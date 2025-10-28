@@ -1,0 +1,84 @@
+name: Feature Request
+description: Proposez une nouvelle fonctionnalité
+title: "[FEATURE] "
+labels: ["type:feature", "status:backlog"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de proposer une nouvelle fonctionnalité ! Remplissez les sections ci-dessous pour nous aider à comprendre votre demande.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Décrivez la fonctionnalité que vous aimeriez voir implémentée
+      placeholder: "Ex: Ajouter un toggle pour activer/désactiver le mode sombre..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation et cas d'usage
+      description: Pourquoi cette fonctionnalité est-elle importante ? Quels problèmes résout-elle ?
+      placeholder: "Ex: Les utilisateurs demandent une option pour réduire la fatigue oculaire la nuit..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Critères d'acceptation
+      description: Listez les critères pour considérer cette fonctionnalité comme terminée
+      placeholder: |
+        - [ ] La UI est implémentée et accessible
+        - [ ] L'API fournit les endpoints nécessaires
+        - [ ] Les tests unitaires couvrent les cas d'usage
+        - [ ] La documentation est mise à jour
+      render: markdown
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Avant de soumettre
+      options:
+        - label: Je n'ai pas trouvé une fonctionnalité similaire
+          required: true
+        - label: Cette fonctionnalité n'a pas déjà été discutée
+          required: true
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Contexte supplémentaire
+      description: Ajoutez des captures d'écran, des mockups, des liens, etc.
+      placeholder: "Optionnel"
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priorité estimée
+      options:
+        - Low
+        - Medium
+        - High
+    validations:
+      required: false
+
+  - type: dropdown
+    id: effort
+    attributes:
+      label: Effort estimé (story points)
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "5"
+        - "8"
+    validations:
+      required: false

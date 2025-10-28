@@ -1,0 +1,109 @@
+name: Bug Report
+description: Signalez un bug ou un problème
+title: "[BUG] "
+labels: ["type:bug", "status:backlog"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de signaler un bug ! Pour nous aider à le reproduire et le corriger rapidement, veuillez remplir les détails ci-dessous.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description du bug
+      description: Décrivez clairement le problème observé
+      placeholder: "Ex: Quand je clique sur le bouton X, il se passe Y au lieu de Z..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: Étapes pour reproduire
+      description: Listez les étapes précises pour reproduire le bug
+      placeholder: |
+        1. Aller à la page X
+        2. Cliquer sur Y
+        3. Observer que Z se produit
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Comportement attendu
+      description: Décrivez ce qui devrait se passer
+      placeholder: "Ex: Le bouton devrait afficher une notification de succès..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual_behavior
+    attributes:
+      label: Comportement observé
+      description: Décrivez ce qui se passe réellement
+      placeholder: "Ex: Une erreur 500 est affichée..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environnement
+      description: Informations système et environnement
+      placeholder: |
+        - OS: Ubuntu 22.04
+        - Python: 3.11.5
+        - Version de l'application: v1.2.3
+        - Navigateur: Chrome 120.0
+        - Base de données: PostgreSQL 15
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: error_logs
+    attributes:
+      label: Logs ou traces d'erreur
+      description: Collez les messages d'erreur, logs ou stack traces pertinents
+      placeholder: "Collez les logs ici..."
+      render: bash
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Captures d'écran
+      description: Ajoutez des captures d'écran montrant le bug
+      placeholder: "Attachez des images si possible"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Avant de soumettre
+      options:
+        - label: J'ai vérifié que ce bug n'a pas déjà été signalé
+          required: true
+        - label: Je peux reproduire le bug de manière consistante
+          required: true
+        - label: Les informations d'environnement sont complètes
+          required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Sévérité
+      options:
+        - Low (cosmétique)
+        - Medium (fonctionnel mais non-bloquant)
+        - High (bloque l'utilisation)
+        - Critical (perte de données / sécurité)
+    validations:
+      required: true

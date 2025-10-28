@@ -1,0 +1,88 @@
+name: Update GitHub Project
+
+on:
+  push:
+    branches: [main, develop, staging]
+  pull_request:
+    types: [opened, synchronize, closed]
+  issues:
+    types: [opened, closed, labeled, unlabeled]
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+
+jobs:
+  update-project:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'issues'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install requests pyyaml
+
+      - name: Update project on PR open
+        if: github.event_name == 'pull_request' && github.event.action == 'opened'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python << 'EOF'
+          import os
+          import re
+          import json
+          import subprocess
+
+          pr_body = """${{ github.event.pull_request.body }}"""
+          pr_title = """${{ github.event.pull_request.title }}"""
+
+          # Extract issue number from PR body (Closes #123 format)
+          match = re.search(r'Closes\s+#(\d+)', pr_body, re.IGNORECASE)
+          if match:
+              issue_number = match.group(1)
+              print(f"Found issue #{issue_number}")
+
+              # Note: Updating project fields via GraphQL requires more setup
+              # For now, we'll output the information
+              print(f"PR #{${{ github.event.pull_request.number }}} linked to issue #{issue_number}")
+              print("Project board should be updated to 'In QA' status")
+          else:
+              print("No linked issue found in PR description")
+          EOF
+
+      - name: Update project on PR close
+        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "PR merged: ${{ github.event.pull_request.number }}"
+          echo "Project board should be updated to 'Done' status"
+
+      - name: Log push event
+        if: github.event_name == 'push'
+        run: |
+          echo "Push to branch: ${{ github.ref }}"
+          echo "Commit: ${{ github.event.head_commit.id }}"
+          echo "Author: ${{ github.event.head_commit.author.name }}"
+          echo "Project board timestamps should be updated"
+
+      - name: Log issue event
+        if: github.event_name == 'issues'
+        run: |
+          echo "Issue ${{ github.event.action }}: #${{ github.event.issue.number }}"
+          echo "Title: ${{ github.event.issue.title }}"
+          echo "Project board should be synchronized"
+
+      - name: Summary
+        run: |
+          echo "✅ Project update workflow completed"
+          echo "Note: Full project API integration requires GitHub Projects GraphQL setup"

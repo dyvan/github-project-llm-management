@@ -1,0 +1,79 @@
+site_name: Project LLM Management
+site_description: GitHub-based project management with LLM agents
+site_author: Your Team
+repo_url: https://github.com/your-org/project-llm-management
+repo_name: project-llm-management
+
+theme:
+  name: material
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - content.code.copy
+    - content.code.select
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - toc.follow
+    - search.suggest
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+  - mermaid2
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      use_pygments: true
+  - pymdownx.arithmatex:
+      generic: true
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quick Start: getting-started/quickstart.md
+      - First Issue: getting-started/first-issue.md
+  - Architecture:
+      - Overview: architecture/overview.md
+      - GitHub Projects v2: architecture/github-projects.md
+      - Workflows: architecture/workflows.md
+      - Agents: architecture/agents.md
+  - Guides:
+      - GitHub Projects Setup: guides/setup-github-projects.md
+      - Using Agents: guides/using-agents.md
+      - Contributing: guides/contributing.md
+      - Troubleshooting: guides/troubleshooting.md
+  - Agents Documentation:
+      - Branch Creator: agents/branch-creator.md
+      - Code Reviewer: agents/code-reviewer.md
+      - Test Feedback: agents/test-feedback.md
+  - API Reference:
+      - GitHub Actions: api/github-actions.md
+      - LLM Integration: api/llm-integration.md
+  - FAQ: faq.md

@@ -1,0 +1,20 @@
+# Core dependencies
+python-dotenv==1.0.0
+requests==2.31.0
+
+# LLM & API clients
+anthropic==0.40.0
+openai==1.33.0
+google-generativeai==0.6.0
+
+# GitHub interaction
+PyGithub==2.1.1
+pyyaml==6.0.1
+
+# Development dependencies (optional, for local setup)
+# pytest==7.4.3
+# black==23.12.1
+# pylint==3.0.3
+# mypy==1.7.1
+# mkdocs==1.5.3
+# mkdocs-material==9.5.3

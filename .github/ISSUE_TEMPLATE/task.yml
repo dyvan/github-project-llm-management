@@ -1,0 +1,107 @@
+name: Task
+description: Créez une tâche ou travail d'ingénierie
+title: "[TASK] "
+labels: ["type:task", "status:backlog"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Utilisez ce template pour créer une tâche d'ingénierie (refactoring, tech debt, setup, documentation, etc.).
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description de la tâche
+      description: Décrivez clairement ce qui doit être fait
+      placeholder: "Ex: Refactoriser le module d'authentification pour améliorer la maintenabilité..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation et objectifs
+      description: Pourquoi cette tâche est-elle nécessaire ? Quels sont les bénéfices ?
+      placeholder: |
+        - Améliorer la performance de X
+        - Réduire la dette technique en Y
+        - Préparer pour la fonctionnalité Z
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: subtasks
+    attributes:
+      label: Sous-tâches (optionnel)
+      description: Décomposez la tâche en étapes plus petites
+      placeholder: |
+        - [ ] Analyser le code existant
+        - [ ] Concevoir la solution
+        - [ ] Implémenter les changements
+        - [ ] Tester et valider
+        - [ ] Mettre à jour la documentation
+      render: markdown
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Critères d'acceptation
+      description: Comment saurons-nous que cette tâche est terminée ?
+      placeholder: |
+        - [ ] Tous les tests passent
+        - [ ] La documentation est à jour
+        - [ ] Le code review est approuvé
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dépendances
+      description: Cette tâche dépend-elle d'autres issues ou tâches ?
+      placeholder: |
+        - Dépend de #123
+        - Bloque #456
+      render: markdown
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priorité
+      options:
+        - Low
+        - Medium
+        - High
+    validations:
+      required: true
+
+  - type: dropdown
+    id: effort
+    attributes:
+      label: Effort estimé (story points)
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "5"
+        - "8"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Avant de soumettre
+      options:
+        - label: La tâche est clairement définie
+          required: true
+        - label: Les critères d'acceptation sont explicites
+          required: true

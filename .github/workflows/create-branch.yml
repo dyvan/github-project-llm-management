@@ -1,0 +1,65 @@
+name: Auto-create Branch on Label
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  create-branch:
+    runs-on: ubuntu-latest
+    if: github.event.label.name == 'auto-branch'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create branch from issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ISSUE_NUMBER=${{ github.event.issue.number }}
+          ISSUE_TITLE="${{ github.event.issue.title }}"
+
+          # Slugify the title (lowercase, replace spaces and special chars with -)
+          SLUGIFIED=$(echo "$ISSUE_TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/-+/-/g' | sed 's/^-|-$//')
+
+          BRANCH_NAME="feat/${ISSUE_NUMBER}-${SLUGIFIED}"
+
+          # Create and push the branch
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH_NAME"
+          git push origin "$BRANCH_NAME"
+
+          echo "Branch created: $BRANCH_NAME"
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Comment on issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ISSUE_NUMBER=${{ github.event.issue.number }}
+          REPO=${{ github.repository }}
+          BRANCH_NAME=${{ env.BRANCH_NAME }}
+
+          gh issue comment $ISSUE_NUMBER \
+            --repo "$REPO" \
+            --body "✅ Branch auto-created: \`$BRANCH_NAME\`
+
+**Next steps:**
+1. Clone the repository and checkout the branch:
+   \`\`\`bash
+   git checkout $BRANCH_NAME
+   \`\`\`
+2. Make your changes
+3. Push and create a Pull Request
+4. The Code Review Agent will automatically review your PR
+
+---
+*Created by GitHub Actions*"

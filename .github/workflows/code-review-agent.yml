@@ -1,0 +1,159 @@
+name: Code Review Agent
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  code-review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install anthropic requests pyyaml
+
+      - name: Get PR diff
+        id: get-diff
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          REPO=${{ github.repository }}
+
+          # Get the diff
+          DIFF=$(gh pr diff $PR_NUMBER --repo "$REPO")
+
+          # Save to file (limit size to avoid token issues)
+          echo "$DIFF" | head -10000 > /tmp/pr_diff.txt
+
+          # Count lines
+          LINES=$(echo "$DIFF" | wc -l)
+          echo "diff_lines=$LINES" >> $GITHUB_OUTPUT
+
+          echo "Diff retrieved: $LINES lines"
+
+      - name: Run Code Review with Claude
+        id: review
+        env:
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python << 'EOF'
+          import os
+          import json
+          import sys
+
+          # Read PR diff
+          with open('/tmp/pr_diff.txt', 'r') as f:
+              diff = f.read()
+
+          if not diff.strip():
+              print("No diff found")
+              sys.exit(0)
+
+          pr_title = "${{ github.event.pull_request.title }}"
+          pr_body = "${{ github.event.pull_request.body }}"
+
+          # Try Claude first, fallback to a mock review if API keys are missing
+          api_key = os.getenv('CLAUDE_API_KEY')
+
+          if api_key:
+              from anthropic import Anthropic
+              client = Anthropic()
+
+              prompt = f"""Review this GitHub Pull Request code changes. Provide constructive feedback in a GitHub-friendly format.
+
+**PR Title**: {pr_title}
+**PR Description**: {pr_body}
+
+**Code Changes**:
+```diff
+{diff}
+```
+
+Provide a code review with:
+1. ✅ Strengths (positive aspects of the code)
+2. ⚠️ Suggestions (improvements but not blocking)
+3. 🔴 Critical Issues (security, performance, bugs)
+
+Format your response as Markdown suitable for a GitHub PR comment. Be concise and professional."""
+
+              response = client.messages.create(
+                  model="claude-3-5-sonnet-20241022",
+                  max_tokens=1024,
+                  messages=[
+                      {"role": "user", "content": prompt}
+                  ]
+              )
+
+              review_comment = response.content[0].text
+          else:
+              # Fallback: basic lint-like review
+              print("⚠️ CLAUDE_API_KEY not set, providing basic review")
+              review_comment = """## 🤖 Code Review (Basic Mode)
+
+**Note**: Full AI review requires CLAUDE_API_KEY secret to be configured.
+
+### Basic Checks
+- [ ] Check file size (large files may be hard to review)
+- [ ] Verify commit messages are descriptive
+- [ ] Ensure no obvious syntax errors
+- [ ] Check for console.log / print statements left in code
+
+---
+*To enable full AI-powered code review, add CLAUDE_API_KEY to GitHub Secrets*"""
+
+          # Write review to file
+          with open('/tmp/review_comment.md', 'w') as f:
+              f.write(review_comment)
+
+          print("Review generated successfully")
+          EOF
+
+      - name: Post review as comment
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          REPO=${{ github.repository }}
+
+          # Read the review comment
+          REVIEW=$(cat /tmp/review_comment.md)
+
+          # Post as PR comment
+          gh pr comment $PR_NUMBER \
+            --repo "$REPO" \
+            --body "## 🤖 Automated Code Review by Claude AI
+
+$REVIEW
+
+---
+*This is an informational review - approval is not required for merge*"
+
+      - name: Handle review errors
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          REPO=${{ github.repository }}
+
+          gh pr comment $PR_NUMBER \
+            --repo "$REPO" \
+            --body "⚠️ Code review workflow encountered an error. Please check the workflow logs."
