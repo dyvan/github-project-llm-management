@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../..">
+        <link rel="prev" href="../quickstart/">
       
       
-        <link rel="next" href="../quickstart/">
+        <link rel="next" href="../../architecture/overview/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Installation - Project LLM Management</title>
+        <title>First Issue - Project LLM Management</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#installation-guide" class="md-skip">
+        <a href="#creer-votre-premiere-issue" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Installation
+              First Issue
             
           </span>
         </div>
@@ -319,32 +319,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Installation
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
         
   
   
@@ -355,377 +333,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#system-requirements" class="md-nav__link">
-    <span class="md-ellipsis">
-      System Requirements
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-1-clone-the-repository" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 1: Clone the Repository
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-install-dependencies-optional" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 2: Install Dependencies (Optional)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-configure-github-secrets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 3: Configure GitHub Secrets
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 3: Configure GitHub Secrets">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#required-secrets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Required Secrets
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Required Secrets">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#github_token" class="md-nav__link">
-    <span class="md-ellipsis">
-      GITHUB_TOKEN
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#claude_api_key-for-code-review" class="md-nav__link">
-    <span class="md-ellipsis">
-      CLAUDE_API_KEY (for Code Review)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#optional-secrets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Optional Secrets
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Optional Secrets">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#openai_api_key-alternative-to-claude" class="md-nav__link">
-    <span class="md-ellipsis">
-      OPENAI_API_KEY (Alternative to Claude)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#gemini_api_key-alternative-to-claude" class="md-nav__link">
-    <span class="md-ellipsis">
-      GEMINI_API_KEY (Alternative to Claude)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-4-enable-github-projects-v2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 4: Enable GitHub Projects v2
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-5-configure-project-fields" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 5: Configure Project Fields
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 5: Configure Project Fields">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#custom-fields-to-create" class="md-nav__link">
-    <span class="md-ellipsis">
-      Custom Fields to Create
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#create-views" class="md-nav__link">
-    <span class="md-ellipsis">
-      Create Views
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Create Views">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-backlog-table" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Backlog (Table)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-priority-board-kanban" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Priority Board (Kanban)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-team-items-table" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Team Items (Table)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-6-configure-workflows" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 6: Configure Workflows
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-7-test-the-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 7: Test the Setup
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 7: Test the Setup">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#create-a-test-issue" class="md-nav__link">
-    <span class="md-ellipsis">
-      Create a test issue
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#verify-workflows-ran" class="md-nav__link">
-    <span class="md-ellipsis">
-      Verify workflows ran
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-8-configure-mkdocs-documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 8: Configure MkDocs (Documentation)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 8: Configure MkDocs (Documentation)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#deploy-to-github-pages" class="md-nav__link">
-    <span class="md-ellipsis">
-      Deploy to GitHub Pages
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-9-create-development-environment" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 9: Create Development Environment
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 9: Create Development Environment">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#python-virtual-environment" class="md-nav__link">
-    <span class="md-ellipsis">
-      Python Virtual Environment
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#install-pre-commit-hooks-optional" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install Pre-commit Hooks (Optional)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-10-verify-installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 10: Verify Installation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Troubleshooting
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#issue-workflows-not-running" class="md-nav__link">
-    <span class="md-ellipsis">
-      Issue: Workflows not running
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#issue-code-review-agent-not-working" class="md-nav__link">
-    <span class="md-ellipsis">
-      Issue: Code Review Agent not working
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#issue-branch-not-created" class="md-nav__link">
-    <span class="md-ellipsis">
-      Issue: Branch not created
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#issue-python-tests-fail" class="md-nav__link">
-    <span class="md-ellipsis">
-      Issue: Python tests fail
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Next Steps
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -758,10 +365,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../first-issue/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    First Issue
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -772,6 +401,245 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#etape-1-creer-une-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Étape 1 : Créer une issue
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 Étape 1 : Créer une issue">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#via-linterface-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      Via l'interface GitHub
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#via-la-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Via la CLI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remplissez-le-formulaire" class="md-nav__link">
+    <span class="md-ellipsis">
+      📝 Remplissez le formulaire
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ajouter-le-label-auto-branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏷️ Ajouter le label auto-branch
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🏷️ Ajouter le label auto-branch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#via-linterface" class="md-nav__link">
+    <span class="md-ellipsis">
+      Via l'interface
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resultat-attendu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Résultat attendu
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verifier-dans-le-project-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Vérifier dans le Project Board
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#developper-localement" class="md-nav__link">
+    <span class="md-ellipsis">
+      💻 Développer localement
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ouvrir-une-pull-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔄 Ouvrir une Pull Request
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔄 Ouvrir une Pull Request">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#via-linterface_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Via l'interface
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflows-automatiques-se-declenchent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflows automatiques se déclenchent
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workflows automatiques se déclenchent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-code-review-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      1️⃣ Code Review Agent
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-ci-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      2️⃣ CI Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-project-board-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      3️⃣ Project Board Update
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#merger-la-pr" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ Merger la PR
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ Merger la PR">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conditions-de-merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conditions de merge
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merger-via-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      Merger via interface
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resultat-final" class="md-nav__link">
+    <span class="md-ellipsis">
+      Résultat final
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checklist-recapitulatif" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 Checklist récapitulatif
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prochaines-etapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎓 Prochaines étapes
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1312,65 +1180,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#system-requirements" class="md-nav__link">
+  <a href="#etape-1-creer-une-issue" class="md-nav__link">
     <span class="md-ellipsis">
-      System Requirements
+      🎯 Étape 1 : Créer une issue
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-1-clone-the-repository" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 1: Clone the Repository
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-install-dependencies-optional" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 2: Install Dependencies (Optional)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-configure-github-secrets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 3: Configure GitHub Secrets
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 3: Configure GitHub Secrets">
+    <nav class="md-nav" aria-label="🎯 Étape 1 : Créer une issue">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#required-secrets" class="md-nav__link">
+  <a href="#via-linterface-github" class="md-nav__link">
     <span class="md-ellipsis">
-      Required Secrets
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Required Secrets">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#github_token" class="md-nav__link">
-    <span class="md-ellipsis">
-      GITHUB_TOKEN
+      Via l'interface GitHub
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#claude_api_key-for-code-review" class="md-nav__link">
+  <a href="#via-la-cli" class="md-nav__link">
     <span class="md-ellipsis">
-      CLAUDE_API_KEY (for Code Review)
+      Via la CLI
     </span>
   </a>
   
@@ -1380,30 +1211,39 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#optional-secrets" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#remplissez-le-formulaire" class="md-nav__link">
     <span class="md-ellipsis">
-      Optional Secrets
+      📝 Remplissez le formulaire
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Optional Secrets">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ajouter-le-label-auto-branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏷️ Ajouter le label auto-branch
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🏷️ Ajouter le label auto-branch">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#openai_api_key-alternative-to-claude" class="md-nav__link">
+  <a href="#via-linterface" class="md-nav__link">
     <span class="md-ellipsis">
-      OPENAI_API_KEY (Alternative to Claude)
+      Via l'interface
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#gemini_api_key-alternative-to-claude" class="md-nav__link">
+  <a href="#resultat-attendu" class="md-nav__link">
     <span class="md-ellipsis">
-      GEMINI_API_KEY (Alternative to Claude)
+      Résultat attendu
     </span>
   </a>
   
@@ -1413,72 +1253,76 @@
     </nav>
   
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
       
         <li class="md-nav__item">
-  <a href="#step-4-enable-github-projects-v2" class="md-nav__link">
+  <a href="#verifier-dans-le-project-board" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 4: Enable GitHub Projects v2
+      📊 Vérifier dans le Project Board
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-5-configure-project-fields" class="md-nav__link">
+  <a href="#developper-localement" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 5: Configure Project Fields
+      💻 Développer localement
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 5: Configure Project Fields">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ouvrir-une-pull-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔄 Ouvrir une Pull Request
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔄 Ouvrir une Pull Request">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#custom-fields-to-create" class="md-nav__link">
+  <a href="#via-linterface_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Custom Fields to Create
+      Via l'interface
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#create-views" class="md-nav__link">
+  <a href="#workflows-automatiques-se-declenchent" class="md-nav__link">
     <span class="md-ellipsis">
-      Create Views
+      Workflows automatiques se déclenchent
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Create Views">
+    <nav class="md-nav" aria-label="Workflows automatiques se déclenchent">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-backlog-table" class="md-nav__link">
+  <a href="#1-code-review-agent" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Backlog (Table)
+      1️⃣ Code Review Agent
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-priority-board-kanban" class="md-nav__link">
+  <a href="#2-ci-tests" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Priority Board (Kanban)
+      2️⃣ CI Tests
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-team-items-table" class="md-nav__link">
+  <a href="#3-project-board-update" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Team Items (Table)
+      3️⃣ Project Board Update
     </span>
   </a>
   
@@ -1495,37 +1339,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-6-configure-workflows" class="md-nav__link">
+  <a href="#merger-la-pr" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 6: Configure Workflows
+      ✅ Merger la PR
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-7-test-the-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 7: Test the Setup
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 7: Test the Setup">
+    <nav class="md-nav" aria-label="✅ Merger la PR">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#create-a-test-issue" class="md-nav__link">
+  <a href="#conditions-de-merge" class="md-nav__link">
     <span class="md-ellipsis">
-      Create a test issue
+      Conditions de merge
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#verify-workflows-ran" class="md-nav__link">
+  <a href="#merger-via-interface" class="md-nav__link">
     <span class="md-ellipsis">
-      Verify workflows ran
+      Merger via interface
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resultat-final" class="md-nav__link">
+    <span class="md-ellipsis">
+      Résultat final
     </span>
   </a>
   
@@ -1537,126 +1381,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-8-configure-mkdocs-documentation" class="md-nav__link">
+  <a href="#checklist-recapitulatif" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 8: Configure MkDocs (Documentation)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 8: Configure MkDocs (Documentation)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#deploy-to-github-pages" class="md-nav__link">
-    <span class="md-ellipsis">
-      Deploy to GitHub Pages
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-9-create-development-environment" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 9: Create Development Environment
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 9: Create Development Environment">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#python-virtual-environment" class="md-nav__link">
-    <span class="md-ellipsis">
-      Python Virtual Environment
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#install-pre-commit-hooks-optional" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install Pre-commit Hooks (Optional)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-10-verify-installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 10: Verify Installation
+      📋 Checklist récapitulatif
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
+  <a href="#prochaines-etapes" class="md-nav__link">
     <span class="md-ellipsis">
-      Troubleshooting
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#issue-workflows-not-running" class="md-nav__link">
-    <span class="md-ellipsis">
-      Issue: Workflows not running
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#issue-code-review-agent-not-working" class="md-nav__link">
-    <span class="md-ellipsis">
-      Issue: Code Review Agent not working
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#issue-branch-not-created" class="md-nav__link">
-    <span class="md-ellipsis">
-      Issue: Branch not created
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#issue-python-tests-fail" class="md-nav__link">
-    <span class="md-ellipsis">
-      Issue: Python tests fail
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Next Steps
+      🎓 Prochaines étapes
     </span>
   </a>
   
@@ -1681,206 +1417,202 @@
   
 
 
-<h1 id="installation-guide">Installation Guide<a class="headerlink" href="#installation-guide" title="Permanent link">&para;</a></h1>
-<h2 id="system-requirements">System Requirements<a class="headerlink" href="#system-requirements" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Git</strong>: 2.30+</li>
-<li><strong>GitHub Account</strong>: With repository admin access</li>
-<li><strong>GitHub CLI</strong>: <code>gh</code> 2.0+</li>
-<li><strong>Python</strong>: 3.11+ (if using Python workflows)</li>
-</ul>
-<h2 id="step-1-clone-the-repository">Step 1: Clone the Repository<a class="headerlink" href="#step-1-clone-the-repository" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># Clone this template</span>
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/your-org/project-llm-management.git
-<span class="nb">cd</span><span class="w"> </span>project-llm-management
-
-<span class="c1"># Or fork and clone your fork</span>
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/YOUR_USERNAME/project-llm-management.git
-</code></pre></div>
-<h2 id="step-2-install-dependencies-optional">Step 2: Install Dependencies (Optional)<a class="headerlink" href="#step-2-install-dependencies-optional" title="Permanent link">&para;</a></h2>
-<p>If you want to run workflows locally for testing:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Python dependencies</span>
-pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-
-<span class="c1"># Development tools (for local testing)</span>
-pip<span class="w"> </span>install<span class="w"> </span>pytest<span class="w"> </span>black<span class="w"> </span>pylint<span class="w"> </span>mypy<span class="w"> </span>mkdocs<span class="w"> </span>mkdocs-material
-</code></pre></div>
-<h2 id="step-3-configure-github-secrets">Step 3: Configure GitHub Secrets<a class="headerlink" href="#step-3-configure-github-secrets" title="Permanent link">&para;</a></h2>
-<p>Navigate to your repository settings:</p>
-<p><strong>Settings → Secrets and variables → Actions</strong></p>
-<p>Add the following secrets:</p>
-<h3 id="required-secrets">Required Secrets<a class="headerlink" href="#required-secrets" title="Permanent link">&para;</a></h3>
-<h4 id="github_token"><code>GITHUB_TOKEN</code><a class="headerlink" href="#github_token" title="Permanent link">&para;</a></h4>
-<p>GitHub automatically provides this, but you can also create a Personal Access Token:</p>
-<div class="highlight"><pre><span></span><code>gh<span class="w"> </span>auth<span class="w"> </span>login
-<span class="c1"># Select: GitHub.com</span>
-<span class="c1"># Select: HTTPS</span>
-<span class="c1"># Authenticate with browser</span>
-</code></pre></div>
-<h4 id="claude_api_key-for-code-review"><code>CLAUDE_API_KEY</code> (for Code Review)<a class="headerlink" href="#claude_api_key-for-code-review" title="Permanent link">&para;</a></h4>
+<h1 id="creer-votre-premiere-issue">Créer votre première issue<a class="headerlink" href="#creer-votre-premiere-issue" title="Permanent link">&para;</a></h1>
+<p>Ce guide vous montre comment créer une première issue et déclencher les workflows automatiques.</p>
+<h2 id="etape-1-creer-une-issue">🎯 Étape 1 : Créer une issue<a class="headerlink" href="#etape-1-creer-une-issue" title="Permanent link">&para;</a></h2>
+<h3 id="via-linterface-github">Via l'interface GitHub<a class="headerlink" href="#via-linterface-github" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Get your API key from <a href="https://console.anthropic.com">console.anthropic.com</a></li>
-<li>Add it to your repo secrets:</li>
+<li>Allez sur : https://github.com/dyvan/github-project-llm-management/issues</li>
+<li>Cliquez sur <strong>New issue</strong></li>
+<li>Sélectionnez le template <strong>Feature Request</strong></li>
 </ol>
-<div class="highlight"><pre><span></span><code>gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>CLAUDE_API_KEY<span class="w"> </span>--body<span class="w"> </span><span class="s2">&quot;sk-ant-...&quot;</span>
-</code></pre></div>
-<h3 id="optional-secrets">Optional Secrets<a class="headerlink" href="#optional-secrets" title="Permanent link">&para;</a></h3>
-<h4 id="openai_api_key-alternative-to-claude"><code>OPENAI_API_KEY</code> (Alternative to Claude)<a class="headerlink" href="#openai_api_key-alternative-to-claude" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>OPENAI_API_KEY<span class="w"> </span>--body<span class="w"> </span><span class="s2">&quot;sk-...&quot;</span>
-</code></pre></div>
-<h4 id="gemini_api_key-alternative-to-claude"><code>GEMINI_API_KEY</code> (Alternative to Claude)<a class="headerlink" href="#gemini_api_key-alternative-to-claude" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>GEMINI_API_KEY<span class="w"> </span>--body<span class="w"> </span><span class="s2">&quot;AIza...&quot;</span>
-</code></pre></div>
-<h2 id="step-4-enable-github-projects-v2">Step 4: Enable GitHub Projects v2<a class="headerlink" href="#step-4-enable-github-projects-v2" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Go to your repository</li>
-<li>Click the <strong>Projects</strong> tab</li>
-<li>Click <strong>New project</strong></li>
-<li>Select <strong>Table</strong> or <strong>Board</strong> view</li>
-<li>Name it: <code>Project Board</code></li>
-<li>Create the project</li>
-</ol>
-<h2 id="step-5-configure-project-fields">Step 5: Configure Project Fields<a class="headerlink" href="#step-5-configure-project-fields" title="Permanent link">&para;</a></h2>
-<h3 id="custom-fields-to-create">Custom Fields to Create<a class="headerlink" href="#custom-fields-to-create" title="Permanent link">&para;</a></h3>
-<p>In the project settings, add these fields:</p>
-<table>
-<thead>
-<tr>
-<th>Field Name</th>
-<th>Type</th>
-<th>Values</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Priority</strong></td>
-<td>Single select</td>
-<td>Low, Medium, High</td>
-</tr>
-<tr>
-<td><strong>Effort</strong></td>
-<td>Single select</td>
-<td>1, 2, 3, 5, 8</td>
-</tr>
-<tr>
-<td><strong>Status</strong></td>
-<td>Single select</td>
-<td>Backlog, In Progress, In QA, Done</td>
-</tr>
-<tr>
-<td><strong>Owner</strong></td>
-<td>People</td>
-<td>Auto (from assignee)</td>
-</tr>
-<tr>
-<td><strong>Sprint</strong></td>
-<td>Text</td>
-<td>v1.0, v2.0, etc.</td>
-</tr>
-<tr>
-<td><strong>Environment</strong></td>
-<td>Single select</td>
-<td>dev, preprod, prod</td>
-</tr>
-</tbody>
-</table>
-<h3 id="create-views">Create Views<a class="headerlink" href="#create-views" title="Permanent link">&para;</a></h3>
-<h4 id="1-backlog-table">1. Backlog (Table)<a class="headerlink" href="#1-backlog-table" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Columns: Title, Priority, Effort, Owner, Status</li>
-<li>Filter: Status != "Done"</li>
-<li>Sort: Created date (oldest first)</li>
-</ul>
-<h4 id="2-priority-board-kanban">2. Priority Board (Kanban)<a class="headerlink" href="#2-priority-board-kanban" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Group by: Status</li>
-<li>Filter: Priority = High OR Medium</li>
-<li>Sort: Priority (highest first)</li>
-</ul>
-<h4 id="3-team-items-table">3. Team Items (Table)<a class="headerlink" href="#3-team-items-table" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Columns: Title, Owner, Sprint, Status, Due Date</li>
-<li>Filter: Owner = me (for personal view)</li>
-</ul>
-<h2 id="step-6-configure-workflows">Step 6: Configure Workflows<a class="headerlink" href="#step-6-configure-workflows" title="Permanent link">&para;</a></h2>
-<p>Most workflows are pre-configured, but verify they're enabled:</p>
-<p><strong>Settings → Actions → General</strong></p>
-<p>Ensure:
-- ✅ Actions workflows are enabled
-- ✅ Read/write permissions for Actions</p>
-<h2 id="step-7-test-the-setup">Step 7: Test the Setup<a class="headerlink" href="#step-7-test-the-setup" title="Permanent link">&para;</a></h2>
-<h3 id="create-a-test-issue">Create a test issue<a class="headerlink" href="#create-a-test-issue" title="Permanent link">&para;</a></h3>
+<h3 id="via-la-cli">Via la CLI<a class="headerlink" href="#via-la-cli" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>gh<span class="w"> </span>issue<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--title<span class="w"> </span><span class="s2">&quot;Test: Setup verification&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--body<span class="w"> </span><span class="s2">&quot;Testing the workflow setup&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--label<span class="w"> </span><span class="s2">&quot;auto-branch&quot;</span>
-</code></pre></div>
-<p>This should automatically:
-1. Create a branch: <code>feat/1-test-setup-verification</code>
-2. Post a comment with checkout instructions
-3. Trigger the CI workflow</p>
-<h3 id="verify-workflows-ran">Verify workflows ran<a class="headerlink" href="#verify-workflows-ran" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>gh<span class="w"> </span>run<span class="w"> </span>list<span class="w"> </span>--workflow<span class="w"> </span>ci-tests.yml
-gh<span class="w"> </span>run<span class="w"> </span>list<span class="w"> </span>--workflow<span class="w"> </span>create-branch.yml
-</code></pre></div>
-<h2 id="step-8-configure-mkdocs-documentation">Step 8: Configure MkDocs (Documentation)<a class="headerlink" href="#step-8-configure-mkdocs-documentation" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># Install MkDocs</span>
-pip<span class="w"> </span>install<span class="w"> </span>mkdocs<span class="w"> </span>mkdocs-material
+<span class="w">  </span>--title<span class="w"> </span><span class="s2">&quot;Implement user authentication&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--body<span class="w"> </span><span class="s2">&quot;Add OAuth2 authentication system</span>
 
-<span class="c1"># Build docs locally</span>
-mkdocs<span class="w"> </span>build
+<span class="s2">**Motivation**: Users need secure login</span>
 
-<span class="c1"># Serve locally</span>
-mkdocs<span class="w"> </span>serve
-<span class="c1"># Visit http://localhost:8000</span>
+<span class="s2">**Acceptance Criteria**:</span>
+<span class="s2">- [ ] OAuth2 provider integration</span>
+<span class="s2">- [ ] Token refresh mechanism</span>
+<span class="s2">- [ ] Tests covering auth flow&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--label<span class="w"> </span><span class="s2">&quot;type:feature&quot;</span>
 </code></pre></div>
-<h3 id="deploy-to-github-pages">Deploy to GitHub Pages<a class="headerlink" href="#deploy-to-github-pages" title="Permanent link">&para;</a></h3>
-<p>The workflow <code>.github/workflows/deploy-docs.yml</code> automatically deploys when you push to <code>docs/</code>:</p>
+<h2 id="remplissez-le-formulaire">📝 Remplissez le formulaire<a class="headerlink" href="#remplissez-le-formulaire" title="Permanent link">&para;</a></h2>
+<p><strong>Exemple de Feature Request</strong> :</p>
+<div class="highlight"><pre><span></span><code>Title: Add dark mode toggle
+
+Description:
+Users want a dark mode option for accessibility and reduced eye strain.
+
+Motivation:
+- Improve accessibility for users with light sensitivity
+- Reduce eye strain during night usage
+- Follow modern app standards
+
+Acceptance Criteria:
+- [ ] Toggle switch in settings
+- [ ] Theme persists in localStorage
+- [ ] Works across all pages
+- [ ] Tests cover both themes
+- [ ] Documentation updated
+</code></pre></div>
+<h2 id="ajouter-le-label-auto-branch">🏷️ Ajouter le label <code>auto-branch</code><a class="headerlink" href="#ajouter-le-label-auto-branch" title="Permanent link">&para;</a></h2>
+<h3 id="via-linterface">Via l'interface<a class="headerlink" href="#via-linterface" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Go to <strong>Settings → Pages</strong></li>
-<li>Set source to <strong>Deploy from a branch</strong></li>
-<li>Select <strong>gh-pages</strong> branch</li>
-<li>Save</li>
+<li>Dans l'issue, cliquez sur <strong>Labels</strong></li>
+<li>Cherchez <code>auto-branch</code></li>
+<li>Cliquez dessus pour l'ajouter</li>
 </ol>
-<p>Your docs will be available at: <code>https://your-username.github.io/project-llm-management</code></p>
-<h2 id="step-9-create-development-environment">Step 9: Create Development Environment<a class="headerlink" href="#step-9-create-development-environment" title="Permanent link">&para;</a></h2>
-<h3 id="python-virtual-environment">Python Virtual Environment<a class="headerlink" href="#python-virtual-environment" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
-<span class="nb">source</span><span class="w"> </span>venv/bin/activate<span class="w">  </span><span class="c1"># On Windows: venv\Scripts\activate</span>
-pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<h3 id="resultat-attendu">Résultat attendu<a class="headerlink" href="#resultat-attendu" title="Permanent link">&para;</a></h3>
+<p><strong>Immédiatement</strong> après avoir ajouté le label :</p>
+<p>✅ Le <strong>Branch Creator</strong> se déclenche</p>
+<div class="highlight"><pre><span></span><code>✅ Branch auto-created: `feat/1-add-dark-mode-toggle`
+
+**Next steps:**
+1. Clone the repository and checkout the branch:
+   git checkout feat/1-add-dark-mode-toggle
+2. Make your changes
+3. Push and create a Pull Request
+4. The Code Review Agent will automatically review your PR
+
+---
+Created by GitHub Actions
 </code></pre></div>
-<h3 id="install-pre-commit-hooks-optional">Install Pre-commit Hooks (Optional)<a class="headerlink" href="#install-pre-commit-hooks-optional" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>pre-commit
-pre-commit<span class="w"> </span>install
+<h2 id="verifier-dans-le-project-board">📊 Vérifier dans le Project Board<a class="headerlink" href="#verifier-dans-le-project-board" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Allez à l'onglet <strong>Projects</strong></li>
+<li>Sélectionnez votre <strong>Project Board</strong></li>
+<li>Votre issue apparaît dans <strong>Backlog</strong></li>
+</ol>
+<p><strong>Colonnes visibles</strong> :
+- Title: "Add dark mode toggle"
+- Priority: Medium
+- Effort: 5
+- Status: Backlog
+- Owner: (vous)</p>
+<h2 id="developper-localement">💻 Développer localement<a class="headerlink" href="#developper-localement" title="Permanent link">&para;</a></h2>
+<p>Une fois la branche créée, vous pouvez commencer :</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Cloner le repo (si pas encore fait)</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/dyvan/github-project-llm-management.git
+<span class="nb">cd</span><span class="w"> </span>github-project-llm-management
+
+<span class="c1"># Checker la branche</span>
+git<span class="w"> </span>checkout<span class="w"> </span>feat/1-add-dark-mode-toggle
+
+<span class="c1"># Développer</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;export const darkMode = true;&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>src/theme.js
+
+<span class="c1"># Commit</span>
+git<span class="w"> </span>add<span class="w"> </span>.
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: Add dark mode toggle</span>
+
+<span class="s2">- Implement toggle component</span>
+<span class="s2">- Add theme CSS variables</span>
+<span class="s2">- Save preference in localStorage&quot;</span>
+
+<span class="c1"># Push</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>feat/1-add-dark-mode-toggle
 </code></pre></div>
-<h2 id="step-10-verify-installation">Step 10: Verify Installation<a class="headerlink" href="#step-10-verify-installation" title="Permanent link">&para;</a></h2>
-<p>Run this checklist:</p>
+<h2 id="ouvrir-une-pull-request">🔄 Ouvrir une Pull Request<a class="headerlink" href="#ouvrir-une-pull-request" title="Permanent link">&para;</a></h2>
+<h3 id="via-linterface_1">Via l'interface<a class="headerlink" href="#via-linterface_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Vous verrez un banner "Compare &amp; pull request"</li>
+<li>Cliquez dessus</li>
+<li>Remplissez le template :</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="gu">## Description</span>
+Added dark mode toggle to settings page.
+
+<span class="gu">## Issue</span>
+Closes <span class="ni">#1</span>
+
+<span class="gu">## Type of change</span>
+<span class="k">- [x]</span> Feature
+
+<span class="gu">## Checklist</span>
+<span class="k">- [x]</span> Tests added
+<span class="k">- [x]</span> Documentation updated
+<span class="k">- [x]</span> Lint passed
+</code></pre></div>
+<ol>
+<li>Cliquez <strong>Create pull request</strong></li>
+</ol>
+<h3 id="workflows-automatiques-se-declenchent">Workflows automatiques se déclenchent<a class="headerlink" href="#workflows-automatiques-se-declenchent" title="Permanent link">&para;</a></h3>
+<h4 id="1-code-review-agent">1️⃣ Code Review Agent<a class="headerlink" href="#1-code-review-agent" title="Permanent link">&para;</a></h4>
+<p>Dans ~30 secondes :</p>
+<div class="highlight"><pre><span></span><code>## 🤖 Automated Code Review by Claude AI
+
+### ✅ Strengths
+- Clean component structure
+- Good use of React hooks
+
+### ⚠️ Suggestions
+- Add error boundary wrapper
+- Consider memoization for performance
+
+### 🔴 Critical Issues
+None found!
+</code></pre></div>
+<h4 id="2-ci-tests">2️⃣ CI Tests<a class="headerlink" href="#2-ci-tests" title="Permanent link">&para;</a></h4>
+<p>Dans ~1 minute :</p>
+<div class="highlight"><pre><span></span><code>## ✅ Tests Passed
+
+- Tests: 45/45 ✅
+- Coverage: 87%
+- Lint: OK
+- Build: ✅
+</code></pre></div>
+<h4 id="3-project-board-update">3️⃣ Project Board Update<a class="headerlink" href="#3-project-board-update" title="Permanent link">&para;</a></h4>
+<p>Status change : <strong>Backlog → In QA</strong></p>
+<h2 id="merger-la-pr">✅ Merger la PR<a class="headerlink" href="#merger-la-pr" title="Permanent link">&para;</a></h2>
+<h3 id="conditions-de-merge">Conditions de merge<a class="headerlink" href="#conditions-de-merge" title="Permanent link">&para;</a></h3>
 <ul>
-<li>[ ] Repository cloned/forked locally</li>
-<li>[ ] GitHub secrets configured</li>
-<li>[ ] GitHub Projects v2 created</li>
-<li>[ ] Workflows enabled</li>
-<li>[ ] Test issue created and branch auto-created</li>
-<li>[ ] MkDocs documentation built</li>
-<li>[ ] Local development environment set up</li>
+<li>✅ Code Review completée</li>
+<li>✅ Tous les tests passent</li>
+<li>✅ Approuvée par un mainteneur</li>
 </ul>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
-<h3 id="issue-workflows-not-running">Issue: Workflows not running<a class="headerlink" href="#issue-workflows-not-running" title="Permanent link">&para;</a></h3>
-<p><strong>Solution</strong>: Check <strong>Settings → Actions → General</strong> → ensure workflows are enabled</p>
-<h3 id="issue-code-review-agent-not-working">Issue: Code Review Agent not working<a class="headerlink" href="#issue-code-review-agent-not-working" title="Permanent link">&para;</a></h3>
-<p><strong>Solution</strong>: Verify <code>CLAUDE_API_KEY</code> is set correctly (no extra spaces)</p>
-<h3 id="issue-branch-not-created">Issue: Branch not created<a class="headerlink" href="#issue-branch-not-created" title="Permanent link">&para;</a></h3>
-<p><strong>Solution</strong>: Ensure <code>auto-branch</code> label is added to the issue</p>
-<h3 id="issue-python-tests-fail">Issue: Python tests fail<a class="headerlink" href="#issue-python-tests-fail" title="Permanent link">&para;</a></h3>
-<p><strong>Solution</strong>: Install all dev dependencies: <code>pip install -r requirements.txt</code></p>
-<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<h3 id="merger-via-interface">Merger via interface<a class="headerlink" href="#merger-via-interface" title="Permanent link">&para;</a></h3>
 <ol>
-<li>✅ <a href="../quickstart/">Quick Start Guide</a> - Run your first workflow</li>
-<li>📚 <a href="../../architecture/overview/">Architecture Overview</a> - Understand the system</li>
-<li>📝 <a href="../../CONTRIBUTING.md">Contributing Guide</a> - Start contributing</li>
+<li>Allez à votre PR</li>
+<li>Cliquez <strong>Merge pull request</strong></li>
+<li>Choisissez la stratégie :</li>
+<li><strong>Create a merge commit</strong> (recommended)</li>
+<li><strong>Squash and merge</strong></li>
+<li><strong>Rebase and merge</strong></li>
+<li>Cliquez <strong>Confirm merge</strong></li>
 </ol>
-<hr />
-<p>Need help? Check the <a href="../../faq/">FAQ</a> or <a href="../guides/troubleshooting.md">Troubleshooting Guide</a></p>
+<h3 id="resultat-final">Résultat final<a class="headerlink" href="#resultat-final" title="Permanent link">&para;</a></h3>
+<ul>
+<li>✅ Branche mergée en <code>main</code></li>
+<li>✅ Project status : <strong>Done</strong></li>
+<li>✅ Issue fermée automatiquement (Closes #1)</li>
+<li>🎉 Feature déployée !</li>
+</ul>
+<h2 id="checklist-recapitulatif">📋 Checklist récapitulatif<a class="headerlink" href="#checklist-recapitulatif" title="Permanent link">&para;</a></h2>
+<p>Vous venez de :</p>
+<ul>
+<li>[ ] Créer une issue avec un template</li>
+<li>[ ] Ajouter le label <code>auto-branch</code></li>
+<li>[ ] Branch auto-créée</li>
+<li>[ ] Développé localement</li>
+<li>[ ] Pushez les changements</li>
+<li>[ ] Ouvert une PR</li>
+<li>[ ] Code Review Agent commenté</li>
+<li>[ ] CI Tests passés</li>
+<li>[ ] PR approuvée</li>
+<li>[ ] Mergée en main</li>
+<li>[ ] Issue fermée</li>
+<li>[ ] Project Board mis à jour</li>
+</ul>
+<p><strong>Bravo ! Vous maîtrisez le workflow complet ! 🚀</strong></p>
+<h2 id="prochaines-etapes">🎓 Prochaines étapes<a class="headerlink" href="#prochaines-etapes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Explorez les <a href="../guides/using-agents.md">agents LLM</a></li>
+<li>Configurez des <a href="../guides/setup-github-projects.md">webhooks Slack</a></li>
+<li>Customisez les <a href="../../architecture/workflows/">workflows</a></li>
+</ul>
 
 
 
