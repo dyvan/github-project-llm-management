@@ -1,0 +1,2068 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="GitHub-based project management with LLM agents">
+      
+      
+        <meta name="author" content="Your Team">
+      
+      
+      
+        <link rel="prev" href="../getting-started/quickstart/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>FAQ - Project LLM Management</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#frequently-asked-questions-faq" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Project LLM Management" class="md-header__button md-logo" aria-label="Project LLM Management" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Project LLM Management
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              FAQ
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/your-org/project-llm-management" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    project-llm-management
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Project LLM Management" class="md-nav__button md-logo" aria-label="Project LLM Management" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Project LLM Management
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/your-org/project-llm-management" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    project-llm-management
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/first-issue.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    First Issue
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/overview.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/github-projects.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GitHub Projects v2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/workflows.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Workflows
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/agents.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Agents
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Guides
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Guides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/setup-github-projects.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GitHub Projects Setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/using-agents.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Using Agents
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/contributing.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contributing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/troubleshooting.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Agents Documentation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Agents Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agents/branch-creator.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Branch Creator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agents/code-reviewer.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Code Reviewer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agents/test-feedback.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Test Feedback
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/github-actions.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GitHub Actions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/llm-integration.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LLM Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup &amp; Installation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setup &amp; Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-do-i-need-to-pay-for-the-api-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Do I need to pay for the API keys?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-use-this-without-llm-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I use this without LLM APIs?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-what-python-versions-are-supported" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: What Python versions are supported?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflows &amp; Automation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workflows &amp; Automation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-why-isnt-my-branch-being-created" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Why isn't my branch being created?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-use-a-different-branch-naming-convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I use a different branch naming convention?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-why-did-the-code-review-agent-not-comment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Why did the Code Review Agent not comment?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-disable-certain-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I disable certain workflows?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-board-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Board &amp; Tracking
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Project Board &amp; Tracking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-how-do-i-bulk-update-statuses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: How do I bulk update statuses?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-automate-status-transitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I automate status transitions?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-why-arent-my-issues-appearing-in-the-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Why aren't my issues appearing in the project?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#github-actions-cicd" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub Actions &amp; CI/CD
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GitHub Actions &amp; CI/CD">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-why-are-my-tests-timing-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Why are my tests timing out?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-trigger-workflows-manually" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I trigger workflows manually?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-how-do-i-see-workflow-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: How do I see workflow logs?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-run-workflows-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I run workflows locally?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#llm-code-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      LLM &amp; Code Review
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LLM &amp; Code Review">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-will-the-ai-leak-my-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Will the AI leak my code?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-customize-the-code-review-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I customize the code review prompt?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-whats-the-typical-cost-per-code-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: What's the typical cost per code review?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-use-multiple-llm-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I use multiple LLM providers?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      Git &amp; Development
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Git &amp; Development">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-how-do-i-revert-a-merged-pr" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: How do I revert a merged PR?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-rename-a-branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I rename a branch?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-why-is-my-commit-not-linked-to-an-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Why is my commit not linked to an issue?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-i-broke-something-how-do-i-reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: I broke something. How do I reset?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-my-workflow-is-in-an-infinite-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: My workflow is in an infinite loop!
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-how-do-i-debug-a-failing-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: How do I debug a failing workflow?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-get-email-notifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I get email notifications?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-how-do-i-customize-the-project-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: How do I customize the project fields?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-use-this-for-non-python-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I use this for non-Python projects?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-how-do-i-integrate-with-external-tools-slack-discord-jira" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: How do I integrate with external tools (Slack, Discord, Jira)?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#still-have-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Still Have Questions?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup &amp; Installation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setup &amp; Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-do-i-need-to-pay-for-the-api-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Do I need to pay for the API keys?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-use-this-without-llm-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I use this without LLM APIs?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-what-python-versions-are-supported" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: What Python versions are supported?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflows &amp; Automation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workflows &amp; Automation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-why-isnt-my-branch-being-created" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Why isn't my branch being created?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-use-a-different-branch-naming-convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I use a different branch naming convention?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-why-did-the-code-review-agent-not-comment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Why did the Code Review Agent not comment?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-disable-certain-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I disable certain workflows?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-board-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Board &amp; Tracking
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Project Board &amp; Tracking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-how-do-i-bulk-update-statuses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: How do I bulk update statuses?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-automate-status-transitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I automate status transitions?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-why-arent-my-issues-appearing-in-the-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Why aren't my issues appearing in the project?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#github-actions-cicd" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub Actions &amp; CI/CD
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GitHub Actions &amp; CI/CD">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-why-are-my-tests-timing-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Why are my tests timing out?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-trigger-workflows-manually" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I trigger workflows manually?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-how-do-i-see-workflow-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: How do I see workflow logs?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-run-workflows-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I run workflows locally?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#llm-code-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      LLM &amp; Code Review
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LLM &amp; Code Review">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-will-the-ai-leak-my-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Will the AI leak my code?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-customize-the-code-review-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I customize the code review prompt?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-whats-the-typical-cost-per-code-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: What's the typical cost per code review?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-use-multiple-llm-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I use multiple LLM providers?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      Git &amp; Development
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Git &amp; Development">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-how-do-i-revert-a-merged-pr" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: How do I revert a merged PR?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-rename-a-branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I rename a branch?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-why-is-my-commit-not-linked-to-an-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Why is my commit not linked to an issue?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-i-broke-something-how-do-i-reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: I broke something. How do I reset?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-my-workflow-is-in-an-infinite-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: My workflow is in an infinite loop!
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-how-do-i-debug-a-failing-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: How do I debug a failing workflow?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-get-email-notifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I get email notifications?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-how-do-i-customize-the-project-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: How do I customize the project fields?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-can-i-use-this-for-non-python-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: Can I use this for non-Python projects?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-how-do-i-integrate-with-external-tools-slack-discord-jira" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q: How do I integrate with external tools (Slack, Discord, Jira)?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#still-have-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Still Have Questions?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="frequently-asked-questions-faq">Frequently Asked Questions (FAQ)<a class="headerlink" href="#frequently-asked-questions-faq" title="Permanent link">&para;</a></h1>
+<h2 id="setup-installation">Setup &amp; Installation<a class="headerlink" href="#setup-installation" title="Permanent link">&para;</a></h2>
+<h3 id="q-do-i-need-to-pay-for-the-api-keys">Q: Do I need to pay for the API keys?<a class="headerlink" href="#q-do-i-need-to-pay-for-the-api-keys" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+- <strong>Claude API</strong>: Anthropic uses a pay-as-you-go model. Free credits available for new accounts.
+- <strong>OpenAI</strong>: Also pay-as-you-go, but usually more expensive than Claude for code review.
+- <strong>Gemini</strong>: Free tier available, pay-as-you-go otherwise.</p>
+<p>We recommend Claude for best code review quality and reasonable pricing.</p>
+<h3 id="q-can-i-use-this-without-llm-apis">Q: Can I use this without LLM APIs?<a class="headerlink" href="#q-can-i-use-this-without-llm-apis" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+Yes! The template will still work:
+- ✅ Branch Creator: Works without API keys
+- ✅ CI Tests: Works without API keys
+- ⚠️ Code Review: Falls back to basic lint if no API key is set
+- ✅ Project Updates: Works without API keys</p>
+<h3 id="q-what-python-versions-are-supported">Q: What Python versions are supported?<a class="headerlink" href="#q-what-python-versions-are-supported" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+3.11+ is the default. You can modify <code>.github/workflows/ci-tests.yml</code> to test against:
+<div class="highlight"><pre><span></span><code><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;3.9&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;3.10&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;3.11&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;3.12&quot;</span><span class="p p-Indicator">]</span>
+</code></pre></div></p>
+<h2 id="workflows-automation">Workflows &amp; Automation<a class="headerlink" href="#workflows-automation" title="Permanent link">&para;</a></h2>
+<h3 id="q-why-isnt-my-branch-being-created">Q: Why isn't my branch being created?<a class="headerlink" href="#q-why-isnt-my-branch-being-created" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+Check these:
+1. ✅ Did you add the <code>auto-branch</code> label?
+2. ✅ Is the Actions tab showing the workflow running?
+3. ✅ Check workflow logs for errors: <strong>Actions → create-branch.yml → Latest run</strong></p>
+<h3 id="q-can-i-use-a-different-branch-naming-convention">Q: Can I use a different branch naming convention?<a class="headerlink" href="#q-can-i-use-a-different-branch-naming-convention" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+Yes! Edit <code>.github/workflows/create-branch.yml</code> and modify the <code>BRANCH_NAME</code> variable:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Current: feat/{number}-{slug}</span>
+<span class="nv">BRANCH_NAME</span><span class="o">=</span><span class="s2">&quot;feat/</span><span class="si">${</span><span class="nv">ISSUE_NUMBER</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">SLUGIFIED</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1"># Custom example: bugfix/{number}-{slug}</span>
+<span class="nv">BRANCH_NAME</span><span class="o">=</span><span class="s2">&quot;bugfix/</span><span class="si">${</span><span class="nv">ISSUE_NUMBER</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">SLUGIFIED</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div>
+<h3 id="q-why-did-the-code-review-agent-not-comment">Q: Why did the Code Review Agent not comment?<a class="headerlink" href="#q-why-did-the-code-review-agent-not-comment" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+Reasons:
+1. <code>CLAUDE_API_KEY</code> not set in secrets
+2. API rate limit exceeded
+3. PR diff too large (limit: 10000 lines)
+4. Workflow failed (check Actions logs)</p>
+<p>Solution: Add the secret and test on a new PR.</p>
+<h3 id="q-can-i-disable-certain-workflows">Q: Can I disable certain workflows?<a class="headerlink" href="#q-can-i-disable-certain-workflows" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+Yes! Workflows have conditions. For example, to disable code review:
+1. Go to <code>.github/workflows/code-review-agent.yml</code>
+2. Add a condition in the <code>jobs:</code> section:
+<div class="highlight"><pre><span></span><code><span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">code-review</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># Disable this workflow</span>
+</code></pre></div></p>
+<p>Or rename the file to <code>.disabled</code> to skip it.</p>
+<h2 id="project-board-tracking">Project Board &amp; Tracking<a class="headerlink" href="#project-board-tracking" title="Permanent link">&para;</a></h2>
+<h3 id="q-how-do-i-bulk-update-statuses">Q: How do I bulk update statuses?<a class="headerlink" href="#q-how-do-i-bulk-update-statuses" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+Currently, GitHub Projects v2 doesn't have bulk edit via UI. You can:
+1. Use GraphQL API for bulk updates
+2. Use GitHub CLI:
+<div class="highlight"><pre><span></span><code>gh<span class="w"> </span>issue<span class="w"> </span>list<span class="w"> </span>--label<span class="w"> </span><span class="s2">&quot;ready&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-I<span class="w"> </span><span class="o">{}</span><span class="w"> </span>gh<span class="w"> </span>issue<span class="w"> </span>edit<span class="w"> </span><span class="o">{}</span><span class="w"> </span>--project<span class="w"> </span><span class="s2">&quot;Project Board&quot;</span>
+</code></pre></div></p>
+<h3 id="q-can-i-automate-status-transitions">Q: Can I automate status transitions?<a class="headerlink" href="#q-can-i-automate-status-transitions" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+Partially. Workflows can update statuses via GraphQL, but full automation requires:
+1. Custom scripts in your repo
+2. External tools (Zapier, Make, etc.)
+3. Custom GitHub App</p>
+<p>We recommend keeping human review for major status changes.</p>
+<h3 id="q-why-arent-my-issues-appearing-in-the-project">Q: Why aren't my issues appearing in the project?<a class="headerlink" href="#q-why-arent-my-issues-appearing-in-the-project" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+Issues auto-appear if:
+1. ✅ Project is linked to the repository
+2. ✅ Issue has the right filters (if any)</p>
+<p>To manually link an issue:
+1. Open the issue
+2. Go to <strong>Projects</strong> section on the right
+3. Click <strong>Add to project</strong> → Select your project</p>
+<h2 id="github-actions-cicd">GitHub Actions &amp; CI/CD<a class="headerlink" href="#github-actions-cicd" title="Permanent link">&para;</a></h2>
+<h3 id="q-why-are-my-tests-timing-out">Q: Why are my tests timing out?<a class="headerlink" href="#q-why-are-my-tests-timing-out" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+GitHub Actions has limits:
+- <strong>Free tier</strong>: 6 hours per month per user (deprecated, now all public)
+- <strong>Jobs</strong>: 6 hours max per job
+- <strong>Workflows</strong>: 35-day retention</p>
+<p>Solutions:
+1. Optimize test suite (reduce expensive tests)
+2. Use caching for dependencies
+3. Run tests in parallel</p>
+<h3 id="q-can-i-trigger-workflows-manually">Q: Can I trigger workflows manually?<a class="headerlink" href="#q-can-i-trigger-workflows-manually" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+Yes! Add <code>workflow_dispatch</code> to any workflow:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">on</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">workflow_dispatch</span><span class="p">:</span><span class="w">  </span><span class="c1"># Allows manual trigger</span>
+</code></pre></div>
+<p>Then go to <strong>Actions → Workflow name → Run workflow</strong></p>
+<h3 id="q-how-do-i-see-workflow-logs">Q: How do I see workflow logs?<a class="headerlink" href="#q-how-do-i-see-workflow-logs" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+1. Go to <strong>Actions</strong> tab
+2. Click the workflow run
+3. Click the failed job
+4. Expand steps to see logs
+5. Look for error messages</p>
+<h3 id="q-can-i-run-workflows-locally">Q: Can I run workflows locally?<a class="headerlink" href="#q-can-i-run-workflows-locally" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+Yes! Use <a href="https://github.com/nektos/act">act</a>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install</span>
+brew<span class="w"> </span>install<span class="w"> </span>act
+
+<span class="c1"># Run a workflow locally</span>
+act<span class="w"> </span>push
+
+<span class="c1"># Run specific job</span>
+act<span class="w"> </span>-j<span class="w"> </span>build
+</code></pre></div>
+<h2 id="llm-code-review">LLM &amp; Code Review<a class="headerlink" href="#llm-code-review" title="Permanent link">&para;</a></h2>
+<h3 id="q-will-the-ai-leak-my-code">Q: Will the AI leak my code?<a class="headerlink" href="#q-will-the-ai-leak-my-code" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+No:
+- Claude: Anthropic doesn't use API calls for training (per their policy)
+- Code review only analyzes the diff, not full codebase
+- All processing is server-side and secure</p>
+<p>However, <strong>always</strong> review third-party APIs' privacy policies.</p>
+<h3 id="q-can-i-customize-the-code-review-prompt">Q: Can I customize the code review prompt?<a class="headerlink" href="#q-can-i-customize-the-code-review-prompt" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+Yes! In <code>.github/workflows/code-review-agent.yml</code>, find this section:</p>
+<div class="highlight"><pre><span></span><code><span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Review this GitHub Pull Request code changes...</span>
+</code></pre></div>
+<p>Modify it to add your custom instructions:
+<div class="highlight"><pre><span></span><code><span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Review this GitHub PR for our project.</span>
+<span class="s2">Focus on: </span><span class="si">{</span><span class="n">your_priorities</span><span class="si">}</span>
+<span class="s2">Ignore: </span><span class="si">{</span><span class="n">your_exclusions</span><span class="si">}</span>
+<span class="s2">...</span>
+</code></pre></div></p>
+<h3 id="q-whats-the-typical-cost-per-code-review">Q: What's the typical cost per code review?<a class="headerlink" href="#q-whats-the-typical-cost-per-code-review" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+<strong>Claude (Anthropic)</strong>:
+- ~$0.01 - $0.05 per review (depending on code size)
+- Much cheaper than OpenAI for this use case</p>
+<p>Monitor spending:
+<div class="highlight"><pre><span></span><code><span class="c1"># Check Anthropic usage</span>
+gh<span class="w"> </span>api<span class="w"> </span>user
+</code></pre></div></p>
+<h3 id="q-can-i-use-multiple-llm-providers">Q: Can I use multiple LLM providers?<a class="headerlink" href="#q-can-i-use-multiple-llm-providers" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+Not yet. The current implementation uses one provider. To support multiple:
+1. Modify the code review script to choose provider
+2. Use a config file or environment variable
+3. Test each provider</p>
+<p>Feature request: Consider opening an issue for multi-provider support!</p>
+<h2 id="git-development">Git &amp; Development<a class="headerlink" href="#git-development" title="Permanent link">&para;</a></h2>
+<h3 id="q-how-do-i-revert-a-merged-pr">Q: How do I revert a merged PR?<a class="headerlink" href="#q-how-do-i-revert-a-merged-pr" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Option 1: Revert the commit</span>
+git<span class="w"> </span>revert<span class="w"> </span><span class="o">{</span>commit-hash<span class="o">}</span>
+
+<span class="c1"># Option 2: Revert via GitHub UI</span>
+Go<span class="w"> </span>to<span class="w"> </span>PR<span class="w"> </span>→<span class="w"> </span>Click<span class="w"> </span><span class="s2">&quot;Revert&quot;</span><span class="w"> </span>button<span class="w"> </span><span class="o">(</span>appears<span class="w"> </span>after<span class="w"> </span>merge<span class="o">)</span>
+</code></pre></div></p>
+<h3 id="q-can-i-rename-a-branch">Q: Can I rename a branch?<a class="headerlink" href="#q-can-i-rename-a-branch" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Rename locally</span>
+git<span class="w"> </span>branch<span class="w"> </span>-m<span class="w"> </span>old-name<span class="w"> </span>new-name
+
+<span class="c1"># Rename remote</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>new-name
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>--delete<span class="w"> </span>old-name
+</code></pre></div></p>
+<p>Then delete the old branch on GitHub.</p>
+<h3 id="q-why-is-my-commit-not-linked-to-an-issue">Q: Why is my commit not linked to an issue?<a class="headerlink" href="#q-why-is-my-commit-not-linked-to-an-issue" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+Use the correct format in your commit message:
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: Add feature</span>
+
+<span class="s2">Closes #123&quot;</span><span class="w">  </span><span class="c1"># Must say &quot;Closes #123&quot;</span>
+</code></pre></div></p>
+<p>Or in PR description:
+<div class="highlight"><pre><span></span><code>Fixes #123
+Resolves #456
+Closes #789
+</code></pre></div></p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="q-i-broke-something-how-do-i-reset">Q: I broke something. How do I reset?<a class="headerlink" href="#q-i-broke-something-how-do-i-reset" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Undo last commit (keep changes)</span>
+git<span class="w"> </span>reset<span class="w"> </span>--soft<span class="w"> </span>HEAD~1
+
+<span class="c1"># Undo last commit (discard changes)</span>
+git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span>HEAD~1
+
+<span class="c1"># Undo to specific commit</span>
+git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span><span class="o">{</span>commit-hash<span class="o">}</span>
+</code></pre></div></p>
+<p>⚠️ Be careful with <code>--hard</code>!</p>
+<h3 id="q-my-workflow-is-in-an-infinite-loop">Q: My workflow is in an infinite loop!<a class="headerlink" href="#q-my-workflow-is-in-an-infinite-loop" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+1. Go to <strong>Actions</strong> tab
+2. Click the stuck workflow
+3. Click <strong>Cancel workflow</strong> (top right)
+4. Fix the issue in the workflow file
+5. Commit and push</p>
+<p>Example infinite loop cause:
+<div class="highlight"><pre><span></span><code><span class="c1"># ❌ This causes infinite loop</span>
+<span class="nt">on</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">paths</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;.github/workflows/&quot;</span><span class="p p-Indicator">]</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">update-workflow</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">git push</span><span class="w">  </span><span class="c1"># Triggers workflow again!</span>
+</code></pre></div></p>
+<h3 id="q-how-do-i-debug-a-failing-workflow">Q: How do I debug a failing workflow?<a class="headerlink" href="#q-how-do-i-debug-a-failing-workflow" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+1. Check <strong>Actions → Failed workflow → Logs</strong>
+2. Look for red text or error messages
+3. Common issues:
+   - Missing secrets: <code>Could not resolve secret</code>
+   - Missing dependencies: <code>ModuleNotFoundError</code>
+   - Wrong branch: Check <code>on: [branches]</code>
+   - Permission issues: Check <code>permissions:</code> section</p>
+<h3 id="q-can-i-get-email-notifications">Q: Can I get email notifications?<a class="headerlink" href="#q-can-i-get-email-notifications" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+Yes:
+1. Go to <strong>Settings → Notifications</strong>
+2. Enable <strong>GitHub Actions</strong> notifications
+3. Choose: Always, Failing only, or Never</p>
+<h2 id="advanced-questions">Advanced Questions<a class="headerlink" href="#advanced-questions" title="Permanent link">&para;</a></h2>
+<h3 id="q-how-do-i-customize-the-project-fields">Q: How do I customize the project fields?<a class="headerlink" href="#q-how-do-i-customize-the-project-fields" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+In your GitHub Project v2 settings:
+1. Click <strong>Settings</strong> (gear icon)
+2. Click <strong>Custom fields</strong>
+3. Add/Remove/Rename fields
+4. Update workflows to sync with new field names</p>
+<h3 id="q-can-i-use-this-for-non-python-projects">Q: Can I use this for non-Python projects?<a class="headerlink" href="#q-can-i-use-this-for-non-python-projects" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+Yes! Modify the workflows:
+- JavaScript: Change <code>setup-python</code> to <code>setup-node</code>
+- Go: Use <code>setup-go</code>
+- Rust: Use <code>dtolnay/rust-toolchain</code></p>
+<p>Update the CI commands accordingly.</p>
+<h3 id="q-how-do-i-integrate-with-external-tools-slack-discord-jira">Q: How do I integrate with external tools (Slack, Discord, Jira)?<a class="headerlink" href="#q-how-do-i-integrate-with-external-tools-slack-discord-jira" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong>
+Options:
+1. <strong>Webhooks</strong>: Send POST requests from workflows
+2. <strong>GitHub Apps</strong>: Develop custom integrations
+3. <strong>Zapier/Make</strong>: Connect without code
+4. <strong>GitHub API</strong>: Custom scripts</p>
+<p>Example: Slack notification
+<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Notify Slack</span>
+<span class="w">  </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">slackapi/slack-github-action@v1</span>
+<span class="w">  </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">webhook-url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.SLACK_WEBHOOK }}</span>
+</code></pre></div></p>
+<h2 id="still-have-questions">Still Have Questions?<a class="headerlink" href="#still-have-questions" title="Permanent link">&para;</a></h2>
+<ul>
+<li>📚 Read the <a href="./architecture/overview.md">Architecture Guide</a></li>
+<li>📖 Check <a href="./guides/troubleshooting.md">Troubleshooting Guide</a></li>
+<li>💬 Open a <a href="../../discussions">GitHub Discussion</a></li>
+<li>🐛 File an <a href="../../issues">Issue</a></li>
+</ul>
+<hr />
+<p><strong>Last Updated</strong>: 2025-01-28
+<strong>Version</strong>: 1.0.0</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.select", "navigation.instant", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
