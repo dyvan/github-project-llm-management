@@ -57,7 +57,8 @@ class TestWorkflowFiles:
                 content = yaml.safe_load(f)
 
             assert 'name' in content, f"{workflow_file.name} missing 'name' field"
-            assert 'on' in content, f"{workflow_file.name} missing 'on' field"
+            # YAML interprets 'on' as boolean True, so check for both
+            assert 'on' in content or True in content, f"{workflow_file.name} missing 'on' field"
             assert 'jobs' in content, f"{workflow_file.name} missing 'jobs' field"
 
     def test_update_project_workflow_structure(self, workflows_dir):
@@ -67,8 +68,9 @@ class TestWorkflowFiles:
         with open(workflow_path, 'r') as f:
             content = yaml.safe_load(f)
 
-        # Check triggers
-        assert 'push' in content['on'] or 'pull_request' in content['on'] or 'issues' in content['on']
+        # Check triggers (YAML interprets 'on' as boolean True)
+        triggers = content.get('on', content.get(True, {}))
+        assert 'push' in triggers or 'pull_request' in triggers or 'issues' in triggers
 
         # Check jobs
         assert 'update-project' in content['jobs']
@@ -91,9 +93,12 @@ class TestWorkflowFiles:
         with open(workflow_path, 'r') as f:
             content = yaml.safe_load(f)
 
-        # Check triggers
-        assert 'issues' in content['on']
-        assert 'labeled' in content['on']['issues']
+        # Check triggers (YAML interprets 'on' as boolean True)
+        triggers = content.get('on', content.get(True, {}))
+        assert 'issues' in triggers
+        # Check that 'labeled' is in the types list
+        assert 'types' in triggers['issues']
+        assert 'labeled' in triggers['issues']['types']
 
     def test_code_review_workflow_structure(self, workflows_dir):
         """Test code-review-agent.yml has correct structure"""
@@ -102,8 +107,9 @@ class TestWorkflowFiles:
         with open(workflow_path, 'r') as f:
             content = yaml.safe_load(f)
 
-        # Check triggers
-        assert 'pull_request' in content['on']
+        # Check triggers (YAML interprets 'on' as boolean True)
+        triggers = content.get('on', content.get(True, {}))
+        assert 'pull_request' in triggers
 
         # Check permissions
         assert 'permissions' in content
@@ -116,8 +122,9 @@ class TestWorkflowFiles:
         with open(workflow_path, 'r') as f:
             content = yaml.safe_load(f)
 
-        # Check triggers
-        assert 'push' in content['on'] or 'pull_request' in content['on']
+        # Check triggers (YAML interprets 'on' as boolean True)
+        triggers = content.get('on', content.get(True, {}))
+        assert 'push' in triggers or 'pull_request' in triggers
 
         # Check that it has test job
         jobs = content['jobs']
