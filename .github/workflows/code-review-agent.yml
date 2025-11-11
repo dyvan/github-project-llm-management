@@ -47,83 +47,65 @@ jobs:
 
           echo "Diff retrieved: $LINES lines"
 
+      - name: Write Python review script
+        run: |
+          cat > /tmp/review_pr.py <<'ENDSCRIPT'
+          import os, sys
+          with open('/tmp/pr_diff.txt', 'r') as f:
+              diff = f.read()
+          if not diff.strip():
+              print("No diff found")
+              sys.exit(0)
+          pr_title = os.getenv('PR_TITLE', '')
+          pr_body = os.getenv('PR_BODY', '')
+          api_key = os.getenv('CLAUDE_API_KEY')
+          if api_key:
+              from anthropic import Anthropic
+              client = Anthropic()
+              with open('/tmp/prompt.txt', 'r') as f:
+                  prompt_template = f.read()
+              prompt = prompt_template.format(pr_title=pr_title, pr_body=pr_body, diff=diff)
+              response = client.messages.create(
+                  model="claude-3-5-sonnet-20241022",
+                  max_tokens=1024,
+                  messages=[{"role": "user", "content": prompt}]
+              )
+              review_comment = response.content[0].text
+          else:
+              print("Warning: CLAUDE_API_KEY not set, providing basic review")
+              review_comment = "Code Review (Basic Mode)\n\nNote: Full AI review requires CLAUDE_API_KEY secret.\n\nBasic Checks:\n- Check file size\n- Verify commit messages\n- Ensure no syntax errors\n- Check for debug statements\n\nTo enable full AI review, add CLAUDE_API_KEY to GitHub Secrets"
+          with open('/tmp/review_comment.md', 'w') as f:
+              f.write(review_comment)
+          print("Review generated successfully")
+          ENDSCRIPT
+
+      - name: Write prompt template
+        run: |
+          cat > /tmp/prompt.txt <<'ENDPROMPT'
+          Review this GitHub Pull Request code changes. Provide constructive feedback in a GitHub-friendly format.
+
+          The PR title is {pr_title}
+          The PR description is {pr_body}
+
+          The following code changes were made
+          {diff}
+
+          Provide a code review with these sections
+          1. Strengths (positive aspects of the code)
+          2. Suggestions (improvements but not blocking)
+          3. Critical Issues (security, performance, bugs)
+
+          Format your response as Markdown suitable for a GitHub PR comment. Be concise and professional.
+          ENDPROMPT
+
       - name: Run Code Review with Claude
         id: review
         env:
           CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
         run: |
-          python << 'EOF'
-          import os
-          import json
-          import sys
-
-          # Read PR diff
-          with open('/tmp/pr_diff.txt', 'r') as f:
-              diff = f.read()
-
-          if not diff.strip():
-              print("No diff found")
-              sys.exit(0)
-
-          pr_title = "${{ github.event.pull_request.title }}"
-          pr_body = "${{ github.event.pull_request.body }}"
-
-          # Try Claude first, fallback to a mock review if API keys are missing
-          api_key = os.getenv('CLAUDE_API_KEY')
-
-          if api_key:
-              from anthropic import Anthropic
-              client = Anthropic()
-
-              prompt = f"""Review this GitHub Pull Request code changes. Provide constructive feedback in a GitHub-friendly format.
-
-**PR Title**: {pr_title}
-**PR Description**: {pr_body}
-
-**Code Changes**:
-```diff
-{diff}
-```
-
-Provide a code review with:
-1. ✅ Strengths (positive aspects of the code)
-2. ⚠️ Suggestions (improvements but not blocking)
-3. 🔴 Critical Issues (security, performance, bugs)
-
-Format your response as Markdown suitable for a GitHub PR comment. Be concise and professional."""
-
-              response = client.messages.create(
-                  model="claude-3-5-sonnet-20241022",
-                  max_tokens=1024,
-                  messages=[
-                      {"role": "user", "content": prompt}
-                  ]
-              )
-
-              review_comment = response.content[0].text
-          else:
-              # Fallback: basic lint-like review
-              print("⚠️ CLAUDE_API_KEY not set, providing basic review")
-              review_comment = """## 🤖 Code Review (Basic Mode)
-
-**Note**: Full AI review requires CLAUDE_API_KEY secret to be configured.
-
-### Basic Checks
-- [ ] Check file size (large files may be hard to review)
-- [ ] Verify commit messages are descriptive
-- [ ] Ensure no obvious syntax errors
-- [ ] Check for console.log / print statements left in code
-
----
-*To enable full AI-powered code review, add CLAUDE_API_KEY to GitHub Secrets*"""
-
-          # Write review to file
-          with open('/tmp/review_comment.md', 'w') as f:
-              f.write(review_comment)
-
-          print("Review generated successfully")
-          EOF
+          python /tmp/review_pr.py
 
       - name: Post review as comment
         if: success()
@@ -133,18 +115,16 @@ Format your response as Markdown suitable for a GitHub PR comment. Be concise an
           PR_NUMBER=${{ github.event.pull_request.number }}
           REPO=${{ github.repository }}
 
-          # Read the review comment
-          REVIEW=$(cat /tmp/review_comment.md)
+          # Create comment body with header and footer
+          echo "## 🤖 Automated Code Review by Claude AI" > /tmp/final_comment.md
+          echo "" >> /tmp/final_comment.md
+          cat /tmp/review_comment.md >> /tmp/final_comment.md
+          echo "" >> /tmp/final_comment.md
+          echo "---" >> /tmp/final_comment.md
+          echo "*This is an informational review - approval is not required for merge*" >> /tmp/final_comment.md
 
           # Post as PR comment
-          gh pr comment $PR_NUMBER \
-            --repo "$REPO" \
-            --body "## 🤖 Automated Code Review by Claude AI
-
-$REVIEW
-
----
-*This is an informational review - approval is not required for merge*"
+          gh pr comment $PR_NUMBER --repo "$REPO" --body-file /tmp/final_comment.md
 
       - name: Handle review errors
         if: failure()
