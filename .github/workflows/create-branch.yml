@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.label.name == 'auto-branch'
 
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -20,8 +23,6 @@ jobs:
           fetch-depth: 0
 
       - name: Create branch from issue
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ISSUE_NUMBER=${{ github.event.issue.number }}
           ISSUE_TITLE="${{ github.event.issue.title }}"
@@ -41,8 +42,6 @@ jobs:
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
       - name: Comment on issue
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ISSUE_NUMBER=${{ github.event.issue.number }}
           REPO=${{ github.repository }}
