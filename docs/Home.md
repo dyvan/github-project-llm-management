@@ -12,6 +12,7 @@
 ### Comprendre le fonctionnement
 - **[🔧 Scripts & Automation](Scripts-Reference)** - Documentation des scripts
 - **[🔀 Workflows GitHub Actions](Understanding-Workflows)** - Comment fonctionnent les automations
+- **[✅ Validation du Template](Template-Validation)** - Tests automatiques de fonctionnalité
 - **[❓ FAQ](FAQ)** - Questions fréquentes
 
 ### Besoin d'aide ?
