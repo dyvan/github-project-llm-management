@@ -1,5 +1,8 @@
 # 🚀 GitHub Project Management - Template Automatisé
 
+[![Template Validation](https://github.com/dyvan/github-project-llm-management/actions/workflows/template-validation.yml/badge.svg)](https://github.com/dyvan/github-project-llm-management/actions/workflows/template-validation.yml)
+[![CI Tests](https://github.com/dyvan/github-project-llm-management/actions/workflows/ci-tests.yml/badge.svg)](https://github.com/dyvan/github-project-llm-management/actions/workflows/ci-tests.yml)
+
 **Template clé-en-main pour gérer vos projets avec GitHub**
 Kanban automatique • Issues intelligentes • Revue de code IA • Zéro configuration
 
