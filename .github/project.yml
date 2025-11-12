@@ -1,0 +1,111 @@
+# GitHub Project Configuration
+# This file configures which GitHub Project v2 board to use for automation
+
+project:
+  # Project number (visible in project URL: github.com/.../projects/1)
+  # Change this to your project number after running setup-project.sh
+  number: 1
+
+  # Project name (optional, for documentation purposes)
+  name: "Project Backlog"
+
+  # Auto-link issues to project when created
+  auto_link: true
+
+# Custom field definitions (must match your Project Board fields)
+fields:
+  status:
+    name: "Status"
+    type: "single_select"
+    options:
+      - "Backlog"
+      - "Ready"
+      - "In Progress"
+      - "In Review"
+      - "Blocked"
+      - "Done"
+    default: "Backlog"
+
+  priority:
+    name: "Priority"
+    type: "single_select"
+    options:
+      - "Low"
+      - "Medium"
+      - "High"
+    default: "Medium"
+
+  effort:
+    name: "Effort"
+    type: "single_select"
+    options:
+      - "1"
+      - "2"
+      - "3"
+      - "5"
+      - "8"
+    default: "3"
+
+  type:
+    name: "Type"
+    type: "single_select"
+    options:
+      - "Feature"
+      - "Bug"
+      - "Task"
+      - "Docs"
+      - "Infrastructure"
+    default: "Task"
+
+  target_version:
+    name: "Target Version"
+    type: "text"
+    default: ""
+
+# Automation rules
+automation:
+  # Auto-create branch when label is added
+  auto_branch:
+    enabled: true
+    label: "auto-branch"
+    branch_prefix: "feat"
+
+  # Auto-update status based on PR state
+  auto_status:
+    enabled: true
+    on_pr_opened: "In Review"
+    on_pr_merged: "Done"
+    on_pr_closed: "Backlog"
+
+  # Auto-set priority based on labels
+  auto_priority:
+    enabled: true
+    label_mapping:
+      "priority:high": "High"
+      "priority:medium": "Medium"
+      "priority:low": "Low"
+
+  # Auto-set type based on labels
+  auto_type:
+    enabled: true
+    label_mapping:
+      "type:feature": "Feature"
+      "type:bug": "Bug"
+      "type:task": "Task"
+      "type:docs": "Docs"
+      "type:infrastructure": "Infrastructure"
+
+# LLM Agent configuration
+agents:
+  code_review:
+    enabled: true
+    provider: "claude"  # Options: claude, openai, gemini
+    model: "claude-3-5-sonnet-20241022"
+    on_events:
+      - "pull_request.opened"
+      - "pull_request.synchronize"
+
+  branch_creator:
+    enabled: true
+    on_events:
+      - "issues.labeled"

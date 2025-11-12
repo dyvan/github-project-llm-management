@@ -18,6 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'issues'
 
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_OWNER: ${{ github.repository_owner }}
+      GH_REPO: ${{ github.event.repository.name }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -33,10 +38,6 @@ jobs:
 
       - name: Sync issue to project on creation
         if: github.event_name == 'issues' && github.event.action == 'opened'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           python scripts/project_sync.py \
             --issue ${{ github.event.issue.number }} \
@@ -44,10 +45,6 @@ jobs:
 
       - name: Update project on issue labeled
         if: github.event_name == 'issues' && github.event.action == 'labeled'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           LABEL="${{ github.event.label.name }}"
           ISSUE_NUM=${{ github.event.issue.number }}
@@ -81,10 +78,6 @@ jobs:
 
       - name: Sync PR to project and update status
         if: github.event_name == 'pull_request' && github.event.action == 'opened'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           # Add PR to project with "In Review" status
           python scripts/project_sync.py \
@@ -106,10 +99,6 @@ jobs:
 
       - name: Update project on PR merge
         if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           # Update PR status to Done
           python scripts/project_sync.py \
