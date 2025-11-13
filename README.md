@@ -11,20 +11,24 @@ Kanban automatique • Issues intelligentes • Revue de code IA • Zéro confi
 ✅ **Product managers** qui veulent organiser leur backlog sans coder
 ✅ **Chefs de projet** qui veulent un suivi automatique
 ✅ **Équipes** qui veulent GitHub Projects synchronisé automatiquement
+✅ **Développeurs** qui veulent un projet géré par LLM (Claude Code, etc.)
 
 **Aucune compétence technique requise** - Tout est automatisé 🎯
 
 ---
 
-## ⚡ Démarrage rapide (2 minutes)
+## ⚡ Démarrage rapide (3 commandes)
 
 1. **Cliquez sur "Use this template"** en haut de cette page 👆
+
 2. **Clonez et configurez** votre projet :
 
 ```bash
 git clone https://github.com/VOTRE_NOM/votre-projet.git
 cd votre-projet
-./setup-project.sh
+cp .env.example .env          # 1. Copier config
+# Éditer .env si besoin (secrets optionnels)
+bash template-setup.sh        # 2. Lancer setup
 ```
 
 **C'est tout !** 🎉 Votre Project Board est créé avec les automations actives.
