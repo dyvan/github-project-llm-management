@@ -17,44 +17,54 @@ run_step() {
 
     # Create symlinks for workflows
     local workflows_dir="${REPO_GITHUB}/workflows"
-    if [ ! -d "$workflows_dir" ]; then
+    if [ -L "$workflows_dir" ]; then
+        # Already a symlink, verify it points to the right place
+        success "Workflows symlink already exists"
+    elif [ -d "$workflows_dir" ]; then
+        # Directory exists but is not a symlink - replace it
+        info "Removing existing workflows directory to create symlink..."
+        rm -rf "$workflows_dir"
         ln -s "${TEMPLATE_GITHUB}/workflows" "$workflows_dir"
         success "Created symlink: .github/workflows → template/.github/workflows"
     else
-        if [ -L "$workflows_dir" ]; then
-            success "Workflows symlink already exists"
-        else
-            warning "Workflows directory exists but is not a symlink"
-            info "Consider removing and recreating as symlink for future updates"
-        fi
+        # Directory doesn't exist - create symlink
+        ln -s "${TEMPLATE_GITHUB}/workflows" "$workflows_dir"
+        success "Created symlink: .github/workflows → template/.github/workflows"
     fi
 
     # Create symlinks for issue templates
     local templates_dir="${REPO_GITHUB}/ISSUE_TEMPLATE"
-    if [ ! -d "$templates_dir" ]; then
+    if [ -L "$templates_dir" ]; then
+        # Already a symlink, verify it points to the right place
+        success "ISSUE_TEMPLATE symlink already exists"
+    elif [ -d "$templates_dir" ]; then
+        # Directory exists but is not a symlink - replace it
+        info "Removing existing ISSUE_TEMPLATE directory to create symlink..."
+        rm -rf "$templates_dir"
         ln -s "${TEMPLATE_GITHUB}/ISSUE_TEMPLATE" "$templates_dir"
         success "Created symlink: .github/ISSUE_TEMPLATE → template/.github/ISSUE_TEMPLATE"
     else
-        if [ -L "$templates_dir" ]; then
-            success "ISSUE_TEMPLATE symlink already exists"
-        else
-            warning "ISSUE_TEMPLATE directory exists but is not a symlink"
-            info "Consider removing and recreating as symlink for future updates"
-        fi
+        # Directory doesn't exist - create symlink
+        ln -s "${TEMPLATE_GITHUB}/ISSUE_TEMPLATE" "$templates_dir"
+        success "Created symlink: .github/ISSUE_TEMPLATE → template/.github/ISSUE_TEMPLATE"
     fi
 
     # Create symlink for PR template if it exists
     if [ -f "${TEMPLATE_GITHUB}/PULL_REQUEST_TEMPLATE.md" ]; then
         local pr_template="${REPO_GITHUB}/PULL_REQUEST_TEMPLATE.md"
-        if [ ! -f "$pr_template" ]; then
+        if [ -L "$pr_template" ]; then
+            # Already a symlink
+            success "PR template symlink already exists"
+        elif [ -f "$pr_template" ]; then
+            # File exists but is not a symlink - replace it
+            info "Removing existing PR template file to create symlink..."
+            rm -f "$pr_template"
             ln -s "${TEMPLATE_GITHUB}/PULL_REQUEST_TEMPLATE.md" "$pr_template"
             success "Created symlink: .github/PULL_REQUEST_TEMPLATE.md"
         else
-            if [ -L "$pr_template" ]; then
-                success "PR template symlink already exists"
-            else
-                warning "PR template file exists but is not a symlink"
-            fi
+            # File doesn't exist - create symlink
+            ln -s "${TEMPLATE_GITHUB}/PULL_REQUEST_TEMPLATE.md" "$pr_template"
+            success "Created symlink: .github/PULL_REQUEST_TEMPLATE.md"
         fi
     fi
 
