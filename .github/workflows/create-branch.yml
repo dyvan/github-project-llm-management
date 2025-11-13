@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.label.name == 'auto-branch'
 
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -20,8 +23,6 @@ jobs:
           fetch-depth: 0
 
       - name: Create branch from issue
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ISSUE_NUMBER=${{ github.event.issue.number }}
           ISSUE_TITLE="${{ github.event.issue.title }}"
@@ -41,25 +42,18 @@ jobs:
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
       - name: Comment on issue
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ISSUE_NUMBER=${{ github.event.issue.number }}
           REPO=${{ github.repository }}
           BRANCH_NAME=${{ env.BRANCH_NAME }}
 
-          gh issue comment $ISSUE_NUMBER \
-            --repo "$REPO" \
-            --body "✅ Branch auto-created: \`$BRANCH_NAME\`
+          # Create comment body and save to file to avoid YAML escaping issues
+          echo "Branch \`$BRANCH_NAME\` has been automatically created." > /tmp/comment.txt
+          echo "" >> /tmp/comment.txt
+          echo "Next steps:" >> /tmp/comment.txt
+          echo "1. Clone and checkout: \`git checkout $BRANCH_NAME\`" >> /tmp/comment.txt
+          echo "2. Make your changes" >> /tmp/comment.txt
+          echo "3. Push and create a Pull Request" >> /tmp/comment.txt
+          echo "4. The Code Review Agent will automatically review your PR" >> /tmp/comment.txt
 
-**Next steps:**
-1. Clone the repository and checkout the branch:
-   \`\`\`bash
-   git checkout $BRANCH_NAME
-   \`\`\`
-2. Make your changes
-3. Push and create a Pull Request
-4. The Code Review Agent will automatically review your PR
-
----
-*Created by GitHub Actions*"
+          gh issue comment $ISSUE_NUMBER --repo "$REPO" --body-file /tmp/comment.txt
