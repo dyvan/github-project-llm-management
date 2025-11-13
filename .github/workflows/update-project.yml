@@ -12,7 +12,10 @@ permissions:
   contents: read
   issues: read
   pull-requests: read
-  # Note: project write permissions handled via GITHUB_TOKEN in GitHub API
+  # Projects v2 requires write permission to modify custom fields
+  # See: https://docs.github.com/en/graphql/reference/mutations#updateprojectv2itemfieldvalue
+  # Note: GITHUB_TOKEN may not have sufficient permissions for Projects v2.
+  # If this fails, you may need to use a Personal Access Token with 'project' scope.
 
 jobs:
   update-project:

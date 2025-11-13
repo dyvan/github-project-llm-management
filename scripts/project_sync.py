@@ -90,9 +90,12 @@ class GitHubProjectSync:
 
     def find_project(self, project_number: Optional[int] = None) -> Optional[str]:
         """Find project by number or get first project"""
-        query = """
-        query($owner: String!) {
-          organization(login: $owner) {
+        projects = None
+
+        # Try repository projects first (most common for GitHub Actions)
+        repo_query = """
+        query($owner: String!, $repo: String!) {
+          repository(owner: $owner, name: $repo) {
             projectsV2(first: 20) {
               nodes {
                 id
@@ -104,14 +107,18 @@ class GitHubProjectSync:
         }
         """
 
-        # Try organization first
         try:
-            variables = {"owner": self.owner}
-            data = self.graphql_query(query, variables)
-            projects = data["organization"]["projectsV2"]["nodes"]
-        except:
-            # Try user projects if organization fails
-            query = """
+            variables = {"owner": self.owner, "repo": self.repo}
+            data = self.graphql_query(repo_query, variables)
+            if data.get("repository") and data["repository"].get("projectsV2"):
+                projects = data["repository"]["projectsV2"]["nodes"]
+                print(f"✅ Found {len(projects)} repository project(s)")
+        except Exception as e:
+            print(f"⚠️  Could not fetch repository projects: {e}")
+
+        # Try user projects if no repository projects
+        if not projects:
+            user_query = """
             query($owner: String!) {
               user(login: $owner) {
                 projectsV2(first: 20) {
@@ -124,12 +131,44 @@ class GitHubProjectSync:
               }
             }
             """
-            variables = {"owner": self.owner}
-            data = self.graphql_query(query, variables)
-            projects = data["user"]["projectsV2"]["nodes"]
+            try:
+                variables = {"owner": self.owner}
+                data = self.graphql_query(user_query, variables)
+                if data.get("user") and data["user"].get("projectsV2"):
+                    projects = data["user"]["projectsV2"]["nodes"]
+                    print(f"✅ Found {len(projects)} user project(s)")
+            except Exception as e:
+                print(f"⚠️  Could not fetch user projects: {e}")
+
+        # Try organization projects if still no projects
+        if not projects:
+            org_query = """
+            query($owner: String!) {
+              organization(login: $owner) {
+                projectsV2(first: 20) {
+                  nodes {
+                    id
+                    number
+                    title
+                  }
+                }
+              }
+            }
+            """
+            try:
+                variables = {"owner": self.owner}
+                data = self.graphql_query(org_query, variables)
+                if data.get("organization") and data["organization"].get("projectsV2"):
+                    projects = data["organization"]["projectsV2"]["nodes"]
+                    print(f"✅ Found {len(projects)} organization project(s)")
+            except Exception as e:
+                print(f"⚠️  Could not fetch organization projects: {e}")
 
         if not projects:
-            print("⚠️  No projects found")
+            print(f"⚠️  No projects found")
+            print(f"   Owner: {self.owner}")
+            print(f"   Repo: {self.repo}")
+            print(f"   Tried: repository, user, and organization projects")
             return None
 
         if project_number:
