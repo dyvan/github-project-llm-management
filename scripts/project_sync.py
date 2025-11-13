@@ -109,10 +109,16 @@ class GitHubProjectSync:
 
         try:
             variables = {"owner": self.owner, "repo": self.repo}
+            print(f"🔍 Fetching repository projects for {self.owner}/{self.repo}...")
             data = self.graphql_query(repo_query, variables)
-            if data.get("repository") and data["repository"].get("projectsV2"):
-                projects = data["repository"]["projectsV2"]["nodes"]
-                print(f"✅ Found {len(projects)} repository project(s)")
+            if data.get("repository"):
+                if data["repository"].get("projectsV2"):
+                    projects = data["repository"]["projectsV2"]["nodes"]
+                    print(f"✅ Found {len(projects)} repository project(s)")
+                else:
+                    print(f"⚠️  Repository has no projectsV2 field")
+            else:
+                print(f"⚠️  Could not fetch repository (might not exist or no access)")
         except Exception as e:
             print(f"⚠️  Could not fetch repository projects: {e}")
 
