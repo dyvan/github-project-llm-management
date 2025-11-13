@@ -370,12 +370,12 @@ jobs:
           EOF
 
   # ==========================================
-  # INTEGRATION TEST (if on main branch)
+  # INTEGRATION TEST (on PRs and main branch)
   # ==========================================
 
   integration-test:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     needs: validate-template
 
     steps:
@@ -394,19 +394,59 @@ jobs:
 
       - name: Run full integration test suite
         run: |
-          echo "🧪 Running integration tests..."
+          echo "🧪 Running integration tests for setup script..."
 
-          # Test that a user could follow the setup process
-          echo "1. ✅ Repository cloned (simulated)"
-          echo "2. ✅ Dependencies installed"
+          # Test 1: Verify setup script help works
+          echo "  1️⃣ Testing setup script help..."
+          bash template-setup.sh --help > /tmp/help.txt 2>&1
+          if grep -q "Quick Start" /tmp/help.txt; then
+            echo "    ✅ Setup help works"
+          else
+            echo "    ❌ Setup help missing"
+            exit 1
+          fi
 
-          # Validate setup script doesn't crash on --help
-          bash setup-project.sh --help 2>&1 || echo "  Script doesn't have --help (expected)"
+          # Test 2: Verify template/.setup/setup.sh exists
+          echo "  2️⃣ Checking template setup structure..."
+          if [ -f "template/.setup/setup.sh" ]; then
+            echo "    ✅ Template setup script exists"
+          else
+            echo "    ❌ Template setup script missing"
+            exit 1
+          fi
 
-          # Test validation script
-          ./scripts/validate_setup.sh || echo "  Validation warnings expected in CI"
+          # Test 3: Validate all setup steps exist
+          echo "  3️⃣ Validating setup steps..."
+          for step in 1-check-state 2-check-prerequisites 3-init-labels 4-create-project 5-link-workflows 6-finalize; do
+            if [ -f "template/.setup/steps/${step}.sh" ]; then
+              echo "    ✅ Step ${step} exists"
+            else
+              echo "    ❌ Step ${step} missing"
+              exit 1
+            fi
+          done
 
-          echo "✅ Integration test completed"
+          # Test 4: Verify all helper libraries exist
+          echo "  4️⃣ Validating helper libraries..."
+          for lib in colors state validators github-api; do
+            if [ -f "template/.setup/lib/${lib}.sh" ]; then
+              echo "    ✅ Library ${lib}.sh exists"
+            else
+              echo "    ❌ Library ${lib}.sh missing"
+              exit 1
+            fi
+          done
+
+          # Test 5: Verify .env file handling
+          echo "  5️⃣ Testing .env file handling..."
+          if grep -q "GH_PROJECT_NUMBER" .env; then
+            echo "    ✅ GH_PROJECT_NUMBER configured in .env"
+          else
+            echo "    ⚠️  GH_PROJECT_NUMBER not yet in .env (expected on fresh install)"
+          fi
+
+          echo ""
+          echo "✅ All integration tests passed!"
 
       - name: Integration test summary
         run: |
