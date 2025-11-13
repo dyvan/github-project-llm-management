@@ -23,15 +23,24 @@ jobs:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'issues'
 
     env:
-      # Use GH_TOKEN secret if available (needs project:read,write permissions)
-      # Fallback to GITHUB_TOKEN (limited but works for issues/PRs)
-      GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
       GH_OWNER: ${{ github.repository_owner }}
       GH_REPO: ${{ github.event.repository.name }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Set up GitHub token
+        run: |
+          # Use custom GH_TOKEN if available (with project permissions)
+          # Otherwise use default GITHUB_TOKEN
+          if [ -n "${{ secrets.GH_TOKEN }}" ]; then
+            echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
+            echo "✅ Using custom GH_TOKEN with project permissions"
+          else
+            echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+            echo "⚠️  Using default GITHUB_TOKEN (limited permissions)"
+          fi
 
       - name: Load project configuration
         id: config
