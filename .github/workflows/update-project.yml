@@ -23,7 +23,9 @@ jobs:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'issues'
 
     env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Use GH_TOKEN secret if available (needs project:read,write permissions)
+      # Fallback to GITHUB_TOKEN (limited but works for issues/PRs)
+      GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
       GH_OWNER: ${{ github.repository_owner }}
       GH_REPO: ${{ github.event.repository.name }}
 
@@ -54,6 +56,7 @@ jobs:
           fi
 
           echo "project_number=${PROJECT_NUM}" >> $GITHUB_OUTPUT
+          echo "PROJECT_NUM=${PROJECT_NUM}" >> $GITHUB_ENV
           echo "Loaded project number: ${PROJECT_NUM}"
 
       - name: Set up Python
@@ -70,7 +73,7 @@ jobs:
         run: |
           python scripts/project_sync.py \
             --issue ${{ github.event.issue.number }} \
-            --project ${{ steps.config.outputs.project_number }} \
+            --project $PROJECT_NUM \
             --status "Backlog"
 
       - name: Update project on issue labeled
@@ -81,29 +84,29 @@ jobs:
 
           # Map labels to status changes
           if [[ "$LABEL" == "auto-branch" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project ${{ steps.config.outputs.project_number }} --status "Ready"
+            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --status "Ready"
           elif [[ "$LABEL" == "status:in-progress" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project ${{ steps.config.outputs.project_number }} --status "In Progress"
+            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --status "In Progress"
           elif [[ "$LABEL" == "status:blocked" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project ${{ steps.config.outputs.project_number }} --status "Blocked"
+            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --status "Blocked"
           fi
 
           # Map priority labels
           if [[ "$LABEL" == "priority:high" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project ${{ steps.config.outputs.project_number }} --priority "High"
+            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --priority "High"
           elif [[ "$LABEL" == "priority:medium" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project ${{ steps.config.outputs.project_number }} --priority "Medium"
+            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --priority "Medium"
           elif [[ "$LABEL" == "priority:low" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project ${{ steps.config.outputs.project_number }} --priority "Low"
+            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --priority "Low"
           fi
 
           # Map type labels
           if [[ "$LABEL" == "type:feature" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project ${{ steps.config.outputs.project_number }} --type "Feature"
+            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --type "Feature"
           elif [[ "$LABEL" == "type:bug" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project ${{ steps.config.outputs.project_number }} --type "Bug"
+            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --type "Bug"
           elif [[ "$LABEL" == "type:task" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project ${{ steps.config.outputs.project_number }} --type "Task"
+            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --type "Task"
           fi
 
       - name: Sync PR to project and update status
@@ -112,7 +115,7 @@ jobs:
           # Add PR to project with "In Review" status
           python scripts/project_sync.py \
             --pr ${{ github.event.pull_request.number }} \
-            --project ${{ steps.config.outputs.project_number }} \
+            --project $PROJECT_NUM \
             --status "In Review"
 
           # Extract and update linked issue
@@ -123,7 +126,7 @@ jobs:
             echo "Found linked issue #$ISSUE_NUM"
             python scripts/project_sync.py \
               --issue $ISSUE_NUM \
-              --project ${{ steps.config.outputs.project_number }} \
+              --project $PROJECT_NUM \
               --status "In Review"
           else
             echo "No linked issue found in PR description"
@@ -135,7 +138,7 @@ jobs:
           # Update PR status to Done
           python scripts/project_sync.py \
             --pr ${{ github.event.pull_request.number }} \
-            --project ${{ steps.config.outputs.project_number }} \
+            --project $PROJECT_NUM \
             --status "Done"
 
           # Extract and update linked issue to Done
@@ -146,7 +149,7 @@ jobs:
             echo "Updating linked issue #$ISSUE_NUM to Done"
             python scripts/project_sync.py \
               --issue $ISSUE_NUM \
-              --project ${{ steps.config.outputs.project_number }} \
+              --project $PROJECT_NUM \
               --status "Done"
           fi
 
