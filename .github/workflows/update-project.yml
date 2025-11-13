@@ -88,7 +88,7 @@ jobs:
           BRANCH_NAME="${{ github.ref_name }}"
 
           # Extract issue number from branch name (e.g., feat/123-description -> 123)
-          ISSUE_NUM=$(echo "$BRANCH_NAME" | grep -oE '^[a-z]+/([0-9]+)' | grep -oE '[0-9]+' | head -1)
+          ISSUE_NUM=$(echo "$BRANCH_NAME" | grep -oE '^[a-z]+/[0-9]+' | cut -d'/' -f2)
 
           if [ -z "$ISSUE_NUM" ]; then
             echo "⚠️  Could not extract issue number from branch name: $BRANCH_NAME"
