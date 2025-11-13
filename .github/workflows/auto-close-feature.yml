@@ -1,0 +1,86 @@
+name: Auto-close Parent Feature
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: read
+
+jobs:
+  check-close-parent:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged
+
+    env:
+      GH_OWNER: ${{ github.repository_owner }}
+      GH_REPO: ${{ github.event.repository.name }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up GitHub token
+        run: |
+          if [ -n "${{ secrets.GH_TOKEN }}" ]; then
+            echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
+          else
+            echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+          fi
+
+      - name: Load project configuration
+        id: config
+        run: |
+          PROJECT_NUM=""
+          if [ -f .env ]; then
+            PROJECT_NUM=$(grep "^GH_PROJECT_NUMBER=" .env | cut -d'=' -f2 | tr -d ' ')
+          fi
+          if [ -z "$PROJECT_NUM" ] && [ -n "${{ secrets.GH_PROJECT_NUMBER }}" ]; then
+            PROJECT_NUM="${{ secrets.GH_PROJECT_NUMBER }}"
+          fi
+          if [ -z "$PROJECT_NUM" ]; then
+            PROJECT_NUM="auto"
+          fi
+          echo "project_number=${PROJECT_NUM}" >> $GITHUB_OUTPUT
+          echo "PROJECT_NUM=${PROJECT_NUM}" >> $GITHUB_ENV
+          echo "Loaded project number: ${PROJECT_NUM}"
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+
+      - name: Extract issue number from PR
+        id: extract_issue
+        run: |
+          PR_BODY='${{ github.event.pull_request.body }}'
+          ISSUE_NUM=$(echo "$PR_BODY" | grep -oP 'Closes\s+#\K\d+' | head -1)
+
+          if [ -z "$ISSUE_NUM" ]; then
+            echo "no_issue=true" >> $GITHUB_OUTPUT
+            echo "⚠️  No issue found in PR description (no 'Closes #X')"
+            exit 0
+          fi
+
+          echo "issue_number=${ISSUE_NUM}" >> $GITHUB_OUTPUT
+          echo "✅ Found linked issue: #${ISSUE_NUM}"
+
+      - name: Check and auto-close parent feature
+        if: steps.extract_issue.outputs.no_issue != 'true'
+        run: |
+          python scripts/auto_close_parent_feature.py \
+            --issue ${{ steps.extract_issue.outputs.issue_number }} \
+            --project ${{ env.PROJECT_NUM }}
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "✅ Auto-close feature check completed"
+          echo "   PR: ${{ github.event.pull_request.number }}"
+          echo "   Merged: ${{ github.event.pull_request.merged }}"
