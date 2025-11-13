@@ -42,7 +42,8 @@ WHAT THIS SCRIPT DOES:
     3. ✅ Creates GitHub labels (type:*, priority:*, status:*)
     4. ✅ Creates GitHub Project v2 board
     5. ✅ Links workflows and issue templates
-    6. ✅ Saves setup state for idempotent reruns
+    5.5. ✅ Copies CLAUDE.md to project root
+    6. ✅ Finalizes setup and saves state for idempotent reruns
 
 PREREQUISITES:
     - GitHub CLI (gh) installed and authenticated
@@ -126,6 +127,7 @@ main() {
         "3-init-labels"
         "4-create-project"
         "5-link-workflows"
+        "5.5-copy-claude-md"
         "6-finalize"
     )
 

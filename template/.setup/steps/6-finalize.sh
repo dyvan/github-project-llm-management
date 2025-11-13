@@ -34,6 +34,7 @@ run_step() {
     echo "  ✅ GitHub Project v2 board"
     echo "  ✅ Workflows linked (create-branch, code-review, etc.)"
     echo "  ✅ Issue templates linked"
+    echo "  ✅ CLAUDE.md copied to project root"
     echo ""
     highlight "Project: $REPO_OWNER/$REPO_NAME"
     echo ""
