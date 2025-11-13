@@ -11,11 +11,13 @@ source "${SETUP_DIR}/lib/state.sh"
 run_step() {
     section "Step 4/6: Creating GitHub Project v2"
 
-    local PROJECT_NAME="${1:-Project Board}"
+    # Get repo info for unique project name
+    local REPO_NAME=$(get_repo_name)
+    local PROJECT_NAME="${1:-Project Board : $REPO_NAME}"
 
-    if [ -z "$PROJECT_NAME" ]; then
-        read -p "Enter project name (default: 'Project Board'): " PROJECT_NAME
-        PROJECT_NAME="${PROJECT_NAME:-Project Board}"
+    if [ -z "$PROJECT_NAME" ] || [ "$PROJECT_NAME" = "Project Board :" ]; then
+        read -p "Enter project name (default: 'Project Board : $REPO_NAME'): " PROJECT_NAME
+        PROJECT_NAME="${PROJECT_NAME:-Project Board : $REPO_NAME}"
     fi
 
     # Get or create project

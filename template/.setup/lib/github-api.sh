@@ -49,9 +49,11 @@ create_project() {
         return 1
     fi
 
-    # Check if project already exists
-    if gh project list --json number,title -q ".[] | select(.title == \"$project_name\")" 2>/dev/null | grep -q .; then
-        local existing=$(gh project list --json number,title -q ".[] | select(.title == \"$project_name\") | .number" | head -1)
+    # Check if project already exists (using correct jq syntax)
+    local owner=$(get_repo_owner)
+    local existing=$(gh project list --owner "$owner" --format json 2>/dev/null | jq -r ".projects[] | select(.title == \"$project_name\") | .number" | head -1)
+
+    if [ -n "$existing" ] && [ "$existing" != "null" ]; then
         warning "Project '$project_name' already exists (number: $existing)"
         echo "$existing"
         return 0

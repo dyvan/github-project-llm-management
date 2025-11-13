@@ -16,6 +16,12 @@ run_step() {
     store_config "repo_owner" "$REPO_OWNER"
     store_config "repo_name" "$REPO_NAME"
 
+    # Update .env with project information
+    local project_num=$(get_config "project_number")
+    if [ "$project_num" != "null" ] && [ -n "$project_num" ]; then
+        update_env_file "GH_PROJECT_NUMBER" "$project_num"
+    fi
+
     # Mark setup as complete
     mark_setup_completed
 
@@ -73,6 +79,35 @@ get_config() {
     else
         echo "null"
     fi
+}
+
+# Helper to update .env file
+update_env_file() {
+    local key=$1
+    local value=$2
+    local env_file="$(cd "$SETUP_DIR/../.." && pwd)/.env"
+
+    if [ ! -f "$env_file" ]; then
+        warning ".env file not found at $env_file"
+        return 1
+    fi
+
+    # Check if key already exists
+    if grep -q "^$key=" "$env_file"; then
+        # Update existing key
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            # macOS sed
+            sed -i "" "s/^$key=.*/$key=$value/" "$env_file"
+        else
+            # Linux sed
+            sed -i "s/^$key=.*/$key=$value/" "$env_file"
+        fi
+    else
+        # Append new key
+        echo "$key=$value" >> "$env_file"
+    fi
+
+    success "Updated $env_file: $key=$value"
 }
 
 # Run if called directly
