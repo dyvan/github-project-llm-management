@@ -343,7 +343,9 @@ class GitHubProjectSync:
 
         # Find or get project
         if not self.project_id:
-            self.project_id = self.find_project(project_number)
+            # If project_number is "auto" (string), pass None to auto-detect
+            proj_num = None if project_number is None or str(project_number) == "auto" else project_number
+            self.project_id = self.find_project(proj_num)
             if not self.project_id:
                 return False
 
@@ -381,7 +383,9 @@ class GitHubProjectSync:
 
         # Find or get project
         if not self.project_id:
-            self.project_id = self.find_project(project_number)
+            # If project_number is "auto" (string), pass None to auto-detect
+            proj_num = None if project_number is None or str(project_number) == "auto" else project_number
+            self.project_id = self.find_project(proj_num)
             if not self.project_id:
                 return False
 
@@ -409,7 +413,7 @@ def main():
     )
     parser.add_argument("--issue", type=int, help="Issue number to sync")
     parser.add_argument("--pr", type=int, help="PR number to sync")
-    parser.add_argument("--project", type=int, help="Project number (optional)")
+    parser.add_argument("--project", help="Project number (optional, or 'auto' to detect)")
     parser.add_argument("--status", help="Set Status field (e.g., 'In Progress')")
     parser.add_argument("--priority", help="Set Priority field (e.g., 'High')")
     parser.add_argument("--effort", help="Set Effort field (e.g., '3')")
@@ -453,11 +457,23 @@ def main():
     # Initialize sync
     sync = GitHubProjectSync(token, owner, repo)
 
+    # Convert project number to int if not "auto"
+    project_num = None
+    if args.project:
+        if args.project.lower() == "auto":
+            project_num = "auto"
+        else:
+            try:
+                project_num = int(args.project)
+            except ValueError:
+                print(f"❌ Invalid project number: {args.project}")
+                sys.exit(1)
+
     # Sync issue or PR
     if args.issue:
-        success = sync.sync_issue(args.issue, args.project, fields)
+        success = sync.sync_issue(args.issue, project_num, fields)
     elif args.pr:
-        success = sync.sync_pr(args.pr, args.project, fields)
+        success = sync.sync_pr(args.pr, project_num, fields)
     else:
         print("❌ Must specify --issue or --pr")
         parser.print_help()

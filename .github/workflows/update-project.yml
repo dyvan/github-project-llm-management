@@ -12,6 +12,7 @@ permissions:
   contents: read
   issues: read
   pull-requests: read
+  # Note: project write permissions handled via GITHUB_TOKEN in GitHub API
 
 jobs:
   update-project:
@@ -30,10 +31,27 @@ jobs:
       - name: Load project configuration
         id: config
         run: |
+          PROJECT_NUM=""
+
+          # Try to load from .env file first (for local development)
           if [ -f .env ]; then
-            PROJECT_NUM=$(grep "^GH_PROJECT_NUMBER=" .env | cut -d'=' -f2)
-            echo "project_number=${PROJECT_NUM}" >> $GITHUB_OUTPUT
+            PROJECT_NUM=$(grep "^GH_PROJECT_NUMBER=" .env | cut -d'=' -f2 | tr -d ' ')
           fi
+
+          # Fallback: Use GitHub Secret if set
+          if [ -z "$PROJECT_NUM" ] && [ -n "${{ secrets.GH_PROJECT_NUMBER }}" ]; then
+            PROJECT_NUM="${{ secrets.GH_PROJECT_NUMBER }}"
+          fi
+
+          # If still empty, detect project dynamically
+          if [ -z "$PROJECT_NUM" ]; then
+            echo "⚠️  Project number not found in .env or secrets, detecting dynamically..."
+            # Will be detected in Python script
+            PROJECT_NUM="auto"
+          fi
+
+          echo "project_number=${PROJECT_NUM}" >> $GITHUB_OUTPUT
+          echo "Loaded project number: ${PROJECT_NUM}"
 
       - name: Set up Python
         uses: actions/setup-python@v4
