@@ -2,6 +2,35 @@
 # Setup script for new GitHub project using this template
 # This script configures GitHub Projects v2, labels, and workflows
 
+# Show help
+if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+    echo "🚀 GitHub Project Management - Setup Script"
+    echo ""
+    echo "Usage: ./setup-project.sh"
+    echo ""
+    echo "What this script does:"
+    echo "  1. ✅ Checks prerequisites (gh, python, jq)"
+    echo "  2. ✅ Creates GitHub labels (type:feature, priority:high, etc.)"
+    echo "  3. ✅ Creates a GitHub Project v2 board"
+    echo "  4. ✅ Guides you through field configuration"
+    echo ""
+    echo "Prerequisites:"
+    echo "  - GitHub CLI (gh) installed and authenticated"
+    echo "  - Python 3.11+"
+    echo "  - jq (optional but recommended)"
+    echo ""
+    echo "After this script:"
+    echo "  1. Note the project number displayed"
+    echo "  2. Run: python3 scripts/setup_project_fields.py --project-number 1 --owner YOUR_USERNAME"
+    echo "  3. Validate: ./scripts/validate_setup.sh"
+    echo ""
+    echo "Documentation:"
+    echo "  - Getting Started: https://github.com/dyvan/github-project-llm-management/wiki/Getting-Started"
+    echo "  - Full guide: https://github.com/dyvan/github-project-llm-management/wiki"
+    echo ""
+    exit 0
+fi
+
 set -e
 
 echo "🚀 GitHub Project LLM Management - Setup Script"

@@ -18,20 +18,18 @@ Kanban automatique • Issues intelligentes • Revue de code IA • Zéro confi
 
 ## ⚡ Démarrage rapide (2 minutes)
 
+1. **Cliquez sur "Use this template"** en haut de cette page 👆
+2. **Clonez et configurez** votre projet :
+
 ```bash
-# 1. Cliquez sur "Use this template" en haut de cette page 👆
-# 2. Clonez votre nouveau repository
 git clone https://github.com/VOTRE_NOM/votre-projet.git
 cd votre-projet
-
-# 3. Lancez le setup automatique (suivez les instructions)
 ./setup-project.sh
 ```
 
-**C'est tout !** 🎉
-Votre Project Board est créé, les labels sont configurés, l'automation fonctionne.
+**C'est tout !** 🎉 Votre Project Board est créé avec les automations actives.
 
-➡️ **[Guide de démarrage détaillé (5 min)](../../wiki/Getting-Started)**
+➡️ **[Guide complet (5 min)](../../wiki/Getting-Started)** • **[Vidéo démo (2 min)](../../wiki/Understanding-Workflows)**
 
 ---
 
@@ -45,7 +43,7 @@ Votre Project Board est créé, les labels sont configurés, l'automation foncti
 | ✅ **Tests automatiques** | Chaque PR est validée automatiquement |
 | 🔄 **Synchronisation** | Status mis à jour automatiquement (Backlog → Done) |
 
-**Démo visuelle** : [Voir le workflow en action](../../wiki/Understanding-Workflows)
+**Voir en vidéo** : [Comment ça fonctionne en 2 minutes](../../wiki/Understanding-Workflows)
 
 ---
 
@@ -58,7 +56,7 @@ Votre Project Board est créé, les labels sont configurés, l'automation foncti
 
 **Pour approfondir :**
 - 🔧 [Scripts & Automation](../../wiki/Scripts-Reference) - Comprendre les scripts
-- 🔀 [Workflows GitHub Actions](../../wiki/Understanding-Workflows) - Comment ça marche
+- 🔀 [Automations GitHub](../../wiki/Understanding-Workflows) - Comment ça marche
 - ❓ [FAQ](../../wiki/FAQ) - Questions fréquentes
 - 🐛 [Dépannage](../../wiki/Troubleshooting) - Résoudre les problèmes
 
@@ -95,10 +93,10 @@ Votre Project Board est créé, les labels sont configurés, l'automation foncti
 - ✅ Suggestions d'amélioration
 - ✅ Détection de bugs potentiels
 
-### CI/CD intégré
-- ✅ Tests automatiques sur chaque PR
-- ✅ Validation YAML et linting
-- ✅ Rapport de couverture
+### Tests intégrés
+- ✅ Vérification automatique sur chaque PR
+- ✅ Validation de tous les fichiers
+- ✅ Rapport de qualité du code
 
 ---
 
