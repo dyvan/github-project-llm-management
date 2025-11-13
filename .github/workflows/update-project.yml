@@ -2,7 +2,7 @@ name: Update GitHub Project
 
 on:
   push:
-    branches: [main, develop, staging]
+    branches: [main, develop, staging, 'feat/*', 'fix/*', 'refactor/*', 'docs/*']
   pull_request:
     types: [opened, synchronize, closed]
   issues:
@@ -11,7 +11,7 @@ on:
 permissions:
   contents: read
   issues: read
-  pull-requests: read
+  pull-requests: write  # Required to create PRs automatically
   # Projects v2 requires write permission to modify custom fields
   # See: https://docs.github.com/en/graphql/reference/mutations#updateprojectv2itemfieldvalue
   # Note: GITHUB_TOKEN may not have sufficient permissions for Projects v2.
@@ -77,13 +77,58 @@ jobs:
         run: |
           pip install requests pyyaml
 
-      - name: Sync issue to project on creation
-        if: github.event_name == 'issues' && github.event.action == 'opened'
+      - name: Create PR automatically on first push (feature/fix branches)
+        if: |
+          github.event_name == 'push' &&
+          (startsWith(github.ref, 'refs/heads/feat/') ||
+           startsWith(github.ref, 'refs/heads/fix/') ||
+           startsWith(github.ref, 'refs/heads/refactor/') ||
+           startsWith(github.ref, 'refs/heads/docs/'))
         run: |
-          python scripts/project_sync.py \
-            --issue ${{ github.event.issue.number }} \
-            --project $PROJECT_NUM \
-            --status "Backlog"
+          BRANCH_NAME="${{ github.ref_name }}"
+
+          # Extract issue number from branch name (e.g., feat/123-description -> 123)
+          ISSUE_NUM=$(echo "$BRANCH_NAME" | grep -oE '^[a-z]+/([0-9]+)' | grep -oE '[0-9]+' | head -1)
+
+          if [ -z "$ISSUE_NUM" ]; then
+            echo "⚠️  Could not extract issue number from branch name: $BRANCH_NAME"
+            exit 0
+          fi
+
+          # Check if PR already exists for this branch
+          EXISTING_PR=$(gh pr list --head "$BRANCH_NAME" --json number -q '.[0].number' 2>/dev/null || echo "")
+
+          if [ -n "$EXISTING_PR" ]; then
+            echo "✅ PR #$EXISTING_PR already exists for branch $BRANCH_NAME"
+            exit 0
+          fi
+
+          # Get issue title and extract base branch
+          ISSUE_TITLE=$(gh issue view "$ISSUE_NUM" --json title -q '.title' 2>/dev/null || echo "")
+          BASE_BRANCH="develop"
+
+          if [ -z "$ISSUE_TITLE" ]; then
+            echo "⚠️  Could not fetch issue #$ISSUE_NUM"
+            exit 0
+          fi
+
+          # Create PR with "Closes #X" in body
+          echo "🔄 Creating PR for branch $BRANCH_NAME (issue #$ISSUE_NUM)..."
+          gh pr create \
+            --title "feat(us-$ISSUE_NUM): $(echo "$ISSUE_TITLE" | sed 's/^\[.*\] //')" \
+            --body "Closes #$ISSUE_NUM
+
+          ## Checklist
+          - [ ] Code follows project conventions
+          - [ ] Tests added/updated
+          - [ ] Documentation updated
+          - [ ] No breaking changes (or documented)" \
+            --base "$BASE_BRANCH" \
+            --head "$BRANCH_NAME" || echo "⚠️  Could not create PR (might already exist)"
+
+      # NOTE: Issues are NOT automatically added to project on creation.
+      # They remain in GitHub Backlog until manually moved or auto-branch label is added.
+      # See WORKFLOW_SPECIFICATION.md for details.
 
       - name: Update project on issue labeled
         if: github.event_name == 'issues' && github.event.action == 'labeled'
@@ -93,7 +138,8 @@ jobs:
 
           # Map labels to status changes
           if [[ "$LABEL" == "auto-branch" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --status "Ready"
+            # auto-branch label triggers branch creation AND moves issue to In Progress
+            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --status "In progress"
           elif [[ "$LABEL" == "status:in-progress" ]]; then
             python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --status "In progress"
           elif [[ "$LABEL" == "status:blocked" ]]; then
