@@ -83,5 +83,20 @@
     "name": "auto-branch",
     "description": "Trigger automatic branch creation",
     "color": "0366d6"
+  },
+  {
+    "name": "us",
+    "description": "User Story (sub-issue of a feature)",
+    "color": "9932cc"
+  },
+  {
+    "name": "needs-spec",
+    "description": "Needs specification (QCM pending or incomplete)",
+    "color": "ff6b6b"
+  },
+  {
+    "name": "blocked",
+    "description": "Blocked by external dependency or issue",
+    "color": "d73a49"
   }
 ]
