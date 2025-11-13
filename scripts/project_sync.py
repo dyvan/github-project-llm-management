@@ -426,11 +426,13 @@ def main():
 
     if not token:
         print("❌ GH_TOKEN or GITHUB_TOKEN environment variable not set")
+        print("📚 See: https://github.com/dyvan/github-project-llm-management/wiki/Configuration#github-secrets")
         sys.exit(1)
 
     if not owner or not repo:
         print("❌ Could not determine repository owner/name")
         print("Set GH_OWNER and GH_REPO environment variables")
+        print("📚 See: https://github.com/dyvan/github-project-llm-management/wiki/Getting-Started#step-2-setup-script")
         sys.exit(1)
 
     # Build fields dict

@@ -24,6 +24,7 @@ if command -v gh &> /dev/null; then
     echo "  ✅ GitHub CLI (gh) installed"
 else
     echo -e "  ${RED}❌ GitHub CLI (gh) not found${NC}"
+    echo -e "  📚 See: https://github.com/dyvan/github-project-llm-management/wiki/Getting-Started#step-1-prerequisites"
     ERRORS=$((ERRORS + 1))
 fi
 
@@ -32,6 +33,7 @@ if command -v python3 &> /dev/null; then
     echo "  ✅ Python 3 installed ($PYTHON_VERSION)"
 else
     echo -e "  ${RED}❌ Python 3 not found${NC}"
+    echo -e "  📚 See: https://github.com/dyvan/github-project-llm-management/wiki/Getting-Started#step-1-prerequisites"
     ERRORS=$((ERRORS + 1))
 fi
 

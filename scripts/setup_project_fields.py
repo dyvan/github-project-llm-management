@@ -235,6 +235,7 @@ def main():
     token = os.getenv("GH_TOKEN") or os.getenv("GITHUB_TOKEN")
     if not token:
         print("❌ GH_TOKEN or GITHUB_TOKEN environment variable not set")
+        print("📚 See: https://github.com/dyvan/github-project-llm-management/wiki/Configuration#github-secrets")
         sys.exit(1)
 
     # Determine project ID
@@ -245,6 +246,7 @@ def main():
         if not owner:
             print("❌ Owner required when using --project-number")
             print("Use --owner or set GH_OWNER environment variable")
+            print("📚 See: https://github.com/dyvan/github-project-llm-management/wiki/Getting-Started#step-4-configure-project-fields")
             sys.exit(1)
 
         print(f"🔍 Looking up project #{args.project_number} for {owner}...")
@@ -252,6 +254,7 @@ def main():
 
         if not project_id:
             print(f"❌ Project #{args.project_number} not found for {owner}")
+            print("📚 See: https://github.com/dyvan/github-project-llm-management/wiki/Troubleshooting#project-not-found")
             sys.exit(1)
 
         print(f"✅ Found project ID: {project_id}")
