@@ -140,15 +140,22 @@ class ProjectFieldsSetup:
         print("🔍 Checking existing fields...")
         existing_fields = self.get_existing_fields()
 
-        # Define required fields
+        # Define required single select fields
         fields_to_create = {
-            "Status": ["Backlog", "Ready", "In Progress", "In Review", "Blocked", "Done"],
+            "Status": ["Backlog", "Ready", "In progress", "In review", "Blocked", "Done"],
             "Priority": ["Low", "Medium", "High"],
             "Effort": ["1", "2", "3", "5", "8"],
-            "Type": ["Feature", "Bug", "Task", "Docs", "Infrastructure"],
+            "Type": ["Feature", "User Story", "Bug", "Task", "Docs", "Infrastructure"],
+            "Spec Status": ["None", "Pending", "Completed"],
         }
 
-        text_fields = ["Target Version"]
+        # Define text fields
+        text_fields = [
+            "Target Version",
+            "Parent Issue",
+            "Branch Name",
+            "Blocker Reason",
+        ]
 
         print(f"\n📋 Creating custom fields...")
 
