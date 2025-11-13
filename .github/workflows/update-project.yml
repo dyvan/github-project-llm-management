@@ -95,7 +95,7 @@ jobs:
           if [[ "$LABEL" == "auto-branch" ]]; then
             python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --status "Ready"
           elif [[ "$LABEL" == "status:in-progress" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --status "In Progress"
+            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --status "In progress"
           elif [[ "$LABEL" == "status:blocked" ]]; then
             python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --status "Blocked"
           fi
@@ -121,11 +121,11 @@ jobs:
       - name: Sync PR to project and update status
         if: github.event_name == 'pull_request' && github.event.action == 'opened'
         run: |
-          # Add PR to project with "In Review" status
+          # Add PR to project with "In review" status
           python scripts/project_sync.py \
             --pr ${{ github.event.pull_request.number }} \
             --project $PROJECT_NUM \
-            --status "In Review"
+            --status "In review"
 
           # Extract and update linked issue
           PR_BODY='${{ github.event.pull_request.body }}'
@@ -136,7 +136,7 @@ jobs:
             python scripts/project_sync.py \
               --issue $ISSUE_NUM \
               --project $PROJECT_NUM \
-              --status "In Review"
+              --status "In review"
           else
             echo "No linked issue found in PR description"
           fi
