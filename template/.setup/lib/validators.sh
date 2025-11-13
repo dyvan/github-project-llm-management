@@ -111,3 +111,41 @@ validate_project_number() {
     fi
     return 1
 }
+
+# Install Python dependencies from requirements.txt
+install_python_dependencies() {
+    section "Installing Python Dependencies"
+
+    # Find requirements.txt in the parent directories
+    local requirements_file=""
+    local current_dir="$(pwd)"
+
+    # Check multiple possible locations
+    if [ -f "requirements.txt" ]; then
+        requirements_file="requirements.txt"
+    elif [ -f "../requirements.txt" ]; then
+        requirements_file="../requirements.txt"
+    elif [ -f "../../requirements.txt" ]; then
+        requirements_file="../../requirements.txt"
+    else
+        warning "requirements.txt not found in expected locations"
+        return 0
+    fi
+
+    # Try installing with --user flag (for system Python on macOS/Linux)
+    if python3 -m pip install -r "$requirements_file" --user --quiet 2>/dev/null; then
+        success "Python dependencies installed successfully"
+        return 0
+    fi
+
+    # Fall back to --break-system-packages if --user fails
+    if python3 -m pip install -r "$requirements_file" --break-system-packages --quiet 2>/dev/null; then
+        success "Python dependencies installed successfully"
+        return 0
+    fi
+
+    # If both fail, just warn but continue (user can install manually)
+    warning "Could not install Python dependencies automatically"
+    warning "You can install manually with: python3 -m pip install --user -r $requirements_file"
+    return 0  # Don't fail the setup, user can fix this later
+}

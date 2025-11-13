@@ -91,7 +91,7 @@ class ProjectFieldsSetup:
         }
         """
 
-        option_inputs = [{"name": opt, "color": "GRAY"} for opt in options]
+        option_inputs = [{"name": opt, "color": "GRAY", "description": f"Option: {opt}"} for opt in options]
         variables = {
             "projectId": self.project_id,
             "name": name,

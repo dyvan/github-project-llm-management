@@ -22,6 +22,13 @@ run_step() {
         return 1
     fi
 
+    # Install Python dependencies
+    echo ""
+    if ! install_python_dependencies; then
+        error "Failed to install Python dependencies"
+        return 1
+    fi
+
     mark_step_completed "check_prerequisites"
     return 0
 }
