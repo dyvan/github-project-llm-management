@@ -90,9 +90,12 @@ class GitHubProjectSync:
 
     def find_project(self, project_number: Optional[int] = None) -> Optional[str]:
         """Find project by number or get first project"""
-        query = """
-        query($owner: String!) {
-          organization(login: $owner) {
+        projects = None
+
+        # Try repository projects first (most common for GitHub Actions)
+        repo_query = """
+        query($owner: String!, $repo: String!) {
+          repository(owner: $owner, name: $repo) {
             projectsV2(first: 20) {
               nodes {
                 id
@@ -104,14 +107,18 @@ class GitHubProjectSync:
         }
         """
 
-        # Try organization first
         try:
-            variables = {"owner": self.owner}
-            data = self.graphql_query(query, variables)
-            projects = data["organization"]["projectsV2"]["nodes"]
-        except:
-            # Try user projects if organization fails
-            query = """
+            variables = {"owner": self.owner, "repo": self.repo}
+            data = self.graphql_query(repo_query, variables)
+            if data.get("repository") and data["repository"].get("projectsV2"):
+                projects = data["repository"]["projectsV2"]["nodes"]
+                print(f"✅ Found {len(projects)} repository project(s)")
+        except Exception as e:
+            print(f"⚠️  Could not fetch repository projects: {e}")
+
+        # Try user projects if no repository projects
+        if not projects:
+            user_query = """
             query($owner: String!) {
               user(login: $owner) {
                 projectsV2(first: 20) {
@@ -124,12 +131,44 @@ class GitHubProjectSync:
               }
             }
             """
-            variables = {"owner": self.owner}
-            data = self.graphql_query(query, variables)
-            projects = data["user"]["projectsV2"]["nodes"]
+            try:
+                variables = {"owner": self.owner}
+                data = self.graphql_query(user_query, variables)
+                if data.get("user") and data["user"].get("projectsV2"):
+                    projects = data["user"]["projectsV2"]["nodes"]
+                    print(f"✅ Found {len(projects)} user project(s)")
+            except Exception as e:
+                print(f"⚠️  Could not fetch user projects: {e}")
+
+        # Try organization projects if still no projects
+        if not projects:
+            org_query = """
+            query($owner: String!) {
+              organization(login: $owner) {
+                projectsV2(first: 20) {
+                  nodes {
+                    id
+                    number
+                    title
+                  }
+                }
+              }
+            }
+            """
+            try:
+                variables = {"owner": self.owner}
+                data = self.graphql_query(org_query, variables)
+                if data.get("organization") and data["organization"].get("projectsV2"):
+                    projects = data["organization"]["projectsV2"]["nodes"]
+                    print(f"✅ Found {len(projects)} organization project(s)")
+            except Exception as e:
+                print(f"⚠️  Could not fetch organization projects: {e}")
 
         if not projects:
-            print("⚠️  No projects found")
+            print(f"⚠️  No projects found")
+            print(f"   Owner: {self.owner}")
+            print(f"   Repo: {self.repo}")
+            print(f"   Tried: repository, user, and organization projects")
             return None
 
         if project_number:
@@ -343,7 +382,9 @@ class GitHubProjectSync:
 
         # Find or get project
         if not self.project_id:
-            self.project_id = self.find_project(project_number)
+            # If project_number is "auto" (string), pass None to auto-detect
+            proj_num = None if project_number is None or str(project_number) == "auto" else project_number
+            self.project_id = self.find_project(proj_num)
             if not self.project_id:
                 return False
 
@@ -381,7 +422,9 @@ class GitHubProjectSync:
 
         # Find or get project
         if not self.project_id:
-            self.project_id = self.find_project(project_number)
+            # If project_number is "auto" (string), pass None to auto-detect
+            proj_num = None if project_number is None or str(project_number) == "auto" else project_number
+            self.project_id = self.find_project(proj_num)
             if not self.project_id:
                 return False
 
@@ -409,7 +452,7 @@ def main():
     )
     parser.add_argument("--issue", type=int, help="Issue number to sync")
     parser.add_argument("--pr", type=int, help="PR number to sync")
-    parser.add_argument("--project", type=int, help="Project number (optional)")
+    parser.add_argument("--project", help="Project number (optional, or 'auto' to detect)")
     parser.add_argument("--status", help="Set Status field (e.g., 'In Progress')")
     parser.add_argument("--priority", help="Set Priority field (e.g., 'High')")
     parser.add_argument("--effort", help="Set Effort field (e.g., '3')")
@@ -453,11 +496,23 @@ def main():
     # Initialize sync
     sync = GitHubProjectSync(token, owner, repo)
 
+    # Convert project number to int if not "auto"
+    project_num = None
+    if args.project:
+        if args.project.lower() == "auto":
+            project_num = "auto"
+        else:
+            try:
+                project_num = int(args.project)
+            except ValueError:
+                print(f"❌ Invalid project number: {args.project}")
+                sys.exit(1)
+
     # Sync issue or PR
     if args.issue:
-        success = sync.sync_issue(args.issue, args.project, fields)
+        success = sync.sync_issue(args.issue, project_num, fields)
     elif args.pr:
-        success = sync.sync_pr(args.pr, args.project, fields)
+        success = sync.sync_pr(args.pr, project_num, fields)
     else:
         print("❌ Must specify --issue or --pr")
         parser.print_help()
