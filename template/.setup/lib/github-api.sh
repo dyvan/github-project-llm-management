@@ -58,7 +58,8 @@ create_project() {
     fi
 
     # Create project
-    local result=$(gh project create --title "$project_name" --format json 2>/dev/null)
+    local owner=$(get_repo_owner)
+    local result=$(gh project create --title "$project_name" --owner "$owner" --format json 2>/dev/null)
 
     if [ $? -eq 0 ]; then
         local project_num=$(echo "$result" | jq -r '.number' 2>/dev/null)
