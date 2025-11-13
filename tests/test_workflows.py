@@ -96,7 +96,8 @@ class TestWorkflowFiles:
         # Check triggers (handle YAML parsing of 'on' as True)
         triggers = content.get('on') or content.get(True, {})
         assert 'issues' in triggers
-        assert 'labeled' in triggers['issues']
+        # Check for 'labeled' in either direct key or in 'types' list
+        assert 'labeled' in triggers['issues'] or 'labeled' in triggers['issues'].get('types', [])
 
     def test_code_review_workflow_structure(self, workflows_dir):
         """Test code-review-agent.yml has correct structure"""
