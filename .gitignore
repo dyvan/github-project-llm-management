@@ -141,3 +141,9 @@ yarn-error.log
 
 # MkDocs
 site/
+
+# Setup state (idempotent setup tracking)
+# NOTE: Only ignore the state file, not the setup scripts!
+template/.setup/.setup-state.json
+.setup-state.json
+.setup/.setup-state.json

@@ -1,0 +1,41 @@
+{
+  "fields": [
+    {
+      "name": "Status",
+      "type": "single_select",
+      "options": [
+        "Backlog",
+        "Ready",
+        "In Progress",
+        "In Review",
+        "Done",
+        "Blocked"
+      ]
+    },
+    {
+      "name": "Priority",
+      "type": "single_select",
+      "options": [
+        "High",
+        "Medium",
+        "Low"
+      ]
+    },
+    {
+      "name": "Effort",
+      "type": "single_select",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "5",
+        "8"
+      ]
+    },
+    {
+      "name": "Sprint",
+      "type": "text",
+      "description": "Sprint name or number"
+    }
+  ]
+}

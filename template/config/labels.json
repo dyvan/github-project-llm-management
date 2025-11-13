@@ -1,0 +1,87 @@
+[
+  {
+    "name": "type:feature",
+    "description": "New feature or enhancement",
+    "color": "00aa44"
+  },
+  {
+    "name": "type:bug",
+    "description": "Bug fix",
+    "color": "cc0000"
+  },
+  {
+    "name": "type:task",
+    "description": "Technical task (refactoring, setup, etc.)",
+    "color": "5319e7"
+  },
+  {
+    "name": "type:docs",
+    "description": "Documentation",
+    "color": "0075ca"
+  },
+  {
+    "name": "type:infrastructure",
+    "description": "CI/CD, workflows, configuration",
+    "color": "fbca04"
+  },
+  {
+    "name": "priority:high",
+    "description": "High priority, blocking",
+    "color": "ff0000"
+  },
+  {
+    "name": "priority:medium",
+    "description": "Medium priority",
+    "color": "ffaa00"
+  },
+  {
+    "name": "priority:low",
+    "description": "Low priority, nice to have",
+    "color": "dddddd"
+  },
+  {
+    "name": "status:backlog",
+    "description": "In backlog, not started",
+    "color": "cccccc"
+  },
+  {
+    "name": "status:ready",
+    "description": "Ready to start",
+    "color": "fbca04"
+  },
+  {
+    "name": "status:in-progress",
+    "description": "Currently being worked on",
+    "color": "0075ca"
+  },
+  {
+    "name": "status:in-review",
+    "description": "PR open, in code review",
+    "color": "ededed"
+  },
+  {
+    "name": "status:blocked",
+    "description": "Blocked, waiting for something",
+    "color": "d73a49"
+  },
+  {
+    "name": "status:done",
+    "description": "Completed and merged",
+    "color": "28a745"
+  },
+  {
+    "name": "good-first-issue",
+    "description": "Good for first-time contributors",
+    "color": "7057ff"
+  },
+  {
+    "name": "help-wanted",
+    "description": "Help or collaboration wanted",
+    "color": "33aa3f"
+  },
+  {
+    "name": "auto-branch",
+    "description": "Trigger automatic branch creation",
+    "color": "0366d6"
+  }
+]
