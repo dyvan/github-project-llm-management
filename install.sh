@@ -5,7 +5,7 @@
 #   curl -fsSL https://raw.githubusercontent.com/dyvan/github-project-llm-management/main/install.sh | bash
 #
 
-set -e
+set +e  # Don't exit on errors, handle them explicitly
 
 # Colors
 RED='\033[0;31m'
@@ -21,37 +21,37 @@ NC='\033[0m'
 # ============================================================================
 
 banner() {
-    echo -e "${CYAN}"
-    echo "╔════════════════════════════════════════════════════════════════╗"
-    echo "║  🚀 GitHub Project LLM Management - Installation               ║"
-    echo "║                                                                ║"
-    echo "║  This will clone and bootstrap your project                    ║"
-    echo "╚════════════════════════════════════════════════════════════════╝"
-    echo -e "${NC}"
+    echo -e "${CYAN}" >&2
+    echo "╔════════════════════════════════════════════════════════════════╗" >&2
+    echo "║  🚀 GitHub Project LLM Management - Installation               ║" >&2
+    echo "║                                                                ║" >&2
+    echo "║  This will clone and bootstrap your project                    ║" >&2
+    echo "╚════════════════════════════════════════════════════════════════╝" >&2
+    echo -e "${NC}" >&2
 }
 
 log_success() {
-    echo -e "${GREEN}✅ $1${NC}"
+    echo -e "${GREEN}✅ $1${NC}" >&2
 }
 
 log_error() {
-    echo -e "${RED}❌ $1${NC}"
+    echo -e "${RED}❌ $1${NC}" >&2
 }
 
 log_info() {
-    echo -e "${BLUE}ℹ️  $1${NC}"
+    echo -e "${BLUE}ℹ️  $1${NC}" >&2
 }
 
 log_warning() {
-    echo -e "${YELLOW}⚠️  $1${NC}"
+    echo -e "${YELLOW}⚠️  $1${NC}" >&2
 }
 
 log_section() {
-    echo ""
-    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${MAGENTA}$1${NC}"
-    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo ""
+    echo "" >&2
+    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}" >&2
+    echo -e "${MAGENTA}$1${NC}" >&2
+    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}" >&2
+    echo "" >&2
 }
 
 # ============================================================================
@@ -62,11 +62,20 @@ ask_project_name() {
     log_section "1. Project Name"
 
     local project_name=""
-    read -p "$(echo -e ${YELLOW})Enter your project name (or press Enter for 'github-project'):$(echo -e ${NC}) " project_name
+    # Use plain read without fancy ANSI codes in prompt to avoid issues
+    read -p "Enter your project name (or press Enter for 'github-project'): " project_name
 
     if [ -z "$project_name" ]; then
         project_name="github-project"
     fi
+
+    # Remove all ANSI escape sequences thoroughly
+    # Using two methods to ensure cleanup: sed with octal codes + sed with ESC pattern
+    project_name=$(echo "$project_name" | \
+        sed 's/\x1b\[[0-9;]*m//g' | \
+        sed 's/\[0[;0-9]*m//g' | \
+        tr -d '\n' | \
+        tr -cd '[:alnum:]._-')
 
     echo "$project_name"
 }
@@ -80,12 +89,44 @@ clone_template() {
 
     if git clone https://github.com/dyvan/github-project-llm-management.git "$project_name" 2>/dev/null; then
         log_success "Template cloned successfully"
+
+        # Remove unnecessary files/directories to keep project clean
+        log_info "Cleaning up unnecessary files..."
+        cd "$project_name" || return 1
+
+        # Keep only essential files for a new project
+        # Note: claude.md is kept as it's essential documentation
+        rm -rf agents/ docs/ tests/ specifications/ tools/ \
+               AUTOMATION.md CLAUDE-USER-TEMPLATE.md CODE_OF_CONDUCT.md \
+               CONTRIBUTING.md IMPROVEMENTS_TODO.md ISSUES_FIXED.md \
+               PROJECT_BOARD_SETUP.md REFACTOR_SUMMARY.md ROADMAP.md \
+               TEMPLATE_INDEX.md TESTING_PHASE_1_2.md WORKFLOW_SPECIFICATION.md \
+               pytest.ini requirements-dev.txt setup-project.sh mkdocs.yml \
+               .claude/ 2>/dev/null || true
+
+        log_success "Project cleaned (kept only essentials)"
+        cd - > /dev/null || return 1
+
         echo "$project_name"
         return 0
     else
         log_error "Failed to clone template"
         log_info "Make sure you have git installed: https://git-scm.com/"
         return 1
+    fi
+}
+
+ensure_claude_md() {
+    local project_dir="$1"
+
+    # Ensure claude.md exists (it should already be at root from cloning)
+    # This is the main documentation file for LLM project management
+    if [ -f "$project_dir/claude.md" ]; then
+        log_info "✅ claude.md documentation is present" >&2
+        return 0
+    else
+        log_warning "claude.md not found at project root" >&2
+        return 0
     fi
 }
 
@@ -97,10 +138,13 @@ launch_bootstrap() {
     log_info "Entering project directory and launching bootstrap..."
     echo ""
 
-    # Change to project directory and run bootstrap
+    # Change to project directory
     cd "$project_dir" || return 1
 
-    # Run bootstrap - this will be interactive or show instructions
+    # Ensure CLAUDE.md exists BEFORE bootstrap (in case bootstrap skips)
+    ensure_claude_md "$(pwd)"
+
+    # Run bootstrap
     bash scripts/bootstrap.sh
 
     return 0
@@ -131,7 +175,7 @@ main() {
     # Check if directory already exists
     if [ -d "$PROJECT_NAME" ]; then
         log_warning "$PROJECT_NAME directory already exists"
-        read -p "$(echo -e ${YELLOW})Overwrite? (y/n):$(echo -e ${NC}) " -n 1 -r
+        read -p "$(printf '%b' ${YELLOW})Overwrite? (y/n):$(printf '%b' ${NC}) " -n 1 -r
         echo
         if [[ ! $REPLY =~ ^[Yy]$ ]]; then
             log_error "Installation cancelled"
