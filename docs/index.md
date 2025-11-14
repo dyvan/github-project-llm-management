@@ -12,6 +12,7 @@ This is a comprehensive, production-ready template for managing software project
 ## 🎯 Key Features
 
 ### Automated Workflows
+- **QCM Generator**: Gemini-powered questionnaires to clarify specifications before implementation
 - **Branch Creator**: Automatically creates feature branches when issues receive the `auto-branch` label
 - **Code Reviewer**: AI-powered code reviews on pull requests
 - **Test Feedback**: Automated testing, linting, and coverage reporting
@@ -58,6 +59,7 @@ Go to **Settings → Secrets and variables → Actions** and add:
 ## 📚 Documentation Structure
 
 - **[Getting Started](./getting-started/installation.md)**: Setup and first steps
+- **[QCM Specification](./QCM-Specification.md)**: Generate specification questionnaires with Gemini
 - **[Architecture](./architecture/overview.md)**: System design and components
 - **[Guides](./guides/setup-github-projects.md)**: How to use each feature
 - **[Agents](./agents/branch-creator.md)**: LLM agent documentation

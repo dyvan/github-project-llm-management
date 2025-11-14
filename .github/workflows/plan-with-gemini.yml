@@ -1,0 +1,104 @@
+name: Plan with Gemini QCM
+
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue number to generate QCM for'
+        required: true
+        type: number
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  generate-qcm:
+    runs-on: ubuntu-latest
+    # Only run if the label is "plan-with-gemini" or if manually triggered
+    if: |
+      (github.event_name == 'issues' && github.event.label.name == 'plan-with-gemini') ||
+      github.event_name == 'workflow_dispatch'
+
+    env:
+      GH_OWNER: ${{ github.repository_owner }}
+      GH_REPO: ${{ github.event.repository.name }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up GitHub token
+        run: |
+          if [ -n "${{ secrets.GH_TOKEN }}" ]; then
+            echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
+            echo "✅ Using custom GH_TOKEN"
+          else
+            echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+            echo "⚠️  Using default GITHUB_TOKEN"
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+
+      - name: Set issue number
+        id: issue
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            ISSUE_NUM=${{ inputs.issue_number }}
+          else
+            ISSUE_NUM=${{ github.event.issue.number }}
+          fi
+          echo "number=${ISSUE_NUM}" >> $GITHUB_OUTPUT
+          echo "📋 Processing issue #${ISSUE_NUM}"
+
+      - name: Check for Gemini API key
+        run: |
+          if [ -z "${{ secrets.GEMINI_API_KEY }}" ]; then
+            echo "❌ GEMINI_API_KEY secret is not set"
+            echo "📚 Please configure the GEMINI_API_KEY secret in your repository settings"
+            echo "   Get your API key from: https://ai.google.dev/gemini-api/docs/api-key"
+            exit 1
+          fi
+          echo "✅ Gemini API key is configured"
+
+      - name: Generate and post QCM
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          echo "🤖 Generating QCM using Gemini AI..."
+          python scripts/generate_qcm.py \
+            --issue ${{ steps.issue.outputs.number }} \
+            --post-comment
+
+      - name: Add status label
+        if: success() && github.event_name == 'issues'
+        run: |
+          # Add a label to indicate QCM was generated
+          gh issue edit ${{ steps.issue.outputs.number }} \
+            --add-label "qcm-generated" 2>/dev/null || true
+
+          echo "✅ QCM generated and posted successfully!"
+          echo "📋 Please review and answer the questionnaire in issue #${{ steps.issue.outputs.number }}"
+
+      - name: Handle errors
+        if: failure()
+        run: |
+          echo "❌ Failed to generate QCM"
+          echo "Check the logs above for details"
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "📊 Plan with Gemini QCM - Execution Summary"
+          echo "   Issue: #${{ steps.issue.outputs.number }}"
+          echo "   Status: ${{ job.status }}"
+          echo "   Trigger: ${{ github.event_name }}"

@@ -43,6 +43,7 @@ bash template-setup.sh        # 2. Lancer setup
 |----------------|-------------|
 | 📋 **Project Board auto** | Issues ajoutées automatiquement au Kanban |
 | 🌿 **Branches automatiques** | Ajoutez le label `auto-branch`, la branche est créée |
+| 📝 **QCM de spécification** | Gemini génère un questionnaire pour clarifier les specs |
 | 🤖 **Revue de code IA** | Claude analyse vos PRs et suggère des améliorations |
 | ✅ **Tests automatiques** | Chaque PR est validée automatiquement |
 | 🔄 **Synchronisation** | Status mis à jour automatiquement (Backlog → Done) |
@@ -91,6 +92,12 @@ bash template-setup.sh        # 2. Lancer setup
 - ✅ Label `auto-branch` → branche créée instantanément
 - ✅ Naming automatique (`feat/123-titre-issue`)
 - ✅ Commentaire posté avec commandes git
+
+### QCM de spécification avec Gemini
+- ✅ Label `plan-with-gemini` → questionnaire généré automatiquement
+- ✅ Questions adaptées au type d'issue (Feature, Bug, Task)
+- ✅ Clarification des specs avant implémentation
+- ✅ QCM posté en commentaire sur l'issue
 
 ### Revue de code par IA
 - ✅ Analyse automatique des PRs par Claude AI
