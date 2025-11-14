@@ -17,33 +17,54 @@ Kanban automatique • Issues intelligentes • Revue de code IA • Zéro confi
 
 ---
 
-## ⚡ Démarrage rapide (2 commandes)
+## ⚡ Démarrage rapide (Une seule commande!)
 
-1. **Clonez ce template** :
+### Option 1️⃣: Curl + Bash (Recommandé)
 
 ```bash
-git clone https://github.com/dyvan/github-project-llm-management.git ma-projet
-cd ma-projet
+curl -fsSL https://raw.githubusercontent.com/dyvan/github-project-llm-management/main/install.sh | bash
 ```
 
-2. **Lancez le bootstrap** (génère .env et configure tout) :
+C'est tout! Le script va:
+1. 📁 Demander le nom de votre projet
+2. 🔄 Cloner le template
+3. 🚀 Lancer le bootstrap automatiquement
+4. ✅ Configurer tout
+
+### Option 2️⃣: Clone + Bootstrap Manuel
+
+Si vous préférez plus de contrôle:
 
 ```bash
+git clone https://github.com/dyvan/github-project-llm-management.git mon-projet
+cd mon-projet
 bash scripts/bootstrap.sh
 ```
 
-Ce script va vous demander:
-- 🔑 **GitHub Token** - Pour accès GitHub CLI
-- 🤖 **Gemini API Key** - Pour génération QCM et spécifications (optionnel)
+### Que fait le bootstrap?
 
-Puis il va créer:
-- ✅ `.env` - Fichier de configuration (jamais commité)
-- ✅ `.gitignore` - Exclusions pour secrets
-- ✅ Afficher les prochaines étapes
+Le script vous demande:
+- **GitHub Token** - Pour créer issues, labels, et project board
+- **Gemini API Key** - Pour génération QCM (optionnel)
 
-**C'est tout !** 🎉 Votre projet est configuré et prêt à l'emploi.
+**Puis deux chemins possibles:**
 
-➡️ **[Guide complet (5 min)](#-guide-détaillé)** • **[Troubleshooting](#-besoin-daide-)**
+#### ✅ Avec un GitHub Token?
+Bootstrap lance automatiquement `template-setup.sh`:
+- 🏷️ Labels GitHub créés
+- 📊 Project Board initialisé
+- 🔄 Workflows configurés
+- **C'est prêt!** Créez votre première issue
+
+#### ⏸️ Sans token?
+Bootstrap affiche les instructions pour:
+1. Générer un token GitHub (avec les scopes exacts)
+2. L'ajouter à `.env`
+3. Relancer `bash template-setup.sh` manuellement
+
+**Zéro configuration requise!** 🎉
+
+➡️ **[Configuration avancée](../../wiki)** • **[Guide complet](#-documentation)**
 
 ---
 
