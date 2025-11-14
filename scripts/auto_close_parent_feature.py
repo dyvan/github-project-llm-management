@@ -124,7 +124,8 @@ class FeatureAutoCloser:
 
         sub_issues = []
         for item in data["node"]["items"]["nodes"]:
-            if item["content"] and item["content"].get("__typename") == "Issue":
+            if item.get("content") and "number" in item["content"]:
+                # This is an Issue (indicated by presence of 'number' field)
                 issue = item["content"]
                 # Check if this issue has the parent in its body
                 parent_id = self.extract_parent_issue_from_body(issue.get("body", ""))
@@ -135,6 +136,7 @@ class FeatureAutoCloser:
 
     def get_project_id_from_number(self, project_number: int) -> str:
         """Get project node ID from project number"""
+        # Try user first
         query = """
         query($owner: String!, $number: Int!) {
           user(login: $owner) {
@@ -142,6 +144,20 @@ class FeatureAutoCloser:
               id
             }
           }
+        }
+        """
+        variables = {"owner": self.owner, "number": project_number}
+        try:
+            data = self.graphql_query(query, variables)
+            if data.get("user") and data["user"].get("projectV2"):
+                return data["user"]["projectV2"]["id"]
+        except Exception:
+            # User not found or project not under user, try organization
+            pass
+
+        # Try organization
+        org_query = """
+        query($owner: String!, $number: Int!) {
           organization(login: $owner) {
             projectV2(number: $number) {
               id
@@ -149,15 +165,14 @@ class FeatureAutoCloser:
           }
         }
         """
-        variables = {"owner": self.owner, "number": project_number}
-        data = self.graphql_query(query, variables)
+        try:
+            data = self.graphql_query(org_query, variables)
+            if data.get("organization") and data["organization"].get("projectV2"):
+                return data["organization"]["projectV2"]["id"]
+        except Exception:
+            pass
 
-        if data.get("user") and data["user"].get("projectV2"):
-            return data["user"]["projectV2"]["id"]
-        elif data.get("organization") and data["organization"].get("projectV2"):
-            return data["organization"]["projectV2"]["id"]
-
-        raise Exception(f"Project #{project_number} not found")
+        raise Exception(f"Project #{project_number} not found for owner {self.owner}")
 
     def close_issue(self, issue_number: int) -> bool:
         """Close an issue"""
@@ -216,10 +231,8 @@ class FeatureAutoCloser:
         print(f"   Title: {issue_info['title']}")
         print(f"   State: {issue_info['state']}")
 
-        # Check if it's already closed
-        if issue_info["state"] == "CLOSED":
-            print(f"   ℹ️  Issue already closed")
-            return False
+        # Note: Issue may already be closed by GitHub (via "Closes #X" in PR)
+        # Continue to check if it's a user story with a parent
 
         # Check if it's a user story (has "us" label)
         labels = [label["name"] for label in issue_info["labels"]["nodes"]]
