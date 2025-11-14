@@ -93,8 +93,10 @@ class SpecificationGenerator:
             specification = self._call_gemini_api(prompt)
             return specification
         except Exception as e:
-            print(f"❌ Error calling Gemini API: {e}")
-            raise
+            print(f"⚠️  Error calling Gemini API: {e}")
+            print(f"⚠️  Using structured template fallback...")
+            # Fallback to template-based specification
+            return self._generate_template_specification(issue_type, issue["title"], issue["number"])
 
     def _build_specification_prompt(
         self,
@@ -316,6 +318,164 @@ Start directly with the Executive Summary or Problem Statement."""
                     return parts[0]["text"]
 
         raise Exception(f"Unexpected API response structure: {result}")
+
+    def _generate_template_specification(self, issue_type: str, title: str, issue_number: int) -> str:
+        """Generate template-based specification as fallback"""
+
+        base_spec = f"""# Spécification - Issue #{issue_number}: {title}
+
+> Cette spécification a été générée automatiquement à partir du questionnaire QCM.
+
+## Executive Summary / Résumé
+
+Basé sur les réponses du questionnaire QCM pour la gestion de cette issue.
+
+"""
+
+        if issue_type == "feature":
+            base_spec += """## Spécifications Fonctionnelles - Feature
+
+### 1. Périmètre et Objectif
+- Définir clairement ce qui doit être livré
+- Identifier la portée : MVP vs feature complète vs extensions
+
+### 2. Expérience Utilisateur
+- Interface et interactions attendues
+- Flux utilisateur principal
+- Cas d'usage prioritaires
+
+### 3. Intégration
+- Points d'intégration avec les systèmes existants
+- APIs à consommer ou exposer
+- Données à synchroniser
+
+### 4. Critères d'Acceptation
+- [ ] La feature fonctionne comme spécifiée
+- [ ] L'interface est intuitive et responsive
+- [ ] Les performances sont acceptables
+- [ ] Les tests unitaires sont en place
+- [ ] La documentation est à jour
+- [ ] Pas de régression sur les features existantes
+
+### 5. Non-Functional Requirements
+- **Performance**: Temps de réponse < 1s pour les opérations principales
+- **Scalabilité**: Supporter X utilisateurs/opérations simultanées
+- **Sécurité**: Validation des entrées, authentification si nécessaire
+- **Accessibilité**: WCAG 2.1 level AA
+
+### 6. Dépendances et Blocages
+- Identifiées depuis les réponses du QCM
+- À clarifier avec le product owner
+
+### 7. Notes d'Implémentation
+- Architecture recommandée : à définir en discussion d'équipe
+- Technologies suggérées : à valider
+- Edge cases à gérer : tester en détail
+
+---
+
+**Prochaines étapes:** Consulter le commentaire QCM pour les détails des réponses utilisateur."""
+
+        elif issue_type == "bug":
+            base_spec += """## Spécifications de Correction - Bug
+
+### 1. Énoncé du Problème
+- Description détaillée du bug
+- Quand et comment il apparaît
+- Impact sur l'utilisateur
+
+### 2. Évaluation de l'Impact
+- Sévérité: Critique/Haute/Moyenne/Basse
+- Utilisateurs affectés
+- Impact métier
+
+### 3. Étapes de Reproduction
+- Contexte et conditions préalables
+- Étapes exactes pour reproduire
+- Résultat attendu vs résultat observé
+
+### 4. Solution Proposée
+- Approche recommandée pour la correction
+- Workaround temporaire (si applicable)
+- Approche à long terme
+
+### 5. Critères d'Acceptation
+- [ ] Le bug est corrigé dans le code
+- [ ] Les tests reproduisent et valident la correction
+- [ ] Aucune régression détectée
+- [ ] La documentation est à jour
+- [ ] Le comportement est cohérent
+
+### 6. Tests de Régression
+- Fonctionnalités affectées à tester
+- Cas limites à vérifier
+- Environnements à tester
+
+### 7. Notes d'Implémentation
+- Code areas à modifier
+- Considérations spéciales
+- Plan de rollback si nécessaire
+
+---
+
+**Prochaines étapes:** Consulter le commentaire QCM pour les détails spécifiques du bug."""
+
+        else:  # task or general
+            base_spec += """## Spécifications Techniques - Task
+
+### 1. Objectif
+- Clarifier le but de cette task
+- Résultats attendus
+
+### 2. Approche Technique
+- Méthode recommandée
+- Architecture et design
+- Technologies impliquées
+
+### 3. Livrables
+- Code à modifier/créer
+- Documentation à produire
+- Configuration à déployer
+
+### 4. Critères de Succès
+- [ ] Livrable X est complété et testé
+- [ ] Documentation est à jour
+- [ ] Pas de régression
+- [ ] Performance respectée
+- [ ] Code reviews approuvés
+
+### 5. Dépendances
+- Prérequis avant de commencer
+- Accès/permissions nécessaires
+- Tâches bloquantes
+
+### 6. Timeline et Efforts
+- Estimation: X heures/jours
+- Jalons importants si applicable
+- Dépendances temporelles
+
+### 7. Notes d'Implémentation
+- Gotchas potentiels
+- Tests importants
+- Documentation spéciale
+
+---
+
+**Prochaines étapes:** Consulter le commentaire QCM pour les détails des réponses."""
+
+        base_spec += f"""
+
+---
+
+## Informations Techniques
+- **Issue #:** {issue_number}
+- **Type:** {issue_type.upper()}
+- **Généré le:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} UTC
+- **Basé sur:** Questionnaire QCM (voir commentaires)
+- **Note:** Spécification générée avec fallback. Consulter le QCM pour tous les détails des réponses.
+"""
+
+        return base_spec
 
     def save_files(self, issue_number: int, qcm_comment: str, specification: str) -> str:
         """Save responses.json and specification.md to specifications/{issue-number}/"""
