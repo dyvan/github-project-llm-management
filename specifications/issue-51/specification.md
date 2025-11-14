@@ -54,6 +54,6 @@ Basé sur les réponses du questionnaire QCM pour la gestion de cette issue.
 ## Informations Techniques
 - **Issue #:** 51
 - **Type:** FEATURE
-- **Généré le:** 2025-11-14 19:08:24 UTC
+- **Généré le:** 2025-11-14 19:11:40 UTC
 - **Basé sur:** Questionnaire QCM (voir commentaires)
 - **Note:** Spécification générée avec fallback. Consulter le QCM pour tous les détails des réponses.
