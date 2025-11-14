@@ -17,33 +17,43 @@ Kanban automatique • Issues intelligentes • Revue de code IA • Zéro confi
 
 ---
 
-## ⚡ Démarrage rapide (2 commandes)
+## ⚡ Démarrage rapide (3 étapes)
 
-1. **Clonez ce template** :
+### 1️⃣ Clonez le template
 
 ```bash
-git clone https://github.com/dyvan/github-project-llm-management.git ma-projet
-cd ma-projet
+git clone https://github.com/dyvan/github-project-llm-management.git mon-projet
+cd mon-projet
 ```
 
-2. **Lancez le bootstrap** (génère .env et configure tout) :
+### 2️⃣ Lancez le bootstrap
 
 ```bash
 bash scripts/bootstrap.sh
 ```
 
-Ce script va vous demander:
-- 🔑 **GitHub Token** - Pour accès GitHub CLI
-- 🤖 **Gemini API Key** - Pour génération QCM et spécifications (optionnel)
+Le script vous demande:
+- **GitHub Token** - Pour créer issues, labels, et project board
+- **Gemini API Key** - Pour génération QCM (optionnel, peut être ajouté plus tard)
 
-Puis il va créer:
-- ✅ `.env` - Fichier de configuration (jamais commité)
-- ✅ `.gitignore` - Exclusions pour secrets
-- ✅ Afficher les prochaines étapes
+### 3️⃣ Deux chemins possibles
 
-**C'est tout !** 🎉 Votre projet est configuré et prêt à l'emploi.
+#### ✅ Vous avez un GitHub Token?
+Le bootstrap lance automatiquement `template-setup.sh` et configure tout:
+- 🏷️ Labels GitHub créés
+- 📊 Project Board initialisé
+- 🔄 Workflows configurés
+- **C'est prêt!** Créez votre première issue
 
-➡️ **[Guide complet (5 min)](#-guide-détaillé)** • **[Troubleshooting](#-besoin-daide-)**
+#### ⏸️ Vous n'avez pas de token?
+Le bootstrap affiche les instructions claires pour:
+1. Générer un token GitHub (avec les scopes exacts)
+2. L'ajouter à `.env`
+3. Lancer `bash template-setup.sh` manuellement
+
+**Aucune configuration complexe!** Le bootstrap gère tout. 🎉
+
+➡️ **[Configuration avancée](../../wiki)** • **[Guide complet](#-documentation)**
 
 ---
 

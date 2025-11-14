@@ -1,9 +1,13 @@
 #!/bin/bash
 #
-# 🚀 Bootstrap Script - Quick Setup for GitHub Project LLM Management
-# This script sets up a new project with .env configuration and .gitignore
+# 🚀 Bootstrap Script - Complete Project Setup
+# GitHub Project LLM Management
 #
-# Usage: bash scripts/bootstrap.sh
+# This script provides complete project initialization:
+# 1. Generates .env with API keys
+# 2. Creates .gitignore
+# 3. If GH_TOKEN provided: automatically runs template-setup.sh
+# 4. If GH_TOKEN not provided: shows clear instructions for manual setup
 #
 
 set -e
@@ -28,9 +32,9 @@ PROJECT_ROOT="$( cd "$SCRIPT_DIR/.." && pwd )"
 banner() {
     echo -e "${CYAN}"
     echo "╔════════════════════════════════════════════════════════════════╗"
-    echo "║  🚀 GitHub Project LLM Management - Bootstrap Setup            ║"
+    echo "║  🚀 GitHub Project LLM Management - Complete Bootstrap         ║"
     echo "║                                                                ║"
-    echo "║  This script will guide you through project initialization     ║"
+    echo "║  This script will initialize your project completely           ║"
     echo "╚════════════════════════════════════════════════════════════════╝"
     echo -e "${NC}"
 }
@@ -80,10 +84,11 @@ check_prerequisites() {
         log_success "Git available"
     fi
 
-    # Check gh (GitHub CLI) - optional but recommended
+    # Check gh (GitHub CLI)
     if ! command -v gh &> /dev/null; then
-        log_warning "GitHub CLI (gh) not found. Optional but recommended."
-        log_info "Install from: https://cli.github.com/"
+        log_error "GitHub CLI (gh) not found. Required for project setup."
+        echo "   Install from: https://cli.github.com/"
+        ((errors++))
     else
         log_success "GitHub CLI available"
     fi
@@ -139,13 +144,14 @@ create_env_file() {
     # Prompt for tokens
     prompt_for_token \
         "GitHub Personal Access Token (GH_TOKEN)" \
-        "Used for GitHub CLI operations and GitHub Actions authentication" \
+        "Used for creating issues, labels, project boards, and workflows
+Required scopes: repo, project, workflow, read:org" \
         "https://github.com/settings/tokens/new" \
         "GH_TOKEN"
 
     prompt_for_token \
         "Google Gemini API Key (GEMINI_API_KEY)" \
-        "Used for AI-powered QCM and specification generation" \
+        "Used for AI-powered QCM and specification generation (optional)" \
         "https://aistudio.google.com/app/apikey" \
         "GEMINI_API_KEY"
 
@@ -177,8 +183,9 @@ create_env_file() {
 # GitHub Configuration
 # ======================
 # Personal Access Token for GitHub CLI operations
+# Needed for: Creating issues, labels, project boards, and workflows
 # Generate at: https://github.com/settings/tokens/new
-# Required scopes: repo, workflow, read:org
+# Required scopes: repo, project, workflow, read:org
 GH_TOKEN=$GH_TOKEN
 
 # Gemini AI Configuration
@@ -324,32 +331,47 @@ EOF
     return 0
 }
 
-show_next_steps() {
-    log_section "4. Next Steps"
+run_template_setup() {
+    log_section "4. Running Template Setup"
 
-    echo -e "${GREEN}Great! Your project is now bootstrapped.${NC}"
+    echo -e "${BLUE}Initializing GitHub Project Board, labels, and workflows...${NC}"
     echo ""
 
-    echo -e "${MAGENTA}1️⃣  Configure GitHub Secrets${NC}"
-    echo -e "${CYAN}   Run the following commands to set GitHub secrets:${NC}"
+    # Run template-setup.sh with auto-confirmation
+    if [ -f "$PROJECT_ROOT/template-setup.sh" ]; then
+        echo "y" | bash "$PROJECT_ROOT/template-setup.sh"
+        local setup_status=$?
+
+        if [ $setup_status -eq 0 ]; then
+            log_success "Template setup completed successfully"
+            return 0
+        else
+            log_warning "Template setup completed with warnings (see above)"
+            return 0  # Don't fail completely, user can retry
+        fi
+    else
+        log_error "template-setup.sh not found at $PROJECT_ROOT/template-setup.sh"
+        return 1
+    fi
+}
+
+show_next_steps_with_token() {
+    log_section "5. Project Ready! Next Steps"
+
+    echo -e "${GREEN}Your project is now fully initialized and ready to use!${NC}"
     echo ""
-    echo "   # Configure GH_TOKEN secret"
-    echo "   ${CYAN}gh secret set GH_TOKEN < <(echo \$GH_TOKEN)${NC}"
+
+    echo -e "${MAGENTA}1️⃣  Configure GitHub Secrets (Recommended)${NC}"
+    echo -e "${CYAN}   Add your tokens to GitHub so workflows can use them:${NC}"
     echo ""
-    echo "   # Configure GEMINI_API_KEY secret"
+    echo "   # Via GitHub CLI:"
     echo "   ${CYAN}gh secret set GEMINI_API_KEY < <(echo \$GEMINI_API_KEY)${NC}"
     echo ""
-    echo -e "   Or do it manually at:"
-    echo -e "   ${CYAN}https://github.com/<owner>/<repo>/settings/secrets/actions${NC}"
+    echo "   # Or manually at:"
+    echo "   ${CYAN}https://github.com/<owner>/<repo>/settings/secrets/actions${NC}"
     echo ""
 
-    echo -e "${MAGENTA}2️⃣  Run Template Setup${NC}"
-    echo -e "${CYAN}   Initialize your GitHub Project Board and workflows:${NC}"
-    echo ""
-    echo "   ${CYAN}bash template-setup.sh${NC}"
-    echo ""
-
-    echo -e "${MAGENTA}3️⃣  Create Your First Issue${NC}"
+    echo -e "${MAGENTA}2️⃣  Create Your First Issue${NC}"
     echo -e "${CYAN}   Test the setup with a real issue:${NC}"
     echo ""
     echo "   ${CYAN}gh issue create \\${NC}"
@@ -358,21 +380,71 @@ show_next_steps() {
     echo "     ${CYAN}--label \"type:feature,plan-with-gemini\"${NC}"
     echo ""
 
-    echo -e "${MAGENTA}4️⃣  Verify Configuration${NC}"
-    echo -e "${CYAN}   Check that everything is set up correctly:${NC}"
-    echo ""
-    echo "   ${CYAN}bash template/scripts/validate_setup.sh${NC}"
-    echo ""
-
-    echo -e "${MAGENTA}5️⃣  Read Documentation${NC}"
-    echo -e "${CYAN}   Learn how to use the template:${NC}"
+    echo -e "${MAGENTA}3️⃣  Start Using Your Project${NC}"
+    echo -e "${CYAN}   Read the documentation and start creating issues:${NC}"
     echo ""
     echo "   ${CYAN}cat CLAUDE.md${NC}  (For LLM project management)"
     echo "   ${CYAN}cat README.md${NC}   (Full documentation)"
     echo ""
 
     echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${GREEN}✨ Bootstrap complete! Your project is ready to use.${NC}"
+    echo -e "${GREEN}✨ Complete! Your project is initialized and ready to use!${NC}"
+    echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+}
+
+show_next_steps_without_token() {
+    log_section "5. Important: Complete Configuration Required"
+
+    echo -e "${YELLOW}⚠️  GH_TOKEN was not provided (using placeholder)${NC}"
+    echo ""
+    echo -e "${CYAN}To complete the setup, you need to:${NC}"
+    echo ""
+
+    echo -e "${MAGENTA}Step 1: Add your GitHub Token to .env${NC}"
+    echo ""
+    echo "   1. Generate a token at: https://github.com/settings/tokens/new"
+    echo "   2. Select these scopes:"
+    echo "      - ${CYAN}repo${NC} (full control of private repositories)"
+    echo "      - ${CYAN}project${NC} (full control of projects)"
+    echo "      - ${CYAN}workflow${NC} (update GitHub Action workflows)"
+    echo "      - ${CYAN}read:org${NC} (read organization data)"
+    echo "   3. Copy the token"
+    echo "   4. Edit ${CYAN}.env${NC} and replace:"
+    echo "      ${YELLOW}GH_TOKEN=PLACEHOLDER_GH_TOKEN_CHANGE_ME${NC}"
+    echo "      with your token value"
+    echo ""
+
+    echo -e "${MAGENTA}Step 2: Run Template Setup${NC}"
+    echo ""
+    echo "   Once .env is updated with your GH_TOKEN, run:"
+    echo ""
+    echo "   ${CYAN}bash template-setup.sh${NC}"
+    echo ""
+    echo "   This will:"
+    echo "   ${GREEN}✅${NC} Create GitHub labels"
+    echo "   ${GREEN}✅${NC} Initialize Project Board"
+    echo "   ${GREEN}✅${NC} Link workflows and issue templates"
+    echo ""
+
+    echo -e "${MAGENTA}Step 3: Add Optional API Keys${NC}"
+    echo ""
+    echo "   If you want AI-powered features, also add to .env:"
+    echo "   - ${YELLOW}GEMINI_API_KEY${NC} from https://aistudio.google.com/app/apikey"
+    echo ""
+    echo "   Then configure GitHub Secrets:"
+    echo "   ${CYAN}gh secret set GEMINI_API_KEY${NC}"
+    echo ""
+
+    echo -e "${MAGENTA}Step 4: Start Using Your Project${NC}"
+    echo ""
+    echo "   Create your first issue:"
+    echo "   ${CYAN}gh issue create --title \"My first task\" --label \"type:feature\"${NC}"
+    echo ""
+
+    echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${YELLOW}⏸️  Bootstrap created .env and .gitignore${NC}"
+    echo -e "${YELLOW}🔐 Add your GH_TOKEN to .env, then run: bash template-setup.sh${NC}"
     echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     echo ""
 }
@@ -389,6 +461,11 @@ show_files_created() {
     echo "   Location: $PROJECT_ROOT/.gitignore"
     echo "   Status: Excludes .env and other secrets from git"
     echo ""
+}
+
+is_token_placeholder() {
+    local token="$1"
+    [[ "$token" == *"PLACEHOLDER"* ]]
 }
 
 # ============================================================================
@@ -416,10 +493,26 @@ main() {
     # Step 4: Show what was created
     show_files_created
 
-    # Step 5: Show next steps
-    show_next_steps
+    # Step 5: Determine if we can run template-setup
+    if is_token_placeholder "$GH_TOKEN"; then
+        # No token provided - show manual instructions
+        show_next_steps_without_token
+        return 0
+    else
+        # Token provided - run template-setup automatically
+        log_section "4. Running Automatic Setup"
+        echo -e "${BLUE}Using provided GH_TOKEN to automatically configure your project...${NC}"
+        echo ""
 
-    return 0
+        if run_template_setup; then
+            show_next_steps_with_token
+            return 0
+        else
+            log_warning "Template setup had issues, but .env and .gitignore are ready"
+            show_next_steps_without_token
+            return 0
+        fi
+    fi
 }
 
 # Run main function
