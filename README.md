@@ -17,23 +17,33 @@ Kanban automatique • Issues intelligentes • Revue de code IA • Zéro confi
 
 ---
 
-## ⚡ Démarrage rapide (3 commandes)
+## ⚡ Démarrage rapide (2 commandes)
 
-1. **Cliquez sur "Use this template"** en haut de cette page 👆
-
-2. **Clonez et configurez** votre projet :
+1. **Clonez ce template** :
 
 ```bash
-git clone https://github.com/VOTRE_NOM/votre-projet.git
-cd votre-projet
-cp .env.example .env          # 1. Copier config
-# Éditer .env si besoin (secrets optionnels)
-bash template-setup.sh        # 2. Lancer setup
+git clone https://github.com/dyvan/github-project-llm-management.git ma-projet
+cd ma-projet
 ```
 
-**C'est tout !** 🎉 Votre Project Board est créé avec les automations actives.
+2. **Lancez le bootstrap** (génère .env et configure tout) :
 
-➡️ **[Guide complet (5 min)](../../wiki/Getting-Started)** • **[Vidéo démo (2 min)](../../wiki/Understanding-Workflows)**
+```bash
+bash scripts/bootstrap.sh
+```
+
+Ce script va vous demander:
+- 🔑 **GitHub Token** - Pour accès GitHub CLI
+- 🤖 **Gemini API Key** - Pour génération QCM et spécifications (optionnel)
+
+Puis il va créer:
+- ✅ `.env` - Fichier de configuration (jamais commité)
+- ✅ `.gitignore` - Exclusions pour secrets
+- ✅ Afficher les prochaines étapes
+
+**C'est tout !** 🎉 Votre projet est configuré et prêt à l'emploi.
+
+➡️ **[Guide complet (5 min)](#-guide-détaillé)** • **[Troubleshooting](#-besoin-daide-)**
 
 ---
 
