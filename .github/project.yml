@@ -109,3 +109,12 @@ agents:
     enabled: true
     on_events:
       - "issues.labeled"
+
+  qcm_generator:
+    enabled: true
+    provider: "gemini"
+    model: "gemini-1.5-flash"
+    trigger_label: "plan-with-gemini"
+    on_events:
+      - "issues.labeled"
+    description: "Generate specification questionnaire (QCM) when issue is moved to Ready status"
