@@ -79,6 +79,8 @@ jobs:
           git push
 
       - name: Add ready labels
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
         run: |
           gh label create "auto-branch" --description "Trigger automatic branch creation" --color "0075CA" 2>&1 || true
