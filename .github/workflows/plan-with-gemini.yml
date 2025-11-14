@@ -100,7 +100,7 @@ jobs:
             gh issue comment ${{ steps.issue.outputs.number }} \
               --body "⚠️ **QCM Generation Failed**
 
-An error occurred while generating the questionnaire. Please check the [workflow logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.
+An error occurred while generating the questionnaire. Please check the workflow logs for details.
 
 Common issues:
 - GEMINI_API_KEY not configured
