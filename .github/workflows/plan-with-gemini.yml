@@ -95,21 +95,6 @@ jobs:
           echo "❌ Failed to generate QCM"
           echo "Check the logs above for details"
 
-          # Post error message as comment (optional)
-          if [ -n "${{ steps.issue.outputs.number }}" ]; then
-            gh issue comment ${{ steps.issue.outputs.number }} \
-              --body "⚠️ **QCM Generation Failed**
-
-An error occurred while generating the questionnaire. Please check the workflow logs for details.
-
-Common issues:
-- GEMINI_API_KEY not configured
-- API rate limit exceeded
-- Network connectivity issues
-
-You can retry by removing and re-adding the \`plan-with-gemini\` label." || true
-          fi
-
       - name: Summary
         if: always()
         run: |
