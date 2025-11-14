@@ -65,93 +65,121 @@ class GeminiQCMGenerator:
             return self._generate_template_qcm(issue_type, issue_title, issue_number)
 
     def _build_prompt(self, issue_type: str, title: str, body: str, issue_number: int) -> str:
-        """Build prompt for Gemini to generate relevant questions"""
-        base_prompt = f"""You are a technical project manager helping to clarify requirements for a GitHub issue.
+        """Build optimized prompt for Gemini to generate relevant questions"""
+        base_prompt = f"""You are a senior technical project manager creating a focused questionnaire.
 
-**Issue #{issue_number}: {title}**
+**Issue:** #{issue_number}: {title}
+**Type:** {issue_type}
 
-**Issue Type:** {issue_type}
-
-**Issue Description:**
+**Description:**
 {body}
 
 ---
 
-Generate a questionnaire (QCM) with 3-5 well-thought questions to help clarify the specifications before implementation.
+Generate 3-5 focused questions to clarify specifications before implementation.
 
-**Requirements:**
-1. Questions should be specific to the issue content
-2. Questions should help clarify ambiguities and technical details
-3. Each question should have:
-   - A clear, concise question text
-   - 3-5 multiple choice options (or indicate if open-ended)
-   - Context explaining why this question matters
-4. Include one open-ended question at the end for additional notes
-5. Format the output in Markdown
+**Question Requirements:**
+1. Each question must be specific to this issue and focused on critical decisions
+2. Provide 3-5 clear, mutually exclusive options (or indicate if open-ended)
+3. Include context explaining WHY the question matters
+4. Include one open-ended question at the end for additional details
+5. Use French language throughout
 
-**Question Focus Areas by Type:**"""
+**Question Focus by Issue Type:**"""
 
         if issue_type == "feature":
             base_prompt += """
-- User experience and interface details
-- Technical implementation approach
-- Edge cases and error handling
-- Integration with existing features
-- Performance and scalability considerations"""
+
+For FEATURE, prioritize:
+- Scope: MVP vs complete feature vs extended scope
+- User Experience: What UI/UX is expected?
+- Integration: How does this integrate with existing features?
+- Performance: Any specific performance requirements?
+- Timeline: What's the urgency/deadline?"""
         elif issue_type == "bug":
             base_prompt += """
-- Reproduction steps clarification
-- Impact and severity assessment
-- Root cause investigation
-- Proposed fix approach
-- Regression testing requirements"""
+
+For BUG, prioritize:
+- Reproducibility: How consistently can it be reproduced?
+- Impact: How severe is this bug? (Blocking/High/Medium/Low)
+- Affected Systems: Which environments/components are affected?
+- Root Cause: Any suspected root cause?
+- Solution Approach: Hotfix vs permanent fix?"""
         elif issue_type == "task":
             base_prompt += """
-- Technical approach and architecture
-- Dependencies and blockers
-- Success criteria and deliverables
-- Timeline and milestones
-- Documentation requirements"""
+
+For TASK, prioritize:
+- Objective: What's the main goal? (Refactoring/Optimization/Setup/Documentation)
+- Technical Approach: What's the recommended method?
+- Dependencies: Are there blocking dependencies?
+- Success Criteria: How do we measure success?
+- Timeline: Estimated effort and timeline?"""
         else:
             base_prompt += """
-- Scope and objectives
-- Technical requirements
-- Success criteria
-- Dependencies
-- Timeline expectations"""
+
+For GENERAL issues, prioritize:
+- Objective: What are we accomplishing?
+- Scope: What's included/excluded?
+- Success Criteria: How do we know it's done?
+- Dependencies: What's needed to start?
+- Timeline: When should this be done?"""
 
         base_prompt += """
 
-**Output Format:**
-Use this markdown structure:
+**Output Format (Markdown):**
 
-## 🎯 Questionnaire de Spécification
+## 🎯 Questionnaire de Spécification - {issue_type.upper()}
 
-> Ce questionnaire vous aide à préciser les détails de cette issue avant l'implémentation.
+> Ce questionnaire aide à clarifier les détails avant l'implémentation.
 
-### Question 1: [Question Title]
+### Question 1: [Titre court et clair]
 
-**Contexte:** [Why this question matters]
+**Contexte:** [Pourquoi cette question est importante]
 
-- [ ] Option A: [Description]
-- [ ] Option B: [Description]
-- [ ] Option C: [Description]
-- [ ] Option D: [Description]
+- [ ] Option A: [Description claire]
+- [ ] Option B: [Description claire]
+- [ ] Option C: [Description claire]
+- [ ] Autre: _[Veuillez préciser]_
 
-### Question 2: [Question Title]
+### Question 2: [Titre]
 ...
+(Continue with questions)
 
-### Question Ouverte: Informations Supplémentaires
+### Question Ouverte: Détails Supplémentaires
 
-**Y a-t-il des détails importants que nous devrions considérer ?**
+**Y a-t-il des détails importants, contraintes ou considérations particulières ?**
 
-[Espace pour réponse libre]
+_[Votre réponse ici]_
 
 ---
 
-**Instructions:** Veuillez cocher les options pertinentes et ajouter vos commentaires. Une fois complété, nous pourrons démarrer l'implémentation avec toutes les informations nécessaires.
+## ✅ Prochaines Étapes
 
-Generate ONLY the questionnaire in Markdown format. Do not include any explanations before or after."""
+**1. Complétez ce questionnaire:**
+   - Cochez les options pertinentes
+   - Modifiez ce commentaire pour ajouter vos réponses
+   - Remplissez la question ouverte avec des détails
+
+**2. Une fois complété, déclenchez la génération de spécification détaillée:**
+
+   **Via ligne de commande:**
+   ```bash
+   gh issue edit {issue_number} --add-label "generate-specification"
+   ```
+
+   **Ou via l'interface GitHub:**
+   - Cliquez sur "Labels" à droite
+   - Trouvez et cochez `generate-specification`
+   - Le workflow se lancera automatiquement
+
+**3. Un rapport détaillé sera généré automatiquement ! 🤖**
+   - Rapport de spécification créé
+   - Sous-issue créée avec la spécification complète
+   - Branche de développement prêt à être utilisée
+
+---
+
+Generate ONLY the questionnaire in Markdown format above. Do not add any text before or after. Do not include explanations or preamble."""
 
         return base_prompt
 

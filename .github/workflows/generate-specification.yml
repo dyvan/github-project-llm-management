@@ -1,0 +1,103 @@
+name: Generate Specification from QCM
+
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue number to generate specification for'
+        required: true
+        type: number
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  generate-specification:
+    runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'issues' && github.event.label.name == 'generate-specification') ||
+      github.event_name == 'workflow_dispatch'
+
+    env:
+      GH_OWNER: ${{ github.repository_owner }}
+      GH_REPO: ${{ github.event.repository.name }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+
+      - name: Set issue number
+        id: issue
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            ISSUE_NUM=${{ inputs.issue_number }}
+          else
+            ISSUE_NUM=${{ github.event.issue.number }}
+          fi
+          echo "number=${ISSUE_NUM}" >> $GITHUB_OUTPUT
+          echo "📋 Processing issue #${ISSUE_NUM}"
+
+      - name: Check for Gemini API key
+        run: |
+          if [ -z "${{ secrets.GEMINI_API_KEY }}" ]; then
+            echo "❌ GEMINI_API_KEY secret is not set"
+            echo "📚 Please configure the GEMINI_API_KEY secret in your repository settings"
+            exit 1
+          fi
+          echo "✅ Gemini API key is configured"
+
+      - name: Generate specification
+        id: generate
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          echo "🤖 Generating detailed specification from QCM responses..."
+          python scripts/generate_specification.py \
+            --issue ${{ steps.issue.outputs.number }} \
+            --save-files \
+            --create-sub-issue
+
+      - name: Commit specification files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add specifications/
+          git commit -m "docs: Add specification for issue #${{ steps.issue.outputs.number }}" || echo "No changes to commit"
+          git push
+
+      - name: Add ready labels
+        run: |
+          gh issue edit ${{ steps.issue.outputs.number }} \
+            --add-label "auto-branch,specifications-ready"
+          echo "✅ Labels added: auto-branch, specifications-ready"
+
+      - name: Success summary
+        run: |
+          echo "📊 Specification Generation - Success Summary"
+          echo "   Issue: #${{ steps.issue.outputs.number }}"
+          echo "   Status: ✅ Completed"
+          echo ""
+          echo "Generated:"
+          echo "   ✅ Specification files saved to specifications/issue-${{ steps.issue.outputs.number }}/"
+          echo "   ✅ Sub-issue created with detailed specification"
+          echo "   ✅ Labels added: auto-branch, specifications-ready"
+          echo ""
+          echo "Next Step: A branch will be automatically created. Start development!"
+
+      - name: Handle errors
+        if: failure()
+        run: |
+          echo "❌ Specification generation failed"
+          echo "Check the logs above for details"
