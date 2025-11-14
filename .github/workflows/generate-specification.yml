@@ -79,10 +79,13 @@ jobs:
           git push
 
       - name: Add ready labels
+        continue-on-error: true
         run: |
+          gh label create "auto-branch" --description "Trigger automatic branch creation" --color "0075CA" 2>&1 || true
+          gh label create "specifications-ready" --description "Specification document ready" --color "28A745" 2>&1 || true
           gh issue edit ${{ steps.issue.outputs.number }} \
-            --add-label "auto-branch,specifications-ready"
-          echo "✅ Labels added: auto-branch, specifications-ready"
+            --add-label "auto-branch,specifications-ready" 2>&1 || echo "ℹ️  Labels may already be present"
+          echo "✅ Labels processed"
 
       - name: Success summary
         run: |
