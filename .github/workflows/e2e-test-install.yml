@@ -189,19 +189,7 @@ jobs:
           # Test 4: Project board creation (if GH_TOKEN provided)
           echo "4️⃣  Validating GitHub project creation..."
           if [ -n "$PROJECT_DIR" ]; then
-            EXPECTED_PROJECT="Project Board : $TEST_REPO"
-            PROJECT_NUM=$(gh project list --owner dyvan-bot --format json 2>/dev/null | \
-              python3 -c "
-import sys, json
-try:
-    data = json.load(sys.stdin)
-    for p in data.get('projects', []):
-        if '$TEST_REPO' in p.get('title', ''):
-            print(p.get('number', ''))
-            break
-except:
-    pass
-" 2>/dev/null)
+            PROJECT_NUM=$(gh project list --owner dyvan-bot --format json 2>/dev/null | python3 -c "import sys,json;d=json.load(sys.stdin);[print(p.get('number','')) for p in d.get('projects',[]) if '$TEST_REPO' in p.get('title','')]" 2>/dev/null | head -1)
 
             if [ -n "$PROJECT_NUM" ]; then
               echo "   ✅ PASS: GitHub project created (#$PROJECT_NUM)"
