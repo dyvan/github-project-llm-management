@@ -232,7 +232,7 @@ clone_template() {
         cd "$project_name" || return 1
 
         # Keep only essential files for a new project
-        # Note: claude.md is kept as it's essential documentation
+        # Note: template-setup.sh and CLAUDE.md are essential and must be preserved
         rm -rf agents/ docs/ tests/ specifications/ tools/ \
                AUTOMATION.md CLAUDE-USER-TEMPLATE.md CODE_OF_CONDUCT.md \
                CONTRIBUTING.md IMPROVEMENTS_TODO.md ISSUES_FIXED.md \
@@ -240,6 +240,18 @@ clone_template() {
                TEMPLATE_INDEX.md TESTING_PHASE_1_2.md WORKFLOW_SPECIFICATION.md \
                pytest.ini requirements-dev.txt setup-project.sh mkdocs.yml \
                .claude/ 2>/dev/null || true
+
+        # Ensure essential template files are preserved
+        # These are critical for the bootstrap process
+        if [ ! -f "template-setup.sh" ]; then
+            log_warning "template-setup.sh missing, restoring from git..."
+            git checkout template-setup.sh 2>/dev/null || log_error "Could not restore template-setup.sh"
+        fi
+
+        if [ ! -f "CLAUDE.md" ]; then
+            log_warning "CLAUDE.md missing, restoring from git..."
+            git checkout CLAUDE.md 2>/dev/null || log_error "Could not restore CLAUDE.md"
+        fi
 
         log_success "Project cleaned (kept only essentials)"
         cd - > /dev/null || return 1
