@@ -185,7 +185,7 @@ merge_template_to_existing() {
     cp -r "$temp_clone/template" "$current_dir/template" 2>/dev/null || true
 
     # Copy essential configuration files
-    cp "$temp_clone/claude.md" "$current_dir/claude.md" 2>/dev/null || true
+    cp "$temp_clone/CLAUDE.md" "$current_dir/CLAUDE.md" 2>/dev/null || true
     cp "$temp_clone/template-setup.sh" "$current_dir/template-setup.sh" 2>/dev/null || true
 
     # Merge .github/workflows if it doesn't exist
@@ -268,13 +268,13 @@ clone_template() {
 ensure_claude_md() {
     local project_dir="$1"
 
-    # Ensure claude.md exists (it should already be at root from cloning)
+    # Ensure CLAUDE.md exists (it should already be at root from cloning)
     # This is the main documentation file for LLM project management
-    if [ -f "$project_dir/claude.md" ]; then
-        log_info "✅ claude.md documentation is present" >&2
+    if [ -f "$project_dir/CLAUDE.md" ]; then
+        log_info "✅ CLAUDE.md documentation is present" >&2
         return 0
     else
-        log_warning "claude.md not found at project root" >&2
+        log_warning "CLAUDE.md not found at project root" >&2
         return 0
     fi
 }
