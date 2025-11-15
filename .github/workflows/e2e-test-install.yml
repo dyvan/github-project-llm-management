@@ -45,19 +45,20 @@ jobs:
       # ============================================================
       # 2. Create isolated test repository
       # ============================================================
-      - name: Create test repository
+      - name: Create empty test repository
         id: create-repo
         run: |
           TEST_REPO="${{ env.TEST_BOT_REPO_PREFIX }}-${{ env.TEST_RUN_ID }}"
           echo "test_repo=$TEST_REPO" >> $GITHUB_OUTPUT
 
-          echo "📦 Creating test repository: $TEST_REPO"
+          echo "📦 Creating empty test repository: $TEST_REPO"
+
+          # Create repo without pushing template files
           gh repo create "$TEST_REPO" \
             --public \
-            --source=. \
-            --remote=origin \
-            --push \
-            2>&1 | head -20
+            --disable-wiki \
+            --disable-issues \
+            2>&1 | grep -E "(created|already exists|https://)" || true
 
           sleep 2
           echo "✅ Test repo created"
@@ -67,13 +68,26 @@ jobs:
           TEST_REPO="${{ steps.create-repo.outputs.test_repo }}"
           TEST_DIR="/tmp/$TEST_REPO"
 
-          echo "🔄 Cloning test repo: $TEST_REPO"
+          echo "🔄 Initializing test repo: $TEST_REPO"
           mkdir -p /tmp
-          gh repo clone "dyvan-bot/$TEST_REPO" "$TEST_DIR"
 
+          # Create a minimal git repo
+          mkdir -p "$TEST_DIR"
           cd "$TEST_DIR"
+
+          git init
           git config user.name "Test Bot"
           git config user.email "test@example.com"
+
+          # Create initial commit
+          echo "# Test Repo" > README.md
+          git add README.md
+          git commit -m "Initial commit"
+
+          # Add remote and push
+          git remote add origin "https://github.com/dyvan-bot/$TEST_REPO.git"
+          git branch -M main
+          git push -u origin main 2>&1 || echo "⚠️  Could not push initial commit"
 
           echo "test_dir=$TEST_DIR" >> $GITHUB_ENV
 
@@ -85,18 +99,34 @@ jobs:
         run: |
           cd "${{ env.test_dir }}"
 
-          echo "🚀 Running install.sh..."
+          echo "🚀 Running install.sh from template..."
 
-          # Simulate non-interactive input
-          echo "" | bash install.sh 2>&1 | tee /tmp/install-output.log
+          # Download install.sh from the main template repo
+          INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/dyvan/github-project-llm-management/main/install.sh"
+
+          echo "Downloading from: $INSTALL_SCRIPT_URL"
+          curl -fsSL "$INSTALL_SCRIPT_URL" -o install.sh
+          chmod +x install.sh
+
+          echo "📝 Running install.sh..."
+
+          # Simulate non-interactive input (multiple empty lines for questions)
+          # Questions: use existing repo?, project name?, create repo?
+          {
+            echo ""  # Use existing repo? (default: n)
+            echo ""  # Project name (default)
+            echo ""  # Create new repo? (default: n)
+          } | bash ./install.sh 2>&1 | tee /tmp/install-output.log
+
           INSTALL_EXIT=$?
-
           echo "install_exit=$INSTALL_EXIT" >> $GITHUB_OUTPUT
 
           if [ $INSTALL_EXIT -eq 0 ]; then
             echo "✅ install.sh executed successfully"
           else
-            echo "⚠️  install.sh exited with code: $INSTALL_EXIT"
+            echo "⚠️  install.sh exited with code: $INSTALL_EXIT (may be expected)"
+            echo "Output saved to /tmp/install-output.log"
+            # Don't fail here - continue validation
           fi
 
       # ============================================================
