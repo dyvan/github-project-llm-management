@@ -175,6 +175,10 @@ clone_and_setup() {
     [ ! -f "CLAUDE.md" ] && git checkout CLAUDE.md 2>/dev/null
     [ ! -f "template-setup.sh" ] && git checkout template-setup.sh 2>/dev/null
 
+    # Remove the template's remote origin
+    log "Preparing for new repository..."
+    git remote remove origin 2>/dev/null || true
+
     ok "Project ready at: $project_name/"
     return 0
 }
@@ -189,21 +193,19 @@ create_env_file() {
     local gh_token="$1"
     local gemini_key="$2"
 
-    # Get GitHub owner/repo from git if possible
+    # Use the collected project name as the repo name
+    local gh_repo="$COLLECTED_PROJECT_NAME"
     local gh_owner=""
-    local gh_repo=""
 
-    if git rev-parse --git-dir >/dev/null 2>&1; then
-        local url=$(git config --get remote.origin.url 2>/dev/null)
-        if [ -n "$url" ]; then
-            # Extract owner/repo from git URL
-            gh_owner=$(echo "$url" | sed -E 's|.*[:/]([^/]+)/[^/]+\.git?$|\1|')
-            gh_repo=$(echo "$url" | sed -E 's|.*[:/][^/]+/([^/]+)\.git?$|\1|')
-        fi
+    # Try to detect the GitHub username using the provided token
+    if command -v gh &>/dev/null && [[ "$gh_token" != *"PLACEHOLDER"* ]]; then
+        gh_owner=$(GH_TOKEN="$gh_token" gh api user -q .login 2>/dev/null || echo "")
     fi
 
-    # Use collected project name as repo if no git remote
-    [ -z "$gh_repo" ] && gh_repo="$COLLECTED_PROJECT_NAME"
+    # Fallback to placeholder if detection fails
+    if [ -z "$gh_owner" ]; then
+        gh_owner="your-username"
+    fi
 
     # Write .env file
     cat > ".env" << EOF
@@ -327,11 +329,11 @@ create_github_repo() {
         return 0
     fi
 
-    # Remove old remote and create new one
+    # Remove old remote and create new one (defensive, already done in clone_and_setup)
     git remote remove origin 2>/dev/null || true
 
     log "Creating repository..."
-    if gh repo create "$project_name" --private --source=. --remote=origin --push 2>/dev/null; then
+    if GH_TOKEN="$gh_token" gh repo create "$project_name" --private --source=. --remote=origin --push 2>/dev/null; then
         ok "Repository created and pushed to GitHub"
     else
         err "Could not create repository automatically"
