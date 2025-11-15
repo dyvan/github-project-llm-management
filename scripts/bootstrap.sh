@@ -1,17 +1,20 @@
 #!/bin/bash
 #
-# Bootstrap - Simple Setup for New Project
+# Bootstrap - Project Setup & Configuration
 #
 # Generates:
-# - .env with API key placeholders
+# - .env with GitHub and API configuration
 # - .gitignore with common exclusions
+# Validates required tokens and explains setup
 #
 
 set +e
 
 log() { echo "→ $*"; }
 ok() { echo "✓ $*"; }
+err() { echo "✗ $*" >&2; }
 section() { echo ""; echo "== $* =="; echo ""; }
+info() { echo ""; echo "ℹ️  $*"; }
 
 # Safe read that works with piped stdin (tries /dev/tty first)
 safe_read() {
@@ -37,7 +40,7 @@ safe_read() {
 # ============================================================================
 
 create_env() {
-    section "1. Environment Configuration (.env)"
+    section "1. Environment Configuration"
 
     local env_file=".env"
 
@@ -62,29 +65,89 @@ create_env() {
         fi
     fi
 
-    # Ask for tokens
+    # Prompt for GitHub Token (REQUIRED for project board features)
+    echo ""
+    info "GitHub Personal Access Token (REQUIRED)"
+    log "Used for:"
+    log "  • Creating GitHub project board"
+    log "  • Creating and managing issues"
+    log "  • Setting up labels and workflows"
+    log ""
+    log "Get your token here:"
+    log "  https://github.com/settings/tokens/new"
+    log ""
+    log "Required scopes:"
+    log "  ✓ repo (full control of repositories)"
+    log "  ✓ project (full control of projects)"
+    log "  ✓ workflow (update workflows)"
+    log "  ✓ read:org (read organization data)"
+    log ""
     local gh_token=""
+    safe_read "Paste your GH_TOKEN (or leave blank): " gh_token
+
+    if [ -z "$gh_token" ]; then
+        err ""
+        err "GH_TOKEN is required for this template!"
+        err ""
+        err "To use this template, you need:"
+        err "  1. Create token: https://github.com/settings/tokens/new"
+        err "  2. Select required scopes (repo, project, workflow, read:org)"
+        err "  3. Copy the token"
+        err "  4. Edit .env and set GH_TOKEN=<your-token>"
+        err "  5. Run: bash scripts/bootstrap.sh again"
+        err ""
+        return 1
+    fi
+
+    ok "GH_TOKEN configured"
+
+    # Prompt for Gemini API Key (OPTIONAL for AI/QCM features)
+    echo ""
+    info "Google Gemini API Key (OPTIONAL - for AI features)"
+    log "Used for:"
+    log "  • QCM (Questionnaire) generation"
+    log "  • Specification generation from QCM"
+    log "  • AI-powered planning workflows"
+    log ""
+    log "Get your key here:"
+    log "  https://aistudio.google.com/app/apikey"
+    log ""
+    log "If skipped: AI features will be disabled (add later if needed)"
+    log ""
     local gemini_key=""
-    safe_read "GitHub Token (GH_TOKEN) - leave blank to skip: " gh_token
-    safe_read "Gemini API Key (optional) - leave blank to skip: " gemini_key
+    safe_read "Paste your GEMINI_API_KEY (or leave blank to skip): " gemini_key
+
+    if [ -z "$gemini_key" ]; then
+        log "Gemini API Key skipped - AI features will be disabled"
+        gemini_key="PLACEHOLDER_GEMINI_API_KEY_CHANGE_ME"
+    else
+        ok "GEMINI_API_KEY configured"
+    fi
 
     # Write .env
     cat > "$env_file" << EOF
+# ============================================================================
 # Environment Configuration
-# NEVER commit this file to git - it contains secrets
+# ============================================================================
+# NEVER commit this file to git - it contains secrets!
+# It's already excluded by .gitignore
 
-# GitHub Configuration
-# Get token: https://github.com/settings/tokens/new
+# GitHub Configuration (REQUIRED)
+# ===============================
+# Personal Access Token for GitHub operations
+# Get it at: https://github.com/settings/tokens/new
 # Required scopes: repo, project, workflow, read:org
-GH_TOKEN=${gh_token:-PLACEHOLDER_GH_TOKEN_CHANGE_ME}
+GH_TOKEN=$gh_token
 
 # Repository Context (auto-detected from git)
 GH_OWNER=${gh_owner:-your-username}
 GH_REPO=${gh_repo:-your-repository}
 
-# Gemini API Key (optional, for AI features)
-# Get key: https://aistudio.google.com/app/apikey
-GEMINI_API_KEY=${gemini_key:-PLACEHOLDER_GEMINI_API_KEY_CHANGE_ME}
+# Gemini API Key (OPTIONAL - for AI/QCM features)
+# ================================================
+# Get key at: https://aistudio.google.com/app/apikey
+# If not set: AI features and QCM generation will be disabled
+GEMINI_API_KEY=$gemini_key
 
 # LLM Configuration
 LLM_PROVIDER=claude
@@ -92,10 +155,10 @@ LLM_MODEL=claude-3-5-sonnet-20241022
 
 # Logging
 LOG_LEVEL=INFO
+
 EOF
 
-    ok ".env created"
-    [ -z "$gh_token" ] && log "Note: Add GH_TOKEN to .env to enable GitHub setup" || ok "GitHub token configured"
+    ok ".env created with configuration"
     return 0
 }
 
@@ -122,39 +185,55 @@ create_gitignore() {
 
     # Create comprehensive .gitignore
     cat > "$gitignore_file" << 'EOF'
+# ============================================================================
 # Environment & Secrets
+# ============================================================================
 .env
 .env.local
 .env.*.local
 *.pem
 *.key
 secrets/
+credentials/
 
+# ============================================================================
 # IDE & Editor
+# ============================================================================
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 .DS_Store
+.sublime-project
+.sublime-workspace
 
+# ============================================================================
 # Python
+# ============================================================================
 __pycache__/
 *.py[cod]
 *$py.class
 *.egg-info/
 dist/
 build/
+.pytest_cache/
 
+# ============================================================================
 # Node
+# ============================================================================
 node_modules/
 .npm
 package-lock.json
+yarn.lock
 
+# ============================================================================
 # Misc
+# ============================================================================
 .cache/
 .temp/
 *.log
+.DS_Store
 EOF
 
     ok ".gitignore created"
@@ -168,17 +247,34 @@ EOF
 summary() {
     section "Setup Complete"
     echo ""
-    log "Files created:"
-    log "  - .env (configuration, keep secret!)"
-    log "  - .gitignore (excludes .env and common artifacts)"
+    ok "Files created:"
+    log "  • .env (configuration with GitHub tokens)"
+    log "  • .gitignore (excludes .env and artifacts)"
     echo ""
-    log "Next steps:"
-    log "  1. Review .env and add your tokens:"
-    log "     - GH_TOKEN for GitHub features"
-    log "     - GEMINI_API_KEY for AI features (optional)"
+
+    # Check what features are enabled
+    local gemini_status="disabled (add GEMINI_API_KEY to enable)"
+    if [ -f ".env" ] && grep -q "PLACEHOLDER_GEMINI" .env; then
+        gemini_status="disabled (add key to .env)"
+    elif [ -f ".env" ] && ! grep -q "PLACEHOLDER_GEMINI" .env; then
+        gemini_status="enabled ✓"
+    fi
+
+    echo ""
+    info "Feature Status:"
+    log "  • GitHub Project Board: enabled ✓"
+    log "  • Issue Management: enabled ✓"
+    log "  • AI/QCM Features: $gemini_status"
+    echo ""
+
+    info "Next steps:"
+    log "  1. Verify .env has your GH_TOKEN configured"
+    log "  2. (Optional) Add GEMINI_API_KEY for AI features"
+    log "  3. Run GitHub setup to create project board:"
     log ""
-    log "  2. To configure GitHub project board, run:"
     log "     bash template-setup.sh"
+    log ""
+    log "  4. Start creating issues and managing your project!"
     echo ""
 }
 
@@ -188,11 +284,19 @@ summary() {
 
 main() {
     echo ""
-    echo "Project Bootstrap"
+    echo "Project Bootstrap - Environment Setup"
     echo ""
 
-    create_env || return 1
-    create_gitignore || return 1
+    if ! create_env; then
+        err "Bootstrap failed - GH_TOKEN is required"
+        return 1
+    fi
+
+    if ! create_gitignore; then
+        err "Failed to create .gitignore"
+        return 1
+    fi
+
     summary
 
     return 0

@@ -70,8 +70,13 @@ detect_existing_repo() {
 # ============================================================================
 
 ask_project_name() {
+    echo ""
+    log "This will be the name of your Git repository"
+    log "Examples: my-project, awesome-app, team-dashboard"
+    echo ""
+
     local name=""
-    safe_read "Project name (default: github-project-llm-management): " name
+    safe_read "Repository name (default: github-project-llm-management): " name
 
     # Use default if empty
     name="${name:-github-project-llm-management}"
@@ -92,15 +97,21 @@ clone_and_setup() {
 
     section "2. Cloning Template"
 
+    log "Downloading template from GitHub..."
+    log "  Repository: github.com/dyvan/github-project-llm-management"
+    log "  Destination: $project_name/"
+    echo ""
+
     if ! git clone https://github.com/dyvan/github-project-llm-management.git "$project_name" 2>/dev/null; then
         err "Failed to clone template"
         return 1
     fi
-    ok "Template cloned: $project_name"
+    ok "Template downloaded"
 
     cd "$project_name" || return 1
 
-    # Clean unnecessary files
+    log "Removing unnecessary files..."
+    # Clean unnecessary files (keep only essentials)
     rm -rf agents/ docs/ tests/ specifications/ tools/ \
            AUTOMATION.md CLAUDE-USER-TEMPLATE.md CODE_OF_CONDUCT.md \
            CONTRIBUTING.md IMPROVEMENTS_TODO.md ISSUES_FIXED.md \
@@ -112,7 +123,7 @@ clone_and_setup() {
     [ ! -f "CLAUDE.md" ] && git checkout CLAUDE.md 2>/dev/null
     [ ! -f "template-setup.sh" ] && git checkout template-setup.sh 2>/dev/null
 
-    ok "Project ready at: $project_name"
+    ok "Project ready at: $project_name/"
     return 0
 }
 
@@ -228,11 +239,27 @@ main() {
 
     section "Installation Complete!"
     echo ""
+    ok "Your project is ready at: $project_name/"
+    echo ""
+
     log "Next steps:"
-    log "  1. cd $project_name"
-    log "  2. Review .env and add your tokens if needed"
-    log "  3. Run: bash template-setup.sh (to configure GitHub)"
-    log "  4. Start creating issues!"
+    log ""
+    log "  1. Enter your project directory:"
+    log "     cd $project_name"
+    log ""
+    log "  2. Review configuration:"
+    log "     cat .env"
+    log ""
+    log "  3. If GH_TOKEN is missing, add it to .env:"
+    log "     - Get token: https://github.com/settings/tokens/new"
+    log "     - Required scopes: repo, project, workflow, read:org"
+    log "     - Edit .env and set GH_TOKEN=<your-token>"
+    log ""
+    log "  4. Setup GitHub project board and features:"
+    log "     bash template-setup.sh"
+    log ""
+    log "  5. Start creating issues to manage your project!"
+    log ""
     echo ""
 
     return 0
