@@ -10,7 +10,7 @@
 # 4. If GH_TOKEN not provided: shows clear instructions for manual setup
 #
 
-set -e
+set +e  # Don't exit on errors, handle them explicitly
 
 # Colors
 RED='\033[0;31m'
@@ -30,37 +30,37 @@ PROJECT_ROOT="$( cd "$SCRIPT_DIR/.." && pwd )"
 # ============================================================================
 
 banner() {
-    echo -e "${CYAN}"
-    echo "╔════════════════════════════════════════════════════════════════╗"
-    echo "║  🚀 GitHub Project LLM Management - Complete Bootstrap         ║"
-    echo "║                                                                ║"
-    echo "║  This script will initialize your project completely           ║"
-    echo "╚════════════════════════════════════════════════════════════════╝"
-    echo -e "${NC}"
+    echo -e "${CYAN}" >&2
+    echo "╔════════════════════════════════════════════════════════════════╗" >&2
+    echo "║  🚀 GitHub Project LLM Management - Complete Bootstrap         ║" >&2
+    echo "║                                                                ║" >&2
+    echo "║  This script will initialize your project completely           ║" >&2
+    echo "╚════════════════════════════════════════════════════════════════╝" >&2
+    echo -e "${NC}" >&2
 }
 
 log_info() {
-    echo -e "${BLUE}ℹ️  $1${NC}"
+    echo -e "${BLUE}ℹ️  $1${NC}" >&2
 }
 
 log_success() {
-    echo -e "${GREEN}✅ $1${NC}"
+    echo -e "${GREEN}✅ $1${NC}" >&2
 }
 
 log_warning() {
-    echo -e "${YELLOW}⚠️  $1${NC}"
+    echo -e "${YELLOW}⚠️  $1${NC}" >&2
 }
 
 log_error() {
-    echo -e "${RED}❌ $1${NC}"
+    echo -e "${RED}❌ $1${NC}" >&2
 }
 
 log_section() {
-    echo ""
-    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${MAGENTA}$1${NC}"
-    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo ""
+    echo "" >&2
+    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}" >&2
+    echo -e "${MAGENTA}$1${NC}" >&2
+    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}" >&2
+    echo "" >&2
 }
 
 check_prerequisites() {
@@ -109,22 +109,23 @@ prompt_for_token() {
     local link="$3"
     local var_name="$4"
 
-    echo ""
-    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${MAGENTA}$token_name${NC}"
-    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo ""
-    echo -e "${BLUE}$description${NC}"
-    echo ""
-    echo -e "📖 Get your token here: ${CYAN}$link${NC}"
-    echo ""
+    echo "" >&2
+    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}" >&2
+    echo -e "${MAGENTA}${token_name}${NC}" >&2
+    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}" >&2
+    echo "" >&2
+    echo -e "${BLUE}${description}${NC}" >&2
+    echo "" >&2
+    echo -e "📖 Get your token here: ${CYAN}${link}${NC}" >&2
+    echo "" >&2
 
     # Read token with validation
     local token_value=""
     local attempts=0
 
     while [ -z "$token_value" ] && [ $attempts -lt 3 ]; do
-        read -p "$(echo -e ${YELLOW})Enter your $token_name (or 'skip' to skip):$(echo -e ${NC}) " token_value
+        # Use simple plain text prompt without ANSI codes for better visibility
+        read -p "Enter your $token_name (or 'skip' to skip): " token_value
 
         if [ "$token_value" = "skip" ] || [ "$token_value" = "Skip" ]; then
             log_warning "Skipped $token_name (you can add it later to .env)"
