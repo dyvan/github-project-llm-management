@@ -62,11 +62,16 @@ ask_project_name() {
     log_section "1. Project Name"
 
     local project_name=""
+    # Show a clearer prompt with better default
+    echo -e "${BLUE}Project Name Configuration${NC}" >&2
+    echo -e "  ${YELLOW}Default: github-project-llm-management${NC}" >&2
+    echo "" >&2
+
     # Use plain read without fancy ANSI codes in prompt to avoid issues
-    read -p "Enter your project name (or press Enter for 'github-project'): " project_name
+    read -p "Enter your project name (or press Enter for default): " project_name
 
     if [ -z "$project_name" ]; then
-        project_name="github-project"
+        project_name="github-project-llm-management"
     fi
 
     # Remove all ANSI escape sequences thoroughly
