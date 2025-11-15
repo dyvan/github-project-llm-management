@@ -11,6 +11,7 @@ log() { echo "→ $*"; }
 ok() { echo "✓ $*"; }
 err() { echo "✗ $*" >&2; }
 section() { echo ""; echo "== $* =="; echo ""; }
+info() { echo ""; echo "ℹ️  $*"; }
 
 # Safe read that works with piped stdin (tries /dev/tty first)
 safe_read() {
@@ -36,7 +37,7 @@ safe_read() {
 # ============================================================================
 
 check_prerequisites() {
-    section "1. Prerequisites"
+    section "Checking Prerequisites"
 
     if ! command -v git &>/dev/null; then
         err "Git not installed. Install from: https://git-scm.com/"
@@ -44,48 +45,99 @@ check_prerequisites() {
     fi
     ok "Git available"
 
+    if ! command -v gh &>/dev/null; then
+        log "⚠️  GitHub CLI (gh) not installed - some features will be limited"
+        log "   Install from: https://cli.github.com/"
+    else
+        ok "GitHub CLI available"
+    fi
+
     return 0
 }
 
 # ============================================================================
-# Detect Existing Repository
+# Welcome & Collect Configuration
 # ============================================================================
 
-detect_existing_repo() {
-    if git rev-parse --git-dir >/dev/null 2>&1; then
-        local remote=$(git config --get remote.origin.url 2>/dev/null)
-        if [ -n "$remote" ]; then
-            log "Git repository found: $remote"
-            local reply=""
-            safe_read "Add template to existing repo? (y/n): " reply
-            [ "$reply" = "y" ] && echo "existing" || echo "new"
-            return 0
-        fi
-    fi
-    echo "new"
-}
-
-# ============================================================================
-# Get Project Name
-# ============================================================================
-
-ask_project_name() {
+welcome_and_collect_info() {
     echo ""
-    log "This will be the name of your Git repository"
+    echo "🚀 Welcome to GitHub Project LLM Management Installer!"
+    echo ""
+    log "This wizard will help you set up your project in a few simple steps."
+    log "We'll collect 3 pieces of information to configure your installation."
+    echo ""
+
+    # ========== 1. Project Name ==========
+    section "1/3 - Project Name"
+    log "This will be the name of your Git repository and local directory."
     log "Examples: my-project, awesome-app, team-dashboard"
     echo ""
 
-    local name=""
-    safe_read "Repository name (default: github-project-llm-management): " name
+    local project_name=""
+    safe_read "Project name [github-project-llm-management]: " project_name
 
     # Use default if empty
-    name="${name:-github-project-llm-management}"
+    project_name="${project_name:-github-project-llm-management}"
 
-    # Clean ANSI codes if piped
-    name=$(printf '%s\n' "$name" | sed 's/\x1b\[[0-9;]*m//g' | sed 's/\[0[;0-9]*m//g' | tr -cd '[:alnum:]._-')
-    [ -z "$name" ] && name="github-project-llm-management"
+    # Clean ANSI codes and special chars if piped
+    project_name=$(printf '%s\n' "$project_name" | sed 's/\x1b\[[0-9;]*m//g' | sed 's/\[0[;0-9]*m//g' | tr -cd '[:alnum:]._-')
+    [ -z "$project_name" ] && project_name="github-project-llm-management"
 
-    echo "$name"
+    ok "Project name: $project_name"
+
+    # ========== 2. GitHub Token ==========
+    section "2/3 - GitHub Personal Access Token (REQUIRED)"
+    log "This token will be stored in your .env file and used for:"
+    log "  • Creating and managing GitHub issues"
+    log "  • Configuring project board automatically"
+    log "  • Managing labels and workflows"
+    echo ""
+    log "📝 How to get your token:"
+    log "   1. Go to: https://github.com/settings/tokens/new"
+    log "   2. Select scopes: repo, project, workflow, read:org"
+    log "   3. Generate and copy the token"
+    echo ""
+
+    local gh_token=""
+    safe_read "GitHub Token (required): " gh_token
+
+    if [ -z "$gh_token" ]; then
+        err "GitHub token is required for this template."
+        err "You can configure it later by editing the .env file"
+        gh_token="PLACEHOLDER_CHANGE_ME"
+    else
+        ok "GitHub token configured"
+    fi
+
+    # ========== 3. Gemini API Key ==========
+    section "3/3 - Google Gemini API Key (OPTIONAL)"
+    log "This key will be stored in your .env file and enable:"
+    log "  • Automatic QCM (questionnaire) generation"
+    log "  • AI-assisted specification creation"
+    log "  • Intelligent planning workflows"
+    echo ""
+    log "📝 How to get your key:"
+    log "   Go to: https://aistudio.google.com/app/apikey"
+    echo ""
+    log "💡 You can leave this blank and add it later to your .env file"
+    echo ""
+
+    local gemini_key=""
+    safe_read "Gemini API Key [optional]: " gemini_key
+
+    if [ -z "$gemini_key" ]; then
+        log "Gemini API key skipped - AI features will be disabled"
+        gemini_key="PLACEHOLDER_CHANGE_ME"
+    else
+        ok "Gemini API key configured"
+    fi
+
+    # Export variables for use in other functions
+    export COLLECTED_PROJECT_NAME="$project_name"
+    export COLLECTED_GH_TOKEN="$gh_token"
+    export COLLECTED_GEMINI_KEY="$gemini_key"
+
+    return 0
 }
 
 # ============================================================================
@@ -128,18 +180,117 @@ clone_and_setup() {
 }
 
 # ============================================================================
-# Bootstrap Configuration
+# Create .env Configuration File
 # ============================================================================
 
-bootstrap() {
-    section "3. Bootstrap Setup"
+create_env_file() {
+    section "Creating Configuration"
 
-    if [ ! -f "scripts/bootstrap.sh" ]; then
-        err "Bootstrap script not found"
-        return 1
+    local gh_token="$1"
+    local gemini_key="$2"
+
+    # Get GitHub owner/repo from git if possible
+    local gh_owner=""
+    local gh_repo=""
+
+    if git rev-parse --git-dir >/dev/null 2>&1; then
+        local url=$(git config --get remote.origin.url 2>/dev/null)
+        if [ -n "$url" ]; then
+            # Extract owner/repo from git URL
+            gh_owner=$(echo "$url" | sed -E 's|.*[:/]([^/]+)/[^/]+\.git?$|\1|')
+            gh_repo=$(echo "$url" | sed -E 's|.*[:/][^/]+/([^/]+)\.git?$|\1|')
+        fi
     fi
 
-    bash scripts/bootstrap.sh
+    # Use collected project name as repo if no git remote
+    [ -z "$gh_repo" ] && gh_repo="$COLLECTED_PROJECT_NAME"
+
+    # Write .env file
+    cat > ".env" << EOF
+# ============================================================================
+# Environment Configuration
+# ============================================================================
+# ⚠️  IMPORTANT: Never commit this file - it contains secrets!
+# It's already excluded by .gitignore
+
+# GitHub Configuration (REQUIRED)
+# ================================
+# Personal Access Token for GitHub operations
+# Get it at: https://github.com/settings/tokens/new
+# Required scopes: repo, project, workflow, read:org
+GH_TOKEN=$gh_token
+
+# Repository Context (auto-detected from git)
+GH_OWNER=${gh_owner:-your-username}
+GH_REPO=${gh_repo}
+
+# GitHub Project Board Number (configured via template-setup.sh)
+GH_PROJECT_NUMBER=0
+
+# Gemini API Key (OPTIONAL - for AI features)
+# ============================================
+# Get key at: https://aistudio.google.com/app/apikey
+# If not set: AI features and QCM generation will be disabled
+GEMINI_API_KEY=$gemini_key
+
+# LLM Configuration
+LLM_PROVIDER=claude
+LLM_MODEL=claude-3-5-sonnet-20241022
+
+# Logging
+LOG_LEVEL=INFO
+
+EOF
+
+    ok ".env file created"
+
+    # Create or update .gitignore
+    if [ ! -f ".gitignore" ]; then
+        log "Creating .gitignore..."
+        cat > ".gitignore" << 'EOF'
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets/
+credentials/
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Node
+node_modules/
+.npm
+package-lock.json
+yarn.lock
+
+# Misc
+.cache/
+.temp/
+*.log
+EOF
+        ok ".gitignore created"
+    elif ! grep -q "^\.env$" ".gitignore"; then
+        echo ".env" >> ".gitignore"
+        ok ".env added to .gitignore"
+    fi
+
     return 0
 }
 
@@ -151,20 +302,26 @@ create_github_repo() {
     local project_name="$1"
     local gh_token="$2"
 
-    section "4. GitHub Repository"
+    section "Creating GitHub Repository (Optional)"
 
     if [[ "$gh_token" == *"PLACEHOLDER"* ]]; then
-        log "No GitHub token provided"
-        log "To create a GitHub repo, run:"
-        log "  gh repo create $project_name --private --source=. --remote=origin --push"
+        log "GitHub token not provided - skipping repository creation"
         log ""
-        log "Then setup the project board:"
-        log "  bash template-setup.sh"
+        log "To create a GitHub repo later, run:"
+        log "  gh repo create $project_name --private --source=. --remote=origin --push"
+        return 0
+    fi
+
+    if ! command -v gh &>/dev/null; then
+        log "GitHub CLI not available - manual creation required"
+        log "Create manually at https://github.com/new then:"
+        log "  git remote add origin <your-repo-url>"
+        log "  git push -u origin main"
         return 0
     fi
 
     local reply=""
-    safe_read "Create new GitHub repo '$project_name'? (y/n): " reply
+    safe_read "Create new GitHub repository '$project_name'? (y/n): " reply
     if [ "$reply" != "y" ]; then
         log "Skipped repository creation"
         return 0
@@ -173,11 +330,12 @@ create_github_repo() {
     # Remove old remote and create new one
     git remote remove origin 2>/dev/null || true
 
+    log "Creating repository..."
     if gh repo create "$project_name" --private --source=. --remote=origin --push 2>/dev/null; then
-        ok "Repository created and pushed"
+        ok "Repository created and pushed to GitHub"
     else
         err "Could not create repository automatically"
-        log "Create manually at https://github.com/new then run:"
+        log "Create manually at https://github.com/new then:"
         log "  git remote add origin <your-repo-url>"
         log "  git push -u origin main"
     fi
@@ -190,54 +348,50 @@ create_github_repo() {
 # ============================================================================
 
 main() {
-    echo ""
-    echo "GitHub Project LLM Management - Installer"
-    echo ""
-
     if ! check_prerequisites; then
         return 1
     fi
 
-    local mode=$(detect_existing_repo)
-
-    if [ "$mode" = "existing" ]; then
-        section "Adding to Existing Repository"
-        # TODO: Merge logic for existing repos
-        log "Merging template files..."
-        bootstrap
-        ok "Template added to existing repository"
-        return 0
+    # Collect all information upfront
+    if ! welcome_and_collect_info; then
+        err "Configuration collection interrupted"
+        return 1
     fi
 
-    # New project mode
-    local project_name=$(ask_project_name)
+    local project_name="$COLLECTED_PROJECT_NAME"
+    local gh_token="$COLLECTED_GH_TOKEN"
+    local gemini_key="$COLLECTED_GEMINI_KEY"
 
+    # Check if directory exists
     if [ -d "$project_name" ]; then
-        read -p "$project_name exists, overwrite? (y/n): " reply
+        local reply=""
+        echo ""
+        safe_read "⚠️  Directory '$project_name' already exists, overwrite? (y/n): " reply
         if [ "$reply" != "y" ]; then
-            err "Cancelled"
+            err "Installation cancelled"
             return 1
         fi
         rm -rf "$project_name"
     fi
 
+    # Clone and setup
     if ! clone_and_setup "$project_name"; then
         return 1
     fi
 
-    if ! bootstrap; then
-        err "Bootstrap failed"
+    # Create .env with collected information
+    if ! create_env_file "$gh_token" "$gemini_key"; then
+        err "Failed to create configuration"
         return 1
     fi
 
-    # Try to create GitHub repo if token available
-    if [ -f ".env" ]; then
-        # Source .env carefully
-        GH_TOKEN=$(grep "^GH_TOKEN=" .env | cut -d= -f2 | tr -d "'" '"')
-        [ -n "$GH_TOKEN" ] && create_github_repo "$project_name" "$GH_TOKEN"
+    # Try to create GitHub repo if token provided and valid
+    if [[ "$gh_token" != *"PLACEHOLDER"* ]]; then
+        create_github_repo "$project_name" "$gh_token"
     fi
 
-    section "Installation Complete!"
+    # Final summary
+    section "✨ Installation Complete!"
     echo ""
     ok "Your project is ready at: $project_name/"
     echo ""
@@ -247,19 +401,37 @@ main() {
     log "  1. Enter your project directory:"
     log "     cd $project_name"
     log ""
-    log "  2. Review configuration:"
+    log "  2. Review your configuration:"
     log "     cat .env"
     log ""
-    log "  3. If GH_TOKEN is missing, add it to .env:"
-    log "     - Get token: https://github.com/settings/tokens/new"
-    log "     - Required scopes: repo, project, workflow, read:org"
-    log "     - Edit .env and set GH_TOKEN=<your-token>"
-    log ""
-    log "  4. Setup GitHub project board and features:"
+
+    if [[ "$gh_token" == *"PLACEHOLDER"* ]]; then
+        log "  3. ⚠️  Configure your GH_TOKEN in .env"
+        log ""
+        log "  4. Configure your GitHub project board:"
+    else
+        log "  3. Configure your GitHub project board:"
+    fi
     log "     bash template-setup.sh"
     log ""
-    log "  5. Start creating issues to manage your project!"
+    local step_num=4
+    if [[ "$gh_token" == *"PLACEHOLDER"* ]]; then
+        step_num=5
+    fi
+    log "  $step_num. Start creating issues!"
+    log "     gh issue create --title 'Your first task' --label type:feature"
     log ""
+
+    if [[ "$gemini_key" == *"PLACEHOLDER"* ]]; then
+        info "AI features disabled"
+        log "To enable QCM and AI-assisted specifications:"
+        log "  - Add your GEMINI_API_KEY to the .env file"
+        log "  - Get it at: https://aistudio.google.com/app/apikey"
+        echo ""
+    fi
+
+    echo ""
+    ok "Happy coding! 🚀"
     echo ""
 
     return 0
