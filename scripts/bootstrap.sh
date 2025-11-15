@@ -29,6 +29,44 @@ PROJECT_ROOT="$( cd "$SCRIPT_DIR/.." && pwd )"
 # Helper Functions
 # ============================================================================
 
+safe_read() {
+    local prompt="$1"
+    local var_name="$2"
+    local input=""
+
+    # Try to read from /dev/tty if available (works with curl piping in interactive terminal)
+    # Suppress errors since /dev/tty may exist but not be usable in some contexts
+    {
+        read -p "$prompt" input < /dev/tty
+    } 2>/dev/null && return_val=0 || return_val=1
+
+    if [ $return_val -ne 0 ]; then
+        # Fall back to stdin if /dev/tty is not available
+        read -p "$prompt" input
+    fi
+
+    eval "$var_name='$input'"
+}
+
+safe_read_single_char() {
+    local prompt="$1"
+    local var_name="$2"
+    local input=""
+
+    # Try to read single character from /dev/tty if available, fall back to stdin
+    # Suppress errors since /dev/tty may exist but not be usable in some contexts
+    {
+        read -p "$prompt" -n 1 -r input < /dev/tty
+    } 2>/dev/null && return_val=0 || return_val=1
+
+    if [ $return_val -ne 0 ]; then
+        # Fall back to stdin if /dev/tty is not available
+        read -p "$prompt" -n 1 -r input
+    fi
+
+    eval "$var_name='$input'"
+}
+
 banner() {
     echo -e "${CYAN}" >&2
     echo "╔════════════════════════════════════════════════════════════════╗" >&2
@@ -123,7 +161,7 @@ prompt_for_token() {
     local token_value=""
 
     # Use simple plain text prompt without ANSI codes for better visibility
-    read -p "Enter your $token_name (or press Enter to skip): " token_value
+    safe_read "Enter your $token_name (or press Enter to skip): " token_value
 
     # If empty or "skip": use placeholder, otherwise use the provided value
     if [ -z "$token_value" ] || [ "$token_value" = "skip" ] || [ "$token_value" = "Skip" ]; then
@@ -158,7 +196,7 @@ Required scopes: repo, project, workflow, read:org" \
 
     if [ -f "$env_file" ]; then
         log_warning ".env file already exists"
-        read -p "$(echo -e ${YELLOW})Overwrite existing .env? (y/n)$(echo -e ${NC}) " -n 1 -r
+        safe_read_single_char "$(echo -e ${YELLOW})Overwrite existing .env? (y/n)$(echo -e ${NC}) " REPLY
         echo
         if [[ ! $REPLY =~ ^[Yy]$ ]]; then
             log_info ".env file kept as is"

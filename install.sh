@@ -20,6 +20,44 @@ NC='\033[0m'
 # Helper Functions
 # ============================================================================
 
+safe_read() {
+    local prompt="$1"
+    local var_name="$2"
+    local input=""
+
+    # Try to read from /dev/tty if available (works with curl piping in interactive terminal)
+    # Suppress errors since /dev/tty may exist but not be usable in some contexts
+    {
+        read -p "$prompt" input < /dev/tty
+    } 2>/dev/null && return_val=0 || return_val=1
+
+    if [ $return_val -ne 0 ]; then
+        # Fall back to stdin if /dev/tty is not available
+        read -p "$prompt" input
+    fi
+
+    eval "$var_name='$input'"
+}
+
+safe_read_single_char() {
+    local prompt="$1"
+    local var_name="$2"
+    local input=""
+
+    # Try to read single character from /dev/tty if available, fall back to stdin
+    # Suppress errors since /dev/tty may exist but not be usable in some contexts
+    {
+        read -p "$prompt" -n 1 -r input < /dev/tty
+    } 2>/dev/null && return_val=0 || return_val=1
+
+    if [ $return_val -ne 0 ]; then
+        # Fall back to stdin if /dev/tty is not available
+        read -p "$prompt" -n 1 -r input
+    fi
+
+    eval "$var_name='$input'"
+}
+
 banner() {
     echo -e "${CYAN}" >&2
     echo "╔════════════════════════════════════════════════════════════════╗" >&2
@@ -69,7 +107,8 @@ detect_existing_repo() {
             echo -e "  Remote: ${CYAN}$current_repo${NC}" >&2
             echo "" >&2
             echo -e "${YELLOW}Do you want to ADD the template to this existing repo?${NC}" >&2
-            read -p "Add to existing repo? (y/n): " use_existing
+            # Use safe_read to work with curl piping
+            safe_read "Add to existing repo? (y/n): " use_existing
 
             if [[ "$use_existing" =~ ^[Yy]$ ]]; then
                 echo "existing"
@@ -95,8 +134,8 @@ ask_project_name() {
     # Loop until we get a valid project name
     local attempts=0
     while [ -z "$project_name" ] && [ $attempts -lt 5 ]; do
-        # Use plain read without fancy ANSI codes in prompt to avoid issues
-        read -p "Enter your project name (or press Enter for default): " project_name
+        # Use safe_read to handle both interactive and piped input
+        safe_read "Enter your project name (or press Enter for default): " project_name
 
         if [ -z "$project_name" ]; then
             project_name="github-project-llm-management"
@@ -255,7 +294,7 @@ setup_github_repo() {
     # Ask user if they want to create a new repo or use existing
     echo "" >&2
     echo -e "${YELLOW}Do you want to create a new GitHub repository?${NC}" >&2
-    read -p "Create new repo '$project_name'? (y/n): " create_repo
+    safe_read "Create new repo '$project_name'? (y/n): " create_repo
 
     if [[ "$create_repo" =~ ^[Yy]$ ]]; then
         log_info "Creating new GitHub repository: $project_name..." >&2
@@ -363,7 +402,7 @@ main() {
         # Check if directory already exists
         if [ -d "$PROJECT_NAME" ]; then
             log_warning "$PROJECT_NAME directory already exists"
-            read -p "$(printf '%b' ${YELLOW})Overwrite? (y/n):$(printf '%b' ${NC}) " -n 1 -r
+            safe_read_single_char "$(printf '%b' ${YELLOW})Overwrite? (y/n):$(printf '%b' ${NC}) " REPLY
             echo
             if [[ ! $REPLY =~ ^[Yy]$ ]]; then
                 log_error "Installation cancelled"
