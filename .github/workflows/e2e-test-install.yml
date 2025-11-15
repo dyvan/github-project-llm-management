@@ -126,9 +126,12 @@ jobs:
       - name: Validate all configurations
         id: validate
         run: |
-          cd "${{ env.test_dir }}"
+          TEST_DIR="/tmp/${{ steps.create-repo.outputs.test_repo }}"
           TEST_REPO="${{ steps.create-repo.outputs.test_repo }}"
-          PROJECT_DIR="${{ env.project_dir }}"
+          cd "$TEST_DIR"
+
+          # Find the cloned project directory
+          PROJECT_DIR=$(ls -d github-project-llm-management 2>/dev/null || echo "")
 
           echo "📊 Validating configuration..."
           echo ""
