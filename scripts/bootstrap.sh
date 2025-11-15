@@ -13,6 +13,25 @@ log() { echo "→ $*"; }
 ok() { echo "✓ $*"; }
 section() { echo ""; echo "== $* =="; echo ""; }
 
+# Safe read that works with piped stdin (tries /dev/tty first)
+safe_read() {
+    local prompt="$1"
+    local var_name="$2"
+    local input=""
+
+    # Try to read from /dev/tty if available (works with curl piping)
+    {
+        read -p "$prompt" input < /dev/tty
+    } 2>/dev/null && {
+        eval "$var_name='$input'"
+        return 0
+    }
+
+    # Fall back to stdin if /dev/tty not available
+    read -p "$prompt" input
+    eval "$var_name='$input'"
+}
+
 # ============================================================================
 # Create .env
 # ============================================================================
@@ -24,7 +43,8 @@ create_env() {
 
     if [ -f "$env_file" ]; then
         log ".env already exists"
-        read -p "Overwrite? (y/n): " reply
+        local reply=""
+        safe_read "Overwrite? (y/n): " reply
         [ "$reply" != "y" ] && return 0
     fi
 
@@ -43,8 +63,10 @@ create_env() {
     fi
 
     # Ask for tokens
-    read -p "GitHub Token (GH_TOKEN) - leave blank to skip: " gh_token
-    read -p "Gemini API Key (optional) - leave blank to skip: " gemini_key
+    local gh_token=""
+    local gemini_key=""
+    safe_read "GitHub Token (GH_TOKEN) - leave blank to skip: " gh_token
+    safe_read "Gemini API Key (optional) - leave blank to skip: " gemini_key
 
     # Write .env
     cat > "$env_file" << EOF

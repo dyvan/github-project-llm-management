@@ -12,6 +12,25 @@ ok() { echo "✓ $*"; }
 err() { echo "✗ $*" >&2; }
 section() { echo ""; echo "== $* =="; echo ""; }
 
+# Safe read that works with piped stdin (tries /dev/tty first)
+safe_read() {
+    local prompt="$1"
+    local var_name="$2"
+    local input=""
+
+    # Try to read from /dev/tty if available (works with curl piping)
+    {
+        read -p "$prompt" input < /dev/tty
+    } 2>/dev/null && {
+        eval "$var_name='$input'"
+        return 0
+    }
+
+    # Fall back to stdin if /dev/tty not available
+    read -p "$prompt" input
+    eval "$var_name='$input'"
+}
+
 # ============================================================================
 # Check Prerequisites
 # ============================================================================
@@ -37,7 +56,8 @@ detect_existing_repo() {
         local remote=$(git config --get remote.origin.url 2>/dev/null)
         if [ -n "$remote" ]; then
             log "Git repository found: $remote"
-            read -p "Add template to existing repo? (y/n): " reply
+            local reply=""
+            safe_read "Add template to existing repo? (y/n): " reply
             [ "$reply" = "y" ] && echo "existing" || echo "new"
             return 0
         fi
@@ -51,11 +71,15 @@ detect_existing_repo() {
 
 ask_project_name() {
     local name=""
-    read -p "Project name (default: github-project-llm-management): " name
+    safe_read "Project name (default: github-project-llm-management): " name
+
+    # Use default if empty
     name="${name:-github-project-llm-management}"
+
     # Clean ANSI codes if piped
-    name=$(echo "$name" | sed 's/\x1b\[[0-9;]*m//g' | sed 's/\[0[;0-9]*m//g' | tr -cd '[:alnum:]._-')
+    name=$(printf '%s\n' "$name" | sed 's/\x1b\[[0-9;]*m//g' | sed 's/\[0[;0-9]*m//g' | tr -cd '[:alnum:]._-')
     [ -z "$name" ] && name="github-project-llm-management"
+
     echo "$name"
 }
 
@@ -128,7 +152,8 @@ create_github_repo() {
         return 0
     fi
 
-    read -p "Create new GitHub repo '$project_name'? (y/n): " reply
+    local reply=""
+    safe_read "Create new GitHub repo '$project_name'? (y/n): " reply
     if [ "$reply" != "y" ]; then
         log "Skipped repository creation"
         return 0
