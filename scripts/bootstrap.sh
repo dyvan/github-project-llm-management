@@ -65,63 +65,91 @@ create_env() {
         fi
     fi
 
-    # Prompt for GitHub Token (REQUIRED for project board features)
-    echo ""
-    info "GitHub Personal Access Token (REQUIRED)"
-    log "Used for:"
-    log "  • Creating GitHub project board"
-    log "  • Creating and managing issues"
-    log "  • Setting up labels and workflows"
-    log ""
-    log "Get your token here:"
-    log "  https://github.com/settings/tokens/new"
-    log ""
-    log "Required scopes:"
-    log "  ✓ repo (full control of repositories)"
-    log "  ✓ project (full control of projects)"
-    log "  ✓ workflow (update workflows)"
-    log "  ✓ read:org (read organization data)"
-    log ""
-    local gh_token=""
-    safe_read "Paste your GH_TOKEN (or leave blank): " gh_token
+    # Check if GH_TOKEN is already set in environment (e.g., in CI/CD)
+    local gh_token="${GH_TOKEN:-}"
 
+    # If not in environment and we can read from user, ask for it
     if [ -z "$gh_token" ]; then
-        err ""
-        err "GH_TOKEN is required for this template!"
-        err ""
-        err "To use this template, you need:"
-        err "  1. Create token: https://github.com/settings/tokens/new"
-        err "  2. Select required scopes (repo, project, workflow, read:org)"
-        err "  3. Copy the token"
-        err "  4. Edit .env and set GH_TOKEN=<your-token>"
-        err "  5. Run: bash scripts/bootstrap.sh again"
-        err ""
-        return 1
+        # Prompt for GitHub Token (REQUIRED for project board features)
+        echo ""
+        info "GitHub Personal Access Token (REQUIRED)"
+        log "Used for:"
+        log "  • Creating GitHub project board"
+        log "  • Creating and managing issues"
+        log "  • Setting up labels and workflows"
+        log ""
+        log "Get your token here:"
+        log "  https://github.com/settings/tokens/new"
+        log ""
+        log "Required scopes:"
+        log "  ✓ repo (full control of repositories)"
+        log "  ✓ project (full control of projects)"
+        log "  ✓ workflow (update workflows)"
+        log "  ✓ read:org (read organization data)"
+        log ""
+        safe_read "Paste your GH_TOKEN (or leave blank): " gh_token
+
+        if [ -z "$gh_token" ]; then
+            err ""
+            err "GH_TOKEN is required for this template!"
+            err ""
+            err "To use this template, you need:"
+            err "  1. Create token: https://github.com/settings/tokens/new"
+            err "  2. Select required scopes (repo, project, workflow, read:org)"
+            err "  3. Copy the token"
+            err "  4. Edit .env and set GH_TOKEN=<your-token>"
+            err "  5. Run: bash scripts/bootstrap.sh again"
+            err ""
+            return 1
+        fi
     fi
 
     ok "GH_TOKEN configured"
 
-    # Prompt for Gemini API Key (OPTIONAL for AI/QCM features)
-    echo ""
-    info "Google Gemini API Key (OPTIONAL - for AI features)"
-    log "Used for:"
-    log "  • QCM (Questionnaire) generation"
-    log "  • Specification generation from QCM"
-    log "  • AI-powered planning workflows"
-    log ""
-    log "Get your key here:"
-    log "  https://aistudio.google.com/app/apikey"
-    log ""
-    log "If skipped: AI features will be disabled (add later if needed)"
-    log ""
-    local gemini_key=""
-    safe_read "Paste your GEMINI_API_KEY (or leave blank to skip): " gemini_key
+    # Check if GEMINI_API_KEY is already set in environment
+    local gemini_key="${GEMINI_API_KEY:-}"
 
+    # If not in environment, ask user (but it's optional)
     if [ -z "$gemini_key" ]; then
-        log "Gemini API Key skipped - AI features will be disabled"
-        gemini_key="PLACEHOLDER_GEMINI_API_KEY_CHANGE_ME"
+        # Prompt for Gemini API Key (OPTIONAL for AI/QCM features)
+        echo ""
+        info "Google Gemini API Key (OPTIONAL - for AI features)"
+        log "Used for:"
+        log "  • QCM (Questionnaire) generation"
+        log "  • Specification generation from QCM"
+        log "  • AI-powered planning workflows"
+        log ""
+        log "Get your key here:"
+        log "  https://aistudio.google.com/app/apikey"
+        log ""
+        log "If skipped: AI features will be disabled (add later if needed)"
+        log ""
+        safe_read "Paste your GEMINI_API_KEY (or leave blank to skip): " gemini_key
+
+        if [ -z "$gemini_key" ]; then
+            log "Gemini API Key skipped - AI features will be disabled"
+            gemini_key="PLACEHOLDER_GEMINI_API_KEY_CHANGE_ME"
+        else
+            ok "GEMINI_API_KEY configured"
+        fi
     else
-        ok "GEMINI_API_KEY configured"
+        ok "GEMINI_API_KEY configured (from environment)"
+    fi
+
+    # Try to create GitHub project board
+    local gh_project_number=""
+    if [ -n "$gh_owner" ] && [ -n "$gh_repo" ]; then
+        log "Creating GitHub project board..."
+        local project_title="Project Board : $gh_repo"
+
+        # Try to create the project
+        gh_project_number=$(gh project create --owner "$gh_owner" --title "$project_title" --format json 2>/dev/null | grep -o '"number":[0-9]*' | cut -d: -f2)
+
+        if [ -n "$gh_project_number" ]; then
+            ok "GitHub project board created (#$gh_project_number)"
+        else
+            log "Note: Could not auto-create project board - you can create it manually"
+        fi
     fi
 
     # Write .env
@@ -142,6 +170,10 @@ GH_TOKEN=$gh_token
 # Repository Context (auto-detected from git)
 GH_OWNER=${gh_owner:-your-username}
 GH_REPO=${gh_repo:-your-repository}
+
+# GitHub Project Board (auto-created if possible)
+# Find in your GitHub Projects v2 URL: github.com/users/YOUR_NAME/projects/NUMBER
+GH_PROJECT_NUMBER=${gh_project_number:-0}
 
 # Gemini API Key (OPTIONAL - for AI/QCM features)
 # ================================================
@@ -248,7 +280,7 @@ summary() {
     section "Setup Complete"
     echo ""
     ok "Files created:"
-    log "  • .env (configuration with GitHub tokens)"
+    log "  • .env (configuration with GitHub tokens and project board)"
     log "  • .gitignore (excludes .env and artifacts)"
     echo ""
 
@@ -260,21 +292,34 @@ summary() {
         gemini_status="enabled ✓"
     fi
 
+    # Check project board status
+    local project_status="not created yet"
+    if [ -f ".env" ] && grep -q "GH_PROJECT_NUMBER=" .env; then
+        local proj_num=$(grep "^GH_PROJECT_NUMBER=" .env | cut -d= -f2)
+        if [ "$proj_num" != "0" ]; then
+            project_status="created ✓ (#$proj_num)"
+        fi
+    fi
+
     echo ""
     info "Feature Status:"
-    log "  • GitHub Project Board: enabled ✓"
-    log "  • Issue Management: enabled ✓"
+    log "  • GitHub Repository: configured ✓"
+    log "  • GitHub Project Board: $project_status"
+    log "  • Issue Management: ready ✓"
     log "  • AI/QCM Features: $gemini_status"
     echo ""
 
     info "Next steps:"
-    log "  1. Verify .env has your GH_TOKEN configured"
-    log "  2. (Optional) Add GEMINI_API_KEY for AI features"
-    log "  3. Run GitHub setup to create project board:"
+    log "  1. Review .env configuration:"
+    log "     cat .env"
     log ""
+    log "  2. (Optional) Add GEMINI_API_KEY for AI/QCM features"
+    log ""
+    log "  3. Configure custom fields on project board:"
     log "     bash template-setup.sh"
     log ""
-    log "  4. Start creating issues and managing your project!"
+    log "  4. Start creating issues:"
+    log "     gh issue create --title 'Your task' --label type:feature"
     echo ""
 }
 
