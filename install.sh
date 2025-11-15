@@ -65,22 +65,39 @@ ask_project_name() {
     # Show a clearer prompt with better default
     echo -e "${BLUE}Project Name Configuration${NC}" >&2
     echo -e "  ${YELLOW}Default: github-project-llm-management${NC}" >&2
+    echo -e "  ${CYAN}Examples: my-project, awesome-app, team-dashboard${NC}" >&2
     echo "" >&2
 
-    # Use plain read without fancy ANSI codes in prompt to avoid issues
-    read -p "Enter your project name (or press Enter for default): " project_name
+    # Loop until we get a valid project name
+    local attempts=0
+    while [ -z "$project_name" ] && [ $attempts -lt 5 ]; do
+        # Use plain read without fancy ANSI codes in prompt to avoid issues
+        read -p "Enter your project name (or press Enter for default): " project_name
 
+        if [ -z "$project_name" ]; then
+            project_name="github-project-llm-management"
+        fi
+
+        # Remove all ANSI escape sequences thoroughly
+        # Using two methods to ensure cleanup: sed with octal codes + sed with ESC pattern
+        project_name=$(echo "$project_name" | \
+            sed 's/\x1b\[[0-9;]*m//g' | \
+            sed 's/\[0[;0-9]*m//g' | \
+            tr -d '\n' | \
+            tr -cd '[:alnum:]._-')
+
+        # Validate the name
+        if [ -z "$project_name" ]; then
+            log_error "Project name cannot be empty or contain only invalid characters"
+            project_name=""
+            ((attempts++))
+        fi
+    done
+
+    # If still empty after all attempts, use default
     if [ -z "$project_name" ]; then
         project_name="github-project-llm-management"
     fi
-
-    # Remove all ANSI escape sequences thoroughly
-    # Using two methods to ensure cleanup: sed with octal codes + sed with ESC pattern
-    project_name=$(echo "$project_name" | \
-        sed 's/\x1b\[[0-9;]*m//g' | \
-        sed 's/\[0[;0-9]*m//g' | \
-        tr -d '\n' | \
-        tr -cd '[:alnum:]._-')
 
     echo "$project_name"
 }
@@ -135,8 +152,57 @@ ensure_claude_md() {
     fi
 }
 
+setup_github_repo() {
+    local project_dir="$1"
+    local project_name="$2"
+    local gh_token="$3"
+
+    log_section "4. GitHub Repository Setup"
+
+    # Check if GH_TOKEN was actually provided (not a placeholder)
+    if [[ "$gh_token" == *"PLACEHOLDER"* ]]; then
+        log_warning "No GitHub token provided - cannot create/configure new repository"
+        log_info "To use all features, you'll need to:"
+        echo "  1. Create a new repository on GitHub: https://github.com/new" >&2
+        echo "  2. Add the repository URL as remote: git remote set-url origin <your-repo-url>" >&2
+        echo "  3. Push the code: git push -u origin main" >&2
+        echo "  4. Run: bash template-setup.sh" >&2
+        return 0
+    fi
+
+    log_info "GitHub token found - configuring repository..." >&2
+
+    # Remove the old remote (pointing to template repo)
+    cd "$project_dir" || return 1
+    git remote remove origin 2>/dev/null || true
+
+    # Ask user if they want to create a new repo or use existing
+    echo "" >&2
+    echo -e "${YELLOW}Do you want to create a new GitHub repository?${NC}" >&2
+    read -p "Create new repo '$project_name'? (y/n): " create_repo
+
+    if [[ "$create_repo" =~ ^[Yy]$ ]]; then
+        log_info "Creating new GitHub repository: $project_name..." >&2
+
+        # Try to create the repo with gh CLI
+        if gh repo create "$project_name" --private --source=. --remote=origin --push 2>&1; then
+            log_success "Repository created successfully!"
+            return 0
+        else
+            log_warning "Could not create repository automatically"
+            log_info "You can create it manually at: https://github.com/new" >&2
+            return 0
+        fi
+    else
+        log_warning "Skipped automatic repo creation"
+        log_info "Remember to create a new repo and run: git remote add origin <your-repo-url>" >&2
+        return 0
+    fi
+}
+
 launch_bootstrap() {
     local project_dir="$1"
+    local project_name="$2"
 
     log_section "3. Running Bootstrap Setup"
 
@@ -149,8 +215,19 @@ launch_bootstrap() {
     # Ensure CLAUDE.md exists BEFORE bootstrap (in case bootstrap skips)
     ensure_claude_md "$(pwd)"
 
-    # Run bootstrap
+    # Run bootstrap - this generates .env
     bash scripts/bootstrap.sh
+
+    # Now setup GitHub repository if token was provided
+    if [ -f ".env" ]; then
+        # Source the .env to get GH_TOKEN
+        set +a  # Turn off automatic export
+        source .env
+        set -a  # Turn on automatic export
+
+        # Setup GitHub repo
+        setup_github_repo "$(pwd)" "$project_name" "$GH_TOKEN"
+    fi
 
     return 0
 }
@@ -194,8 +271,8 @@ main() {
         return 1
     fi
 
-    # Launch bootstrap
-    if ! launch_bootstrap "$PROJECT_NAME"; then
+    # Launch bootstrap (with repo setup)
+    if ! launch_bootstrap "$PROJECT_NAME" "$PROJECT_NAME"; then
         log_error "Bootstrap failed"
         return 1
     fi

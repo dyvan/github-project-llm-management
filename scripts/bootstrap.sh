@@ -119,22 +119,17 @@ prompt_for_token() {
     echo -e "📖 Get your token here: ${CYAN}${link}${NC}" >&2
     echo "" >&2
 
-    # Read token with validation
+    # Read token - Enter/empty = skip, anything else = use value
     local token_value=""
-    local attempts=0
 
-    while [ -z "$token_value" ] && [ $attempts -lt 3 ]; do
-        # Use simple plain text prompt without ANSI codes for better visibility
-        read -p "Enter your $token_name (or 'skip' to skip): " token_value
+    # Use simple plain text prompt without ANSI codes for better visibility
+    read -p "Enter your $token_name (or press Enter to skip): " token_value
 
-        if [ "$token_value" = "skip" ] || [ "$token_value" = "Skip" ]; then
-            log_warning "Skipped $token_name (you can add it later to .env)"
-            token_value="PLACEHOLDER_${var_name}_CHANGE_ME"
-        elif [ -z "$token_value" ]; then
-            log_error "Token cannot be empty"
-            ((attempts++))
-        fi
-    done
+    # If empty or "skip": use placeholder, otherwise use the provided value
+    if [ -z "$token_value" ] || [ "$token_value" = "skip" ] || [ "$token_value" = "Skip" ]; then
+        log_warning "Skipped $token_name (you can add it later to .env)"
+        token_value="PLACEHOLDER_${var_name}_CHANGE_ME"
+    fi
 
     eval "$var_name='$token_value'"
 }
