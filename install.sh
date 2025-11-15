@@ -363,7 +363,7 @@ main() {
         # Check if directory already exists
         if [ -d "$PROJECT_NAME" ]; then
             log_warning "$PROJECT_NAME directory already exists"
-            read -p "$(printf '%b' ${YELLOW})Overwrite? (y/n):$(printf '%b' ${NC}) " -n 1 -r
+            safe_read_single_char "$(printf '%b' ${YELLOW})Overwrite? (y/n):$(printf '%b' ${NC}) " REPLY
             echo
             if [[ ! $REPLY =~ ^[Yy]$ ]]; then
                 log_error "Installation cancelled"
