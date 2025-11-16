@@ -156,7 +156,8 @@ main() {
         if [ "$DRY_RUN" = true ]; then
             highlight "DRY-RUN: Would execute $step"
         else
-            if ! bash "$step_file"; then
+            # Export GH_TOKEN to ensure it's available in subprocesses
+            if ! GH_TOKEN="${GH_TOKEN}" bash "$step_file"; then
                 error "Step '$step' failed"
                 add_error "Step '$step' failed at $(date)"
                 return 1

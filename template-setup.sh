@@ -165,6 +165,15 @@ validate_env() {
 main() {
     banner
 
+    # Load GH_TOKEN from .env if not already set
+    if [ -z "$GH_TOKEN" ] && [ -f ".env" ]; then
+        export GH_TOKEN=$(grep '^GH_TOKEN=' .env | cut -d'=' -f2- | tr -d '"' | tr -d "'")
+        if [ -n "$GH_TOKEN" ]; then
+            echo -e "${GREEN}✅ Loaded GH_TOKEN from .env${NC}"
+            echo ""
+        fi
+    fi
+
     # Validate environment
     if ! validate_env; then
         echo -e "${RED}Please install missing prerequisites and try again${NC}"

@@ -41,6 +41,15 @@ run_step() {
 
     success "Project setup complete: #$project_num"
 
+    # Link project to repository
+    info "Linking project to repository..."
+    if link_project_to_repo "$project_num"; then
+        success "Project linked to repository"
+    else
+        warning "Could not link project to repository"
+        warning "You can still access the project at: https://github.com/users/$(get_repo_owner)/projects/$project_num"
+    fi
+
     # Configure custom fields
     info "Configuring custom fields..."
     echo ""
