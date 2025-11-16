@@ -387,9 +387,34 @@ main() {
         return 1
     fi
 
+    # Track if template-setup was run
+    local template_setup_run=false
+
     # Try to create GitHub repo if token provided and valid
     if [[ "$gh_token" != *"PLACEHOLDER"* ]]; then
         create_github_repo "$project_name" "$gh_token"
+
+        # Offer to setup project board
+        echo ""
+        local setup_reply=""
+        safe_read "Setup GitHub project board and labels now? (y/n): " setup_reply
+        if [ "$setup_reply" = "y" ]; then
+            echo ""
+            log "Running template setup..."
+            echo ""
+            cd "$project_name" || return 1
+            if bash template-setup.sh; then
+                echo ""
+                ok "Project board configured successfully!"
+                template_setup_run=true
+            else
+                warning "Project board setup encountered some issues"
+                warning "You can retry with: cd $project_name && bash template-setup.sh"
+            fi
+            cd - > /dev/null
+        else
+            log "You can setup the project board later with: cd $project_name && bash template-setup.sh"
+        fi
     fi
 
     # Final summary
@@ -409,18 +434,26 @@ main() {
 
     if [[ "$gh_token" == *"PLACEHOLDER"* ]]; then
         log "  3. ⚠️  Configure your GH_TOKEN in .env"
+        log "     Edit .env and set: GH_TOKEN=<your-github-token>"
         log ""
-        log "  4. Configure your GitHub project board:"
+        if [ "$template_setup_run" = true ]; then
+            log "  4. Start creating issues!"
+        else
+            log "  4. Setup project board (if GH_TOKEN is configured):"
+            log "     bash template-setup.sh"
+            log ""
+            log "  5. Start creating issues!"
+        fi
     else
-        log "  3. Configure your GitHub project board:"
+        if [ "$template_setup_run" = true ]; then
+            log "  3. Start creating issues!"
+        else
+            log "  3. Setup project board:"
+            log "     bash template-setup.sh"
+            log ""
+            log "  4. Start creating issues!"
+        fi
     fi
-    log "     bash template-setup.sh"
-    log ""
-    local step_num=4
-    if [[ "$gh_token" == *"PLACEHOLDER"* ]]; then
-        step_num=5
-    fi
-    log "  $step_num. Start creating issues!"
     log "     gh issue create --title 'Your first task' --label type:feature"
     log ""
 

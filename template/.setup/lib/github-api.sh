@@ -115,3 +115,77 @@ check_pages_enabled() {
     fi
     return 1
 }
+
+# Link project to repository
+link_project_to_repo() {
+    local project_num=$1
+    local owner=$(get_repo_owner)
+    local repo=$(get_repo_name)
+
+    if [ -z "$project_num" ] || [ -z "$owner" ] || [ -z "$repo" ]; then
+        error "Missing required parameters for linking project to repo"
+        return 1
+    fi
+
+    # Get repository ID
+    local repo_id=$(gh api graphql -f query="
+query {
+  repository(owner: \"$owner\", name: \"$repo\") {
+    id
+  }
+}" -q '.data.repository.id' 2>&1)
+
+    if [ -z "$repo_id" ] || [ "$repo_id" = "null" ]; then
+        error "Could not retrieve repository ID for $owner/$repo"
+        return 1
+    fi
+
+    # Get project ID from project number
+    local project_id=$(gh api graphql -f query="
+query {
+  user(login: \"$owner\") {
+    projectV2(number: $project_num) {
+      id
+    }
+  }
+}" -q '.data.user.projectV2.id' 2>/dev/null)
+
+    # If user query fails, try organization query
+    if [ -z "$project_id" ] || [ "$project_id" = "null" ]; then
+        project_id=$(gh api graphql -f query="
+query {
+  organization(login: \"$owner\") {
+    projectV2(number: $project_num) {
+      id
+    }
+  }
+}" -q '.data.organization.projectV2.id' 2>/dev/null)
+    fi
+
+    if [ -z "$project_id" ] || [ "$project_id" = "null" ]; then
+        error "Could not retrieve project ID for project #$project_num"
+        return 1
+    fi
+
+    # Link project to repository
+    local result=$(gh api graphql -f query="
+mutation {
+  linkProjectV2ToRepository(input: {
+    projectId: \"$project_id\",
+    repositoryId: \"$repo_id\"
+  }) {
+    repository {
+      id
+      name
+    }
+  }
+}" 2>&1)
+
+    if [ $? -eq 0 ]; then
+        success "Linked project #$project_num to repository $owner/$repo"
+        return 0
+    else
+        warning "Could not link project to repository: $result"
+        return 1
+    fi
+}

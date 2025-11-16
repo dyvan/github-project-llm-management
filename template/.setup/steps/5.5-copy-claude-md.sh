@@ -10,7 +10,7 @@ run_step() {
     section "Step 5.5/6: Copying CLAUDE.md to Project Root"
 
     # Get paths
-    local TEMPLATE_CLAUDE="${SETUP_DIR}/../claude.md"
+    local TEMPLATE_CLAUDE="${SETUP_DIR}/../CLAUDE.md"
     local PROJECT_CLAUDE="${PWD}/CLAUDE.md"
 
     # Check if source file exists
