@@ -7,11 +7,11 @@
 set +e
 
 # Simple logging (no colors)
-log() { echo "→ $*"; }
-ok() { echo "✓ $*"; }
+log() { echo "→ $*" >&2; }
+ok() { echo "✓ $*" >&2; }
 err() { echo "✗ $*" >&2; }
-section() { echo ""; echo "== $* =="; echo ""; }
-info() { echo ""; echo "ℹ️  $*"; }
+section() { echo "" >&2; echo "== $* ==" >&2; echo "" >&2; }
+info() { echo "" >&2; echo "ℹ️  $*" >&2; }
 
 # Safe read that works with piped stdin (tries /dev/tty first)
 safe_read() {
