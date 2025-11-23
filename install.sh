@@ -6,11 +6,18 @@
 
 set +e
 
-# Simple logging (no colors)
+# Colors (minimal, essential only)
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'  # No Color
+
+# Logging with colors
 log() { echo "→ $*" >&2; }
-ok() { echo "✓ $*" >&2; }
-err() { echo "✗ $*" >&2; }
-section() { echo "" >&2; echo "== $* ==" >&2; echo "" >&2; }
+ok() { echo -e "${GREEN}✓${NC} $*" >&2; }
+err() { echo -e "${RED}✗${NC} $*" >&2; }
+section() { echo "" >&2; echo -e "${BLUE}== $* ==${NC}" >&2; echo "" >&2; }
 info() { echo "" >&2; echo "ℹ️  $*" >&2; }
 
 # Safe read that works with piped stdin (tries /dev/tty first)
@@ -72,9 +79,12 @@ welcome_and_collect_info() {
     log "This will be the name of your Git repository and local directory."
     log "Examples: my-project, awesome-app, team-dashboard"
     echo ""
+    log "👇 Please add your custom project name:"
+    log "   (leave blank to use the default: github-project-llm-management)"
+    echo ""
 
     local project_name=""
-    safe_read "Project name [github-project-llm-management]: " project_name
+    safe_read "Project name: " project_name
 
     # Use default if empty
     project_name="${project_name:-github-project-llm-management}"
@@ -97,9 +107,11 @@ welcome_and_collect_info() {
     log "   2. Select scopes: repo, project, workflow, read:org"
     log "   3. Generate and copy the token"
     echo ""
+    log "👇 Please add your GitHub token:"
+    echo ""
 
     local gh_token=""
-    safe_read "GitHub Token (required): " gh_token
+    safe_read "GitHub Token: " gh_token
 
     if [ -z "$gh_token" ]; then
         err "GitHub token is required for this template."
