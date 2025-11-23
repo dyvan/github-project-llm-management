@@ -20,8 +20,8 @@ create_labels() {
         local description=$(echo "$label" | jq -r '.description // ""')
         local color=$(echo "$label" | jq -r '.color // "0075ca"')
 
-        # Check if label already exists
-        if gh label list --json name -q ".[].name" 2>/dev/null | grep -q "^${name}$"; then
+        # Check if label already exists using -F for fixed string matching (no regex)
+        if gh label list --json name -q ".[].name" 2>/dev/null | grep -qF "$name"; then
             warning "Label '$name' already exists, skipping"
             ((skipped++))
         else
@@ -29,7 +29,13 @@ create_labels() {
                 success "Created label: $name"
                 ((count++))
             else
-                error "Failed to create label: $name"
+                # If it fails, it might already exist - try with --force to update
+                if gh label create "$name" --description "$description" --color "$color" --force > /dev/null 2>&1; then
+                    success "Updated label: $name"
+                    ((count++))
+                else
+                    error "Failed to create/update label: $name"
+                fi
             fi
         fi
     done < <(echo "$labels_json" | jq -c '.[]')
