@@ -152,7 +152,7 @@ class ProjectFieldsSetup:
         # Define text fields
         text_fields = [
             "Target Version",
-            "Parent Issue",
+            "Related Issue",
             "Branch Name",
             "Blocker Reason",
         ]
