@@ -165,13 +165,41 @@ validate_env() {
 main() {
     banner
 
-    # Load GH_TOKEN from .env if not already set
-    if [ -z "$GH_TOKEN" ] && [ -f ".env" ]; then
-        export GH_TOKEN=$(grep '^GH_TOKEN=' .env | cut -d'=' -f2- | tr -d '"' | tr -d "'")
-        if [ -n "$GH_TOKEN" ]; then
-            echo -e "${GREEN}✅ Loaded GH_TOKEN from .env${NC}"
-            echo ""
+    # Load environment variables from .env if they exist
+    # Check both script directory and current directory
+    local env_file=""
+    if [ -f "$SCRIPT_DIR/.env" ]; then
+        env_file="$SCRIPT_DIR/.env"
+    elif [ -f ".env" ]; then
+        env_file=".env"
+    fi
+
+    if [ -n "$env_file" ]; then
+        # Load GH_TOKEN
+        if [ -z "$GH_TOKEN" ]; then
+            export GH_TOKEN=$(grep '^GH_TOKEN=' "$env_file" | cut -d'=' -f2- | tr -d '"' | tr -d "'")
+            if [ -n "$GH_TOKEN" ]; then
+                echo -e "${GREEN}✅ Loaded GH_TOKEN from .env${NC}"
+            fi
         fi
+
+        # Load GH_OWNER
+        if [ -z "$GH_OWNER" ]; then
+            export GH_OWNER=$(grep '^GH_OWNER=' "$env_file" | cut -d'=' -f2- | tr -d '"' | tr -d "'")
+            if [ -n "$GH_OWNER" ]; then
+                echo -e "${GREEN}✅ Loaded GH_OWNER from .env${NC}"
+            fi
+        fi
+
+        # Load GH_REPO
+        if [ -z "$GH_REPO" ]; then
+            export GH_REPO=$(grep '^GH_REPO=' "$env_file" | cut -d'=' -f2- | tr -d '"' | tr -d "'")
+            if [ -n "$GH_REPO" ]; then
+                echo -e "${GREEN}✅ Loaded GH_REPO from .env${NC}"
+            fi
+        fi
+
+        echo ""
     fi
 
     # Validate environment
@@ -187,13 +215,34 @@ main() {
         exit 1
     fi
 
-    if ! gh repo view > /dev/null 2>&1; then
-        echo -e "${RED}❌ Not in a GitHub repository${NC}"
-        echo "Make sure you've pushed this to GitHub and gh is authenticated"
-        exit 1
+    # Use GH_OWNER and GH_REPO from .env if available
+    local repo=""
+    if [ -n "$GH_OWNER" ] && [ -n "$GH_REPO" ]; then
+        repo="$GH_OWNER/$GH_REPO"
+
+        # Verify the GitHub repository exists and is accessible
+        if ! gh repo view "$repo" > /dev/null 2>&1; then
+            echo -e "${RED}❌ GitHub repository not found or not accessible${NC}"
+            echo "   Repository: $repo"
+            echo "   Make sure:"
+            echo "   1. The repository exists on GitHub"
+            echo "   2. Your GH_TOKEN has access to it"
+            echo "   3. Check GH_OWNER and GH_REPO in .env"
+            exit 1
+        fi
+    else
+        # Fallback to gh repo view (requires remote origin)
+        if ! gh repo view > /dev/null 2>&1; then
+            echo -e "${RED}❌ Could not determine GitHub repository${NC}"
+            echo "   Either:"
+            echo "   1. Set GH_OWNER and GH_REPO in .env, OR"
+            echo "   2. Add a git remote: git remote add origin <url>"
+            exit 1
+        fi
+
+        repo=$(gh repo view --json nameWithOwner -q '.nameWithOwner')
     fi
 
-    local repo=$(gh repo view --json nameWithOwner -q '.nameWithOwner')
     echo -e "${CYAN}Repository: $repo${NC}"
     echo ""
 
