@@ -168,19 +168,27 @@ clone_and_setup() {
     ok "Template git history removed"
 
     # Setup GitHub workflows in parent repo
+    # Only copy user-relevant workflows (skip template validation workflows)
     log "Setting up GitHub workflows..."
 
     # Create .github/workflows if it doesn't exist
     mkdir -p .github/workflows
 
+    # Whitelist of workflows to include (user-relevant only)
+    local whitelist_workflows="create-branch.yml|code-review-agent.yml|auto-close-feature.yml|generate-specification.yml|plan-with-gemini.yml|update-project.yml"
+
     # Move and rename workflows with github-project-llm-management prefix
     if [ -d "$template_dir/.github/workflows" ]; then
         while IFS= read -r workflow; do
             local filename=$(basename "$workflow")
-            local new_name="github-project-llm-management-${filename}"
-            cp "$workflow" ".github/workflows/$new_name"
+
+            # Check if this workflow is in the whitelist
+            if echo "$filename" | grep -E "^($whitelist_workflows)$" >/dev/null; then
+                local new_name="github-project-llm-management-${filename}"
+                cp "$workflow" ".github/workflows/$new_name"
+            fi
         done < <(find "$template_dir/.github/workflows" -maxdepth 1 -name "*.yml" -type f)
-        ok "Workflows moved to .github/workflows/ with 'github-project-llm-management-' prefix"
+        ok "User-relevant workflows installed (6 workflows)"
     fi
 
     # Copy .github/labels and project.yml to parent repo if they don't exist
@@ -395,11 +403,13 @@ main() {
     log "    └── ..."
     echo ""
 
-    log "GitHub workflows added to root:"
-    log "  .github/workflows/"
-    log "    ├── github-project-llm-management-create-branch.yml"
-    log "    ├── github-project-llm-management-code-review-agent.yml"
-    log "    └── ... (other workflows with prefix)"
+    log "GitHub workflows added to root (.github/workflows/):"
+    log "  • github-project-llm-management-create-branch.yml"
+    log "  • github-project-llm-management-code-review-agent.yml"
+    log "  • github-project-llm-management-auto-close-feature.yml"
+    log "  • github-project-llm-management-generate-specification.yml"
+    log "  • github-project-llm-management-plan-with-gemini.yml"
+    log "  • github-project-llm-management-update-project.yml"
     echo ""
 
     log "Next steps:"
