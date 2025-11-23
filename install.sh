@@ -1,6 +1,7 @@
 #!/bin/bash
 #
-# GitHub Project LLM Management - Simple Installation
+# GitHub Project LLM Management - Template Installer
+# Installs the template into an existing Git repository subdirectory
 # Usage: curl -fsSL https://raw.githubusercontent.com/dyvan/github-project-llm-management/main/install.sh | bash
 #
 
@@ -63,40 +64,31 @@ check_prerequisites() {
 }
 
 # ============================================================================
-# Welcome & Collect Configuration
+# Detect Git Repository
 # ============================================================================
 
-welcome_and_collect_info() {
+detect_git_repo() {
+    if git rev-parse --git-dir >/dev/null 2>&1; then
+        return 0  # In a git repo
+    else
+        return 1  # Not in a git repo
+    fi
+}
+
+# ============================================================================
+# Collect Configuration
+# ============================================================================
+
+collect_info() {
     echo ""
     echo "🚀 Welcome to GitHub Project LLM Management Installer!"
     echo ""
-    log "This wizard will help you set up your project in a few simple steps."
-    log "We'll collect 3 pieces of information to configure your installation."
+    log "This wizard will collect your GitHub tokens to set up project management."
+    log "The template will be installed in: github-project-llm-management/"
     echo ""
 
-    # ========== 1. Project Name ==========
-    section "1/3 - Project Name"
-    log "This will be the name of your Git repository and local directory."
-    log "Examples: my-project, awesome-app, team-dashboard"
-    echo ""
-    log "👇 Please add your custom project name:"
-    log "   (leave blank to use the default: github-project-llm-management)"
-    echo ""
-
-    local project_name=""
-    safe_read "Project name: " project_name
-
-    # Use default if empty
-    project_name="${project_name:-github-project-llm-management}"
-
-    # Clean ANSI codes and special chars if piped
-    project_name=$(printf '%s\n' "$project_name" | sed 's/\x1b\[[0-9;]*m//g' | sed 's/\[0[;0-9]*m//g' | tr -cd '[:alnum:]._-')
-    [ -z "$project_name" ] && project_name="github-project-llm-management"
-
-    ok "Project name: $project_name"
-
-    # ========== 2. GitHub Token ==========
-    section "2/3 - GitHub Personal Access Token (REQUIRED)"
+    # ========== 1. GitHub Token ==========
+    section "1/2 - GitHub Personal Access Token (REQUIRED)"
     log "This token will be stored in your .env file and used for:"
     log "  • Creating and managing GitHub issues"
     log "  • Configuring project board automatically"
@@ -115,14 +107,13 @@ welcome_and_collect_info() {
 
     if [ -z "$gh_token" ]; then
         err "GitHub token is required for this template."
-        err "You can configure it later by editing the .env file"
-        gh_token="PLACEHOLDER_CHANGE_ME"
-    else
-        ok "GitHub token configured"
+        err "Please provide a valid token and try again."
+        return 1
     fi
+    ok "GitHub token configured"
 
-    # ========== 3. Gemini API Key ==========
-    section "3/3 - Google Gemini API Key (OPTIONAL)"
+    # ========== 2. Gemini API Key ==========
+    section "2/2 - Google Gemini API Key (OPTIONAL)"
     log "This key will be stored in your .env file and enable:"
     log "  • Automatic QCM (questionnaire) generation"
     log "  • AI-assisted specification creation"
@@ -145,7 +136,6 @@ welcome_and_collect_info() {
     fi
 
     # Export variables for use in other functions
-    export COLLECTED_PROJECT_NAME="$project_name"
     export COLLECTED_GH_TOKEN="$gh_token"
     export COLLECTED_GEMINI_KEY="$gemini_key"
 
@@ -157,41 +147,79 @@ welcome_and_collect_info() {
 # ============================================================================
 
 clone_and_setup() {
-    local project_name="$1"
+    local template_dir="github-project-llm-management"
 
-    section "2. Cloning Template"
+    section "2. Installing Template"
 
     log "Downloading template from GitHub..."
     log "  Repository: github.com/dyvan/github-project-llm-management"
-    log "  Destination: $project_name/"
+    log "  Destination: $template_dir/"
     echo ""
 
-    if ! git clone https://github.com/dyvan/github-project-llm-management.git "$project_name" 2>/dev/null; then
+    if ! git clone https://github.com/dyvan/github-project-llm-management.git "$template_dir" 2>/dev/null; then
         err "Failed to clone template"
         return 1
     fi
     ok "Template downloaded"
 
-    cd "$project_name" || return 1
+    # Remove git history from template (we only want the files, not the template's git history)
+    log "Cleaning up template git history..."
+    rm -rf "$template_dir/.git" 2>/dev/null || true
+    ok "Template git history removed"
 
-    log "Removing unnecessary files..."
-    # Clean unnecessary files (keep only essentials)
+    # Setup GitHub workflows in parent repo
+    # Only copy user-relevant workflows (skip template validation workflows)
+    log "Setting up GitHub workflows..."
+
+    # Create .github/workflows if it doesn't exist
+    mkdir -p .github/workflows
+
+    # Whitelist of workflows to include (user-relevant only)
+    local whitelist_workflows="create-branch.yml|code-review-agent.yml|auto-close-feature.yml|generate-specification.yml|plan-with-gemini.yml|update-project.yml"
+
+    # Move and rename workflows with github-project-llm-management prefix
+    if [ -d "$template_dir/.github/workflows" ]; then
+        while IFS= read -r workflow; do
+            local filename=$(basename "$workflow")
+
+            # Check if this workflow is in the whitelist
+            if echo "$filename" | grep -E "^($whitelist_workflows)$" >/dev/null; then
+                local new_name="github-project-llm-management-${filename}"
+                cp "$workflow" ".github/workflows/$new_name"
+            fi
+        done < <(find "$template_dir/.github/workflows" -maxdepth 1 -name "*.yml" -type f)
+        ok "User-relevant workflows installed (6 workflows)"
+    fi
+
+    # Copy .github/labels and project.yml to parent repo if they don't exist
+    if [ -d "$template_dir/.github/labels" ] && [ ! -d ".github/labels" ]; then
+        cp -r "$template_dir/.github/labels" .github/
+        ok "GitHub labels copied"
+    fi
+
+    if [ -f "$template_dir/.github/project.yml" ] && [ ! -f ".github/project.yml" ]; then
+        cp "$template_dir/.github/project.yml" .github/
+        ok "GitHub project configuration copied"
+    fi
+
+    # Remove .github from template directory (moved to parent)
+    rm -rf "$template_dir/.github" 2>/dev/null || true
+
+    # Clean unnecessary files from template directory
+    log "Removing unnecessary files from template..."
+    cd "$template_dir" || return 1
+
     rm -rf agents/ docs/ tests/ specifications/ tools/ \
            AUTOMATION.md CLAUDE-USER-TEMPLATE.md CODE_OF_CONDUCT.md \
            CONTRIBUTING.md IMPROVEMENTS_TODO.md ISSUES_FIXED.md \
            PROJECT_BOARD_SETUP.md REFACTOR_SUMMARY.md ROADMAP.md \
            TEMPLATE_INDEX.md TESTING_PHASE_1_2.md WORKFLOW_SPECIFICATION.md \
-           pytest.ini requirements-dev.txt setup-project.sh mkdocs.yml .claude/ 2>/dev/null || true
+           pytest.ini requirements-dev.txt setup-project.sh mkdocs.yml .claude/ \
+           install.sh bootstrap.sh 2>/dev/null || true
 
-    # Ensure essential files exist
-    [ ! -f "CLAUDE.md" ] && git checkout CLAUDE.md 2>/dev/null
-    [ ! -f "template-setup.sh" ] && git checkout template-setup.sh 2>/dev/null
+    ok "Unnecessary files removed from template directory"
 
-    # Remove the template's remote origin
-    log "Preparing for new repository..."
-    git remote remove origin 2>/dev/null || true
-
-    ok "Project ready at: $project_name/"
+    cd - > /dev/null
     return 0
 }
 
@@ -200,27 +228,33 @@ clone_and_setup() {
 # ============================================================================
 
 create_env_file() {
-    section "Creating Configuration"
-
     local gh_token="$1"
     local gemini_key="$2"
+    local template_dir="github-project-llm-management"
 
-    # Use the collected project name as the repo name
-    local gh_repo="$COLLECTED_PROJECT_NAME"
+    section "Creating Configuration"
+
+    # Get GitHub owner/repo from current git repo
     local gh_owner=""
+    local gh_repo=""
 
-    # Try to detect the GitHub username using the provided token
-    if command -v gh &>/dev/null && [[ "$gh_token" != *"PLACEHOLDER"* ]]; then
-        gh_owner=$(GH_TOKEN="$gh_token" gh api user -q .login 2>/dev/null || echo "")
+    if git rev-parse --git-dir >/dev/null 2>&1; then
+        local url=$(git config --get remote.origin.url 2>/dev/null)
+        if [ -n "$url" ]; then
+            # Extract owner/repo from git URL (handle both https and ssh)
+            gh_owner=$(echo "$url" | sed -E 's|.*[:/]([^/]+)/[^/]+\.git?$|\1|')
+            gh_repo=$(echo "$url" | sed -E 's|.*[:/][^/]+/([^/]+)\.git?$|\1|')
+        fi
     fi
 
-    # Fallback to placeholder if detection fails
-    if [ -z "$gh_owner" ]; then
+    # Fallback if detection fails
+    if [ -z "$gh_owner" ] || [ -z "$gh_repo" ]; then
         gh_owner="your-username"
+        gh_repo="your-repo"
     fi
 
-    # Write .env file
-    cat > ".env" << EOF
+    # Write .env file in template directory
+    cat > "$template_dir/.env" << EOF
 # ============================================================================
 # Environment Configuration
 # ============================================================================
@@ -235,7 +269,7 @@ create_env_file() {
 GH_TOKEN=$gh_token
 
 # Repository Context (auto-detected from git)
-GH_OWNER=${gh_owner:-your-username}
+GH_OWNER=${gh_owner}
 GH_REPO=${gh_repo}
 
 # GitHub Project Board Number (configured via template-setup.sh)
@@ -258,7 +292,7 @@ EOF
 
     ok ".env file created"
 
-    # Create or update .gitignore
+    # Create or update .gitignore in parent repo
     if [ ! -f ".gitignore" ]; then
         log "Creating .gitignore..."
         cat > ".gitignore" << 'EOF'
@@ -309,55 +343,6 @@ EOF
 }
 
 # ============================================================================
-# Create GitHub Repository (Optional)
-# ============================================================================
-
-create_github_repo() {
-    local project_name="$1"
-    local gh_token="$2"
-
-    section "Creating GitHub Repository (Optional)"
-
-    if [[ "$gh_token" == *"PLACEHOLDER"* ]]; then
-        log "GitHub token not provided - skipping repository creation"
-        log ""
-        log "To create a GitHub repo later, run:"
-        log "  gh repo create $project_name --private --source=. --remote=origin --push"
-        return 0
-    fi
-
-    if ! command -v gh &>/dev/null; then
-        log "GitHub CLI not available - manual creation required"
-        log "Create manually at https://github.com/new then:"
-        log "  git remote add origin <your-repo-url>"
-        log "  git push -u origin main"
-        return 0
-    fi
-
-    local reply=""
-    safe_read "Create new GitHub repository '$project_name'? (y/n): " reply
-    if [ "$reply" != "y" ]; then
-        log "Skipped repository creation"
-        return 0
-    fi
-
-    # Remove old remote and create new one (defensive, already done in clone_and_setup)
-    git remote remove origin 2>/dev/null || true
-
-    log "Creating repository..."
-    if GH_TOKEN="$gh_token" gh repo create "$project_name" --private --source=. --remote=origin --push 2>/dev/null; then
-        ok "Repository created and pushed to GitHub"
-    else
-        err "Could not create repository automatically"
-        log "Create manually at https://github.com/new then:"
-        log "  git remote add origin <your-repo-url>"
-        log "  git push -u origin main"
-    fi
-
-    return 0
-}
-
-# ============================================================================
 # Main
 # ============================================================================
 
@@ -366,118 +351,91 @@ main() {
         return 1
     fi
 
-    # Collect all information upfront
-    if ! welcome_and_collect_info; then
-        err "Configuration collection interrupted"
+    # Check if we're in a git repo
+    if ! detect_git_repo; then
+        err "Not in a Git repository!"
+        err ""
+        err "To use this template, you need to be in a Git repository."
+        err "Create one first:"
+        err "  mkdir my-project"
+        err "  cd my-project"
+        err "  git init"
+        err "  bash <(curl ...) install.sh"
         return 1
     fi
 
-    local project_name="$COLLECTED_PROJECT_NAME"
+    ok "In a Git repository"
+    echo ""
+
+    # Collect configuration
+    if ! collect_info; then
+        err "Configuration collection failed"
+        return 1
+    fi
+
     local gh_token="$COLLECTED_GH_TOKEN"
     local gemini_key="$COLLECTED_GEMINI_KEY"
 
-    # Check if directory exists
-    if [ -d "$project_name" ]; then
-        local reply=""
-        echo ""
-        safe_read "⚠️  Directory '$project_name' already exists, overwrite? (y/n): " reply
-        if [ "$reply" != "y" ]; then
-            err "Installation cancelled"
-            return 1
-        fi
-        rm -rf "$project_name"
-    fi
-
-    # Clone and setup
-    if ! clone_and_setup "$project_name"; then
+    # Clone and setup template
+    if ! clone_and_setup; then
+        err "Failed to setup template"
         return 1
     fi
 
-    # Create .env with collected information
+    # Create .env file
     if ! create_env_file "$gh_token" "$gemini_key"; then
         err "Failed to create configuration"
         return 1
     fi
 
-    # Track if template-setup was run
-    local template_setup_run=false
-
-    # Try to create GitHub repo if token provided and valid
-    if [[ "$gh_token" != *"PLACEHOLDER"* ]]; then
-        create_github_repo "$project_name" "$gh_token"
-
-        # Offer to setup project board
-        echo ""
-        local setup_reply=""
-        safe_read "Setup GitHub project board and labels now? (y/n): " setup_reply
-        if [ "$setup_reply" = "y" ]; then
-            echo ""
-            log "Running template setup..."
-            echo ""
-            cd "$project_name" || return 1
-            if bash template-setup.sh; then
-                echo ""
-                ok "Project board configured successfully!"
-                template_setup_run=true
-            else
-                warning "Project board setup encountered some issues"
-                warning "You can retry with: cd $project_name && bash template-setup.sh"
-            fi
-            cd - > /dev/null
-        else
-            log "You can setup the project board later with: cd $project_name && bash template-setup.sh"
-        fi
-    fi
-
     # Final summary
     section "✨ Installation Complete!"
     echo ""
-    ok "Your project is ready at: $project_name/"
+    ok "GitHub Project LLM Management is ready!"
+    echo ""
+
+    log "Directory structure created:"
+    log "  github-project-llm-management/"
+    log "    ├── .env                    (your tokens - NEVER commit!)"
+    log "    ├── CLAUDE.md              (LLM instructions for Claude Code, Cursor, etc.)"
+    log "    ├── scripts/               (helper scripts)"
+    log "    ├── template-setup.sh      (setup project board & labels)"
+    log "    └── ..."
+    echo ""
+
+    log "GitHub workflows added to root (.github/workflows/):"
+    log "  • github-project-llm-management-create-branch.yml"
+    log "  • github-project-llm-management-code-review-agent.yml"
+    log "  • github-project-llm-management-auto-close-feature.yml"
+    log "  • github-project-llm-management-generate-specification.yml"
+    log "  • github-project-llm-management-plan-with-gemini.yml"
+    log "  • github-project-llm-management-update-project.yml"
     echo ""
 
     log "Next steps:"
     log ""
-    log "  1. Enter your project directory:"
-    log "     cd $project_name"
+    log "  1. Review your configuration:"
+    log "     cat github-project-llm-management/.env"
     log ""
-    log "  2. Review your configuration:"
-    log "     cat .env"
+    log "  2. (Optional) Add the files to git:"
+    log "     git add github-project-llm-management/ .github/workflows/ .gitignore"
+    log "     git commit -m 'feat: Add GitHub Project LLM Management'"
     log ""
-
-    if [[ "$gh_token" == *"PLACEHOLDER"* ]]; then
-        log "  3. ⚠️  Configure your GH_TOKEN in .env"
-        log "     Edit .env and set: GH_TOKEN=<your-github-token>"
-        log ""
-        if [ "$template_setup_run" = true ]; then
-            log "  4. Start creating issues!"
-        else
-            log "  4. Setup project board (if GH_TOKEN is configured):"
-            log "     bash template-setup.sh"
-            log ""
-            log "  5. Start creating issues!"
-        fi
-    else
-        if [ "$template_setup_run" = true ]; then
-            log "  3. Start creating issues!"
-        else
-            log "  3. Setup project board:"
-            log "     bash template-setup.sh"
-            log ""
-            log "  4. Start creating issues!"
-        fi
-    fi
+    log "  3. Setup GitHub project board and labels:"
+    log "     bash github-project-llm-management/template-setup.sh"
+    log ""
+    log "  4. Start creating issues to manage your project:"
     log "     gh issue create --title 'Your first task' --label type:feature"
     log ""
 
     if [[ "$gemini_key" == *"PLACEHOLDER"* ]]; then
         info "AI features disabled"
         log "To enable QCM and AI-assisted specifications:"
-        log "  - Add your GEMINI_API_KEY to the .env file"
+        log "  - Add your GEMINI_API_KEY to github-project-llm-management/.env"
         log "  - Get it at: https://aistudio.google.com/app/apikey"
         echo ""
     fi
 
-    echo ""
     ok "Happy coding! 🚀"
     echo ""
 
