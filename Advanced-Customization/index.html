@@ -23,7 +23,7 @@
     
     
       
-        <title>🎨 Personnalisation avancée - Project LLM Management</title>
+        <title>🎨 Advanced Customization - Project LLM Management</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#personnalisation-avancee" class="md-skip">
+        <a href="#advanced-customization" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              🎨 Personnalisation avancée
+              🎨 Advanced Customization
             
           </span>
         </div>
@@ -1050,10 +1050,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#changer-le-naming-des-branches" class="md-nav__link">
+  <a href="#changing-branch-naming" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Changer le naming des branches
+        Changing branch naming
       
     </span>
   </a>
@@ -1061,10 +1061,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ajouter-des-champs-custom-au-project-board" class="md-nav__link">
+  <a href="#adding-custom-fields-to-the-project-board" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ajouter des champs custom au Project Board
+        Adding custom fields to the Project Board
       
     </span>
   </a>
@@ -1072,10 +1072,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#notifications-slackdiscord" class="md-nav__link">
+  <a href="#slackdiscord-notifications" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Notifications Slack/Discord
+        Slack/Discord Notifications
       
     </span>
   </a>
@@ -1083,10 +1083,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#multi-repositories-avec-un-seul-project" class="md-nav__link">
+  <a href="#multi-repository-with-a-single-project" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Multi-repositories avec un seul Project
+        Multi-repository with a single Project
       
     </span>
   </a>
@@ -1094,10 +1094,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#changer-le-modele-llm" class="md-nav__link">
+  <a href="#changing-the-llm-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Changer le modèle LLM
+        Changing the LLM model
       
     </span>
   </a>
@@ -1105,10 +1105,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ajouter-des-validations-custom" class="md-nav__link">
+  <a href="#adding-custom-validations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ajouter des validations custom
+        Adding custom validations
       
     </span>
   </a>
@@ -1116,10 +1116,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#templates-dissues-personnalises" class="md-nav__link">
+  <a href="#custom-issue-templates" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Templates d'issues personnalisés
+        Custom issue templates
       
     </span>
   </a>
@@ -1146,34 +1146,34 @@
   
 
 
-<h1 id="personnalisation-avancee">🎨 Personnalisation avancée<a class="headerlink" href="#personnalisation-avancee" title="Permanent link">&para;</a></h1>
-<p>Pour adapter le template à vos besoins spécifiques.</p>
-<h2 id="changer-le-naming-des-branches">Changer le naming des branches<a class="headerlink" href="#changer-le-naming-des-branches" title="Permanent link">&para;</a></h2>
-<p>Éditer <code>.github/workflows/create-branch.yml</code> :</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># De : feat/{number}-{title}</span>
+<h1 id="advanced-customization">🎨 Advanced Customization<a class="headerlink" href="#advanced-customization" title="Permanent link">&para;</a></h1>
+<p>To adapt the template to your specific needs.</p>
+<h2 id="changing-branch-naming">Changing branch naming<a class="headerlink" href="#changing-branch-naming" title="Permanent link">&para;</a></h2>
+<p>Edit <code>.github/workflows/create-branch.yml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># From: feat/{number}-{title}</span>
 <span class="nv">BRANCH_NAME</span><span class="o">=</span><span class="s2">&quot;feat/</span><span class="si">${</span><span class="nv">ISSUE_NUMBER</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">SLUGIFIED</span><span class="si">}</span><span class="s2">&quot;</span>
 
-<span class="c1"># À : feature/{number}-{title}</span>
+<span class="c1"># To: feature/{number}-{title}</span>
 <span class="nv">BRANCH_NAME</span><span class="o">=</span><span class="s2">&quot;feature/</span><span class="si">${</span><span class="nv">ISSUE_NUMBER</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">SLUGIFIED</span><span class="si">}</span><span class="s2">&quot;</span>
 
-<span class="c1"># Ou : naming basé sur le type</span>
+<span class="c1"># Or: type-based naming</span>
 <span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LABELS</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>*<span class="s2">&quot;type:bug&quot;</span>*<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">  </span><span class="nv">BRANCH_NAME</span><span class="o">=</span><span class="s2">&quot;fix/</span><span class="si">${</span><span class="nv">ISSUE_NUMBER</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">SLUGIFIED</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="k">else</span>
 <span class="w">  </span><span class="nv">BRANCH_NAME</span><span class="o">=</span><span class="s2">&quot;feat/</span><span class="si">${</span><span class="nv">ISSUE_NUMBER</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">SLUGIFIED</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="k">fi</span>
 </code></pre></div>
-<h2 id="ajouter-des-champs-custom-au-project-board">Ajouter des champs custom au Project Board<a class="headerlink" href="#ajouter-des-champs-custom-au-project-board" title="Permanent link">&para;</a></h2>
+<h2 id="adding-custom-fields-to-the-project-board">Adding custom fields to the Project Board<a class="headerlink" href="#adding-custom-fields-to-the-project-board" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Créer le champ manuellement sur GitHub ou modifier <code>scripts/setup_project_fields.py</code> :</li>
+<li>Create the field manually on GitHub or modify <code>scripts/setup_project_fields.py</code>:</li>
 </ol>
 <div class="highlight"><pre><span></span><code><span class="n">fields_to_create</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;Status&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">],</span>
-    <span class="s2">&quot;Sprint&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Sprint 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Sprint 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Sprint 3&quot;</span><span class="p">],</span>  <span class="c1"># Nouveau champ</span>
+    <span class="s2">&quot;Sprint&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Sprint 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Sprint 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Sprint 3&quot;</span><span class="p">],</span>  <span class="c1"># New field</span>
 <span class="p">}</span>
 </code></pre></div>
 <ol>
-<li>Mapper dans <code>update-project.yml</code> :</li>
+<li>Map it in <code>update-project.yml</code>:</li>
 </ol>
 <div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Update sprint field</span>
 <span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
@@ -1181,26 +1181,26 @@
 <span class="w">      </span><span class="no">python scripts/project_sync.py --issue $NUM --sprint &quot;Sprint 1&quot;</span>
 <span class="w">    </span><span class="no">fi</span>
 </code></pre></div>
-<h2 id="notifications-slackdiscord">Notifications Slack/Discord<a class="headerlink" href="#notifications-slackdiscord" title="Permanent link">&para;</a></h2>
-<p>Ajouter à n'importe quel workflow :</p>
+<h2 id="slackdiscord-notifications">Slack/Discord Notifications<a class="headerlink" href="#slackdiscord-notifications" title="Permanent link">&para;</a></h2>
+<p>Add to any workflow:</p>
 <div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Notify Slack</span>
 <span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">    </span><span class="no">curl -X POST ${{ secrets.SLACK_WEBHOOK_URL }} \</span>
 <span class="w">      </span><span class="no">-H &#39;Content-Type: application/json&#39; \</span>
 <span class="w">      </span><span class="no">-d &#39;{&quot;text&quot;:&quot;✅ PR #${{ github.event.pull_request.number }} merged!&quot;}&#39;</span>
 </code></pre></div>
-<h2 id="multi-repositories-avec-un-seul-project">Multi-repositories avec un seul Project<a class="headerlink" href="#multi-repositories-avec-un-seul-project" title="Permanent link">&para;</a></h2>
-<p>Configurez le même <code>GH_PROJECT_NUMBER</code> dans chaque repo.</p>
-<h2 id="changer-le-modele-llm">Changer le modèle LLM<a class="headerlink" href="#changer-le-modele-llm" title="Permanent link">&para;</a></h2>
-<p>Tous les workflows IA utilisent Gemini. Le modèle par défaut est <code>gemini-2.0-flash</code>. Pour changer le modèle, modifiez la variable correspondante dans le workflow <code>code-review-agent.yml</code>.</p>
-<h2 id="ajouter-des-validations-custom">Ajouter des validations custom<a class="headerlink" href="#ajouter-des-validations-custom" title="Permanent link">&para;</a></h2>
-<p>Dans <code>ci-tests.yml</code>, ajoutez vos étapes :</p>
+<h2 id="multi-repository-with-a-single-project">Multi-repository with a single Project<a class="headerlink" href="#multi-repository-with-a-single-project" title="Permanent link">&para;</a></h2>
+<p>Set the same <code>GH_PROJECT_NUMBER</code> in each repo.</p>
+<h2 id="changing-the-llm-model">Changing the LLM model<a class="headerlink" href="#changing-the-llm-model" title="Permanent link">&para;</a></h2>
+<p>All AI workflows use Gemini. The default model is <code>gemini-2.0-flash</code>. To change the model, update the corresponding variable in the <code>code-review-agent.yml</code> workflow.</p>
+<h2 id="adding-custom-validations">Adding custom validations<a class="headerlink" href="#adding-custom-validations" title="Permanent link">&para;</a></h2>
+<p>In <code>ci-tests.yml</code>, add your steps:</p>
 <div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Custom validation</span>
 <span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">    </span><span class="no">./scripts/my_custom_check.sh</span>
 </code></pre></div>
-<h2 id="templates-dissues-personnalises">Templates d'issues personnalisés<a class="headerlink" href="#templates-dissues-personnalises" title="Permanent link">&para;</a></h2>
-<p>Éditez <code>.github/ISSUE_TEMPLATE/*.yml</code> selon vos besoins.</p>
+<h2 id="custom-issue-templates">Custom issue templates<a class="headerlink" href="#custom-issue-templates" title="Permanent link">&para;</a></h2>
+<p>Edit <code>.github/ISSUE_TEMPLATE/*.yml</code> to suit your needs.</p>
 <p><a href="FAQ">⬅️ FAQ</a> | <a href="Contributing">➡️ Contributing</a></p>
 
 

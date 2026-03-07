@@ -23,7 +23,7 @@
     
     
       
-        <title>🎓 Utiliser le template - Project LLM Management</title>
+        <title>🎓 Using the Template - Project LLM Management</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#utiliser-le-template" class="md-skip">
+        <a href="#using-the-template" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              🎓 Utiliser le template
+              🎓 Using the Template
             
           </span>
         </div>
@@ -1050,10 +1050,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#creer-une-issue" class="md-nav__link">
+  <a href="#create-an-issue" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Créer une issue
+        Create an Issue
       
     </span>
   </a>
@@ -1061,10 +1061,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#auto-creer-une-branche" class="md-nav__link">
+  <a href="#auto-create-a-branch" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Auto-créer une branche
+        Auto-create a Branch
       
     </span>
   </a>
@@ -1072,10 +1072,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#travailler-sur-une-branche" class="md-nav__link">
+  <a href="#work-on-a-branch" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Travailler sur une branche
+        Work on a Branch
       
     </span>
   </a>
@@ -1083,10 +1083,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#creer-une-pull-request" class="md-nav__link">
+  <a href="#create-a-pull-request" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Créer une Pull Request
+        Create a Pull Request
       
     </span>
   </a>
@@ -1094,10 +1094,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#merger-une-pr" class="md-nav__link">
+  <a href="#merge-a-pr" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Merger une PR
+        Merge a PR
       
     </span>
   </a>
@@ -1105,10 +1105,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#utiliser-les-labels-pour-automatiser" class="md-nav__link">
+  <a href="#use-labels-to-automate" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Utiliser les labels pour automatiser
+        Use Labels to Automate
       
     </span>
   </a>
@@ -1116,10 +1116,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#voir-le-project-board" class="md-nav__link">
+  <a href="#view-the-project-board" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Voir le Project Board
+        View the Project Board
       
     </span>
   </a>
@@ -1127,10 +1127,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#templates-dissues" class="md-nav__link">
+  <a href="#issue-templates" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Templates d'issues
+        Issue Templates
       
     </span>
   </a>
@@ -1138,22 +1138,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#workflow-complet" class="md-nav__link">
+  <a href="#complete-workflow" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Workflow complet
+        Complete Workflow
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Workflow complet">
+    <nav class="md-nav" aria-label="Complete Workflow">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#exemple-developper-une-nouvelle-feature" class="md-nav__link">
+  <a href="#example-develop-a-new-feature" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Exemple : Développer une nouvelle feature
+        Example: Develop a New Feature
       
     </span>
   </a>
@@ -1185,64 +1185,64 @@
   
 
 
-<h1 id="utiliser-le-template">🎓 Utiliser le template<a class="headerlink" href="#utiliser-le-template" title="Permanent link">&para;</a></h1>
-<p>Guide complet pour utiliser toutes les fonctionnalités du template.</p>
-<h2 id="creer-une-issue">Créer une issue<a class="headerlink" href="#creer-une-issue" title="Permanent link">&para;</a></h2>
+<h1 id="using-the-template">🎓 Using the Template<a class="headerlink" href="#using-the-template" title="Permanent link">&para;</a></h1>
+<p>Complete guide to using all the template features.</p>
+<h2 id="create-an-issue">Create an Issue<a class="headerlink" href="#create-an-issue" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>gh<span class="w"> </span>issue<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--title<span class="w"> </span><span class="s2">&quot;Ajouter dark mode&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--title<span class="w"> </span><span class="s2">&quot;Add dark mode&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--label<span class="w"> </span><span class="s2">&quot;type:feature,priority:high&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--body<span class="w"> </span><span class="s2">&quot;Description de la feature&quot;</span>
+<span class="w">  </span>--body<span class="w"> </span><span class="s2">&quot;Feature description&quot;</span>
 </code></pre></div>
-<p><strong>Résultat</strong> : Issue ajoutée automatiquement au Project Board avec Priority=High, Type=Feature</p>
-<h2 id="auto-creer-une-branche">Auto-créer une branche<a class="headerlink" href="#auto-creer-une-branche" title="Permanent link">&para;</a></h2>
-<p>Ajoutez le label <code>auto-branch</code> à une issue :</p>
+<p><strong>Result</strong>: Issue automatically added to the Project Board with Priority=High, Type=Feature</p>
+<h2 id="auto-create-a-branch">Auto-create a Branch<a class="headerlink" href="#auto-create-a-branch" title="Permanent link">&para;</a></h2>
+<p>Add the <code>auto-branch</code> label to an issue:</p>
 <div class="highlight"><pre><span></span><code>gh<span class="w"> </span>issue<span class="w"> </span>edit<span class="w"> </span><span class="m">123</span><span class="w"> </span>--add-label<span class="w"> </span><span class="s2">&quot;auto-branch&quot;</span>
 </code></pre></div>
-<p><strong>Résultat</strong> :
-- ✅ Branche créée : <code>feat/123-titre-issue</code>
-- ✅ Commentaire posté avec instructions git
-- ✅ Status mis à jour : "Ready"</p>
-<h2 id="travailler-sur-une-branche">Travailler sur une branche<a class="headerlink" href="#travailler-sur-une-branche" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># Récupérer la branche</span>
+<p><strong>Result</strong>:
+- ✅ Branch created: <code>feat/123-issue-title</code>
+- ✅ Comment posted with git instructions
+- ✅ Status updated: "Ready"</p>
+<h2 id="work-on-a-branch">Work on a Branch<a class="headerlink" href="#work-on-a-branch" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Fetch the branch</span>
 git<span class="w"> </span>fetch<span class="w"> </span>origin
-git<span class="w"> </span>checkout<span class="w"> </span>feat/123-ajouter-dark-mode
+git<span class="w"> </span>checkout<span class="w"> </span>feat/123-add-dark-mode
 
-<span class="c1"># Faire vos modifications</span>
+<span class="c1"># Make your changes</span>
 <span class="c1"># ...</span>
 
-<span class="c1"># Committer avec référence à l&#39;issue</span>
+<span class="c1"># Commit with issue reference</span>
 git<span class="w"> </span>add<span class="w"> </span>.
 git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: add dark mode toggle (#123)&quot;</span>
-git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>feat/123-ajouter-dark-mode
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>feat/123-add-dark-mode
 </code></pre></div>
-<h2 id="creer-une-pull-request">Créer une Pull Request<a class="headerlink" href="#creer-une-pull-request" title="Permanent link">&para;</a></h2>
+<h2 id="create-a-pull-request">Create a Pull Request<a class="headerlink" href="#create-a-pull-request" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>gh<span class="w"> </span>pr<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--title<span class="w"> </span><span class="s2">&quot;Add dark mode (#123)&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--body<span class="w"> </span><span class="s2">&quot;Closes #123&quot;</span>
 </code></pre></div>
-<p><strong>Résultat</strong> :
-- ✅ CI/CD se lance
-- ✅ Gemini AI analyse le code (si configuré)
-- ✅ Status de l'issue → "In Review"</p>
-<h2 id="merger-une-pr">Merger une PR<a class="headerlink" href="#merger-une-pr" title="Permanent link">&para;</a></h2>
-<p>Quand la PR est approuvée :</p>
+<p><strong>Result</strong>:
+- ✅ CI/CD runs
+- ✅ Gemini AI analyzes the code (if configured)
+- ✅ Issue Status → "In Review"</p>
+<h2 id="merge-a-pr">Merge a PR<a class="headerlink" href="#merge-a-pr" title="Permanent link">&para;</a></h2>
+<p>When the PR is approved:</p>
 <div class="highlight"><pre><span></span><code>gh<span class="w"> </span>pr<span class="w"> </span>merge<span class="w"> </span><span class="m">456</span><span class="w"> </span>--squash
 </code></pre></div>
-<p><strong>Résultat</strong> :
-- ✅ PR et issue → Status "Done"
-- ✅ Branche supprimée automatiquement</p>
-<h2 id="utiliser-les-labels-pour-automatiser">Utiliser les labels pour automatiser<a class="headerlink" href="#utiliser-les-labels-pour-automatiser" title="Permanent link">&para;</a></h2>
+<p><strong>Result</strong>:
+- ✅ PR and issue → Status "Done"
+- ✅ Branch automatically deleted</p>
+<h2 id="use-labels-to-automate">Use Labels to Automate<a class="headerlink" href="#use-labels-to-automate" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
 <th>Label</th>
-<th>Action automatique</th>
+<th>Automatic Action</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>auto-branch</code></td>
-<td>Crée une branche</td>
+<td>Creates a branch</td>
 </tr>
 <tr>
 <td><code>priority:high</code></td>
@@ -1258,33 +1258,33 @@ git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </
 </tr>
 </tbody>
 </table>
-<h2 id="voir-le-project-board">Voir le Project Board<a class="headerlink" href="#voir-le-project-board" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># Lister les items</span>
+<h2 id="view-the-project-board">View the Project Board<a class="headerlink" href="#view-the-project-board" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># List items</span>
 gh<span class="w"> </span>project<span class="w"> </span>item-list<span class="w"> </span><span class="m">1</span><span class="w"> </span>--owner<span class="w"> </span>YOUR_USERNAME
 
-<span class="c1"># Voir dans le navigateur</span>
+<span class="c1"># View in the browser</span>
 gh<span class="w"> </span>project<span class="w"> </span>view<span class="w"> </span><span class="m">1</span><span class="w"> </span>--owner<span class="w"> </span>YOUR_USERNAME<span class="w"> </span>--web
 </code></pre></div>
-<h2 id="templates-dissues">Templates d'issues<a class="headerlink" href="#templates-dissues" title="Permanent link">&para;</a></h2>
-<p>Utilisez les templates dans <code>.github/ISSUE_TEMPLATE/</code> :</p>
+<h2 id="issue-templates">Issue Templates<a class="headerlink" href="#issue-templates" title="Permanent link">&para;</a></h2>
+<p>Use the templates in <code>.github/ISSUE_TEMPLATE/</code>:</p>
 <ul>
-<li><code>feature_request.yml</code> : Nouvelle fonctionnalité</li>
-<li><code>bug_report.yml</code> : Signaler un bug</li>
-<li><code>task.yml</code> : Tâche technique</li>
+<li><code>feature_request.yml</code>: New feature</li>
+<li><code>bug_report.yml</code>: Report a bug</li>
+<li><code>task.yml</code>: Technical task</li>
 </ul>
-<h2 id="workflow-complet">Workflow complet<a class="headerlink" href="#workflow-complet" title="Permanent link">&para;</a></h2>
-<h3 id="exemple-developper-une-nouvelle-feature">Exemple : Développer une nouvelle feature<a class="headerlink" href="#exemple-developper-une-nouvelle-feature" title="Permanent link">&para;</a></h3>
+<h2 id="complete-workflow">Complete Workflow<a class="headerlink" href="#complete-workflow" title="Permanent link">&para;</a></h2>
+<h3 id="example-develop-a-new-feature">Example: Develop a New Feature<a class="headerlink" href="#example-develop-a-new-feature" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
-<p><strong>Créer l'issue</strong>
+<p><strong>Create the issue</strong>
    <div class="highlight"><pre><span></span><code>gh<span class="w"> </span>issue<span class="w"> </span>create<span class="w"> </span>--title<span class="w"> </span><span class="s2">&quot;Add user profile&quot;</span><span class="w"> </span>--label<span class="w"> </span><span class="s2">&quot;type:feature,priority:medium,auto-branch&quot;</span>
 </code></pre></div></p>
 </li>
 <li>
-<p><strong>Branche auto-créée</strong> → <code>feat/1-add-user-profile</code></p>
+<p><strong>Branch auto-created</strong> → <code>feat/1-add-user-profile</code></p>
 </li>
 <li>
-<p><strong>Développer</strong>
+<p><strong>Develop</strong>
    <div class="highlight"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>feat/1-add-user-profile
 <span class="c1"># Code...</span>
 git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: add user profile page (#1)&quot;</span>
@@ -1292,15 +1292,15 @@ git<span class="w"> </span>push
 </code></pre></div></p>
 </li>
 <li>
-<p><strong>Créer PR</strong>
+<p><strong>Create PR</strong>
    <div class="highlight"><pre><span></span><code>gh<span class="w"> </span>pr<span class="w"> </span>create<span class="w"> </span>--title<span class="w"> </span><span class="s2">&quot;Add user profile (#1)&quot;</span><span class="w"> </span>--body<span class="w"> </span><span class="s2">&quot;Closes #1&quot;</span>
 </code></pre></div></p>
 </li>
 <li>
-<p><strong>Revue auto</strong> → Gemini analyse le code</p>
+<p><strong>Auto review</strong> → Gemini analyzes the code</p>
 </li>
 <li>
-<p><strong>Merger</strong> → Status "Done" automatique</p>
+<p><strong>Merge</strong> → Status automatically set to "Done"</p>
 </li>
 </ol>
 <p><a href="Configuration">⬅️ Configuration</a> | <a href="Understanding-Workflows">➡️ Workflows</a></p>

@@ -23,7 +23,7 @@
     
     
       
-        <title>🐛 Dépannage - Project LLM Management</title>
+        <title>🐛 Troubleshooting - Project LLM Management</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#depannage" class="md-skip">
+        <a href="#troubleshooting" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              🐛 Dépannage
+              🐛 Troubleshooting
             
           </span>
         </div>
@@ -1072,10 +1072,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#permission-denied-sur-scripts" class="md-nav__link">
+  <a href="#permission-denied-on-scripts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        "Permission denied" sur scripts
+        "Permission denied" on scripts
       
     </span>
   </a>
@@ -1083,10 +1083,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#workflows-ne-se-declenchent-pas" class="md-nav__link">
+  <a href="#workflows-not-triggering" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Workflows ne se déclenchent pas
+        Workflows not triggering
       
     </span>
   </a>
@@ -1094,10 +1094,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#project-board-ne-se-met-pas-a-jour" class="md-nav__link">
+  <a href="#project-board-not-updating" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Project Board ne se met pas à jour
+        Project Board not updating
       
     </span>
   </a>
@@ -1105,10 +1105,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#auto-branch-ne-cree-pas-la-branche" class="md-nav__link">
+  <a href="#auto-branch-not-creating-the-branch" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Auto-branch ne crée pas la branche
+        Auto-branch not creating the branch
       
     </span>
   </a>
@@ -1116,10 +1116,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#code-review-ne-fonctionne-pas" class="md-nav__link">
+  <a href="#code-review-not-working" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Code Review ne fonctionne pas
+        Code Review not working
       
     </span>
   </a>
@@ -1127,10 +1127,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#tests-echouent" class="md-nav__link">
+  <a href="#tests-failing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tests échouent
+        Tests failing
       
     </span>
   </a>
@@ -1149,10 +1149,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#besoin-daide-supplementaire" class="md-nav__link">
+  <a href="#need-more-help" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Besoin d'aide supplémentaire
+        Need more help?
       
     </span>
   </a>
@@ -1179,10 +1179,10 @@
   
 
 
-<h1 id="depannage">🐛 Dépannage<a class="headerlink" href="#depannage" title="Permanent link">&para;</a></h1>
-<p>Solutions aux problèmes courants.</p>
+<h1 id="troubleshooting">🐛 Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h1>
+<p>Solutions to common problems.</p>
 <h2 id="gh-command-not-found">"gh: command not found"<a class="headerlink" href="#gh-command-not-found" title="Permanent link">&para;</a></h2>
-<p><strong>Solution</strong> : Installer GitHub CLI</p>
+<p><strong>Solution</strong>: Install GitHub CLI</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># macOS</span>
 brew<span class="w"> </span>install<span class="w"> </span>gh
 
@@ -1217,49 +1217,49 @@ gh<span class="w"> </span>project<span class="w"> </span>list<span class="w"> </
 <span class="c1"># Check the diagnostic step in update-project.yml workflow logs</span>
 <span class="c1"># for detailed error messages</span>
 </code></pre></div>
-<h2 id="permission-denied-sur-scripts">"Permission denied" sur scripts<a class="headerlink" href="#permission-denied-sur-scripts" title="Permanent link">&para;</a></h2>
-<p><strong>Solution</strong> :
+<h2 id="permission-denied-on-scripts">"Permission denied" on scripts<a class="headerlink" href="#permission-denied-on-scripts" title="Permanent link">&para;</a></h2>
+<p><strong>Solution</strong>:
 <div class="highlight"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>setup-project.sh
 chmod<span class="w"> </span>+x<span class="w"> </span>scripts/*.sh
 chmod<span class="w"> </span>+x<span class="w"> </span>scripts/*.py
 </code></pre></div></p>
-<h2 id="workflows-ne-se-declenchent-pas">Workflows ne se déclenchent pas<a class="headerlink" href="#workflows-ne-se-declenchent-pas" title="Permanent link">&para;</a></h2>
-<p><strong>Vérifier</strong> :
-1. Actions activées : Settings → Actions → General
-2. Workflows valides : <code>./scripts/validate_setup.sh</code>
-3. Secrets configurés : <code>gh secret list</code>
-4. Logs : Actions tab sur GitHub</p>
-<h2 id="project-board-ne-se-met-pas-a-jour">Project Board ne se met pas à jour<a class="headerlink" href="#project-board-ne-se-met-pas-a-jour" title="Permanent link">&para;</a></h2>
-<p><strong>Solutions</strong> :
-<div class="highlight"><pre><span></span><code><span class="c1"># Vérifier projet existe</span>
+<h2 id="workflows-not-triggering">Workflows not triggering<a class="headerlink" href="#workflows-not-triggering" title="Permanent link">&para;</a></h2>
+<p><strong>Check</strong>:
+1. Actions enabled: Settings → Actions → General
+2. Workflows valid: <code>./scripts/validate_setup.sh</code>
+3. Secrets configured: <code>gh secret list</code>
+4. Logs: Actions tab on GitHub</p>
+<h2 id="project-board-not-updating">Project Board not updating<a class="headerlink" href="#project-board-not-updating" title="Permanent link">&para;</a></h2>
+<p><strong>Solutions</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># Verify the project exists</span>
 gh<span class="w"> </span>project<span class="w"> </span>list<span class="w"> </span>--owner<span class="w"> </span>YOUR_USERNAME
 
-<span class="c1"># Vérifier project.yml</span>
+<span class="c1"># Check project.yml</span>
 cat<span class="w"> </span>.github/project.yml
 
-<span class="c1"># Tester manuellement</span>
+<span class="c1"># Test manually</span>
 python3<span class="w"> </span>scripts/project_sync.py<span class="w"> </span>--issue<span class="w"> </span><span class="m">1</span><span class="w"> </span>--status<span class="w"> </span><span class="s2">&quot;Backlog&quot;</span>
 </code></pre></div></p>
-<h2 id="auto-branch-ne-cree-pas-la-branche">Auto-branch ne crée pas la branche<a class="headerlink" href="#auto-branch-ne-cree-pas-la-branche" title="Permanent link">&para;</a></h2>
-<p><strong>Vérifier</strong> :
-- Issue a bien label <code>auto-branch</code>
-- Pas de branche existante même nom
-- Workflow logs dans Actions</p>
-<h2 id="code-review-ne-fonctionne-pas">Code Review ne fonctionne pas<a class="headerlink" href="#code-review-ne-fonctionne-pas" title="Permanent link">&para;</a></h2>
-<p><strong>Sans commentaire</strong> :
-- Vérifier <code>GEMINI_API_KEY</code> : <code>gh secret list</code>
-- Mode basique sans API key</p>
-<p><strong>Erreur API</strong> :
-- Vérifier validité clé
-- Vérifier quotas : https://aistudio.google.com/</p>
-<h2 id="tests-echouent">Tests échouent<a class="headerlink" href="#tests-echouent" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># Installer dépendances dev</span>
+<h2 id="auto-branch-not-creating-the-branch">Auto-branch not creating the branch<a class="headerlink" href="#auto-branch-not-creating-the-branch" title="Permanent link">&para;</a></h2>
+<p><strong>Check</strong>:
+- Issue has the <code>auto-branch</code> label
+- No existing branch with the same name
+- Workflow logs in Actions</p>
+<h2 id="code-review-not-working">Code Review not working<a class="headerlink" href="#code-review-not-working" title="Permanent link">&para;</a></h2>
+<p><strong>No comment posted</strong>:
+- Check <code>GEMINI_API_KEY</code>: <code>gh secret list</code>
+- Basic mode without API key</p>
+<p><strong>API error</strong>:
+- Check key validity
+- Check quotas: https://aistudio.google.com/</p>
+<h2 id="tests-failing">Tests failing<a class="headerlink" href="#tests-failing" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install dev dependencies</span>
 pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-dev.txt
 
-<span class="c1"># Lancer tests</span>
+<span class="c1"># Run tests</span>
 pytest<span class="w"> </span>tests/<span class="w"> </span>-v
 
-<span class="c1"># Vérifier workflows YAML</span>
+<span class="c1"># Validate workflow YAML</span>
 python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import yaml; [yaml.safe_load(open(f)) for f in [&#39;.github/workflows/ci-tests.yml&#39;]]&quot;</span>
 </code></pre></div>
 <h2 id="invalid-or-insufficient-github-token">Invalid or insufficient GitHub token<a class="headerlink" href="#invalid-or-insufficient-github-token" title="Permanent link">&para;</a></h2>
@@ -1270,12 +1270,12 @@ python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;i
 4. Store as secret: <code>gh secret set GH_TOKEN</code></p>
 <p><strong>Note</strong>: Fine-grained PATs do not support Projects v2. Use a classic PAT.
 See <a href="Configuration">Configuration</a> for details.</p>
-<h2 id="besoin-daide-supplementaire">Besoin d'aide supplémentaire<a class="headerlink" href="#besoin-daide-supplementaire" title="Permanent link">&para;</a></h2>
+<h2 id="need-more-help">Need more help?<a class="headerlink" href="#need-more-help" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Valider setup : <code>./scripts/validate_setup.sh</code></li>
-<li>Consulter FAQ : <a href="FAQ">FAQ</a></li>
-<li>Ouvrir issue : https://github.com/dyvan/github-project-llm-management/issues</li>
-<li>Poser question : https://github.com/dyvan/github-project-llm-management/discussions</li>
+<li>Validate setup: <code>./scripts/validate_setup.sh</code></li>
+<li>Check the FAQ: <a href="FAQ">FAQ</a></li>
+<li>Open an issue: https://github.com/dyvan/github-project-llm-management/issues</li>
+<li>Ask a question: https://github.com/dyvan/github-project-llm-management/discussions</li>
 </ol>
 <p><a href="Understanding-Workflows">⬅️ Workflows</a> | <a href="FAQ">➡️ FAQ</a></p>
 

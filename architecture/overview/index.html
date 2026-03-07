@@ -1880,7 +1880,7 @@
 
 <h1 id="architecture-overview">Architecture Overview<a class="headerlink" href="#architecture-overview" title="Permanent link">&para;</a></h1>
 <h2 id="system-design">🏗️ System Design<a class="headerlink" href="#system-design" title="Permanent link">&para;</a></h2>
-<p>Le système est composé de trois couches interconnectées :</p>
+<p>The system is composed of three interconnected layers:</p>
 <div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────────┐
 │                    HUMAN OVERSIGHT LAYER                     │
 │              GitHub Projects v2 - Central Dashboard           │
@@ -1957,39 +1957,39 @@ Project Board reflects completion
 <h2 id="agent-responsibilities">🔄 Agent Responsibilities<a class="headerlink" href="#agent-responsibilities" title="Permanent link">&para;</a></h2>
 <h3 id="branch-creator">Branch Creator<a class="headerlink" href="#branch-creator" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Input</strong> : Issue + <code>auto-branch</code> label</li>
-<li><strong>Process</strong> : Validate → Format → Create → Comment</li>
-<li><strong>Output</strong> : Branch created, comment posted</li>
-<li><strong>Permissions</strong> : <code>contents: write</code>, <code>issues: write</code></li>
+<li><strong>Input</strong>: Issue + <code>auto-branch</code> label</li>
+<li><strong>Process</strong>: Validate → Format → Create → Comment</li>
+<li><strong>Output</strong>: Branch created, comment posted</li>
+<li><strong>Permissions</strong>: <code>contents: write</code>, <code>issues: write</code></li>
 </ul>
 <h3 id="code-reviewer">Code Reviewer<a class="headerlink" href="#code-reviewer" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Input</strong> : PR opened/updated</li>
-<li><strong>Process</strong> : Extract diff → Call Gemini → Format → Post</li>
-<li><strong>Output</strong> : Comment with feedback</li>
-<li><strong>Permissions</strong> : <code>pull-requests: write</code>, <code>contents: read</code></li>
-<li><strong>Note</strong> : Non-blocking, informational only</li>
+<li><strong>Input</strong>: PR opened/updated</li>
+<li><strong>Process</strong>: Extract diff → Call Gemini → Format → Post</li>
+<li><strong>Output</strong>: Comment with feedback</li>
+<li><strong>Permissions</strong>: <code>pull-requests: write</code>, <code>contents: read</code></li>
+<li><strong>Note</strong>: Non-blocking, informational only</li>
 </ul>
 <h3 id="test-feedback">Test Feedback<a class="headerlink" href="#test-feedback" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Input</strong> : Push to branch or PR</li>
-<li><strong>Process</strong> : Run tests → Collect results → Report → Update project</li>
-<li><strong>Output</strong> : Comment + status update</li>
-<li><strong>Permissions</strong> : <code>contents: read</code>, <code>pull-requests: write</code></li>
+<li><strong>Input</strong>: Push to branch or PR</li>
+<li><strong>Process</strong>: Run tests → Collect results → Report → Update project</li>
+<li><strong>Output</strong>: Comment + status update</li>
+<li><strong>Permissions</strong>: <code>contents: read</code>, <code>pull-requests: write</code></li>
 </ul>
 <h2 id="project-board-integration">🎯 Project Board Integration<a class="headerlink" href="#project-board-integration" title="Permanent link">&para;</a></h2>
 <h3 id="fields-views">Fields &amp; Views<a class="headerlink" href="#fields-views" title="Permanent link">&para;</a></h3>
-<p><strong>Custom Fields</strong> :
+<p><strong>Custom Fields</strong>:
 - Priority: Low/Medium/High
 - Effort: 1/2/3/5/8 (story points)
 - Status: Backlog/In Progress/In QA/Done
 - Owner: (auto from assignee)
 - Sprint: (text field)
 - Environment: dev/preprod/prod</p>
-<p><strong>Views</strong> :
-1. <strong>Backlog</strong> (Table) : All issues, sortable
-2. <strong>Priority Board</strong> (Kanban) : Grouped by status
-3. <strong>Team Items</strong> (Table) : Filtered by owner</p>
+<p><strong>Views</strong>:
+1. <strong>Backlog</strong> (Table): All issues, sortable
+2. <strong>Priority Board</strong> (Kanban): Grouped by status
+3. <strong>Team Items</strong> (Table): Filtered by owner</p>
 <h2 id="permission-model">🔐 Permission Model<a class="headerlink" href="#permission-model" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2063,9 +2063,9 @@ Deploy to production
 <h2 id="integration-points">🔌 Integration Points<a class="headerlink" href="#integration-points" title="Permanent link">&para;</a></h2>
 <h3 id="external-services">External Services<a class="headerlink" href="#external-services" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Gemini API</strong> (Google) : Code review</li>
-<li><strong>GitHub API</strong> : Repository operations</li>
-<li><strong>GitHub GraphQL</strong> : Project updates (future)</li>
+<li><strong>Gemini API</strong> (Google): Code review</li>
+<li><strong>GitHub API</strong>: Repository operations</li>
+<li><strong>GitHub GraphQL</strong>: Project updates (future)</li>
 </ul>
 <h3 id="future-integrations">Future Integrations<a class="headerlink" href="#future-integrations" title="Permanent link">&para;</a></h3>
 <ul>

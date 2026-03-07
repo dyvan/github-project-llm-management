@@ -23,7 +23,7 @@
     
     
       
-        <title>🔀 Comprendre les Workflows - Project LLM Management</title>
+        <title>🔀 Understanding Workflows - Project LLM Management</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#comprendre-les-workflows" class="md-skip">
+        <a href="#understanding-workflows" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              🔀 Comprendre les Workflows
+              🔀 Understanding Workflows
             
           </span>
         </div>
@@ -1050,10 +1050,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#vue-densemble" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Vue d'ensemble
+        Overview
       
     </span>
   </a>
@@ -1061,15 +1061,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#workflows-detailles" class="md-nav__link">
+  <a href="#detailed-workflows" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Workflows détaillés
+        Detailed Workflows
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Workflows détaillés">
+    <nav class="md-nav" aria-label="Detailed Workflows">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1122,22 +1122,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#personnaliser-les-workflows" class="md-nav__link">
+  <a href="#customizing-workflows" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Personnaliser les workflows
+        Customizing Workflows
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Personnaliser les workflows">
+    <nav class="md-nav" aria-label="Customizing Workflows">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ajouter-un-nouveau-mapping-label" class="md-nav__link">
+  <a href="#add-a-new-label-mapping" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ajouter un nouveau mapping label
+        Add a new label mapping
       
     </span>
   </a>
@@ -1145,10 +1145,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#changer-le-prefix-de-branche" class="md-nav__link">
+  <a href="#change-the-branch-prefix" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Changer le prefix de branche
+        Change the branch prefix
       
     </span>
   </a>
@@ -1156,10 +1156,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ajouter-des-notifications" class="md-nav__link">
+  <a href="#add-notifications" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ajouter des notifications
+        Add notifications
       
     </span>
   </a>
@@ -1172,10 +1172,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deboguer-un-workflow" class="md-nav__link">
+  <a href="#debugging-a-workflow" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Déboguer un workflow
+        Debugging a Workflow
       
     </span>
   </a>
@@ -1202,83 +1202,83 @@
   
 
 
-<h1 id="comprendre-les-workflows">🔀 Comprendre les Workflows<a class="headerlink" href="#comprendre-les-workflows" title="Permanent link">&para;</a></h1>
-<p>Comment fonctionnent les automations GitHub Actions.</p>
-<h2 id="vue-densemble">Vue d'ensemble<a class="headerlink" href="#vue-densemble" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>Issue créée → update-project.yml → Ajout au Project Board (Backlog)
+<h1 id="understanding-workflows">🔀 Understanding Workflows<a class="headerlink" href="#understanding-workflows" title="Permanent link">&para;</a></h1>
+<p>How the GitHub Actions automations work.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Issue created → update-project.yml → Added to Project Board (Backlog)
      ↓
-Label &quot;auto-branch&quot; → create-branch.yml → Branche créée
+Label &quot;auto-branch&quot; → create-branch.yml → Branch created
      ↓
-Développeur code
+Developer codes
      ↓
-PR ouverte → code-review-agent.yml → Gemini analyse
-           → ci-tests.yml → Tests exécutés
-           → update-project.yml → Status &quot;In Review&quot;
+PR opened → code-review-agent.yml → Gemini analyzes
+          → ci-tests.yml → Tests run
+          → update-project.yml → Status &quot;In Review&quot;
      ↓
-PR mergée → update-project.yml → Status &quot;Done&quot;
+PR merged → update-project.yml → Status &quot;Done&quot;
 </code></pre></div>
-<h2 id="workflows-detailles">Workflows détaillés<a class="headerlink" href="#workflows-detailles" title="Permanent link">&para;</a></h2>
+<h2 id="detailed-workflows">Detailed Workflows<a class="headerlink" href="#detailed-workflows" title="Permanent link">&para;</a></h2>
 <h3 id="1-update-projectyml">1. update-project.yml<a class="headerlink" href="#1-update-projectyml" title="Permanent link">&para;</a></h3>
-<p><strong>Quand</strong> : Issue/PR créée, labellée, mergée</p>
-<p><strong>Actions</strong> :
-- Issue créée → Ajoute au Backlog
-- Label ajouté → Met à jour Status/Priority/Type
-- PR ouverte → Status "In Review"
-- PR mergée → Status "Done"</p>
-<p><strong>Variables</strong> :
+<p><strong>When</strong>: Issue/PR created, labeled, merged</p>
+<p><strong>Actions</strong>:
+- Issue created → Adds to Backlog
+- Label added → Updates Status/Priority/Type
+- PR opened → Status "In Review"
+- PR merged → Status "Done"</p>
+<p><strong>Variables</strong>:
 <div class="highlight"><pre><span></span><code><span class="nt">env</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">GH_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span>
 <span class="w">  </span><span class="nt">GH_OWNER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ github.repository_owner }}</span>
 <span class="w">  </span><span class="nt">GH_REPO</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ github.event.repository.name }}</span>
 </code></pre></div></p>
 <h3 id="2-create-branchyml">2. create-branch.yml<a class="headerlink" href="#2-create-branchyml" title="Permanent link">&para;</a></h3>
-<p><strong>Quand</strong> : Label <code>auto-branch</code> ajouté</p>
-<p><strong>Actions</strong> :
-1. Récupère titre issue
-2. Crée slug (ex: "Fix API Bug" → "fix-api-bug")
-3. Crée branche <code>feat/{number}-{slug}</code>
-4. Poste commentaire avec instructions</p>
+<p><strong>When</strong>: Label <code>auto-branch</code> added</p>
+<p><strong>Actions</strong>:
+1. Retrieves issue title
+2. Creates slug (e.g., "Fix API Bug" → "fix-api-bug")
+3. Creates branch <code>feat/{number}-{slug}</code>
+4. Posts comment with instructions</p>
 <h3 id="3-code-review-agentyml">3. code-review-agent.yml<a class="headerlink" href="#3-code-review-agentyml" title="Permanent link">&para;</a></h3>
-<p><strong>Quand</strong> : PR ouverte/mise à jour</p>
-<p><strong>Actions</strong> :
-1. Récupère le diff
-2. Envoie à Gemini AI
-3. Génère revue (Points forts, Suggestions, Problèmes)
-4. Poste commentaire</p>
-<p><strong>Mode fallback</strong> : Sans GEMINI_API_KEY, checklist basique</p>
+<p><strong>When</strong>: PR opened/updated</p>
+<p><strong>Actions</strong>:
+1. Retrieves the diff
+2. Sends it to Gemini AI
+3. Generates review (Strengths, Suggestions, Issues)
+4. Posts comment</p>
+<p><strong>Fallback mode</strong>: Without GEMINI_API_KEY, basic checklist</p>
 <h3 id="4-ci-testsyml">4. ci-tests.yml<a class="headerlink" href="#4-ci-testsyml" title="Permanent link">&para;</a></h3>
-<p><strong>Quand</strong> : Push sur main/develop, PR ouverte</p>
-<p><strong>Actions</strong> :
-1. Vérifie permissions scripts
-2. Valide YAML workflows
-3. Lance tests unitaires
-4. Rapport de couverture</p>
-<h2 id="personnaliser-les-workflows">Personnaliser les workflows<a class="headerlink" href="#personnaliser-les-workflows" title="Permanent link">&para;</a></h2>
-<h3 id="ajouter-un-nouveau-mapping-label">Ajouter un nouveau mapping label<a class="headerlink" href="#ajouter-un-nouveau-mapping-label" title="Permanent link">&para;</a></h3>
-<p>Dans <code>update-project.yml</code> :
+<p><strong>When</strong>: Push on main/develop, PR opened</p>
+<p><strong>Actions</strong>:
+1. Checks script permissions
+2. Validates workflow YAML syntax
+3. Runs unit tests
+4. Coverage report</p>
+<h2 id="customizing-workflows">Customizing Workflows<a class="headerlink" href="#customizing-workflows" title="Permanent link">&para;</a></h2>
+<h3 id="add-a-new-label-mapping">Add a new label mapping<a class="headerlink" href="#add-a-new-label-mapping" title="Permanent link">&para;</a></h3>
+<p>In <code>update-project.yml</code>:
 <div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Update on custom label</span>
 <span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">    </span><span class="no">if [[ &quot;$LABEL&quot; == &quot;needs-review&quot; ]]; then</span>
 <span class="w">      </span><span class="no">python scripts/project_sync.py --issue $NUM --status &quot;In Review&quot;</span>
 <span class="w">    </span><span class="no">fi</span>
 </code></pre></div></p>
-<h3 id="changer-le-prefix-de-branche">Changer le prefix de branche<a class="headerlink" href="#changer-le-prefix-de-branche" title="Permanent link">&para;</a></h3>
-<p>Dans <code>create-branch.yml</code> :
-<div class="highlight"><pre><span></span><code><span class="c1"># Changer &quot;feat/&quot; en &quot;feature/&quot;</span>
+<h3 id="change-the-branch-prefix">Change the branch prefix<a class="headerlink" href="#change-the-branch-prefix" title="Permanent link">&para;</a></h3>
+<p>In <code>create-branch.yml</code>:
+<div class="highlight"><pre><span></span><code><span class="c1"># Change &quot;feat/&quot; to &quot;feature/&quot;</span>
 <span class="nv">BRANCH_NAME</span><span class="o">=</span><span class="s2">&quot;feature/</span><span class="si">${</span><span class="nv">ISSUE_NUMBER</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">SLUGIFIED</span><span class="si">}</span><span class="s2">&quot;</span>
 </code></pre></div></p>
-<h3 id="ajouter-des-notifications">Ajouter des notifications<a class="headerlink" href="#ajouter-des-notifications" title="Permanent link">&para;</a></h3>
+<h3 id="add-notifications">Add notifications<a class="headerlink" href="#add-notifications" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Notify Slack</span>
 <span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">    </span><span class="no">curl -X POST ${{ secrets.SLACK_WEBHOOK }} \</span>
 <span class="w">      </span><span class="no">-d &#39;{&quot;text&quot;:&quot;PR merged!&quot;}&#39;</span>
 </code></pre></div>
-<h2 id="deboguer-un-workflow">Déboguer un workflow<a class="headerlink" href="#deboguer-un-workflow" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># Voir les logs</span>
+<h2 id="debugging-a-workflow">Debugging a Workflow<a class="headerlink" href="#debugging-a-workflow" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># View logs</span>
 gh<span class="w"> </span>run<span class="w"> </span>list
 gh<span class="w"> </span>run<span class="w"> </span>view<span class="w"> </span>RUN_ID<span class="w"> </span>--log
 
-<span class="c1"># Re-lancer un workflow</span>
+<span class="c1"># Re-run a workflow</span>
 gh<span class="w"> </span>run<span class="w"> </span>rerun<span class="w"> </span>RUN_ID
 </code></pre></div>
 <p><a href="Using-The-Template">⬅️ Using Template</a> | <a href="FAQ">➡️ FAQ</a></p>
