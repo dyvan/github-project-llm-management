@@ -143,15 +143,12 @@ copy_claude_commands() {
 }
 
 copy_claude_md() {
-    local src="${TEMPLATE_ROOT}/CLAUDE-USER-TEMPLATE.md"
+    local src="${REPO_ROOT}/CLAUDE.md"
     local dest="${PWD}/CLAUDE.md"
 
-    # Try multiple source locations
+    # Try template root as fallback
     if [ ! -f "$src" ]; then
-        src="${REPO_ROOT}/CLAUDE-USER-TEMPLATE.md"
-    fi
-    if [ ! -f "$src" ]; then
-        src="${REPO_ROOT}/CLAUDE.md"
+        src="${TEMPLATE_ROOT}/CLAUDE.md"
     fi
 
     if [ ! -f "$src" ]; then

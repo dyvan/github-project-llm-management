@@ -109,7 +109,6 @@ jobs:
           cp -r .github/ "$TEMPLATE_DIR/.github/"
           cp template-setup.sh "$TEMPLATE_DIR/"
           cp CLAUDE.md "$TEMPLATE_DIR/"
-          cp CLAUDE-USER-TEMPLATE.md "$TEMPLATE_DIR/" 2>/dev/null || true
 
           # Create .env targeting projectbot-test01
           OWNER=$(echo "$TEST_REPO" | cut -d'/' -f1)
