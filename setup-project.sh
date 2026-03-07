@@ -92,11 +92,11 @@ echo ""
 echo -e "${BLUE}Step 1/5: Checking GitHub Secrets...${NC}"
 echo "Required secrets:"
 echo "  - GH_TOKEN: GitHub Personal Access Token"
-echo "  - CLAUDE_API_KEY: Anthropic Claude API key (for code review)"
+echo "  - GEMINI_API_KEY: Google Gemini API key (for code review)"
 echo ""
 echo "To add secrets, run:"
 echo "  gh secret set GH_TOKEN"
-echo "  gh secret set CLAUDE_API_KEY"
+echo "  gh secret set GEMINI_API_KEY"
 echo ""
 read -p "Have you configured the required secrets? (y/n) " -n 1 -r
 echo

@@ -177,7 +177,7 @@ Deploy to production
 ## 🔌 Integration Points
 
 ### External Services
-- **Claude API** (Anthropic) : Code review
+- **Gemini API** (Google) : Code review
 - **GitHub API** : Repository operations
 - **GitHub GraphQL** : Project updates (future)
 

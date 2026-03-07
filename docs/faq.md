@@ -22,8 +22,8 @@ Environ 5 minutes en suivant le guide.
 gh issue create --title "Ma tâche" --label "type:feature,auto-branch"
 ```
 
-### Puis-je désactiver Claude AI ?
-Oui, ne configurez simplement pas `CLAUDE_API_KEY`. La revue fonctionnera en mode basique.
+### Puis-je désactiver l'IA Gemini ?
+Oui, ne configurez simplement pas `GEMINI_API_KEY`. La revue fonctionnera en mode basique.
 
 ### Comment personnaliser les labels ?
 Éditez `setup-project.sh` lignes 86+ et relancez le script.
@@ -33,11 +33,11 @@ Oui, complètement.
 
 ## Techniques
 
-### Quel modèle Claude est utilisé ?
-`claude-3-5-sonnet-20241022` par défaut. Modifiable dans `code-review-agent.yml`.
+### Quel modèle est utilisé ?
+`gemini-2.0-flash` par défaut. Modifiable dans les variables des workflows.
 
 ### Puis-je utiliser un autre LLM ?
-Oui ! Remplacez l'appel API dans `code-review-agent.yml` par OpenAI, Gemini, etc.
+Actuellement, tous les workflows utilisent Gemini. Pour utiliser un autre provider, il faut modifier les workflows manuellement.
 
 ### Les workflows consomment-ils beaucoup de minutes GitHub Actions ?
 Non, très peu. Environ 1-2 minutes par workflow.

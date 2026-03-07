@@ -224,9 +224,9 @@ on:
 ```
 
 ### Requirements
-- `CLAUDE_API_KEY` secret configured
+- `GEMINI_API_KEY` secret configured (or `GEMINI_REVIEW_API_KEY`)
 - PR should be < 10000 lines (limit)
-- Python with anthropic library installed
+- Python with google-generativeai library installed
 
 ### Process
 
@@ -237,7 +237,7 @@ Get PR diff (via gh cli)
      ↓
 Prepare prompt with diff + PR description
      ↓
-Call Claude API with prompt
+Call Gemini API with prompt
      ↓
 Parse response (structured markdown)
      ↓
@@ -264,19 +264,17 @@ Provide review with:
 3. 🔴 Critical Issues
 ```
 
-### Claude Configuration
+### Gemini Configuration
 ```python
-client = Anthropic()
-response = client.messages.create(
-    model="claude-3-5-sonnet-20241022",
-    max_tokens=1024,
-    messages=[{"role": "user", "content": prompt}]
-)
+import google.generativeai as genai
+genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
+model = genai.GenerativeModel('gemini-2.0-flash')
+response = model.generate_content(prompt)
 ```
 
 ### Example Output
 ```markdown
-## 🤖 Automated Code Review by Claude AI
+## 🤖 Automated Code Review by Gemini AI
 
 ### ✅ Strengths
 - Good separation of concerns
@@ -302,9 +300,7 @@ response = client.messages.create(
 
 #### Change Model
 ```python
-model="claude-3-sonnet-20240229",  # Other Claude versions
-# or
-model="gpt-4",  # OpenAI fallback
+model = genai.GenerativeModel('gemini-1.5-pro')  # Other Gemini models
 ```
 
 #### Increase/Decrease Detail
@@ -326,11 +322,11 @@ prompt = f"""Review focusing on:
 ```
 
 ### Fallback Behavior
-If `CLAUDE_API_KEY` not set:
+If `GEMINI_API_KEY` not set:
 ```
 ⚠️ Code review workflow encountered an error
 
-Add CLAUDE_API_KEY to GitHub Secrets to enable full AI-powered review.
+Add GEMINI_API_KEY to GitHub Secrets to enable full AI-powered review.
 ```
 
 ---
@@ -514,14 +510,15 @@ Then:
 
 ### Secrets for Workflows
 Add/update in **Settings → Secrets and variables → Actions**:
-- `CLAUDE_API_KEY` : Anthropic API key
-- `OPENAI_API_KEY` : OpenAI API key (optional)
-- `GEMINI_API_KEY` : Google Gemini API key (optional)
+- `GEMINI_API_KEY` : Google Gemini API key (required for AI features)
+- `GEMINI_REVIEW_API_KEY` : Dedicated key for code review (optional, falls back to GEMINI_API_KEY)
+- `GEMINI_PLAN_API_KEY` : Dedicated key for planning (optional, falls back to GEMINI_API_KEY)
+- `GEMINI_SPEC_API_KEY` : Dedicated key for specification (optional, falls back to GEMINI_API_KEY)
 
 Access in workflows:
 ```yaml
 env:
-  CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 ```
 
 ---

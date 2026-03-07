@@ -95,10 +95,10 @@ if [ -n "$REPO_OWNER" ] && [ -n "$REPO_NAME" ]; then
         WARNINGS=$((WARNINGS + 1))
     fi
 
-    if echo "$SECRETS" | grep -q "CLAUDE_API_KEY"; then
-        echo "  ✅ CLAUDE_API_KEY configured"
+    if echo "$SECRETS" | grep -q "GEMINI_API_KEY"; then
+        echo "  ✅ GEMINI_API_KEY configured"
     else
-        echo -e "  ${YELLOW}⚠️  CLAUDE_API_KEY secret not configured${NC}"
+        echo -e "  ${YELLOW}⚠️  GEMINI_API_KEY secret not configured${NC}"
         echo "     Code review agent will run in basic mode"
         WARNINGS=$((WARNINGS + 1))
     fi

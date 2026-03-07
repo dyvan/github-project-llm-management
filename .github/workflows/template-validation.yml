@@ -266,7 +266,7 @@ jobs:
           pip install -r requirements-dev.txt
 
           # Check critical imports
-          python -c "import requests; import yaml; import anthropic"
+          python -c "import requests; import yaml; import google.generativeai"
 
           deactivate
           rm -rf /tmp/test-venv

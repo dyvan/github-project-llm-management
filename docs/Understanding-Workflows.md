@@ -54,11 +54,11 @@ env:
 
 **Actions** :
 1. Récupère le diff
-2. Envoie à Claude AI
+2. Envoie à Gemini AI
 3. Génère revue (Points forts, Suggestions, Problèmes)
 4. Poste commentaire
 
-**Mode fallback** : Sans CLAUDE_API_KEY, checklist basique
+**Mode fallback** : Sans GEMINI_API_KEY, checklist basique
 
 ### 4. ci-tests.yml
 

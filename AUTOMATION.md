@@ -58,7 +58,7 @@ gh pr merge 45
 ### 3. **Code Review by AI** ✅
 **Trigger**: PR opened, synchronized, or reopened
 **What happens**:
-- Claude AI analyzes the diff
+- Gemini AI analyzes the diff
 - Posts structured comment with:
   - ✅ Strengths
   - ⚠️ Suggestions
@@ -66,7 +66,7 @@ gh pr merge 45
 
 **Workflow**: `.github/workflows/code-review-agent.yml`
 
-**Requirements**: `CLAUDE_API_KEY` secret configured
+**Requirements**: `GEMINI_API_KEY` secret configured (or `GEMINI_REVIEW_API_KEY`)
 
 ---
 
@@ -125,8 +125,7 @@ gh pr merge 45
 **Manual setup required**:
 ```bash
 gh secret set GH_TOKEN
-gh secret set CLAUDE_API_KEY
-gh secret set OPENAI_API_KEY  # Optional
+gh secret set GEMINI_API_KEY
 ```
 
 **Why manual?**: Security - secrets cannot be auto-configured
@@ -158,7 +157,7 @@ Use this checklist when setting up a new project from this template:
 - [ ] **3. Configure GitHub Secrets**
   ```bash
   gh secret set GH_TOKEN          # GitHub Personal Access Token
-  gh secret set CLAUDE_API_KEY    # Anthropic API key
+  gh secret set GEMINI_API_KEY    # Google Gemini API key
   ```
 
 - [ ] **4. Manually configure Project Board custom fields**
@@ -369,7 +368,7 @@ python scripts/project_sync.py --issue 123 --status "In Progress"
 ### Code review not working?
 
 **Check**:
-1. Is `CLAUDE_API_KEY` secret configured?
+1. Is `GEMINI_API_KEY` secret configured?
 2. Check workflow logs: Actions → Code Review Agent
 
 **Fallback**: Script provides basic review without API key

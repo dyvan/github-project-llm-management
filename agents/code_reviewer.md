@@ -42,8 +42,8 @@ Récupère les changements complets de la PR (limité à 10000 lignes)
 - Diff : (voir fichier temporaire)
 ```
 
-#### Étape 3 : Appel à l'API Claude
-Envoie au modèle `claude-3-5-sonnet-20241022` :
+#### Étape 3 : Appel à l'API Gemini
+Envoie au modèle `gemini-2.0-flash` :
 
 ```
 Prompt:
@@ -64,7 +64,7 @@ Provide a code review with:
 ```
 
 #### Étape 4 : Génération de la revue
-Claude retourne une réponse structurée en Markdown
+Gemini retourne une réponse structurée en Markdown
 
 #### Étape 5 : Publication en tant que commentaire PR
 ```bash
@@ -74,7 +74,7 @@ gh pr comment {PR_NUMBER} --body "{review_comment}"
 ### 3. **Format de la réponse**
 
 ```markdown
-## 🤖 Automated Code Review by Claude AI
+## 🤖 Automated Code Review by Gemini AI
 
 ### ✅ Strengths
 - Good error handling in the database query
@@ -105,7 +105,7 @@ gh pr comment {PR_NUMBER} --body "{review_comment}"
 ## 🔑 Configuration
 
 ### Secrets requis
-- `CLAUDE_API_KEY` : Clé API Anthropic
+- `GEMINI_API_KEY` : Clé API Google Gemini (ou `GEMINI_REVIEW_API_KEY` pour une clé dédiée)
 
 ### Fichier de workflow
 `.github/workflows/code-review-agent.yml`
@@ -114,13 +114,13 @@ gh pr comment {PR_NUMBER} --body "{review_comment}"
 
 | Propriété | Valeur |
 |-----------|--------|
-| **Provider** | Anthropic |
-| **Model** | `claude-3-5-sonnet-20241022` |
+| **Provider** | Google Gemini |
+| **Model** | `gemini-2.0-flash` |
 | **Max Tokens** | 1024 |
 | **Temperature** | 1.0 (défaut) |
 
 ### Alternative : Fallback sans API key
-Si `CLAUDE_API_KEY` n'est pas défini, l'agent fourni une revue de base :
+Si `GEMINI_API_KEY` n'est pas défini, l'agent fourni une revue de base :
 - Check de taille de fichiers
 - Vérification de commits
 - Rappel de configuration de clé API
@@ -241,9 +241,9 @@ Merge + Project Board update
 
 Avant d'activer le Code Reviewer :
 
-- [ ] Ajouter `CLAUDE_API_KEY` à GitHub Secrets
+- [ ] Ajouter `GEMINI_API_KEY` à GitHub Secrets
 - [ ] Tester sur une PR pilote
-- [ ] Vérifier le coût API (Anthropic billing)
+- [ ] Vérifier le coût API (Google AI Studio billing)
 - [ ] Définir les rules de code review team
 - [ ] Former les developers à utiliser le feedback
 - [ ] Itérer sur les prompts pour améliorer qualité

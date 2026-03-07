@@ -106,7 +106,7 @@ python3 scripts/setup_project_fields.py \
 1. ✅ **Prérequis** : gh, python3, git installés
 2. ✅ **Repository** : Dans un repo git avec remote GitHub
 3. ✅ **Authentification** : GitHub CLI authentifié
-4. ✅ **Secrets** : GH_TOKEN et CLAUDE_API_KEY configurés
+4. ✅ **Secrets** : GH_TOKEN et GEMINI_API_KEY configurés
 5. ✅ **Labels** : Tous les labels requis existent
 6. ✅ **Project** : Au moins un projet existe
 7. ✅ **Workflows** : Tous les workflows sont présents
@@ -276,9 +276,9 @@ git checkout feat/42-add-dark-mode
 4. Poste la revue en commentaire
 
 **Mode fallback** :
-Si `CLAUDE_API_KEY` n'est pas configuré, fonctionne en mode basique (checklist manuelle).
+Si `GEMINI_API_KEY` n'est pas configuré, fonctionne en mode basique (checklist manuelle).
 
-**Modèle utilisé** : `claude-3-5-sonnet-20241022`
+**Modèle utilisé** : `gemini-2.0-flash`
 
 ---
 

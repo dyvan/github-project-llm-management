@@ -24,7 +24,7 @@ This is a comprehensive, production-ready template for managing software project
 
 ### Integration
 - Seamless GitHub Projects v2 integration
-- Multiple LLM provider support (Anthropic Claude, OpenAI, Google Gemini)
+- Google Gemini AI integration for code review, planning, and specification
 - Full CI/CD pipeline with automatic status updates
 
 ## 🚀 Quick Start
@@ -43,7 +43,7 @@ cd project-llm-management
 
 ### 3. Configure GitHub Secrets
 Go to **Settings → Secrets and variables → Actions** and add:
-- `CLAUDE_API_KEY` (for code review)
+- `GEMINI_API_KEY` (for code review)
 - `GH_TOKEN` (GitHub token with repo access)
 
 ### 4. Enable GitHub Projects v2
@@ -71,7 +71,7 @@ graph TD
     A["Create Issue<br/>+ auto-branch label"] -->|GitHub Actions| B["Branch Creator<br/>Creates feat/123-title"]
     B --> C["Develop Locally"]
     C --> D["Push & Create PR"]
-    D -->|GitHub Actions| E["Code Reviewer<br/>Claude analyzes code"]
+    D -->|GitHub Actions| E["Code Reviewer<br/>Gemini analyzes code"]
     D -->|GitHub Actions| F["CI Tests<br/>Run tests & lint"]
     E --> G["Post Comments"]
     F --> H["Report Results"]
@@ -110,7 +110,7 @@ Filter by assignee and sprint for personal tracking
 ### API Keys
 All sensitive credentials stored in GitHub Secrets (never in git):
 ```
-GH_TOKEN, CLAUDE_API_KEY, OPENAI_API_KEY, GEMINI_API_KEY
+GH_TOKEN, GEMINI_API_KEY
 ```
 
 ## 🎓 Use Cases

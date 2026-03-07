@@ -126,6 +126,9 @@ gh secret set GEMINI_API_KEY
 
 Modify workflows in `.github/workflows/` as needed:
 
+### Change the Gemini model
+The default model is `gemini-2.0-flash`. You can change it in the workflow environment variables.
+
 ### Change branch naming convention
 In `create-branch.yml`:
 ```bash
