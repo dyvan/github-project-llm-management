@@ -87,11 +87,8 @@ jobs:
 
           echo "Executing install.sh (with GH_TOKEN)..."
 
-          {
-            echo ""  # Use existing repo? (default: n)
-            echo ""  # Project name (default)
-            echo ""  # Create new repo? (default: n)
-          } | bash ./install.sh 2>&1 | tee /tmp/install.log
+          # install.sh prompts: 1) GH_TOKEN, 2) Gemini key (optional)
+          printf '%s\n%s\n' "$GH_TOKEN" "" | bash ./install.sh 2>&1 | tee /tmp/install.log
 
           INSTALL_EXIT=$?
           echo "exit_code=$INSTALL_EXIT" >> $GITHUB_OUTPUT
@@ -334,11 +331,8 @@ jobs:
           chmod +x install.sh
 
           echo "Running install.sh on existing project..."
-          {
-            echo ""  # prompts
-            echo ""
-            echo ""
-          } | bash ./install.sh 2>&1 | tee /tmp/install-s2.log
+          # install.sh prompts: 1) GH_TOKEN, 2) Gemini key (optional)
+          printf '%s\n%s\n' "$GH_TOKEN" "" | bash ./install.sh 2>&1 | tee /tmp/install-s2.log
 
           INSTALL_EXIT=$?
           echo "exit_code=$INSTALL_EXIT" >> $GITHUB_OUTPUT
@@ -588,11 +582,8 @@ jobs:
           chmod +x install.sh
 
           echo "=== FIRST install.sh run ==="
-          {
-            echo ""
-            echo ""
-            echo ""
-          } | bash ./install.sh 2>&1 | tee /tmp/install-run1.log
+          # install.sh prompts: 1) GH_TOKEN, 2) Gemini key (optional)
+          printf '%s\n%s\n' "$GH_TOKEN" "" | bash ./install.sh 2>&1 | tee /tmp/install-run1.log
 
           echo "exit_code=$?" >> $GITHUB_OUTPUT
           echo "First install completed"
@@ -659,11 +650,7 @@ jobs:
           echo "=== SECOND install.sh run ==="
           # install.sh clones into github-project-llm-management/ — it already exists
           # This tests how install.sh handles existing directory
-          {
-            echo ""
-            echo ""
-            echo ""
-          } | bash ./install.sh 2>&1 | tee /tmp/install-run2.log
+          printf '%s\n%s\n' "$GH_TOKEN" "" | bash ./install.sh 2>&1 | tee /tmp/install-run2.log
 
           echo "exit_code=$?" >> $GITHUB_OUTPUT
           echo "Second install completed"
