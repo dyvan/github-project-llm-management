@@ -153,13 +153,13 @@ jobs:
             fi
           fi
 
-          # Test 3: .env file
+          # Test 3: .env file (install.sh creates it at project root, not inside template dir)
           echo "3. Validating .env setup..."
-          if [ -n "$PROJECT_DIR" ] && [ -f "$PROJECT_DIR/.env" ]; then
-            echo "   PASS: .env file created"
+          if [ -f ".env" ]; then
+            echo "   PASS: .env file created at project root"
             PASSED=$((PASSED + 1))
 
-            if grep -q "^\.env$" "$PROJECT_DIR/.gitignore" 2>/dev/null; then
+            if grep -q "^\.env$" ".gitignore" 2>/dev/null; then
               echo "   PASS: .env in .gitignore"
               PASSED=$((PASSED + 1))
             else
@@ -366,12 +366,17 @@ jobs:
           done
 
           # Verify content preserved (checksums)
+          # .gitignore is expected to be modified (install.sh adds .env to it)
           echo ""
           echo "--- Checking file contents unchanged ---"
           CHECKSUM_FAILURES=0
           while read expected_line; do
             expected_hash=$(echo "$expected_line" | awk '{print $1}')
             file_path=$(echo "$expected_line" | awk '{print $2}')
+            if echo "$file_path" | grep -q ".gitignore"; then
+              echo "  SKIP: $file_path (expected to be modified by install.sh)"
+              continue
+            fi
             if [ -f "$file_path" ]; then
               actual_hash=$(md5sum "$file_path" | awk '{print $1}')
               if [ "$expected_hash" = "$actual_hash" ]; then
