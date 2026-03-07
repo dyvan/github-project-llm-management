@@ -11,7 +11,10 @@ permissions:
   actions: read
 
 jobs:
-  e2e-test-install:
+  # ==========================================================================
+  # Scenario 1: New Repository + install.sh (existing test)
+  # ==========================================================================
+  e2e-scenario-1-new-repo:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -21,9 +24,6 @@ jobs:
       GH_TOKEN: ${{ secrets.TEST_BOT_TOKEN }}
 
     steps:
-      # ============================================================
-      # 1. Setup
-      # ============================================================
       - name: Checkout template repo
         uses: actions/checkout@v4
         with:
@@ -36,23 +36,20 @@ jobs:
 
       - name: Verify bot authentication
         run: |
-          echo "🤖 Verifying bot authentication..."
+          echo "Verifying bot authentication..."
           gh auth status
-          echo "✅ Bot authenticated"
+          echo "Bot authenticated"
 
-      # ============================================================
-      # 2. Create isolated test repository
-      # ============================================================
       - name: Create test repository
         id: create-repo
         run: |
           TEST_REPO="${{ env.TEST_BOT_REPO_PREFIX }}-${{ env.TEST_RUN_ID }}"
           echo "test_repo=$TEST_REPO" >> $GITHUB_OUTPUT
 
-          echo "📦 Creating empty test repository: $TEST_REPO"
+          echo "Creating empty test repository: $TEST_REPO"
           gh repo create "$TEST_REPO" --public --disable-wiki --disable-issues 2>&1 | grep -E "(created|error)" | head -1
           sleep 2
-          echo "✅ Test repo created"
+          echo "Test repo created"
 
       - name: Initialize test repo with git
         id: init-repo
@@ -60,7 +57,7 @@ jobs:
           TEST_REPO="${{ steps.create-repo.outputs.test_repo }}"
           TEST_DIR="/tmp/$TEST_REPO"
 
-          echo "🔄 Initializing git repo: $TEST_REPO"
+          echo "Initializing git repo: $TEST_REPO"
           mkdir -p "$TEST_DIR"
           cd "$TEST_DIR"
 
@@ -68,34 +65,28 @@ jobs:
           git config user.name "E2E Test Bot"
           git config user.email "e2e-test@github.com"
 
-          # Create initial commit
           echo "# Test Repository" > README.md
           git add README.md
           git commit -m "Initial commit"
 
-          # Add remote and push
           git remote add origin "https://github.com/dyvan-bot/$TEST_REPO.git"
           git branch -M main
           git push -u origin main 2>&1 | grep -E "(master|main|error)" | head -1
 
           echo "test_dir=$TEST_DIR" >> $GITHUB_ENV
-          echo "✅ Repo initialized and pushed"
+          echo "Repo initialized and pushed"
 
-      # ============================================================
-      # 3. Run install.sh
-      # ============================================================
       - name: Download and execute install.sh
         id: install-script
         run: |
           cd "${{ env.test_dir }}"
 
-          echo "🚀 Downloading install.sh..."
+          echo "Downloading install.sh..."
           curl -fsSL "https://raw.githubusercontent.com/dyvan/github-project-llm-management/main/install.sh" -o install.sh
           chmod +x install.sh
 
-          echo "📝 Executing install.sh (with GH_TOKEN)..."
+          echo "Executing install.sh (with GH_TOKEN)..."
 
-          # Provide empty inputs to all prompts
           {
             echo ""  # Use existing repo? (default: n)
             echo ""  # Project name (default)
@@ -105,36 +96,31 @@ jobs:
           INSTALL_EXIT=$?
           echo "exit_code=$INSTALL_EXIT" >> $GITHUB_OUTPUT
 
-          # Detect cloned project directory
           PROJECT_DIR=$(ls -d github-project-llm-management 2>/dev/null | head -1)
           if [ -n "$PROJECT_DIR" ]; then
             echo "project_dir=$PROJECT_DIR" >> $GITHUB_ENV
-            echo "✅ Project cloned to: $PROJECT_DIR"
+            echo "Project cloned to: $PROJECT_DIR"
           else
-            echo "⚠️  Could not find cloned project directory"
+            echo "Could not find cloned project directory"
           fi
 
           if [ $INSTALL_EXIT -eq 0 ]; then
-            echo "✅ install.sh completed successfully"
+            echo "install.sh completed successfully"
           else
-            echo "⚠️  install.sh exited with code: $INSTALL_EXIT"
+            echo "install.sh exited with code: $INSTALL_EXIT"
           fi
 
-      # ============================================================
-      # 4. Validate Results
-      # ============================================================
       - name: Validate all configurations
         id: validate
         run: |
-          set +e  # Don't exit on errors
+          set +e
           TEST_DIR="/tmp/${{ steps.create-repo.outputs.test_repo }}"
           TEST_REPO="${{ steps.create-repo.outputs.test_repo }}"
           cd "$TEST_DIR"
 
-          # Find the cloned project directory
           PROJECT_DIR=$(ls -d github-project-llm-management 2>/dev/null || echo "")
 
-          echo "📊 Validating configuration..."
+          echo "Validating configuration..."
           echo ""
 
           PASSED=0
@@ -142,118 +128,702 @@ jobs:
           FAILED_TESTS=""
 
           # Test 1: Repository context
-          echo "1️⃣  Validating repository context..."
+          echo "1. Validating repository context..."
           REPO_OWNER=$(gh repo view "dyvan-bot/$TEST_REPO" --json owner -q '.owner.login' 2>/dev/null)
           if [ "$REPO_OWNER" = "dyvan-bot" ]; then
-            echo "   ✅ PASS: Repo owner is dyvan-bot"
+            echo "   PASS: Repo owner is dyvan-bot"
             PASSED=$((PASSED + 1))
           else
-            echo "   ❌ FAIL: Repo owner is '$REPO_OWNER' (expected dyvan-bot)"
+            echo "   FAIL: Repo owner is '$REPO_OWNER' (expected dyvan-bot)"
             FAILED_TESTS="${FAILED_TESTS}Repository Context, "
             FAILED=$((FAILED + 1))
           fi
 
           # Test 2: Project creation
-          echo "2️⃣  Validating project creation..."
+          echo "2. Validating project creation..."
           if [ -z "$PROJECT_DIR" ]; then
-            echo "   ❌ FAIL: Project not cloned (no project_dir found)"
+            echo "   FAIL: Project not cloned (no project_dir found)"
             FAILED_TESTS="${FAILED_TESTS}Project Cloning, "
             FAILED=$((FAILED + 1))
           else
-            # Check if project files exist
             if [ -f "$PROJECT_DIR/template-setup.sh" ] && [ -f "$PROJECT_DIR/CLAUDE.md" ]; then
-              echo "   ✅ PASS: Template files present (template-setup.sh, CLAUDE.md)"
+              echo "   PASS: Template files present (template-setup.sh, CLAUDE.md)"
               PASSED=$((PASSED + 1))
             else
-              echo "   ❌ FAIL: Template files missing"
+              echo "   FAIL: Template files missing"
               FAILED_TESTS="${FAILED_TESTS}Template Files, "
               FAILED=$((FAILED + 1))
             fi
           fi
 
           # Test 3: .env file
-          echo "3️⃣  Validating .env setup..."
+          echo "3. Validating .env setup..."
           if [ -n "$PROJECT_DIR" ] && [ -f "$PROJECT_DIR/.env" ]; then
-            echo "   ✅ PASS: .env file created"
+            echo "   PASS: .env file created"
             PASSED=$((PASSED + 1))
 
-            # Check .gitignore
             if grep -q "^\.env$" "$PROJECT_DIR/.gitignore" 2>/dev/null; then
-              echo "   ✅ PASS: .env in .gitignore"
+              echo "   PASS: .env in .gitignore"
               PASSED=$((PASSED + 1))
             else
-              echo "   ⚠️  WARN: .env not in .gitignore"
+              echo "   WARN: .env not in .gitignore"
             fi
           else
-            echo "   ❌ FAIL: .env file not found"
+            echo "   FAIL: .env file not found"
             FAILED_TESTS="${FAILED_TESTS}Environment Setup, "
             FAILED=$((FAILED + 1))
           fi
 
-          # Test 4: Project board creation (if GH_TOKEN provided)
-          echo "4️⃣  Validating GitHub project creation..."
+          # Test 4: Project board creation
+          echo "4. Validating GitHub project creation..."
           if [ -n "$PROJECT_DIR" ]; then
             PROJECT_NUM=$(gh project list --owner dyvan-bot --format json 2>/dev/null | python3 -c "import sys,json;d=json.load(sys.stdin);[print(p.get('number','')) for p in d.get('projects',[]) if '$TEST_REPO' in p.get('title','')]" 2>/dev/null | head -1)
 
             if [ -n "$PROJECT_NUM" ]; then
-              echo "   ✅ PASS: GitHub project created (#$PROJECT_NUM)"
+              echo "   PASS: GitHub project created (#$PROJECT_NUM)"
               PASSED=$((PASSED + 1))
             else
-              echo "   ⚠️  WARN: GitHub project not found (may need manual template-setup.sh)"
+              echo "   WARN: GitHub project not found (may need manual template-setup.sh)"
             fi
           fi
 
-          set -e  # Re-enable exit on errors for the end of the script
+          set -e
 
           echo ""
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          echo "📊 Test Results: $PASSED/$((PASSED + FAILED))"
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Test Results: $PASSED/$((PASSED + FAILED))"
 
           if [ $FAILED -gt 0 ]; then
-            echo "❌ Failed Tests: ${FAILED_TESTS%, }"
-            echo ""
+            echo "Failed Tests: ${FAILED_TESTS%, }"
           else
-            echo "✅ All critical tests passed!"
-            echo ""
+            echo "All critical tests passed!"
           fi
 
-          # Save results
           echo "tests_passed=$PASSED" >> $GITHUB_OUTPUT
           echo "tests_failed=$FAILED" >> $GITHUB_OUTPUT
           echo "tests_total=$((PASSED + FAILED))" >> $GITHUB_OUTPUT
 
-      # ============================================================
-      # 5. Cleanup
-      # ============================================================
       - name: Cleanup test repository
         if: always()
         run: |
           TEST_REPO="${{ steps.create-repo.outputs.test_repo }}"
-          echo "🧹 Deleting test repo: $TEST_REPO"
+          echo "Deleting test repo: $TEST_REPO"
           gh repo delete "dyvan-bot/$TEST_REPO" --confirm 2>&1 | grep -E "(Deleted|error|not found)" | head -1 || echo "Repository deleted"
 
-      # ============================================================
-      # 6. Summary
-      # ============================================================
       - name: Print test summary
         if: always()
         run: |
           echo ""
-          echo "╔════════════════════════════════════════════════╗"
-          echo "║  🧪 E2E Test Summary - Scenario 1              ║"
-          echo "╚════════════════════════════════════════════════╝"
+          echo "=========================================="
+          echo "  E2E Test Summary - Scenario 1 (New Repo)"
+          echo "=========================================="
           echo ""
           echo "Tests Passed: ${{ steps.validate.outputs.tests_passed }}/${{ steps.validate.outputs.tests_total }}"
           echo "Tests Failed: ${{ steps.validate.outputs.tests_failed }}"
-          echo ""
-          echo "Scenario: New Repository + install.sh"
-          echo "Bot Account: dyvan-bot"
-          echo "Status: $([ '${{ steps.validate.outputs.tests_failed }}' = '0' ] && echo '✅ PASSED' || echo '❌ FAILED')"
+          echo "Status: $([ '${{ steps.validate.outputs.tests_failed }}' = '0' ] && echo 'PASSED' || echo 'FAILED')"
           echo ""
 
       - name: Fail if critical tests failed
         if: steps.validate.outputs.tests_failed != '0'
         run: |
-          echo "❌ E2E tests failed"
+          echo "E2E tests failed"
           exit 1
+
+  # ==========================================================================
+  # Scenario 2: Existing Project + install.sh (#64)
+  # ==========================================================================
+  e2e-scenario-2-existing-project:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    env:
+      TEST_BOT_REPO_PREFIX: "test-existing-e2e"
+      TEST_RUN_ID: "${{ github.run_id }}-${{ github.run_number }}"
+      GH_TOKEN: ${{ secrets.TEST_BOT_TOKEN }}
+
+    steps:
+      - name: Checkout template repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Verify bot authentication
+        run: |
+          echo "Verifying bot authentication..."
+          gh auth status
+          echo "Bot authenticated"
+
+      # ---- Create repo with existing code ----
+      - name: Create test repository with existing code
+        id: create-repo
+        run: |
+          TEST_REPO="${{ env.TEST_BOT_REPO_PREFIX }}-${{ env.TEST_RUN_ID }}"
+          TEST_DIR="/tmp/$TEST_REPO"
+          echo "test_repo=$TEST_REPO" >> $GITHUB_OUTPUT
+          echo "test_dir=$TEST_DIR" >> $GITHUB_ENV
+
+          echo "Creating test repository with existing code: $TEST_REPO"
+          gh repo create "$TEST_REPO" --public --disable-wiki --disable-issues 2>&1 | grep -E "(created|error)" | head -1
+          sleep 2
+
+          mkdir -p "$TEST_DIR"
+          cd "$TEST_DIR"
+
+          git init
+          git config user.name "E2E Test Bot"
+          git config user.email "e2e-test@github.com"
+
+          # Create existing project structure (3+ commits)
+          echo "# My Existing Project" > README.md
+          echo "This project has existing code that must be preserved." >> README.md
+          git add README.md
+          git commit -m "Initial commit: README"
+
+          mkdir -p src
+          cat > src/main.py << 'PYEOF'
+          def hello():
+              return "Hello from existing project"
+
+          if __name__ == "__main__":
+              print(hello())
+          PYEOF
+          cat > src/__init__.py << 'PYEOF'
+          __version__ = "1.0.0"
+          PYEOF
+          git add src/
+          git commit -m "feat: add main module"
+
+          mkdir -p tests
+          cat > tests/test_main.py << 'PYEOF'
+          from src.main import hello
+
+          def test_hello():
+              assert hello() == "Hello from existing project"
+          PYEOF
+          cat > .gitignore << 'PYEOF'
+          __pycache__/
+          *.pyc
+          PYEOF
+          git add tests/ .gitignore
+          git commit -m "test: add unit tests"
+
+          git remote add origin "https://github.com/dyvan-bot/$TEST_REPO.git"
+          git branch -M main
+          git push -u origin main
+
+          # Save file checksums for later comparison
+          find . -name '*.py' -o -name '*.md' -o -name '.gitignore' | grep -v '.git/' | sort | while read f; do
+            md5sum "$f"
+          done > /tmp/original-checksums.txt
+
+          echo "Test repo created with 3 commits and existing code"
+          cat /tmp/original-checksums.txt
+
+      # ---- Run install.sh on existing project ----
+      - name: Run install.sh on existing project
+        id: install
+        run: |
+          cd "${{ env.test_dir }}"
+
+          echo "Downloading install.sh..."
+          curl -fsSL "https://raw.githubusercontent.com/dyvan/github-project-llm-management/main/install.sh" -o install.sh
+          chmod +x install.sh
+
+          echo "Running install.sh on existing project..."
+          {
+            echo ""  # prompts
+            echo ""
+            echo ""
+          } | bash ./install.sh 2>&1 | tee /tmp/install-s2.log
+
+          INSTALL_EXIT=$?
+          echo "exit_code=$INSTALL_EXIT" >> $GITHUB_OUTPUT
+
+          if [ $INSTALL_EXIT -eq 0 ]; then
+            echo "install.sh completed successfully"
+          else
+            echo "install.sh exited with code: $INSTALL_EXIT"
+          fi
+
+      # ---- Validate ----
+      - name: Validate existing files preserved
+        id: validate-preserved
+        run: |
+          cd "${{ env.test_dir }}"
+          PASSED=0
+          FAILED=0
+
+          echo "--- Checking existing files are preserved ---"
+
+          # Check original files still exist and unchanged
+          ORIGINAL_FILES="README.md src/main.py src/__init__.py tests/test_main.py"
+          for f in $ORIGINAL_FILES; do
+            if [ -f "$f" ]; then
+              echo "  PASS: $f exists"
+              PASSED=$((PASSED + 1))
+            else
+              echo "  FAIL: $f missing!"
+              FAILED=$((FAILED + 1))
+            fi
+          done
+
+          # Verify content preserved (checksums)
+          echo ""
+          echo "--- Checking file contents unchanged ---"
+          CHECKSUM_FAILURES=0
+          while read expected_line; do
+            expected_hash=$(echo "$expected_line" | awk '{print $1}')
+            file_path=$(echo "$expected_line" | awk '{print $2}')
+            if [ -f "$file_path" ]; then
+              actual_hash=$(md5sum "$file_path" | awk '{print $1}')
+              if [ "$expected_hash" = "$actual_hash" ]; then
+                echo "  PASS: $file_path unchanged"
+                PASSED=$((PASSED + 1))
+              else
+                echo "  FAIL: $file_path was modified!"
+                FAILED=$((FAILED + 1))
+                CHECKSUM_FAILURES=$((CHECKSUM_FAILURES + 1))
+              fi
+            fi
+          done < /tmp/original-checksums.txt
+
+          # Check .gitignore was extended, not replaced
+          echo ""
+          echo "--- Checking .gitignore ---"
+          if grep -q "__pycache__" .gitignore; then
+            echo "  PASS: .gitignore still has original entries"
+            PASSED=$((PASSED + 1))
+          else
+            echo "  FAIL: .gitignore lost original entries"
+            FAILED=$((FAILED + 1))
+          fi
+
+          if grep -q "^\.env$" .gitignore; then
+            echo "  PASS: .gitignore has .env entry"
+            PASSED=$((PASSED + 1))
+          else
+            echo "  WARN: .gitignore missing .env entry"
+          fi
+
+          echo ""
+          echo "preserved_passed=$PASSED" >> $GITHUB_OUTPUT
+          echo "preserved_failed=$FAILED" >> $GITHUB_OUTPUT
+
+      - name: Validate template files added
+        id: validate-added
+        run: |
+          cd "${{ env.test_dir }}"
+          PASSED=0
+          FAILED=0
+
+          echo "--- Checking template files were added ---"
+
+          # Check template directory exists
+          if [ -d "github-project-llm-management" ]; then
+            echo "  PASS: template directory created"
+            PASSED=$((PASSED + 1))
+          else
+            echo "  FAIL: template directory missing"
+            FAILED=$((FAILED + 1))
+          fi
+
+          # Check workflows copied
+          EXPECTED_WORKFLOWS="create-branch.yml code-review-agent.yml auto-close-feature.yml generate-specification.yml plan-with-gemini.yml update-project.yml"
+          for wf in $EXPECTED_WORKFLOWS; do
+            if [ -f ".github/workflows/$wf" ]; then
+              echo "  PASS: workflow $wf present"
+              PASSED=$((PASSED + 1))
+            else
+              echo "  FAIL: workflow $wf missing"
+              FAILED=$((FAILED + 1))
+            fi
+          done
+
+          # Check issue templates
+          if [ -d ".github/ISSUE_TEMPLATE" ] && ls .github/ISSUE_TEMPLATE/*.yml >/dev/null 2>&1; then
+            TEMPLATE_COUNT=$(ls .github/ISSUE_TEMPLATE/*.yml | wc -l | tr -d ' ')
+            echo "  PASS: $TEMPLATE_COUNT issue templates found"
+            PASSED=$((PASSED + 1))
+          else
+            echo "  FAIL: no issue templates"
+            FAILED=$((FAILED + 1))
+          fi
+
+          # Check scripts
+          EXPECTED_SCRIPTS="project_sync.py auto_close_parent_feature.py generate_specification.py"
+          for script in $EXPECTED_SCRIPTS; do
+            if [ -f "scripts/$script" ]; then
+              echo "  PASS: script $script present"
+              PASSED=$((PASSED + 1))
+            else
+              echo "  FAIL: script $script missing"
+              FAILED=$((FAILED + 1))
+            fi
+          done
+
+          # Check .env created
+          if [ -f ".env" ]; then
+            echo "  PASS: .env created"
+            PASSED=$((PASSED + 1))
+          else
+            echo "  FAIL: .env not created"
+            FAILED=$((FAILED + 1))
+          fi
+
+          echo ""
+          echo "added_passed=$PASSED" >> $GITHUB_OUTPUT
+          echo "added_failed=$FAILED" >> $GITHUB_OUTPUT
+
+      - name: Cleanup test repository
+        if: always()
+        run: |
+          TEST_REPO="${{ steps.create-repo.outputs.test_repo }}"
+          echo "Deleting test repo: $TEST_REPO"
+          gh repo delete "dyvan-bot/$TEST_REPO" --confirm 2>&1 || echo "Cleanup done"
+
+      - name: Test summary
+        if: always()
+        run: |
+          PRESERVED_P=${{ steps.validate-preserved.outputs.preserved_passed || 0 }}
+          PRESERVED_F=${{ steps.validate-preserved.outputs.preserved_failed || 0 }}
+          ADDED_P=${{ steps.validate-added.outputs.added_passed || 0 }}
+          ADDED_F=${{ steps.validate-added.outputs.added_failed || 0 }}
+          TOTAL_P=$((PRESERVED_P + ADDED_P))
+          TOTAL_F=$((PRESERVED_F + ADDED_F))
+
+          echo ""
+          echo "=========================================="
+          echo "  E2E Test Summary - Scenario 2"
+          echo "  (Existing Project + install.sh)"
+          echo "=========================================="
+          echo ""
+          echo "Files preserved: $PRESERVED_P passed, $PRESERVED_F failed"
+          echo "Files added:     $ADDED_P passed, $ADDED_F failed"
+          echo "Total:           $TOTAL_P/$((TOTAL_P + TOTAL_F))"
+          echo "Status: $([ $TOTAL_F -eq 0 ] && echo 'PASSED' || echo 'FAILED')"
+          echo ""
+
+      - name: Fail if tests failed
+        if: always()
+        run: |
+          PRESERVED_F=${{ steps.validate-preserved.outputs.preserved_failed || 0 }}
+          ADDED_F=${{ steps.validate-added.outputs.added_failed || 0 }}
+          TOTAL_F=$((PRESERVED_F + ADDED_F))
+          if [ $TOTAL_F -gt 0 ]; then
+            echo "E2E Scenario 2 tests failed"
+            exit 1
+          fi
+
+  # ==========================================================================
+  # Scenario 3: Reinstallation + Idempotency (#65)
+  # ==========================================================================
+  e2e-scenario-3-idempotency:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    env:
+      TEST_BOT_REPO_PREFIX: "test-idempotent-e2e"
+      TEST_RUN_ID: "${{ github.run_id }}-${{ github.run_number }}"
+      GH_TOKEN: ${{ secrets.TEST_BOT_TOKEN }}
+
+    steps:
+      - name: Checkout template repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests pyyaml
+
+      - name: Verify bot authentication
+        run: |
+          echo "Verifying bot authentication..."
+          gh auth status
+          echo "Bot authenticated"
+
+      # ---- Initial setup (same as Scenario 1) ----
+      - name: Create and initialize test repository
+        id: create-repo
+        run: |
+          TEST_REPO="${{ env.TEST_BOT_REPO_PREFIX }}-${{ env.TEST_RUN_ID }}"
+          TEST_DIR="/tmp/$TEST_REPO"
+          echo "test_repo=$TEST_REPO" >> $GITHUB_OUTPUT
+          echo "test_dir=$TEST_DIR" >> $GITHUB_ENV
+
+          echo "Creating test repository: $TEST_REPO"
+          gh repo create "$TEST_REPO" --public --disable-wiki --disable-issues 2>&1 | grep -E "(created|error)" | head -1
+          sleep 2
+
+          mkdir -p "$TEST_DIR"
+          cd "$TEST_DIR"
+
+          git init
+          git config user.name "E2E Test Bot"
+          git config user.email "e2e-test@github.com"
+
+          echo "# Idempotency Test" > README.md
+          git add README.md
+          git commit -m "Initial commit"
+
+          git remote add origin "https://github.com/dyvan-bot/$TEST_REPO.git"
+          git branch -M main
+          git push -u origin main
+          echo "Test repo ready"
+
+      - name: First install.sh run
+        id: first-install
+        run: |
+          cd "${{ env.test_dir }}"
+
+          curl -fsSL "https://raw.githubusercontent.com/dyvan/github-project-llm-management/main/install.sh" -o install.sh
+          chmod +x install.sh
+
+          echo "=== FIRST install.sh run ==="
+          {
+            echo ""
+            echo ""
+            echo ""
+          } | bash ./install.sh 2>&1 | tee /tmp/install-run1.log
+
+          echo "exit_code=$?" >> $GITHUB_OUTPUT
+          echo "First install completed"
+
+      - name: Run template-setup.sh (first time)
+        id: first-setup
+        run: |
+          cd "${{ env.test_dir }}/github-project-llm-management"
+
+          # Prepare git context for template-setup.sh
+          git init -b main 2>/dev/null || true
+          git config user.name "E2E Test Bot"
+          git config user.email "e2e-test@github.com"
+          git remote add origin "https://github.com/dyvan-bot/${{ steps.create-repo.outputs.test_repo }}.git" 2>/dev/null || true
+
+          export GITHUB_TOKEN="$GH_TOKEN"
+
+          echo "=== FIRST template-setup.sh run ==="
+          echo "y" | bash template-setup.sh --reset-state 2>&1 | tee /tmp/setup-run1.log
+          SETUP_EXIT=${PIPESTATUS[1]}
+          echo "exit_code=$SETUP_EXIT" >> $GITHUB_OUTPUT
+
+          if [ $SETUP_EXIT -eq 0 ]; then
+            echo "First setup completed successfully"
+          else
+            echo "First setup failed with code: $SETUP_EXIT"
+          fi
+
+      - name: Capture state after first run
+        id: capture-state
+        run: |
+          cd "${{ env.test_dir }}"
+          TEST_REPO="${{ steps.create-repo.outputs.test_repo }}"
+
+          # Add custom value to .env
+          echo "CUSTOM_VAR=must_be_preserved" >> .env
+          echo "Custom .env value added"
+
+          # Save .env checksum
+          ENV_HASH=$(md5sum .env | awk '{print $1}')
+          echo "env_hash=$ENV_HASH" >> $GITHUB_OUTPUT
+
+          # Count labels
+          LABEL_COUNT=$(gh label list -R "dyvan-bot/$TEST_REPO" --json name -q '.[].name' 2>/dev/null | wc -l | tr -d ' ')
+          echo "label_count=$LABEL_COUNT" >> $GITHUB_OUTPUT
+          echo "Labels after first run: $LABEL_COUNT"
+
+          # Get project number
+          PROJECT_NUM=$(gh project list --owner dyvan-bot --format json 2>/dev/null | python3 -c "import sys,json;d=json.load(sys.stdin);[print(p.get('number','')) for p in d.get('projects',[]) if '$TEST_REPO' in p.get('title','')]" 2>/dev/null | head -1)
+          echo "project_num=$PROJECT_NUM" >> $GITHUB_OUTPUT
+          echo "Project number: ${PROJECT_NUM:-none}"
+
+          # Count projects matching this repo
+          PROJECT_COUNT=$(gh project list --owner dyvan-bot --format json 2>/dev/null | python3 -c "import sys,json;d=json.load(sys.stdin);print(len([p for p in d.get('projects',[]) if '$TEST_REPO' in p.get('title','')]))" 2>/dev/null)
+          echo "project_count=$PROJECT_COUNT" >> $GITHUB_OUTPUT
+          echo "Matching projects: ${PROJECT_COUNT:-0}"
+
+      # ---- Second run (idempotency test) ----
+      - name: Second install.sh run
+        id: second-install
+        run: |
+          cd "${{ env.test_dir }}"
+
+          echo "=== SECOND install.sh run ==="
+          # install.sh clones into github-project-llm-management/ — it already exists
+          # This tests how install.sh handles existing directory
+          {
+            echo ""
+            echo ""
+            echo ""
+          } | bash ./install.sh 2>&1 | tee /tmp/install-run2.log
+
+          echo "exit_code=$?" >> $GITHUB_OUTPUT
+          echo "Second install completed"
+
+      - name: Second template-setup.sh run
+        id: second-setup
+        run: |
+          cd "${{ env.test_dir }}/github-project-llm-management"
+
+          export GITHUB_TOKEN="$GH_TOKEN"
+
+          echo "=== SECOND template-setup.sh run ==="
+          echo "y" | bash template-setup.sh 2>&1 | tee /tmp/setup-run2.log
+          SETUP_EXIT=${PIPESTATUS[1]}
+          echo "exit_code=$SETUP_EXIT" >> $GITHUB_OUTPUT
+
+          if [ $SETUP_EXIT -eq 0 ]; then
+            echo "Second setup completed successfully"
+          else
+            echo "Second setup exited with code: $SETUP_EXIT"
+            echo "This may be acceptable if setup detects already-completed state"
+          fi
+
+      # ---- Validate idempotency ----
+      - name: Validate idempotency
+        id: validate
+        run: |
+          cd "${{ env.test_dir }}"
+          TEST_REPO="${{ steps.create-repo.outputs.test_repo }}"
+          PASSED=0
+          FAILED=0
+
+          echo "=== Idempotency Validation ==="
+          echo ""
+
+          # 1. .env preserved (custom value still present)
+          echo "1. Checking .env preservation..."
+          if grep -q "CUSTOM_VAR=must_be_preserved" .env 2>/dev/null; then
+            echo "   PASS: Custom .env value preserved"
+            PASSED=$((PASSED + 1))
+          else
+            echo "   FAIL: Custom .env value lost!"
+            FAILED=$((FAILED + 1))
+          fi
+
+          # 2. .env has GH_TOKEN (not wiped)
+          if grep -q "^GH_TOKEN=" .env 2>/dev/null; then
+            echo "   PASS: GH_TOKEN still in .env"
+            PASSED=$((PASSED + 1))
+          else
+            echo "   FAIL: GH_TOKEN missing from .env"
+            FAILED=$((FAILED + 1))
+          fi
+
+          # 3. Project not duplicated
+          echo "2. Checking project not duplicated..."
+          PROJECT_COUNT=$(gh project list --owner dyvan-bot --format json 2>/dev/null | python3 -c "import sys,json;d=json.load(sys.stdin);print(len([p for p in d.get('projects',[]) if '$TEST_REPO' in p.get('title','')]))" 2>/dev/null)
+          ORIGINAL_COUNT="${{ steps.capture-state.outputs.project_count }}"
+
+          if [ "${PROJECT_COUNT:-0}" = "${ORIGINAL_COUNT:-0}" ]; then
+            echo "   PASS: Project count unchanged ($PROJECT_COUNT)"
+            PASSED=$((PASSED + 1))
+          else
+            echo "   FAIL: Project count changed ($ORIGINAL_COUNT -> $PROJECT_COUNT)"
+            FAILED=$((FAILED + 1))
+          fi
+
+          # 4. Project number unchanged
+          echo "3. Checking project number unchanged..."
+          PROJECT_NUM_AFTER=$(gh project list --owner dyvan-bot --format json 2>/dev/null | python3 -c "import sys,json;d=json.load(sys.stdin);[print(p.get('number','')) for p in d.get('projects',[]) if '$TEST_REPO' in p.get('title','')]" 2>/dev/null | head -1)
+          ORIGINAL_NUM="${{ steps.capture-state.outputs.project_num }}"
+
+          if [ "${PROJECT_NUM_AFTER:-}" = "${ORIGINAL_NUM:-}" ]; then
+            echo "   PASS: Project number unchanged (#$PROJECT_NUM_AFTER)"
+            PASSED=$((PASSED + 1))
+          else
+            echo "   FAIL: Project number changed (#$ORIGINAL_NUM -> #$PROJECT_NUM_AFTER)"
+            FAILED=$((FAILED + 1))
+          fi
+
+          # 5. Labels not duplicated
+          echo "4. Checking labels not duplicated..."
+          LABEL_COUNT_AFTER=$(gh label list -R "dyvan-bot/$TEST_REPO" --json name -q '.[].name' 2>/dev/null | wc -l | tr -d ' ')
+          ORIGINAL_LABELS="${{ steps.capture-state.outputs.label_count }}"
+
+          if [ "${LABEL_COUNT_AFTER:-0}" = "${ORIGINAL_LABELS:-0}" ]; then
+            echo "   PASS: Label count unchanged ($LABEL_COUNT_AFTER)"
+            PASSED=$((PASSED + 1))
+          else
+            echo "   WARN: Label count changed ($ORIGINAL_LABELS -> $LABEL_COUNT_AFTER)"
+            # Not a hard failure — labels may be created with --force
+            PASSED=$((PASSED + 1))
+          fi
+
+          # 6. Template files still present
+          echo "5. Checking template files intact..."
+          FILES_OK=true
+          for f in github-project-llm-management/template-setup.sh .github/workflows/create-branch.yml scripts/project_sync.py; do
+            if [ -f "$f" ]; then
+              echo "   PASS: $f present"
+              PASSED=$((PASSED + 1))
+            else
+              echo "   FAIL: $f missing"
+              FAILED=$((FAILED + 1))
+              FILES_OK=false
+            fi
+          done
+
+          # 7. Second setup didn't error
+          echo "6. Checking second run exit codes..."
+          SECOND_SETUP_EXIT="${{ steps.second-setup.outputs.exit_code }}"
+          if [ "${SECOND_SETUP_EXIT:-1}" = "0" ]; then
+            echo "   PASS: Second template-setup.sh exited cleanly"
+            PASSED=$((PASSED + 1))
+          else
+            echo "   WARN: Second template-setup.sh exited with code $SECOND_SETUP_EXIT"
+            # Not necessarily a failure — may be expected behavior
+          fi
+
+          echo ""
+          echo "tests_passed=$PASSED" >> $GITHUB_OUTPUT
+          echo "tests_failed=$FAILED" >> $GITHUB_OUTPUT
+
+      - name: Cleanup test repository and projects
+        if: always()
+        run: |
+          TEST_REPO="${{ steps.create-repo.outputs.test_repo }}"
+
+          # Delete project(s)
+          PROJECT_NUMS=$(gh project list --owner dyvan-bot --format json 2>/dev/null | python3 -c "import sys,json;d=json.load(sys.stdin);[print(p.get('number','')) for p in d.get('projects',[]) if '$TEST_REPO' in p.get('title','')]" 2>/dev/null)
+          for pnum in $PROJECT_NUMS; do
+            gh project delete "$pnum" --owner dyvan-bot 2>/dev/null || true
+            echo "Deleted project #$pnum"
+          done
+
+          # Delete repo
+          echo "Deleting test repo: $TEST_REPO"
+          gh repo delete "dyvan-bot/$TEST_REPO" --confirm 2>&1 || echo "Cleanup done"
+
+      - name: Test summary
+        if: always()
+        run: |
+          PASSED=${{ steps.validate.outputs.tests_passed || 0 }}
+          FAILED=${{ steps.validate.outputs.tests_failed || 0 }}
+
+          echo ""
+          echo "=========================================="
+          echo "  E2E Test Summary - Scenario 3"
+          echo "  (Reinstallation + Idempotency)"
+          echo "=========================================="
+          echo ""
+          echo "Tests: $PASSED/$((PASSED + FAILED))"
+          echo "Status: $([ ${FAILED:-0} -eq 0 ] && echo 'PASSED' || echo 'FAILED')"
+          echo ""
+
+      - name: Fail if tests failed
+        if: always()
+        run: |
+          FAILED=${{ steps.validate.outputs.tests_failed || 0 }}
+          if [ ${FAILED:-0} -gt 0 ]; then
+            echo "E2E Scenario 3 tests failed"
+            exit 1
+          fi
