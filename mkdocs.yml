@@ -83,4 +83,5 @@ nav:
       - Template Validation: Template-Validation.md
       - Troubleshooting: Troubleshooting.md
       - FAQ: faq.md
+      - Hooks: hooks.md
   - Contributing: Contributing.md
