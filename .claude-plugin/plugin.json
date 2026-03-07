@@ -1,0 +1,26 @@
+{
+  "name": "github-project-management",
+  "version": "0.1.0",
+  "description": "GitHub Project Management with AI-powered workflows",
+  "author": "dyvan",
+  "repository": "https://github.com/dyvan/github-project-llm-management",
+  "commands": [
+    "commands/start-task.md",
+    "commands/finish-task.md",
+    "commands/task-status.md",
+    "commands/save-session.md",
+    "commands/load-session.md",
+    "commands/sprint-report.md",
+    "commands/plan-task.md",
+    "commands/next-task.md"
+  ],
+  "hooks": [
+    "hooks/pre-commit-check.sh",
+    "hooks/post-commit-update.sh",
+    "hooks/session-start.sh",
+    "hooks/session-end.sh"
+  ],
+  "requires": {
+    "gh": ">=2.0.0"
+  }
+}
