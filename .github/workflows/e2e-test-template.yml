@@ -1,0 +1,395 @@
+name: E2E Test - Template Setup on projectbot-test01
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  e2e-template-setup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      TEST_REPO: dyvan/projectbot-test01
+      # GH_TOKEN (dyvan PAT) — projectbot-test01 is public
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+    steps:
+      # ============================================================
+      # 1. Setup
+      # ============================================================
+      - name: Checkout template repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests pyyaml
+
+      - name: Verify authentication and test repo access
+        run: |
+          echo "Verifying access to $TEST_REPO..."
+          gh repo view "$TEST_REPO" --json name -q '.name'
+          echo "OK: authenticated and repo accessible"
+
+      # ============================================================
+      # 2. Reset projectbot-test01 to clean state
+      # ============================================================
+      - name: Clean up previous test artifacts
+        run: |
+          echo "Cleaning up $TEST_REPO..."
+
+          # Close any open test issues
+          OPEN_ISSUES=$(gh issue list -R "$TEST_REPO" --state open --json number -q '.[].number')
+          for num in $OPEN_ISSUES; do
+            gh issue close "$num" -R "$TEST_REPO" --comment "Closed by E2E test cleanup" 2>/dev/null || true
+          done
+          echo "Closed $(echo "$OPEN_ISSUES" | wc -w | tr -d ' ') open issues"
+
+          # Close any open PRs
+          OPEN_PRS=$(gh pr list -R "$TEST_REPO" --state open --json number -q '.[].number')
+          for num in $OPEN_PRS; do
+            gh pr close "$num" -R "$TEST_REPO" --comment "Closed by E2E test cleanup" 2>/dev/null || true
+          done
+          echo "Closed $(echo "$OPEN_PRS" | wc -w | tr -d ' ') open PRs"
+
+          # Delete test branches (keep main)
+          BRANCHES=$(gh api repos/$TEST_REPO/branches --jq '.[].name' | grep -v '^main$' || true)
+          for branch in $BRANCHES; do
+            gh api -X DELETE "repos/$TEST_REPO/git/refs/heads/$branch" 2>/dev/null || true
+          done
+          echo "Deleted $(echo "$BRANCHES" | grep -c . || echo 0) branches"
+
+          # Delete custom labels (keep GitHub defaults)
+          DEFAULT_LABELS="bug documentation duplicate enhancement good-first-issue help-wanted invalid question wontfix"
+          LABELS=$(gh label list -R "$TEST_REPO" --json name -q '.[].name')
+          for label in $LABELS; do
+            # Normalize for comparison (GitHub default labels use spaces, not hyphens)
+            normalized=$(echo "$label" | tr ' ' '-')
+            is_default=false
+            for dl in $DEFAULT_LABELS; do
+              if [ "$normalized" = "$dl" ] || [ "$label" = "$dl" ]; then
+                is_default=true
+                break
+              fi
+            done
+            if [ "$is_default" = "false" ]; then
+              gh label delete "$label" -R "$TEST_REPO" --yes 2>/dev/null || true
+            fi
+          done
+          echo "Cleaned custom labels"
+
+          echo "Cleanup complete"
+
+      # ============================================================
+      # 3. Prepare test environment and run template-setup.sh
+      # ============================================================
+      - name: Clone test repo and prepare environment
+        run: |
+          # Clone projectbot-test01 into a working directory
+          TEST_DIR="/tmp/e2e-test"
+          gh repo clone "$TEST_REPO" "$TEST_DIR" -- --depth 1
+          echo "test_dir=$TEST_DIR" >> $GITHUB_ENV
+
+          # Copy the ENTIRE template repo as a subdirectory (simulating install.sh clone)
+          TEMPLATE_DIR="$TEST_DIR/github-project-llm-management"
+          mkdir -p "$TEMPLATE_DIR"
+          # Copy everything from current checkout (the template repo)
+          cp -r template/ "$TEMPLATE_DIR/template/"
+          cp -r scripts/ "$TEMPLATE_DIR/scripts/"
+          cp -r .github/ "$TEMPLATE_DIR/.github/"
+          cp template-setup.sh "$TEMPLATE_DIR/"
+          cp CLAUDE.md "$TEMPLATE_DIR/"
+          cp CLAUDE-USER-TEMPLATE.md "$TEMPLATE_DIR/" 2>/dev/null || true
+
+          # Create .env targeting projectbot-test01
+          OWNER=$(echo "$TEST_REPO" | cut -d'/' -f1)
+          REPO=$(echo "$TEST_REPO" | cut -d'/' -f2)
+          printf "GH_TOKEN=%s\nGH_OWNER=%s\nGH_REPO=%s\nGEMINI_API_KEY=test-not-needed-for-setup\n" \
+            "$GH_TOKEN" "$OWNER" "$REPO" > "$TEMPLATE_DIR/.env"
+
+          echo "Test environment prepared"
+          echo "Template dir contents:"
+          ls -la "$TEMPLATE_DIR/"
+          echo "Template/.setup contents:"
+          ls -la "$TEMPLATE_DIR/template/.setup/" 2>&1 || echo "WARNING: .setup not found"
+
+      - name: Run template-setup.sh
+        id: run-setup
+        continue-on-error: true
+        run: |
+          cd "${{ env.test_dir }}/github-project-llm-management"
+
+          # template-setup.sh checks for git repo + gh repo view
+          git init -b main
+          git config user.name "E2E Test"
+          git config user.email "e2e@test.local"
+          git remote add origin "https://github.com/$TEST_REPO.git"
+
+          # Override GITHUB_TOKEN so gh CLI uses our token
+          export GITHUB_TOKEN="$GH_TOKEN"
+
+          # Run setup in non-interactive mode (pipe 'y' for confirmation)
+          echo "y" | bash template-setup.sh --reset-state 2>&1 | tee /tmp/setup.log
+          SETUP_EXIT=${PIPESTATUS[1]}
+
+          echo "setup_exit=$SETUP_EXIT" >> $GITHUB_ENV
+          echo "setup_exit=$SETUP_EXIT" >> $GITHUB_OUTPUT
+
+          if [ "$SETUP_EXIT" -eq 0 ]; then
+            echo "template-setup.sh completed successfully"
+          else
+            echo "template-setup.sh exited with code: $SETUP_EXIT"
+            tail -30 /tmp/setup.log
+            exit 1
+          fi
+
+      # ============================================================
+      # 4. Validate Results
+      # ============================================================
+      - name: Validate labels
+        id: validate-labels
+        run: |
+          EXPECTED_LABELS=(
+            "type:feature" "type:bug" "type:task" "type:docs" "type:infrastructure"
+            "priority:high" "priority:medium" "priority:low"
+            "status:backlog" "status:ready" "status:in-progress" "status:in-review" "status:blocked" "status:done"
+            "good-first-issue" "help-wanted" "auto-branch" "us" "needs-spec" "blocked"
+          )
+
+          ACTUAL_LABELS=$(gh label list -R "$TEST_REPO" --json name -q '.[].name')
+          PASSED=0
+          FAILED=0
+          MISSING=""
+
+          for expected in "${EXPECTED_LABELS[@]}"; do
+            if echo "$ACTUAL_LABELS" | grep -qF "$expected"; then
+              PASSED=$((PASSED + 1))
+            else
+              FAILED=$((FAILED + 1))
+              MISSING="$MISSING $expected"
+            fi
+          done
+
+          echo "Labels: $PASSED/${#EXPECTED_LABELS[@]} present"
+          if [ $FAILED -gt 0 ]; then
+            echo "Missing labels:$MISSING"
+          fi
+
+          echo "labels_passed=$PASSED" >> $GITHUB_OUTPUT
+          echo "labels_total=${#EXPECTED_LABELS[@]}" >> $GITHUB_OUTPUT
+          echo "labels_ok=$([ $FAILED -eq 0 ] && echo true || echo false)" >> $GITHUB_OUTPUT
+
+      - name: Validate project board
+        id: validate-project
+        run: |
+          OWNER=$(echo "$TEST_REPO" | cut -d'/' -f1)
+          PROJECT_TITLE="Project Board : $(echo "$TEST_REPO" | cut -d'/' -f2)"
+
+          # Check if project exists
+          PROJECT_NUM=$(gh project list --owner "$OWNER" --format json 2>/dev/null | \
+            python3 -c "import sys,json;d=json.load(sys.stdin);nums=[str(p['number']) for p in d.get('projects',[]) if p.get('title','')=='$PROJECT_TITLE'];print(nums[0] if nums else '')" 2>/dev/null)
+
+          if [ -n "$PROJECT_NUM" ]; then
+            echo "Project board found: #$PROJECT_NUM ($PROJECT_TITLE)"
+            echo "project_ok=true" >> $GITHUB_OUTPUT
+            echo "project_num=$PROJECT_NUM" >> $GITHUB_OUTPUT
+          else
+            echo "Project board NOT found: $PROJECT_TITLE"
+            echo "project_ok=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Validate workflows copied
+        id: validate-workflows
+        run: |
+          EXPECTED_WORKFLOWS=(
+            "create-branch.yml"
+            "code-review-agent.yml"
+            "auto-close-feature.yml"
+            "generate-specification.yml"
+            "plan-with-gemini.yml"
+            "update-project.yml"
+          )
+
+          # Check local filesystem (setup copies files to $PWD)
+          SETUP_DIR="${{ env.test_dir }}/github-project-llm-management"
+          PASSED=0
+          FAILED=0
+          MISSING=""
+
+          for wf in "${EXPECTED_WORKFLOWS[@]}"; do
+            if [ -f "$SETUP_DIR/.github/workflows/$wf" ]; then
+              PASSED=$((PASSED + 1))
+            else
+              FAILED=$((FAILED + 1))
+              MISSING="$MISSING $wf"
+            fi
+          done
+
+          echo "Workflows: $PASSED/${#EXPECTED_WORKFLOWS[@]} present"
+          if [ $FAILED -gt 0 ]; then
+            echo "Missing workflows:$MISSING"
+          fi
+
+          echo "workflows_passed=$PASSED" >> $GITHUB_OUTPUT
+          echo "workflows_total=${#EXPECTED_WORKFLOWS[@]}" >> $GITHUB_OUTPUT
+          echo "workflows_ok=$([ $FAILED -eq 0 ] && echo true || echo false)" >> $GITHUB_OUTPUT
+
+      - name: Validate issue templates
+        id: validate-templates
+        run: |
+          SETUP_DIR="${{ env.test_dir }}/github-project-llm-management"
+          COUNT=$(ls "$SETUP_DIR/.github/ISSUE_TEMPLATE/"*.yml 2>/dev/null | wc -l | tr -d ' ')
+
+          echo "Issue templates found: $COUNT"
+          ls "$SETUP_DIR/.github/ISSUE_TEMPLATE/" 2>/dev/null || echo "(none)"
+
+          echo "templates_count=$COUNT" >> $GITHUB_OUTPUT
+          echo "templates_ok=$([ $COUNT -gt 0 ] && echo true || echo false)" >> $GITHUB_OUTPUT
+
+      - name: Validate CLAUDE.md and scripts
+        id: validate-files
+        run: |
+          SETUP_DIR="${{ env.test_dir }}/github-project-llm-management"
+          FILES_OK=true
+
+          # Check CLAUDE.md
+          if [ -f "$SETUP_DIR/CLAUDE.md" ]; then
+            echo "CLAUDE.md: present"
+          else
+            echo "CLAUDE.md: MISSING"
+            FILES_OK=false
+          fi
+
+          # Check key scripts
+          EXPECTED_SCRIPTS=("project_sync.py" "auto_close_parent_feature.py" "generate_specification.py")
+          for script in "${EXPECTED_SCRIPTS[@]}"; do
+            if [ -f "$SETUP_DIR/scripts/$script" ]; then
+              echo "scripts/$script: present"
+            else
+              echo "scripts/$script: MISSING"
+              FILES_OK=false
+            fi
+          done
+
+          echo "files_ok=$FILES_OK" >> $GITHUB_OUTPUT
+
+      # ============================================================
+      # 5. Test Automations
+      # ============================================================
+      - name: Test auto-branch creation
+        id: test-auto-branch
+        run: |
+          echo "Creating test issue with auto-branch label..."
+
+          ISSUE_URL=$(gh issue create -R "$TEST_REPO" \
+            --title "E2E Test: auto-branch creation" \
+            --body "Automated E2E test - will be cleaned up. Run: ${{ github.run_id }}" \
+            --label "type:task,auto-branch")
+
+          ISSUE_NUM=$(echo "$ISSUE_URL" | grep -oE '[0-9]+$')
+          echo "Created test issue #$ISSUE_NUM"
+          echo "test_issue=$ISSUE_NUM" >> $GITHUB_OUTPUT
+
+          # Wait for create-branch workflow to trigger (up to 60s)
+          echo "Waiting for auto-branch workflow..."
+          BRANCH_FOUND=false
+          for i in $(seq 1 12); do
+            sleep 5
+            BRANCHES=$(gh api repos/$TEST_REPO/branches --jq '.[].name' 2>/dev/null)
+            if echo "$BRANCHES" | grep -qE "feat/${ISSUE_NUM}-"; then
+              BRANCH_FOUND=true
+              BRANCH_NAME=$(echo "$BRANCHES" | grep -E "feat/${ISSUE_NUM}-" | head -1)
+              echo "Branch created: $BRANCH_NAME"
+              break
+            fi
+            echo "  Attempt $i/12 - branch not yet created..."
+          done
+
+          echo "auto_branch_ok=$BRANCH_FOUND" >> $GITHUB_OUTPUT
+          if [ "$BRANCH_FOUND" = "false" ]; then
+            echo "Auto-branch was not created within 60s"
+            echo "This may be expected if create-branch.yml workflow is not active on projectbot-test01"
+          fi
+
+      # ============================================================
+      # 6. Cleanup
+      # ============================================================
+      - name: Cleanup test artifacts
+        if: always()
+        run: |
+          echo "Cleaning up test artifacts..."
+
+          # Close test issue
+          TEST_ISSUE="${{ steps.test-auto-branch.outputs.test_issue }}"
+          if [ -n "$TEST_ISSUE" ]; then
+            gh issue close "$TEST_ISSUE" -R "$TEST_REPO" --comment "E2E test completed. Closing." 2>/dev/null || true
+          fi
+
+          # Delete test branches
+          BRANCHES=$(gh api repos/$TEST_REPO/branches --jq '.[].name' | grep -v '^main$' || true)
+          for branch in $BRANCHES; do
+            gh api -X DELETE "repos/$TEST_REPO/git/refs/heads/$branch" 2>/dev/null || true
+          done
+
+          echo "Cleanup complete"
+
+      # ============================================================
+      # 7. Summary
+      # ============================================================
+      - name: Test summary
+        if: always()
+        run: |
+          echo ""
+          echo "=========================================="
+          echo "  E2E Test Summary - Template Setup"
+          echo "=========================================="
+          echo ""
+          echo "Test Repo: $TEST_REPO"
+          echo "Run ID: ${{ github.run_id }}"
+          echo ""
+          echo "Setup exit code: ${{ env.setup_exit }}"
+          echo ""
+          echo "--- Validation Results ---"
+          echo "Labels:     ${{ steps.validate-labels.outputs.labels_passed }}/${{ steps.validate-labels.outputs.labels_total }} (${{ steps.validate-labels.outputs.labels_ok }})"
+          echo "Project:    ${{ steps.validate-project.outputs.project_ok }}"
+          echo "Workflows:  ${{ steps.validate-workflows.outputs.workflows_passed }}/${{ steps.validate-workflows.outputs.workflows_total }} (${{ steps.validate-workflows.outputs.workflows_ok }})"
+          echo "Templates:  ${{ steps.validate-templates.outputs.templates_count }} found (${{ steps.validate-templates.outputs.templates_ok }})"
+          echo "Files:      ${{ steps.validate-files.outputs.files_ok }}"
+          echo ""
+          echo "--- Automation Tests ---"
+          echo "Auto-branch: ${{ steps.test-auto-branch.outputs.auto_branch_ok }}"
+          echo ""
+
+          # Determine overall result
+          LABELS_OK="${{ steps.validate-labels.outputs.labels_ok }}"
+          PROJECT_OK="${{ steps.validate-project.outputs.project_ok }}"
+          WORKFLOWS_OK="${{ steps.validate-workflows.outputs.workflows_ok }}"
+          FILES_OK="${{ steps.validate-files.outputs.files_ok }}"
+
+          if [ "$LABELS_OK" = "true" ] && [ "$PROJECT_OK" = "true" ] && [ "$FILES_OK" = "true" ]; then
+            echo "OVERALL: PASSED"
+          else
+            echo "OVERALL: FAILED"
+          fi
+
+      - name: Fail if critical validations failed
+        if: always()
+        run: |
+          LABELS_OK="${{ steps.validate-labels.outputs.labels_ok }}"
+          PROJECT_OK="${{ steps.validate-project.outputs.project_ok }}"
+          FILES_OK="${{ steps.validate-files.outputs.files_ok }}"
+
+          if [ "$LABELS_OK" != "true" ] || [ "$PROJECT_OK" != "true" ] || [ "$FILES_OK" != "true" ]; then
+            echo "Critical E2E validations failed"
+            exit 1
+          fi
