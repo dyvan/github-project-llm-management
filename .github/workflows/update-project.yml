@@ -1,5 +1,25 @@
 name: Update GitHub Project
 
+# =============================================================================
+# REQUIRED TOKEN SCOPES
+# =============================================================================
+# This workflow uses GitHub's GraphQL API to manage Projects v2 boards.
+# The default GITHUB_TOKEN does NOT support Projects v2 operations.
+#
+# You MUST create a Personal Access Token (classic) with these scopes:
+#   - repo        (full control of private repositories)
+#   - project     (full control of projects -- REQUIRED for Projects v2 GraphQL)
+#   - workflow    (update GitHub Action workflows)
+#
+# Then store it as a repository secret named GH_TOKEN:
+#   gh secret set GH_TOKEN
+#
+# Without the 'project' scope, all project board updates will fail with
+# HTTP 401 or "Resource not accessible by integration" errors.
+#
+# See: docs/Configuration.md for detailed setup instructions.
+# =============================================================================
+
 on:
   push:
     branches: [main, develop, staging, 'feat/*', 'fix/*', 'refactor/*', 'docs/*']
@@ -12,10 +32,9 @@ permissions:
   contents: read
   issues: read
   pull-requests: write  # Required to create PRs automatically
-  # Projects v2 requires write permission to modify custom fields
+  # Projects v2 requires a PAT with 'project' scope -- the built-in
+  # GITHUB_TOKEN cannot access Projects v2 GraphQL mutations.
   # See: https://docs.github.com/en/graphql/reference/mutations#updateprojectv2itemfieldvalue
-  # Note: GITHUB_TOKEN may not have sufficient permissions for Projects v2.
-  # If this fails, you may need to use a Personal Access Token with 'project' scope.
 
 jobs:
   update-project:
@@ -38,12 +57,59 @@ jobs:
           if [ -n "${{ secrets.GH_TOKEN }}" ]; then
             echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
             echo "has_project_token=true" >> $GITHUB_OUTPUT
-            echo "✅ Using custom GH_TOKEN with project permissions"
+            echo "Using custom GH_TOKEN"
           else
             echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
             echo "has_project_token=false" >> $GITHUB_OUTPUT
-            echo "⚠️  Using default GITHUB_TOKEN (may lack project permissions)"
+            echo "::warning::No GH_TOKEN secret found. Using default GITHUB_TOKEN which lacks 'project' scope. Project board updates will fail. See docs/Configuration.md for setup instructions."
           fi
+
+      - name: Diagnose token permissions for Projects v2
+        id: diagnose
+        run: |
+          echo "--- Token Diagnostics ---"
+
+          # Test 1: Basic GraphQL connectivity
+          HTTP_CODE=$(curl -s -o /tmp/graphql_response.json -w "%{http_code}" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"query":"query { viewer { login } }"}' \
+            https://api.github.com/graphql)
+
+          if [ "$HTTP_CODE" = "200" ]; then
+            VIEWER=$(cat /tmp/graphql_response.json | python3 -c "import sys,json; print(json.load(sys.stdin).get('data',{}).get('viewer',{}).get('login','unknown'))" 2>/dev/null || echo "unknown")
+            echo "GraphQL auth OK (authenticated as: $VIEWER)"
+          else
+            echo "::error::GraphQL authentication failed (HTTP $HTTP_CODE). Check that GH_TOKEN is valid."
+            echo "has_project_scope=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Test 2: Projects v2 scope -- try to list projects for the repo owner
+          HTTP_CODE=$(curl -s -o /tmp/project_response.json -w "%{http_code}" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"query\":\"query { user(login: \\\"$GH_OWNER\\\") { projectsV2(first: 1) { totalCount } } }\"}" \
+            https://api.github.com/graphql)
+
+          RESPONSE=$(cat /tmp/project_response.json)
+          HAS_ERRORS=$(echo "$RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); print('yes' if 'errors' in d else 'no')" 2>/dev/null || echo "unknown")
+
+          if [ "$HTTP_CODE" = "200" ] && [ "$HAS_ERRORS" = "no" ]; then
+            PROJECT_COUNT=$(echo "$RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['user']['projectsV2']['totalCount'])" 2>/dev/null || echo "?")
+            echo "Projects v2 access OK (found $PROJECT_COUNT project(s) for $GH_OWNER)"
+            echo "has_project_scope=true" >> $GITHUB_OUTPUT
+          else
+            ERROR_MSG=$(echo "$RESPONSE" | python3 -c "import sys,json; errs=json.load(sys.stdin).get('errors',[]); print(errs[0].get('message','unknown') if errs else 'unknown')" 2>/dev/null || echo "unknown")
+            echo "::warning::Projects v2 access FAILED: $ERROR_MSG"
+            echo "::warning::Your GH_TOKEN is missing the 'project' scope. Project board updates will be skipped."
+            echo "::warning::Fix: Create a new PAT at https://github.com/settings/tokens/new with scopes: repo, project, workflow"
+            echo "::warning::Then run: gh secret set GH_TOKEN"
+            echo "::warning::See docs/Configuration.md for detailed instructions."
+            echo "has_project_scope=false" >> $GITHUB_OUTPUT
+          fi
+
+          echo "--- End Diagnostics ---"
 
       - name: Load project configuration
         id: config
@@ -217,5 +283,12 @@ jobs:
       - name: Summary
         if: always()
         run: |
-          echo "✅ Project synchronization workflow completed"
-          echo "GitHub Projects v2 board updated via GraphQL API"
+          echo "--- Update Project Workflow Summary ---"
+          if [ "${{ steps.diagnose.outputs.has_project_scope }}" = "true" ]; then
+            echo "Token: OK (has project scope)"
+          else
+            echo "Token: MISSING project scope -- project board steps were skipped or failed"
+            echo "Action required: See docs/Configuration.md for GH_TOKEN setup"
+          fi
+          echo "Event: ${{ github.event_name }} / ${{ github.event.action }}"
+          echo "--- End Summary ---"

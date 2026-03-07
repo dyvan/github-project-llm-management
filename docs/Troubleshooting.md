@@ -18,20 +18,36 @@ sudo apt install gh
 winget install GitHub.cli
 ```
 
-## "Project not found" ou "GraphQL errors"
+## "Project not found" or "GraphQL errors" or HTTP 401
 
-**Causes** :
-- Projet n'existe pas
-- Mauvais numéro dans `.github/project.yml`
-- Token sans scope `project`
+**Most common cause**: The `GH_TOKEN` secret is missing the `project` scope.
 
-**Solutions** :
+The default `GITHUB_TOKEN` provided by GitHub Actions does **not** support
+Projects v2 GraphQL operations. You need a classic Personal Access Token (PAT)
+with scopes: `repo`, `project`, `workflow`.
+
+**How to fix**:
+
+1. Create a new PAT at https://github.com/settings/tokens/new
+2. Select scopes: `repo`, `project`, `workflow`
+3. Save it as a repository secret:
+   ```bash
+   gh secret set GH_TOKEN
+   ```
+4. Re-run the failed workflow
+
+See [Configuration](Configuration) for detailed instructions.
+
+**Other causes**:
+- Project does not exist or wrong number in `.github/project.yml`
+- Fine-grained PAT used instead of classic PAT (Projects v2 requires classic)
+
 ```bash
-# Vérifier projets existants
+# Verify existing projects
 gh project list --owner YOUR_USERNAME
 
-# Mettre à jour project.yml avec bon numéro
-# Recréer token avec scope project
+# Check the diagnostic step in update-project.yml workflow logs
+# for detailed error messages
 ```
 
 ## "Permission denied" sur scripts
@@ -95,13 +111,16 @@ pytest tests/ -v
 python -c "import yaml; [yaml.safe_load(open(f)) for f in ['.github/workflows/ci-tests.yml']]"
 ```
 
-## Token GitHub invalide
+## Invalid or insufficient GitHub token
 
-**Recréer** :
-1. Aller sur https://github.com/settings/tokens/new
-2. Cocher scopes : `repo`, `project`, `workflow`
-3. Générer
-4. Configurer : `gh secret set GH_TOKEN`
+**Recreate**:
+1. Go to https://github.com/settings/tokens/new (must be **classic** token)
+2. Select scopes: `repo`, `project`, `workflow`
+3. Generate and copy the token
+4. Store as secret: `gh secret set GH_TOKEN`
+
+**Note**: Fine-grained PATs do not support Projects v2. Use a classic PAT.
+See [Configuration](Configuration) for details.
 
 ## Besoin d'aide supplémentaire
 
