@@ -23,14 +23,8 @@ fi
 
 ## Adding custom fields to the Project Board
 
-1. Create the field manually on GitHub or modify `scripts/setup_project_fields.py`:
-
-```python
-fields_to_create = {
-    "Status": [...],
-    "Sprint": ["Sprint 1", "Sprint 2", "Sprint 3"],  # New field
-}
-```
+1. Create the field manually on the GitHub Project Board settings page.
+   The GitHub API does not support creating custom fields programmatically.
 
 2. Map it in `update-project.yml`:
 

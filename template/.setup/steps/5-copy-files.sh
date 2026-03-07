@@ -105,7 +105,6 @@ copy_scripts() {
         "auto_close_parent_feature.py"
         "generate_specification.py"
         "generate_qcm.py"
-        "setup_project_fields.py"
     )
 
     local count=0

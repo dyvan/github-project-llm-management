@@ -19,7 +19,6 @@ The `.github/workflows/template-validation.yml` workflow automatically validates
 
 **Python scripts**:
 - `scripts/project_sync.py`
-- `scripts/setup_project_fields.py`
 
 **Bash scripts**:
 - `template-setup.sh`
@@ -124,7 +123,6 @@ The `.github/workflows/template-validation.yml` workflow automatically validates
 
 **Features simulated**:
 - CLI project_sync.py
-- CLI setup_project_fields.py
 - Setup validation
 
 #### 10. Integration test (on main)

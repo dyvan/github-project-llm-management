@@ -211,7 +211,7 @@ clone_and_setup() {
 
     # Copy scripts needed by workflows
     mkdir -p scripts
-    for script in project_sync.py auto_close_parent_feature.py generate_specification.py generate_qcm.py setup_project_fields.py; do
+    for script in project_sync.py auto_close_parent_feature.py generate_specification.py generate_qcm.py; do
         if [ -f "$template_dir/scripts/$script" ]; then
             cp "$template_dir/scripts/$script" "scripts/$script"
         fi
