@@ -182,12 +182,19 @@ main() {
             [[ "$key" =~ ^#.*$ || -z "$key" ]] && continue
             # Trim whitespace and quotes
             value=$(echo "$value" | tr -d '"' | tr -d "'")
-            # Only export if not already set in environment
-            if [ -z "${!key}" ] && [ -n "$value" ]; then
+            # Export from .env (overrides environment for project-specific config)
+            if [ -n "$value" ]; then
                 export "$key=$value"
                 echo -e "${GREEN}✅ Loaded $key from .env${NC}"
             fi
         done < "$env_file"
+
+        # gh CLI uses GITHUB_TOKEN — override with GH_TOKEN from .env
+        # This ensures the project-specific token is used, not a global one
+        if [ -n "$GH_TOKEN" ]; then
+            export GITHUB_TOKEN="$GH_TOKEN"
+            echo -e "${GREEN}✅ Set GITHUB_TOKEN from GH_TOKEN${NC}"
+        fi
         echo ""
     fi
 
