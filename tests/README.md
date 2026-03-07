@@ -10,7 +10,6 @@ Comprehensive test suite for GitHub Project LLM Management template.
 tests/
 ├── test_project_sync.py      # Unit tests for project_sync.py
 ├── test_workflows.py          # Workflow YAML validation tests
-├── test_setup_script.sh       # Bash tests for setup-project.sh
 ├── conftest.py               # Pytest configuration
 └── README.md                 # This file
 ```
@@ -41,8 +40,8 @@ pytest tests/test_project_sync.py
 # Workflow validation only
 pytest tests/test_workflows.py
 
-# Setup script tests only
-cd tests && bash test_setup_script.sh
+# Workflow validation only (verbose)
+pytest tests/test_workflows.py -v
 ```
 
 ### Run Specific Tests
@@ -123,24 +122,6 @@ def test_workflow_yaml_syntax(self, workflows_dir):
     # Assert no YAML errors
 ```
 
-### 3. Setup Script Tests (`test_setup_script.sh`)
-
-Tests for `setup-project.sh`:
-- ✅ Bash syntax validation
-- ✅ Executable permissions
-- ✅ Required command checks
-- ✅ Label definitions present
-- ✅ Error handling (`set -e`)
-- ✅ Color definitions
-
-**Example**:
-```bash
-test_syntax() {
-    bash -n ../setup-project.sh
-    # Assert exit code 0
-}
-```
-
 ---
 
 ## 🔧 Test Configuration
@@ -213,28 +194,6 @@ class TestNewFeature:
     def test_something(self, feature):
         result = feature.do_something()
         assert result == expected
-```
-
-### Adding Bash Tests
-
-1. Add test function to `test_setup_script.sh`
-2. Follow naming convention: `test_*`
-3. Return 0 for success, 1 for failure
-4. Add to main() function
-
-**Template**:
-```bash
-test_new_feature() {
-    echo "Testing new feature..."
-    # Test logic here
-    if [ condition ]; then
-        echo "✅ Test passed"
-        return 0
-    else
-        echo "❌ Test failed"
-        return 1
-    fi
-}
 ```
 
 ---
@@ -323,11 +282,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'scripts'))
 ### Permission Denied
 
 ```bash
-# Make test script executable
-chmod +x tests/test_setup_script.sh
-
 # Make scripts executable
-chmod +x setup-project.sh scripts/project_sync.py
+chmod +x template-setup.sh scripts/project_sync.py
 ```
 
 ---

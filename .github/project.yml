@@ -3,7 +3,7 @@
 
 project:
   # Project number (visible in project URL: github.com/.../projects/1)
-  # Change this to your project number after running setup-project.sh
+  # Change this to your project number after running template-setup.sh
   number: 1
 
   # Project name (optional, for documentation purposes)

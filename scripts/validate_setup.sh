@@ -138,7 +138,7 @@ if [ -n "$REPO_OWNER" ] && [ -n "$REPO_NAME" ]; then
         echo "  ✅ All required labels exist"
     else
         echo -e "  ${YELLOW}⚠️  $MISSING_LABELS required labels missing${NC}"
-        echo "     Run: ./setup-project.sh to create labels"
+        echo "     Run: bash template-setup.sh to create labels"
         WARNINGS=$((WARNINGS + 1))
     fi
 else
@@ -168,7 +168,7 @@ if [ -n "$REPO_OWNER" ]; then
         fi
     else
         echo -e "  ${YELLOW}⚠️  No GitHub Projects found${NC}"
-        echo "     Run: ./setup-project.sh to create a project"
+        echo "     Run: bash template-setup.sh to create a project"
         WARNINGS=$((WARNINGS + 1))
     fi
 else

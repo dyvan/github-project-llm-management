@@ -54,7 +54,7 @@ gh project list --owner YOUR_USERNAME
 
 **Solution**:
 ```bash
-chmod +x setup-project.sh
+chmod +x template-setup.sh
 chmod +x scripts/*.sh
 chmod +x scripts/*.py
 ```

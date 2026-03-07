@@ -53,14 +53,14 @@ jobs:
       - name: Validate Bash scripts syntax
         run: |
           echo "📝 Validating Bash scripts syntax..."
-          bash -n setup-project.sh
+          bash -n template-setup.sh
           bash -n scripts/validate_setup.sh
           echo "✅ All Bash scripts have valid syntax"
 
       - name: Check scripts are executable
         run: |
           echo "📝 Checking script permissions..."
-          test -x setup-project.sh || chmod +x setup-project.sh
+          test -x template-setup.sh || chmod +x template-setup.sh
           test -x scripts/validate_setup.sh || chmod +x scripts/validate_setup.sh
           test -x scripts/setup_project_fields.py || chmod +x scripts/setup_project_fields.py
           test -x scripts/project_sync.py || chmod +x scripts/project_sync.py

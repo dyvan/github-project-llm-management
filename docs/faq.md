@@ -26,7 +26,7 @@ gh issue create --title "My task" --label "type:feature,auto-branch"
 Yes, simply don't configure `GEMINI_API_KEY`. The review will work in basic mode.
 
 ### How do I customize labels?
-Edit `setup-project.sh` lines 86+ and re-run the script.
+Edit `template-setup.sh` and re-run the script.
 
 ### Does it work with private repos?
 Yes, fully.

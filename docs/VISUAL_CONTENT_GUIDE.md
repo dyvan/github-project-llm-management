@@ -39,12 +39,12 @@ mkdir -p docs/images/demo
 **File**: `docs/images/screenshots/02-setup-running.png`
 
 **What to capture**:
-- Terminal running `./setup-project.sh`
+- Terminal running `bash template-setup.sh`
 - Colored messages (✅, ❌, emojis)
 - At least 2-3 visible steps
 
 **How**:
-1. Run `./setup-project.sh` in a terminal
+1. Run `bash template-setup.sh` in a terminal
 2. Capture when the steps are displayed
 3. Make sure colors are visible
 
@@ -177,7 +177,7 @@ mkdir -p docs/images/demo
 #### 0:45-1:15 - Step 2: Setup Script
 - Clone the repository locally
 - Open a terminal
-- Run `./setup-project.sh`
+- Run `bash template-setup.sh`
 - Show the steps executing (sped up if needed)
 - Text: "2️⃣ Run the automatic setup script"
 
@@ -228,7 +228,7 @@ mkdir -p docs/images/demo
 
 2. **Run the setup**
    ```bash
-   ./setup-project.sh
+   bash template-setup.sh
    ```
    ![Setup Running](docs/images/screenshots/02-setup-running.png)
 

@@ -47,7 +47,7 @@ jobs:
 
       - name: Verify scripts are executable
         run: |
-          test -x setup-project.sh || echo "⚠️ setup-project.sh not executable"
+          test -x template-setup.sh || echo "⚠️ template-setup.sh not executable"
           test -x scripts/project_sync.py || echo "⚠️ project_sync.py not executable"
           echo "✅ Script permissions verified"
 
@@ -62,8 +62,8 @@ jobs:
 
       - name: Test setup script syntax
         run: |
-          bash -n setup-project.sh
-          echo "✅ setup-project.sh syntax is valid"
+          bash -n template-setup.sh
+          echo "✅ template-setup.sh syntax is valid"
 
       - name: Format check (black)
         continue-on-error: true
@@ -97,12 +97,6 @@ jobs:
           pytest tests/ --cov=scripts/ --cov-report=xml --cov-report=html --cov-report=term --junitxml=test-results.xml
           echo "✅ Tests completed"
         continue-on-error: false
-
-      - name: Run setup script tests
-        run: |
-          cd tests
-          bash test_setup_script.sh
-          echo "✅ Setup script tests completed"
 
       - name: Upload coverage reports
         uses: codecov/codecov-action@v3

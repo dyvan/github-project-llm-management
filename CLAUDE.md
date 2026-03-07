@@ -318,6 +318,21 @@ python scripts/generate_dashboard.py
 **Action**: Synchronizes the Project Board (currently logging, GraphQL to be implemented)
 **Usage**: Automatic, event tracking
 
+### 6. `plan-with-gemini.yml`
+**Trigger**: Label `plan-with-gemini` added to an issue
+**Action**: Gemini AI generates a specification questionnaire (QCM) tailored to the issue type
+**Usage**: Add the label via `gh issue edit 123 --add-label "plan-with-gemini"`
+
+### 7. `generate-specification.yml`
+**Trigger**: Label `generate-specification` added to an issue (after QCM is completed)
+**Action**: Gemini reads QCM responses and generates a detailed specification, creates a sub-issue, and triggers branch creation
+**Usage**: Add the label via `gh issue edit 123 --add-label "generate-specification"`
+
+### 8. `auto-close-feature.yml`
+**Trigger**: PR merged with `Closes #X` in description
+**Action**: Checks if all sub-issues of the parent feature are closed, and auto-closes the parent if complete
+**Usage**: Automatic, no intervention needed
+
 ---
 
 ## 📊 Useful Commands for Tracking

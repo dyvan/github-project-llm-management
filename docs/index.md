@@ -62,7 +62,6 @@ Go to **Settings → Secrets and variables → Actions** and add:
 - **[QCM Specification](./QCM-Specification.md)**: Generate specification questionnaires with Gemini
 - **[Architecture](./architecture/overview.md)**: System design and components
 - **[Guides](./guides/setup-github-projects.md)**: How to use each feature
-- **[Agents](./agents/branch-creator.md)**: LLM agent documentation
 
 ## 🤖 How It Works
 
