@@ -71,6 +71,7 @@ nav:
   - User Guide:
       - Using the Template: Using-The-Template.md
       - Configuration: Configuration.md
+      - AI Features: ai-features.md
       - QCM Specification: QCM-Specification.md
       - Scripts Reference: Scripts-Reference.md
   - Architecture:
