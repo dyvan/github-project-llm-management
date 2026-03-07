@@ -172,6 +172,32 @@ copy_memory_templates() {
     fi
 }
 
+copy_wiki_templates() {
+    local src="${TEMPLATE_ROOT}/wiki"
+    local dest="${PWD}/template/wiki"
+
+    if [ "$REPO_ROOT" = "$PWD" ]; then
+        success "Wiki templates already in place"
+        return 0
+    fi
+
+    if [ -d "$src" ]; then
+        mkdir -p "$dest"
+        local count=0
+        for tmpl in "$src"/*.md; do
+            if [ -f "$tmpl" ]; then
+                cp "$tmpl" "$dest/"
+                count=$((count+1))
+            fi
+        done
+        if [ $count -gt 0 ]; then
+            success "Copied $count wiki templates to template/wiki/"
+        fi
+    else
+        warning "No wiki templates found at $src"
+    fi
+}
+
 copy_claude_md() {
     local src="${REPO_ROOT}/CLAUDE.md"
     local dest="${PWD}/CLAUDE.md"
@@ -208,6 +234,7 @@ run_step() {
     copy_claude_commands
     copy_claude_md
     copy_memory_templates
+    copy_wiki_templates
 
     mark_step_completed "link_workflows"
     mark_step_completed "copy_claude_md"
