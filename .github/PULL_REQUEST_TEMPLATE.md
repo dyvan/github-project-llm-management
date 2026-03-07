@@ -1,69 +1,69 @@
 ## Description
-Résumé concis des changements effectués dans cette PR.
+Concise summary of changes made in this PR.
 
-**Exemple** : This PR adds dark mode toggle functionality to the settings page. Users can now switch between light and dark themes, with their preference saved in localStorage.
+**Example**: This PR adds dark mode toggle functionality to the settings page. Users can now switch between light and dark themes, with their preference saved in localStorage.
 
-## Type de changement
-Sélectionnez le(s) type(s) applicable(s) :
-- [ ] 🐛 Bug fix (changement non-breaking qui corrige un problème)
-- [ ] ✨ Feature (changement non-breaking qui ajoute une fonctionnalité)
-- [ ] 🔧 Refactoring (amélioration du code sans changement fonctionnel)
-- [ ] 📚 Documentation (mise à jour de la documentation)
-- [ ] 🧪 Tests (ajout ou amélioration des tests)
-- [ ] 🚀 Performance (amélioration de la performance)
-- [ ] 🔒 Security (correction de sécurité)
+## Type of Change
+Select the applicable type(s):
+- [ ] Bug fix (non-breaking change that fixes an issue)
+- [ ] Feature (non-breaking change that adds functionality)
+- [ ] Refactoring (code improvement with no functional change)
+- [ ] Documentation (documentation update)
+- [ ] Tests (adding or improving tests)
+- [ ] Performance (performance improvement)
+- [ ] Security (security fix)
 
-## Issue associée
+## Related Issue
 Closes #(issue number)
 
-**Exemple** : Closes #123
+**Example**: Closes #123
 
-## Changements détaillés
-Décrivez les changements plus en détail si nécessaire.
+## Detailed Changes
+Describe the changes in more detail if necessary.
 
-## Tests effectués
-Décrivez les tests que vous avez exécutés pour valider vos changements.
+## Tests Performed
+Describe the tests you ran to validate your changes.
 
-**Exemple** :
+**Example**:
 - [x] Unit tests: `pytest tests/test_dark_mode.py`
 - [x] Integration tests: All passing
 - [x] Manual testing: Tested on Chrome, Firefox, Safari
 
-## Checklist avant la soumission
-Assurez-vous d'avoir complété les points suivants :
+## Pre-submission Checklist
+Make sure you have completed the following items:
 
 ### Code Quality
-- [ ] Mon code suit le style du projet (lint check passed)
-- [ ] J'ai exécuté les tests localement et ils passent
-- [ ] J'ai vérifié qu'il n'y a pas de warnings ou erreurs
-- [ ] Pas de données sensibles (clés API, tokens, mots de passe) commitées
+- [ ] My code follows the project style (lint check passed)
+- [ ] I have run the tests locally and they pass
+- [ ] I have verified there are no warnings or errors
+- [ ] No sensitive data (API keys, tokens, passwords) committed
 
 ### Documentation & Tests
-- [ ] J'ai ajouté/mis à jour la documentation si nécessaire
-- [ ] J'ai ajouté des tests pour couvrir les nouveaux changements
-- [ ] Les tests couvrent les cas d'usage positifs et négatifs
+- [ ] I have added/updated documentation if necessary
+- [ ] I have added tests to cover the new changes
+- [ ] Tests cover both positive and negative use cases
 
-### Changements breaking
-- [ ] Ce PR contient des changements breaking (non-backward compatible)
-  - Si oui, décrivez l'impact et comment les utilisateurs peuvent migrer :
+### Breaking Changes
+- [ ] This PR contains breaking changes (non-backward compatible)
+  - If yes, describe the impact and how users can migrate:
     ```
     Breaking change: ...
     Migration guide: ...
     ```
 
-## Screenshots ou vidéos (si applicable)
-Attachez des captures d'écran ou vidéos montrant les changements visuels.
+## Screenshots or videos (if applicable)
+Attach screenshots or videos showing the visual changes.
 
-## Performance & Scalabilité
-- [ ] Les changements ont-ils un impact sur la performance ?
-- [ ] Y a-t-il des préoccupations de scalabilité ?
-- [ ] Avez-vous testé avec de grandes quantités de données ?
+## Performance & Scalability
+- [ ] Do the changes have an impact on performance?
+- [ ] Are there scalability concerns?
+- [ ] Have you tested with large amounts of data?
 
-## Notes supplémentaires
-Ajoutez toute information supplémentaire utile pour les reviewers.
+## Additional notes
+Add any additional information useful for reviewers.
 
 ---
 
-**🤖 Code Review par l'agent IA** : Ce PR sera automatiquement révisé par Gemini. Des suggestions et des commentaires apparaîtront ci-dessous.
+**AI Code Review**: This PR will be automatically reviewed by Gemini. Suggestions and comments will appear below.
 
-**👥 Review humain requis** : Veuillez attendre l'approbation d'au moins un mainteneur avant le merge.
+**Human review required**: Please wait for approval from at least one maintainer before merging.

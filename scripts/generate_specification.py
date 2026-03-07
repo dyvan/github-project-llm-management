@@ -47,10 +47,10 @@ class SpecificationGenerator:
         response.raise_for_status()
         comments = response.json()
 
-        # Find QCM comment (has "Questionnaire de Spécification")
+        # Find QCM comment (has "Specification Questionnaire")
         qcm_comment = None
         for comment in comments:
-            if "Questionnaire de Spécification" in comment.get("body", ""):
+            if "Specification Questionnaire" in comment.get("body", "") or "Questionnaire de Spécification" in comment.get("body", ""):
                 qcm_comment = comment["body"]
                 break
 
@@ -267,7 +267,7 @@ Your specification should:
 
 ## Important Guidelines:
 
-- Write in French language
+- Write in English language
 - Be specific and concrete
 - Reference the user's QCM answers directly
 - Provide clear, actionable guidance
@@ -322,157 +322,157 @@ Start directly with the Executive Summary or Problem Statement."""
     def _generate_template_specification(self, issue_type: str, title: str, issue_number: int) -> str:
         """Generate template-based specification as fallback"""
 
-        base_spec = f"""# Spécification - Issue #{issue_number}: {title}
+        base_spec = f"""# Specification - Issue #{issue_number}: {title}
 
-> Cette spécification a été générée automatiquement à partir du questionnaire QCM.
+> This specification was automatically generated from the QCM questionnaire responses.
 
-## Executive Summary / Résumé
+## Executive Summary
 
-Basé sur les réponses du questionnaire QCM pour la gestion de cette issue.
+Based on the QCM questionnaire responses for this issue.
 
 """
 
         if issue_type == "feature":
-            base_spec += """## Spécifications Fonctionnelles - Feature
+            base_spec += """## Functional Specifications - Feature
 
-### 1. Périmètre et Objectif
-- Définir clairement ce qui doit être livré
-- Identifier la portée : MVP vs feature complète vs extensions
+### 1. Scope and Objective
+- Clearly define what needs to be delivered
+- Identify scope: MVP vs full feature vs extensions
 
-### 2. Expérience Utilisateur
-- Interface et interactions attendues
-- Flux utilisateur principal
-- Cas d'usage prioritaires
+### 2. User Experience
+- Expected interface and interactions
+- Main user flow
+- Priority use cases
 
-### 3. Intégration
-- Points d'intégration avec les systèmes existants
-- APIs à consommer ou exposer
-- Données à synchroniser
+### 3. Integration
+- Integration points with existing systems
+- APIs to consume or expose
+- Data to synchronize
 
-### 4. Critères d'Acceptation
-- [ ] La feature fonctionne comme spécifiée
-- [ ] L'interface est intuitive et responsive
-- [ ] Les performances sont acceptables
-- [ ] Les tests unitaires sont en place
-- [ ] La documentation est à jour
-- [ ] Pas de régression sur les features existantes
+### 4. Acceptance Criteria
+- [ ] Feature works as specified
+- [ ] Interface is intuitive and responsive
+- [ ] Performance is acceptable
+- [ ] Unit tests are in place
+- [ ] Documentation is up to date
+- [ ] No regression on existing features
 
 ### 5. Non-Functional Requirements
-- **Performance**: Temps de réponse < 1s pour les opérations principales
-- **Scalabilité**: Supporter X utilisateurs/opérations simultanées
-- **Sécurité**: Validation des entrées, authentification si nécessaire
-- **Accessibilité**: WCAG 2.1 level AA
+- **Performance**: Response time < 1s for main operations
+- **Scalability**: Support X concurrent users/operations
+- **Security**: Input validation, authentication if needed
+- **Accessibility**: WCAG 2.1 level AA
 
-### 6. Dépendances et Blocages
-- Identifiées depuis les réponses du QCM
-- À clarifier avec le product owner
+### 6. Dependencies and Blockers
+- Identified from QCM responses
+- To clarify with the product owner
 
-### 7. Notes d'Implémentation
-- Architecture recommandée : à définir en discussion d'équipe
-- Technologies suggérées : à valider
-- Edge cases à gérer : tester en détail
+### 7. Implementation Notes
+- Recommended architecture: to define in team discussion
+- Suggested technologies: to validate
+- Edge cases to handle: test in detail
 
 ---
 
-**Prochaines étapes:** Consulter le commentaire QCM pour les détails des réponses utilisateur."""
+**Next steps:** Refer to the QCM comment for user response details."""
 
         elif issue_type == "bug":
-            base_spec += """## Spécifications de Correction - Bug
+            base_spec += """## Fix Specifications - Bug
 
-### 1. Énoncé du Problème
-- Description détaillée du bug
-- Quand et comment il apparaît
-- Impact sur l'utilisateur
+### 1. Problem Statement
+- Detailed bug description
+- When and how it occurs
+- Impact on the user
 
-### 2. Évaluation de l'Impact
-- Sévérité: Critique/Haute/Moyenne/Basse
-- Utilisateurs affectés
-- Impact métier
+### 2. Impact Assessment
+- Severity: Critical/High/Medium/Low
+- Affected users
+- Business impact
 
-### 3. Étapes de Reproduction
-- Contexte et conditions préalables
-- Étapes exactes pour reproduire
-- Résultat attendu vs résultat observé
+### 3. Reproduction Steps
+- Context and preconditions
+- Exact steps to reproduce
+- Expected vs observed result
 
-### 4. Solution Proposée
-- Approche recommandée pour la correction
-- Workaround temporaire (si applicable)
-- Approche à long terme
+### 4. Proposed Solution
+- Recommended fix approach
+- Temporary workaround (if applicable)
+- Long-term approach
 
-### 5. Critères d'Acceptation
-- [ ] Le bug est corrigé dans le code
-- [ ] Les tests reproduisent et valident la correction
-- [ ] Aucune régression détectée
-- [ ] La documentation est à jour
-- [ ] Le comportement est cohérent
+### 5. Acceptance Criteria
+- [ ] Bug is fixed in the code
+- [ ] Tests reproduce and validate the fix
+- [ ] No regression detected
+- [ ] Documentation is up to date
+- [ ] Behavior is consistent
 
-### 6. Tests de Régression
-- Fonctionnalités affectées à tester
-- Cas limites à vérifier
-- Environnements à tester
+### 6. Regression Testing
+- Affected features to test
+- Edge cases to verify
+- Environments to test
 
-### 7. Notes d'Implémentation
-- Code areas à modifier
-- Considérations spéciales
-- Plan de rollback si nécessaire
+### 7. Implementation Notes
+- Code areas to modify
+- Special considerations
+- Rollback plan if needed
 
 ---
 
-**Prochaines étapes:** Consulter le commentaire QCM pour les détails spécifiques du bug."""
+**Next steps:** Refer to the QCM comment for bug-specific details."""
 
         else:  # task or general
-            base_spec += """## Spécifications Techniques - Task
+            base_spec += """## Technical Specifications - Task
 
-### 1. Objectif
-- Clarifier le but de cette task
-- Résultats attendus
+### 1. Objective
+- Clarify the purpose of this task
+- Expected outcomes
 
-### 2. Approche Technique
-- Méthode recommandée
-- Architecture et design
-- Technologies impliquées
+### 2. Technical Approach
+- Recommended method
+- Architecture and design
+- Technologies involved
 
-### 3. Livrables
-- Code à modifier/créer
-- Documentation à produire
-- Configuration à déployer
+### 3. Deliverables
+- Code to modify/create
+- Documentation to produce
+- Configuration to deploy
 
-### 4. Critères de Succès
-- [ ] Livrable X est complété et testé
-- [ ] Documentation est à jour
-- [ ] Pas de régression
-- [ ] Performance respectée
-- [ ] Code reviews approuvés
+### 4. Success Criteria
+- [ ] Deliverable X is completed and tested
+- [ ] Documentation is up to date
+- [ ] No regression
+- [ ] Performance requirements met
+- [ ] Code reviews approved
 
-### 5. Dépendances
-- Prérequis avant de commencer
-- Accès/permissions nécessaires
-- Tâches bloquantes
+### 5. Dependencies
+- Prerequisites before starting
+- Required access/permissions
+- Blocking tasks
 
-### 6. Timeline et Efforts
-- Estimation: X heures/jours
-- Jalons importants si applicable
-- Dépendances temporelles
+### 6. Timeline and Effort
+- Estimate: X hours/days
+- Key milestones if applicable
+- Time dependencies
 
-### 7. Notes d'Implémentation
-- Gotchas potentiels
-- Tests importants
-- Documentation spéciale
+### 7. Implementation Notes
+- Potential gotchas
+- Important tests
+- Special documentation
 
 ---
 
-**Prochaines étapes:** Consulter le commentaire QCM pour les détails des réponses."""
+**Next steps:** Refer to the QCM comment for response details."""
 
         base_spec += f"""
 
 ---
 
-## Informations Techniques
+## Technical Information
 - **Issue #:** {issue_number}
 - **Type:** {issue_type.upper()}
-- **Généré le:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} UTC
-- **Basé sur:** Questionnaire QCM (voir commentaires)
-- **Note:** Spécification générée avec fallback. Consulter le QCM pour tous les détails des réponses.
+- **Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} UTC
+- **Based on:** QCM Questionnaire (see comments)
+- **Note:** Specification generated with fallback template. Refer to the QCM for full response details.
 """
 
         return base_spec

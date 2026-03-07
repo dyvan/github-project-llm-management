@@ -1,12 +1,12 @@
-# 📸 Guide de Création de Contenu Visuel
+# 📸 Visual Content Creation Guide
 
-Ce guide vous aide à créer des screenshots et vidéos pour améliorer la documentation du template.
+This guide helps you create screenshots and videos to enhance the template documentation.
 
 ---
 
-## 📁 Structure des Fichiers
+## 📁 File Structure
 
-Créez le dossier pour stocker les images :
+Create the folder to store images:
 
 ```bash
 mkdir -p docs/images
@@ -16,311 +16,311 @@ mkdir -p docs/images/demo
 
 ---
 
-## 🖼️ Screenshots à Créer
+## 🖼️ Screenshots to Create
 
-### 1. Screenshot : GitHub Template Button
-**Fichier** : `docs/images/screenshots/01-use-template.png`
+### 1. Screenshot: GitHub Template Button
+**File**: `docs/images/screenshots/01-use-template.png`
 
-**À capturer** :
-- Page GitHub du repository template
-- Bouton vert "Use this template" bien visible
-- Titre du repository en haut
+**What to capture**:
+- GitHub page of the template repository
+- Green "Use this template" button clearly visible
+- Repository title at the top
 
-**Comment** :
-1. Allez sur https://github.com/dyvan/github-project-llm-management
-2. Capturez la partie haute de la page avec le bouton
-3. Annotez le bouton avec une flèche ou un cercle
+**How**:
+1. Go to https://github.com/dyvan/github-project-llm-management
+2. Capture the top section of the page with the button
+3. Annotate the button with an arrow or circle
 
-**Utilisation** : README.md, Getting-Started.md
-
----
-
-### 2. Screenshot : Setup Script en Action
-**Fichier** : `docs/images/screenshots/02-setup-running.png`
-
-**À capturer** :
-- Terminal avec `./setup-project.sh` en cours d'exécution
-- Messages colorés (✅, ❌, emojis)
-- Au moins 2-3 étapes visibles
-
-**Comment** :
-1. Lancez `./setup-project.sh` dans un terminal
-2. Capturez quand les étapes sont affichées
-3. Assurez-vous que les couleurs sont visibles
-
-**Utilisation** : Getting-Started.md, Scripts-Reference.md
+**Used in**: README.md, Getting-Started.md
 
 ---
 
-### 3. Screenshot : GitHub Project Board Créé
-**Fichier** : `docs/images/screenshots/03-project-board.png`
+### 2. Screenshot: Setup Script in Action
+**File**: `docs/images/screenshots/02-setup-running.png`
 
-**À capturer** :
-- Vue d'ensemble du Project Board
-- Colonnes : Backlog, Ready, In Progress, In Review, Done
-- Au moins 2-3 issues visibles
-- Champs personnalisés (Priority, Effort, Type) visibles
+**What to capture**:
+- Terminal running `./setup-project.sh`
+- Colored messages (✅, ❌, emojis)
+- At least 2-3 visible steps
 
-**Comment** :
-1. Allez sur votre GitHub Project (https://github.com/users/VOTRE_NOM/projects/X)
-2. Vue "Table" pour voir les champs
-3. Capturez toute la largeur du tableau
+**How**:
+1. Run `./setup-project.sh` in a terminal
+2. Capture when the steps are displayed
+3. Make sure colors are visible
 
-**Utilisation** : README.md, Using-The-Template.md, Configuration.md
-
----
-
-### 4. Screenshot : Auto-Branch en Action
-**Fichier** : `docs/images/screenshots/04-auto-branch-comment.png`
-
-**À capturer** :
-- Issue avec label `auto-branch`
-- Commentaire automatique du bot avec commandes git
-- Nouvelle branche créée visible
-
-**Comment** :
-1. Créez une issue
-2. Ajoutez le label `auto-branch`
-3. Attendez 30 secondes
-4. Capturez le commentaire automatique
-
-**Utilisation** : README.md, Understanding-Workflows.md
+**Used in**: Getting-Started.md, Scripts-Reference.md
 
 ---
 
-### 5. Screenshot : Code Review par Gemini AI
-**Fichier** : `docs/images/screenshots/05-gemini-review.png`
+### 3. Screenshot: Created GitHub Project Board
+**File**: `docs/images/screenshots/03-project-board.png`
 
-**À capturer** :
-- Pull Request avec commentaire de Gemini
-- Suggestions d'amélioration
-- Emojis et formatage markdown
+**What to capture**:
+- Overview of the Project Board
+- Columns: Backlog, Ready, In Progress, In Review, Done
+- At least 2-3 visible issues
+- Custom fields (Priority, Effort, Type) visible
 
-**Comment** :
-1. Créez une PR avec du code
-2. Attendez la revue automatique de Gemini
-3. Capturez le commentaire complet
+**How**:
+1. Go to your GitHub Project (https://github.com/users/YOUR_NAME/projects/X)
+2. Use "Table" view to see the fields
+3. Capture the full width of the table
 
-**Utilisation** : README.md, Understanding-Workflows.md
-
----
-
-### 6. Screenshot : GitHub Actions Workflows
-**Fichier** : `docs/images/screenshots/06-github-actions.png`
-
-**À capturer** :
-- Onglet "Actions" du repository
-- Liste des workflows (validation, tests, etc.)
-- Statuts verts (✓) pour montrer que ça fonctionne
-
-**Comment** :
-1. Allez sur l'onglet "Actions" du repository
-2. Capturez la liste des derniers runs
-3. Assurez-vous que des checkmarks verts sont visibles
-
-**Utilisation** : Understanding-Workflows.md, Template-Validation.md
+**Used in**: README.md, Using-The-Template.md, Configuration.md
 
 ---
 
-### 7. Screenshot : Labels Configurés
-**Fichier** : `docs/images/screenshots/07-labels.png`
+### 4. Screenshot: Auto-Branch in Action
+**File**: `docs/images/screenshots/04-auto-branch-comment.png`
 
-**À capturer** :
-- Page des labels du repository
-- Labels organisés par catégorie (type:, status:, priority:)
-- Couleurs distinctes
+**What to capture**:
+- Issue with `auto-branch` label
+- Automatic bot comment with git commands
+- Newly created branch visible
 
-**Comment** :
-1. Allez sur Issues → Labels
-2. Capturez la liste complète
-3. Montrez au moins 10-15 labels
+**How**:
+1. Create an issue
+2. Add the `auto-branch` label
+3. Wait 30 seconds
+4. Capture the automatic comment
 
-**Utilisation** : Getting-Started.md, Configuration.md
-
----
-
-### 8. Screenshot : Validation Script Output
-**Fichier** : `docs/images/screenshots/08-validation.png`
-
-**À capturer** :
-- Terminal avec `./scripts/validate_setup.sh`
-- Tous les checks passés (✅)
-- Score final
-
-**Comment** :
-1. Lancez `./scripts/validate_setup.sh`
-2. Capturez tout l'output
-3. Assurez-vous que le score est visible
-
-**Utilisation** : Getting-Started.md, Troubleshooting.md
+**Used in**: README.md, Understanding-Workflows.md
 
 ---
 
-## 🎬 Vidéo Démo à Créer
+### 5. Screenshot: Code Review by Gemini AI
+**File**: `docs/images/screenshots/05-gemini-review.png`
 
-### Vidéo : Workflow Complet (2-3 minutes)
-**Fichier** : Hébergé sur YouTube/Vimeo, lien dans README
+**What to capture**:
+- Pull Request with Gemini comment
+- Improvement suggestions
+- Emojis and markdown formatting
 
-**Script Détaillé** :
+**How**:
+1. Create a PR with some code
+2. Wait for Gemini's automatic review
+3. Capture the full comment
+
+**Used in**: README.md, Understanding-Workflows.md
+
+---
+
+### 6. Screenshot: GitHub Actions Workflows
+**File**: `docs/images/screenshots/06-github-actions.png`
+
+**What to capture**:
+- Repository "Actions" tab
+- List of workflows (validation, tests, etc.)
+- Green statuses (✓) to show everything is working
+
+**How**:
+1. Go to the repository's "Actions" tab
+2. Capture the list of recent runs
+3. Make sure green checkmarks are visible
+
+**Used in**: Understanding-Workflows.md, Template-Validation.md
+
+---
+
+### 7. Screenshot: Configured Labels
+**File**: `docs/images/screenshots/07-labels.png`
+
+**What to capture**:
+- Repository labels page
+- Labels organized by category (type:, status:, priority:)
+- Distinct colors
+
+**How**:
+1. Go to Issues → Labels
+2. Capture the full list
+3. Show at least 10-15 labels
+
+**Used in**: Getting-Started.md, Configuration.md
+
+---
+
+### 8. Screenshot: Validation Script Output
+**File**: `docs/images/screenshots/08-validation.png`
+
+**What to capture**:
+- Terminal running `./scripts/validate_setup.sh`
+- All checks passed (✅)
+- Final score
+
+**How**:
+1. Run `./scripts/validate_setup.sh`
+2. Capture the full output
+3. Make sure the score is visible
+
+**Used in**: Getting-Started.md, Troubleshooting.md
+
+---
+
+## 🎬 Demo Video to Create
+
+### Video: Full Workflow (2-3 minutes)
+**File**: Hosted on YouTube/Vimeo, linked in README
+
+**Detailed Script**:
 
 #### 0:00-0:15 - Introduction
-- Montrer le README du template
-- Texte à l'écran : "GitHub Project Management - Setup en 2 minutes"
-- Expliquer brièvement : "Template clé-en-main pour gérer vos projets"
+- Show the template README
+- On-screen text: "GitHub Project Management - Setup in 2 minutes"
+- Brief explanation: "Turnkey template to manage your projects"
 
-#### 0:15-0:45 - Étape 1 : Utiliser le Template
-- Cliquer sur "Use this template"
-- Remplir le nom du nouveau repository
-- Cliquer sur "Create repository"
-- Texte : "1️⃣ Créez votre repository depuis le template"
+#### 0:15-0:45 - Step 1: Use the Template
+- Click "Use this template"
+- Fill in the new repository name
+- Click "Create repository"
+- Text: "1️⃣ Create your repository from the template"
 
-#### 0:45-1:15 - Étape 2 : Setup Script
-- Cloner le repository localement
-- Ouvrir un terminal
-- Lancer `./setup-project.sh`
-- Montrer les étapes qui s'exécutent (accéléré si besoin)
-- Texte : "2️⃣ Lancez le script de setup automatique"
+#### 0:45-1:15 - Step 2: Setup Script
+- Clone the repository locally
+- Open a terminal
+- Run `./setup-project.sh`
+- Show the steps executing (sped up if needed)
+- Text: "2️⃣ Run the automatic setup script"
 
-#### 1:15-1:45 - Étape 3 : Project Board
-- Ouvrir le Project Board créé
-- Montrer les colonnes
-- Montrer les champs personnalisés
-- Créer une issue rapidement
-- Montrer qu'elle apparaît automatiquement dans le board
-- Texte : "3️⃣ Votre Project Board est prêt !"
+#### 1:15-1:45 - Step 3: Project Board
+- Open the created Project Board
+- Show the columns
+- Show the custom fields
+- Quickly create an issue
+- Show it automatically appearing on the board
+- Text: "3️⃣ Your Project Board is ready!"
 
-#### 1:45-2:15 - Étape 4 : Automations
-- Ajouter le label `auto-branch` à une issue
-- Montrer le commentaire automatique qui apparaît
-- Créer une branche depuis les commandes
-- Faire un commit et ouvrir une PR
-- Texte : "4️⃣ Les automations fonctionnent : branches, reviews, sync"
+#### 1:45-2:15 - Step 4: Automations
+- Add the `auto-branch` label to an issue
+- Show the automatic comment that appears
+- Create a branch from the commands
+- Make a commit and open a PR
+- Text: "4️⃣ Automations work: branches, reviews, sync"
 
-#### 2:15-2:30 - Étape 5 : Code Review
-- Montrer Gemini AI qui review la PR automatiquement
-- Zoomer sur un commentaire de suggestion
-- Texte : "5️⃣ Gemini AI review votre code automatiquement"
+#### 2:15-2:30 - Step 5: Code Review
+- Show Gemini AI reviewing the PR automatically
+- Zoom in on a suggestion comment
+- Text: "5️⃣ Gemini AI reviews your code automatically"
 
 #### 2:30-2:45 - Conclusion
-- Récapitulatif des bénéfices :
-  - ✅ Project Board automatique
-  - ✅ Branches auto-créées
-  - ✅ Revue de code par IA
-  - ✅ Tests automatiques
-- Texte : "Prêt en 2 minutes. Aucune compétence technique requise."
-- Afficher le lien du repository
+- Summary of benefits:
+  - ✅ Automatic Project Board
+  - ✅ Auto-created branches
+  - ✅ AI code review
+  - ✅ Automated tests
+- Text: "Ready in 2 minutes. No technical skills required."
+- Display the repository link
 
 #### 2:45-3:00 - Call to Action
-- Texte : "Essayez maintenant !"
-- Afficher : github.com/dyvan/github-project-llm-management
-- Afficher : "⭐ Star le projet si ça vous aide !"
+- Text: "Try it now!"
+- Display: github.com/dyvan/github-project-llm-management
+- Display: "⭐ Star the project if it helps you!"
 
 ---
 
-## 📝 Où Utiliser les Screenshots
+## 📝 Where to Use Screenshots
 
 ### README.md
 ```markdown
-## ⚡ Démarrage rapide
+## ⚡ Quick Start
 
-1. **Cliquez sur "Use this template"**
+1. **Click "Use this template"**
    ![Use Template](docs/images/screenshots/01-use-template.png)
 
-2. **Lancez le setup**
+2. **Run the setup**
    ```bash
    ./setup-project.sh
    ```
    ![Setup Running](docs/images/screenshots/02-setup-running.png)
 
-3. **Votre Project Board est prêt !**
+3. **Your Project Board is ready!**
    ![Project Board](docs/images/screenshots/03-project-board.png)
 
-**[Voir la vidéo démo complète (2 min) →](https://youtube.com/...)**
+**[Watch the full demo video (2 min) →](https://youtube.com/...)**
 ```
 
 ### docs/Getting-Started.md
-Ajouter des screenshots pour chaque étape :
-- Étape 1 : `01-use-template.png`
-- Étape 2 : `02-setup-running.png`
-- Étape 3 : `03-project-board.png`
-- Étape 4 : `07-labels.png`
-- Étape 5 : `08-validation.png`
+Add screenshots for each step:
+- Step 1: `01-use-template.png`
+- Step 2: `02-setup-running.png`
+- Step 3: `03-project-board.png`
+- Step 4: `07-labels.png`
+- Step 5: `08-validation.png`
 
 ### docs/Understanding-Workflows.md
-Ajouter des screenshots pour expliquer :
-- Auto-branch : `04-auto-branch-comment.png`
-- Code review : `05-gemini-review.png`
-- GitHub Actions : `06-github-actions.png`
+Add screenshots to explain:
+- Auto-branch: `04-auto-branch-comment.png`
+- Code review: `05-gemini-review.png`
+- GitHub Actions: `06-github-actions.png`
 
 ### docs/Home.md (Wiki Homepage)
-Ajouter la vidéo démo en haut :
+Add the demo video at the top:
 ```markdown
 # 🚀 GitHub Project Management
 
-**Vidéo de présentation (2 min)** : [Voir le workflow complet →](https://youtube.com/...)
+**Presentation video (2 min)**: [Watch the full workflow →](https://youtube.com/...)
 
 ![Project Board Example](docs/images/screenshots/03-project-board.png)
 ```
 
 ---
 
-## 🛠️ Outils Recommandés
+## 🛠️ Recommended Tools
 
-### Pour les Screenshots
-- **macOS** : Cmd+Shift+4 (sélection), Cmd+Shift+3 (plein écran)
-- **Windows** : Windows+Shift+S (Snipping Tool)
-- **Linux** : `gnome-screenshot` ou `flameshot`
-- **Annotation** : [Skitch](https://evernote.com/products/skitch) (gratuit)
+### For Screenshots
+- **macOS**: Cmd+Shift+4 (selection), Cmd+Shift+3 (full screen)
+- **Windows**: Windows+Shift+S (Snipping Tool)
+- **Linux**: `gnome-screenshot` or `flameshot`
+- **Annotation**: [Skitch](https://evernote.com/products/skitch) (free)
 
-### Pour la Vidéo
-- **Screencast** :
-  - [OBS Studio](https://obsproject.com/) (gratuit, multi-plateforme)
-  - [Loom](https://www.loom.com/) (gratuit pour vidéos courtes)
+### For Video
+- **Screencast**:
+  - [OBS Studio](https://obsproject.com/) (free, cross-platform)
+  - [Loom](https://www.loom.com/) (free for short videos)
   - macOS QuickTime (Cmd+Shift+5)
-- **Montage** :
-  - [DaVinci Resolve](https://www.blackmagicdesign.com/products/davinciresolve) (gratuit)
+- **Editing**:
+  - [DaVinci Resolve](https://www.blackmagicdesign.com/products/davinciresolve) (free)
   - iMovie (macOS)
   - Windows Video Editor
 
-### Pour l'Hébergement
-- **YouTube** : Illimité, bon référencement
-- **Vimeo** : Plus professionnel
-- **Asciinema** : Pour les démos terminal (https://asciinema.org/)
+### For Hosting
+- **YouTube**: Unlimited, good SEO
+- **Vimeo**: More professional
+- **Asciinema**: For terminal demos (https://asciinema.org/)
 
 ---
 
-## ✅ Checklist de Publication
+## ✅ Publishing Checklist
 
-Avant de mettre à jour la documentation :
+Before updating the documentation:
 
-- [ ] Tous les screenshots sont créés (8 fichiers)
-- [ ] Screenshots sont en format PNG ou JPG
-- [ ] Résolution minimum : 1920x1080 pour les screenshots larges
-- [ ] Annotations claires (flèches, cercles) si nécessaire
-- [ ] Vidéo démo enregistrée (2-3 minutes)
-- [ ] Vidéo uploadée sur YouTube/Vimeo
-- [ ] Vidéo a des sous-titres/captions (accessibilité)
-- [ ] Lien vidéo testé (pas en privé)
-- [ ] Tous les fichiers sont dans `docs/images/`
-- [ ] README.md mis à jour avec les screenshots
-- [ ] Wiki pages mises à jour avec les visuels
-- [ ] Commit et push vers le repository
-
----
-
-## 🎯 Résultat Attendu
-
-Après avoir ajouté le contenu visuel :
-
-1. **README.md** devient beaucoup plus engageant visuellement
-2. **Wiki** a des guides illustrés faciles à suivre
-3. **Vidéo démo** permet de comprendre en 2 minutes
-4. **Taux d'adoption** augmenté (users comprennent plus vite)
-5. **Questions réduites** (tout est montré visuellement)
+- [ ] All screenshots are created (8 files)
+- [ ] Screenshots are in PNG or JPG format
+- [ ] Minimum resolution: 1920x1080 for wide screenshots
+- [ ] Clear annotations (arrows, circles) where needed
+- [ ] Demo video recorded (2-3 minutes)
+- [ ] Video uploaded to YouTube/Vimeo
+- [ ] Video has subtitles/captions (accessibility)
+- [ ] Video link tested (not set to private)
+- [ ] All files are in `docs/images/`
+- [ ] README.md updated with screenshots
+- [ ] Wiki pages updated with visuals
+- [ ] Committed and pushed to the repository
 
 ---
 
-## 📚 Ressources Supplémentaires
+## 🎯 Expected Outcome
+
+After adding visual content:
+
+1. **README.md** becomes much more visually engaging
+2. **Wiki** has illustrated guides that are easy to follow
+3. **Demo video** lets people understand the project in 2 minutes
+4. **Adoption rate** increases (users understand faster)
+5. **Fewer questions** (everything is shown visually)
+
+---
+
+## 📚 Additional Resources
 
 - [GitHub Docs - Images in Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#images)
 - [GitHub Wiki Best Practices](https://docs.github.com/en/communities/documenting-your-project-with-wikis/about-wikis)
@@ -328,4 +328,4 @@ Après avoir ajouté le contenu visuel :
 
 ---
 
-**Note** : Ce guide est un template. Adaptez-le selon vos besoins et votre style visuel !
+**Note**: This guide is a template. Adapt it to your needs and visual style!

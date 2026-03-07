@@ -303,10 +303,10 @@ python scripts/project_sync.py --pr 45 --status "Done"
 
 ### Using with Gemini AI
 
-Claude can use these commands via `claude.md` instructions:
+An AI assistant can use these commands via `CLAUDE.md` instructions:
 
 ```bash
-# Gemini can autonomously execute:
+# AI assistant can autonomously execute:
 gh issue create --title "..." --label "..."
 gh issue edit 123 --add-label "auto-branch"
 python scripts/project_sync.py --issue 123 --status "In Progress"
@@ -390,7 +390,6 @@ python scripts/project_sync.py --issue 123 --status "In Progress"
 
 - `README.md`: Main project documentation
 - `claude.md`: Instructions for Gemini AI
-- `PROJECT_BOARD_SETUP.md`: Detailed Project Board setup
 - `CONTRIBUTING.md`: Contribution guidelines
 - `.github/workflows/`: All automation workflows
 

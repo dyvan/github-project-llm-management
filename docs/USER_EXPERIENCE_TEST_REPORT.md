@@ -1,79 +1,79 @@
-# 🧪 Rapport de test - Expérience utilisateur non-technique
+# 🧪 Test Report - Non-Technical User Experience
 
-**Date** : 13 novembre 2024
-**Score global** : 100% (29/29 tests passés)
-**Warnings** : 5 points d'amélioration identifiés
-
----
-
-## 📊 Résultat global
-
-✅ **Le template est prêt pour des utilisateurs non-techniques**
-
-- ✅ 29 tests passés
-- ⚠️ 5 warnings (améliorations recommandées)
-- ❌ 0 tests échoués
+**Date**: November 13, 2024
+**Overall Score**: 100% (29/29 tests passed)
+**Warnings**: 5 improvement areas identified
 
 ---
 
-## ✅ Points forts validés
+## 📊 Overall Result
+
+✅ **The template is ready for non-technical users**
+
+- ✅ 29 tests passed
+- ⚠️ 5 warnings (recommended improvements)
+- ❌ 0 tests failed
+
+---
+
+## ✅ Validated Strengths
 
 ### 1. Documentation
-- ✅ README concis (113 lignes)
-- ✅ Structure docs/ complète
-- ✅ Icons visuels pour meilleure lisibilité
-- ✅ Liens vers documentation détaillée
+- ✅ Concise README (113 lines)
+- ✅ Complete docs/ structure
+- ✅ Visual icons for better readability
+- ✅ Links to detailed documentation
 
 ### 2. Getting Started
-- ✅ Guide d'installation clair
-- ✅ Commandes d'installation pour chaque OS
-- ✅ Commandes de vérification incluses
+- ✅ Clear installation guide
+- ✅ Installation commands for each OS
+- ✅ Verification commands included
 
 ### 3. Scripts
-- ✅ Tous les scripts ont `--help`
-- ✅ Messages d'erreur friendly avec emojis
-- ✅ Scripts exécutables
+- ✅ All scripts have `--help`
+- ✅ Friendly error messages with emojis
+- ✅ Scripts are executable
 
 ### 4. Configuration
-- ✅ Fichier `.github/project.yml` avec commentaires
-- ✅ Valeurs d'exemple claires
+- ✅ `.github/project.yml` file with comments
+- ✅ Clear example values
 
 ### 5. Validation
-- ✅ Script de validation fourni
-- ✅ Workflow de validation automatique
+- ✅ Validation script provided
+- ✅ Automatic validation workflow
 
 ---
 
-## ⚠️ Points d'amélioration identifiés
+## ⚠️ Identified Improvement Areas
 
-### 1. Jargon technique dans README
+### 1. Technical Jargon in README
 
-**Problème** : Le README contient des termes comme "GraphQL", "API"
+**Problem**: The README contains terms like "GraphQL", "API"
 
-**Impact** : Peut intimider les utilisateurs non-techniques
+**Impact**: May intimidate non-technical users
 
-**Solution recommandée** :
+**Recommended Solution**:
 ```markdown
-# Avant
-"Synchronise avec GraphQL API"
+# Before
+"Synchronizes with GraphQL API"
 
-# Après
-"Se synchronise automatiquement"
+# After
+"Synchronizes automatically"
 ```
 
-**Priorité** : 🟡 Moyenne
+**Priority**: 🟡 Medium
 
 ---
 
-### 2. Setup script sans usage instructions
+### 2. Setup Script Missing Usage Instructions
 
-**Problème** : `setup-project.sh` n'affiche pas d'aide si lancé avec `--help`
+**Problem**: `setup-project.sh` doesn't display help when run with `--help`
 
-**Impact** : Utilisateur ne sait pas comment l'utiliser
+**Impact**: User doesn't know how to use it
 
-**Solution recommandée** :
+**Recommended Solution**:
 ```bash
-# Ajouter dans setup-project.sh
+# Add to setup-project.sh
 if [[ "$1" == "--help" || "$1" == "-h" ]]; then
     echo "Usage: ./setup-project.sh"
     echo ""
@@ -89,31 +89,31 @@ if [[ "$1" == "--help" || "$1" == "-h" ]]; then
 fi
 ```
 
-**Priorité** : 🟡 Moyenne
+**Priority**: 🟡 Medium
 
 ---
 
-### 3. .env.example manquant
+### 3. Missing .env.example
 
-**Problème** : Fichier `.env.example` existe mais pas copié dans test
+**Problem**: `.env.example` file exists but isn't copied during testing
 
-**Impact** : Utilisateur ne sait pas quels secrets configurer
+**Impact**: User doesn't know which secrets to configure
 
-**Solution** : ✅ Déjà présent, juste s'assurer qu'il soit visible
+**Solution**: ✅ Already present, just ensure it's visible
 
-**Priorité** : 🟢 Basse (déjà résolu)
+**Priority**: 🟢 Low (already resolved)
 
 ---
 
-### 4. Scripts ne pointent pas vers documentation
+### 4. Scripts Don't Point to Documentation
 
-**Problème** : Messages d'erreur ne guident pas vers le Wiki/docs
+**Problem**: Error messages don't guide users to the Wiki/docs
 
-**Impact** : Utilisateur bloqué ne sait pas où chercher de l'aide
+**Impact**: Stuck users don't know where to find help
 
-**Solution recommandée** :
+**Recommended Solution**:
 ```python
-# Dans scripts/project_sync.py
+# In scripts/project_sync.py
 if not token:
     print("❌ GH_TOKEN or GITHUB_TOKEN environment variable not set")
     print("")
@@ -123,88 +123,88 @@ if not token:
     sys.exit(1)
 ```
 
-**Priorité** : 🟡 Moyenne
+**Priority**: 🟡 Medium
 
 ---
 
-### 5. Quick start trop de commandes
+### 5. Quick Start Has Too Many Commands
 
-**Problème** : Section "Démarrage rapide" a 7 commandes
+**Problem**: "Quick Start" section has 7 commands
 
-**Impact** : Peut paraître long pour un "quick" start
+**Impact**: May seem long for a "quick" start
 
-**Solution recommandée** :
+**Recommended Solution**:
 ```markdown
-## ⚡ Démarrage rapide (2 minutes)
+## ⚡ Quick Start (2 minutes)
 
 ```bash
-# 1. Cliquez "Use this template" en haut 👆
-# 2. Clonez votre repo
-git clone https://github.com/VOUS/votre-projet.git
-cd votre-projet
+# 1. Click "Use this template" above 👆
+# 2. Clone your repo
+git clone https://github.com/YOU/your-project.git
+cd your-project
 
-# 3. Lancez le setup automatique
+# 3. Run the automatic setup
 ./setup-project.sh
 ```
 
-➡️ **[Guide complet en 5 étapes](../../wiki/Getting-Started)**
+➡️ **[Full guide in 5 steps](../../wiki/Getting-Started)**
 ```
 
-**Priorité** : 🟡 Moyenne
+**Priority**: 🟡 Medium
 
 ---
 
-## 🎯 Recommandations par priorité
+## 🎯 Recommendations by Priority
 
-### 🔴 Priorité Haute
-Aucune - Le template est déjà fonctionnel !
+### 🔴 High Priority
+None - The template is already functional!
 
-### 🟡 Priorité Moyenne
-1. **Simplifier le jargon technique dans README** (15 min)
-2. **Ajouter --help au setup script** (15 min)
-3. **Ajouter liens docs dans messages d'erreur** (30 min)
-4. **Simplifier quick start** (10 min)
+### 🟡 Medium Priority
+1. **Simplify technical jargon in README** (15 min)
+2. **Add --help to the setup script** (15 min)
+3. **Add docs links in error messages** (30 min)
+4. **Simplify quick start** (10 min)
 
-### 🟢 Priorité Basse
-Aucune action requise
+### 🟢 Low Priority
+No action required
 
 ---
 
-## 📋 Checklist d'amélioration
+## 📋 Improvement Checklist
 
 ```markdown
-- [ ] Remplacer "GraphQL", "API" par termes simples dans README
-- [ ] Ajouter --help à setup-project.sh
-- [ ] Ajouter liens docs dans erreurs scripts
-- [ ] Réduire quick start à 3 commandes max
-- [ ] Re-tester après modifications
+- [ ] Replace "GraphQL", "API" with simpler terms in README
+- [ ] Add --help to setup-project.sh
+- [ ] Add docs links in script errors
+- [ ] Reduce quick start to 3 commands max
+- [ ] Re-test after modifications
 ```
 
 ---
 
 ## 🎉 Conclusion
 
-**Le template est prêt pour des utilisateurs non-techniques !**
+**The template is ready for non-technical users!**
 
-### Ce qui fonctionne déjà :
-- ✅ Documentation complète et accessible
-- ✅ Setup guidé étape par étape
-- ✅ Scripts avec aide intégrée
-- ✅ Validation automatique
-- ✅ Messages d'erreur friendly
+### What already works:
+- ✅ Complete and accessible documentation
+- ✅ Step-by-step guided setup
+- ✅ Scripts with built-in help
+- ✅ Automatic validation
+- ✅ Friendly error messages
 
-### Améliorations recommandées :
-- 🟡 4 optimisations mineures (~1h de travail)
-- 📈 Passage de "Bon" à "Excellent"
+### Recommended improvements:
+- 🟡 4 minor optimizations (~1h of work)
+- 📈 Going from "Good" to "Excellent"
 
-### Temps estimé pour améliorer :
-**~1 heure** pour adresser tous les warnings
+### Estimated time to improve:
+**~1 hour** to address all warnings
 
 ---
 
-## 📊 Métriques détaillées
+## 📊 Detailed Metrics
 
-| Catégorie | Tests | Passés | Score |
+| Category | Tests | Passed | Score |
 |-----------|-------|--------|-------|
 | Documentation | 5 | 5 | 100% |
 | Prerequisites | 3 | 3 | 100% |
@@ -218,16 +218,16 @@ Aucune action requise
 
 ---
 
-## 🔄 Prochaines étapes
+## 🔄 Next Steps
 
-1. **Option A** : Déployer maintenant (déjà utilisable)
-2. **Option B** : Implémenter les 4 améliorations (~1h) puis déployer
-3. **Option C** : Tester avec un vrai utilisateur non-technique
+1. **Option A**: Deploy now (already usable)
+2. **Option B**: Implement the 4 improvements (~1h) then deploy
+3. **Option C**: Test with an actual non-technical user
 
-**Recommandation** : Option B (meilleur ROI)
+**Recommendation**: Option B (best ROI)
 
 ---
 
-**Test effectué avec** : Script automatisé simulant un utilisateur non-technique
-**Environnement** : Template complet copié dans `/tmp/test-template-user`
-**Logs complets** : `/tmp/test-template-validation.log`
+**Tested with**: Automated script simulating a non-technical user
+**Environment**: Full template copied to `/tmp/test-template-user`
+**Full logs**: `/tmp/test-template-validation.log`

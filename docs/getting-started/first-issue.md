@@ -1,16 +1,16 @@
-# Créer votre première issue
+# Create Your First Issue
 
-Ce guide vous montre comment créer une première issue et déclencher les workflows automatiques.
+This guide shows you how to create your first issue and trigger the automatic workflows.
 
-## 🎯 Étape 1 : Créer une issue
+## 🎯 Step 1: Create an Issue
 
-### Via l'interface GitHub
+### Via the GitHub Interface
 
-1. Allez sur : https://github.com/dyvan/github-project-llm-management/issues
-2. Cliquez sur **New issue**
-3. Sélectionnez le template **Feature Request**
+1. Go to: https://github.com/dyvan/github-project-llm-management/issues
+2. Click **New issue**
+3. Select the **Feature Request** template
 
-### Via la CLI
+### Via the CLI
 
 ```bash
 gh issue create \
@@ -26,9 +26,9 @@ gh issue create \
   --label "type:feature"
 ```
 
-## 📝 Remplissez le formulaire
+## 📝 Fill in the Form
 
-**Exemple de Feature Request** :
+**Feature Request Example**:
 
 ```
 Title: Add dark mode toggle
@@ -49,19 +49,19 @@ Acceptance Criteria:
 - [ ] Documentation updated
 ```
 
-## 🏷️ Ajouter le label `auto-branch`
+## 🏷️ Add the `auto-branch` Label
 
-### Via l'interface
+### Via the Interface
 
-1. Dans l'issue, cliquez sur **Labels**
-2. Cherchez `auto-branch`
-3. Cliquez dessus pour l'ajouter
+1. In the issue, click **Labels**
+2. Search for `auto-branch`
+3. Click it to add it
 
-### Résultat attendu
+### Expected Result
 
-**Immédiatement** après avoir ajouté le label :
+**Immediately** after adding the label:
 
-✅ Le **Branch Creator** se déclenche
+✅ The **Branch Creator** triggers
 
 ```
 ✅ Branch auto-created: `feat/1-add-dark-mode-toggle`
@@ -77,32 +77,32 @@ Acceptance Criteria:
 Created by GitHub Actions
 ```
 
-## 📊 Vérifier dans le Project Board
+## 📊 Check the Project Board
 
-1. Allez à l'onglet **Projects**
-2. Sélectionnez votre **Project Board**
-3. Votre issue apparaît dans **Backlog**
+1. Go to the **Projects** tab
+2. Select your **Project Board**
+3. Your issue appears in **Backlog**
 
-**Colonnes visibles** :
+**Visible columns**:
 - Title: "Add dark mode toggle"
 - Priority: Medium
 - Effort: 5
 - Status: Backlog
-- Owner: (vous)
+- Owner: (you)
 
-## 💻 Développer localement
+## 💻 Develop Locally
 
-Une fois la branche créée, vous pouvez commencer :
+Once the branch is created, you can get started:
 
 ```bash
-# Cloner le repo (si pas encore fait)
+# Clone the repo (if not already done)
 git clone https://github.com/dyvan/github-project-llm-management.git
 cd github-project-llm-management
 
-# Checker la branche
+# Checkout the branch
 git checkout feat/1-add-dark-mode-toggle
 
-# Développer
+# Develop
 echo "export const darkMode = true;" > src/theme.js
 
 # Commit
@@ -117,13 +117,13 @@ git commit -m "feat: Add dark mode toggle
 git push origin feat/1-add-dark-mode-toggle
 ```
 
-## 🔄 Ouvrir une Pull Request
+## 🔄 Open a Pull Request
 
-### Via l'interface
+### Via the Interface
 
-1. Vous verrez un banner "Compare & pull request"
-2. Cliquez dessus
-3. Remplissez le template :
+1. You'll see a "Compare & pull request" banner
+2. Click it
+3. Fill in the template:
 
 ```markdown
 ## Description
@@ -141,12 +141,12 @@ Closes #1
 - [x] Lint passed
 ```
 
-4. Cliquez **Create pull request**
+4. Click **Create pull request**
 
-### Workflows automatiques se déclenchent
+### Automatic Workflows Trigger
 
 #### 1️⃣ Code Review Agent
-Dans ~30 secondes :
+Within ~30 seconds:
 
 ```
 ## 🤖 Automated Code Review by Gemini AI
@@ -164,7 +164,7 @@ None found!
 ```
 
 #### 2️⃣ CI Tests
-Dans ~1 minute :
+Within ~1 minute:
 
 ```
 ## ✅ Tests Passed
@@ -176,54 +176,54 @@ Dans ~1 minute :
 ```
 
 #### 3️⃣ Project Board Update
-Status change : **Backlog → In QA**
+Status change: **Backlog → In QA**
 
-## ✅ Merger la PR
+## ✅ Merge the PR
 
-### Conditions de merge
+### Merge Conditions
 
-- ✅ Code Review completée
-- ✅ Tous les tests passent
-- ✅ Approuvée par un mainteneur
+- ✅ Code review completed
+- ✅ All tests pass
+- ✅ Approved by a maintainer
 
-### Merger via interface
+### Merge via Interface
 
-1. Allez à votre PR
-2. Cliquez **Merge pull request**
-3. Choisissez la stratégie :
+1. Go to your PR
+2. Click **Merge pull request**
+3. Choose the strategy:
    - **Create a merge commit** (recommended)
    - **Squash and merge**
    - **Rebase and merge**
-4. Cliquez **Confirm merge**
+4. Click **Confirm merge**
 
-### Résultat final
+### Final Result
 
-- ✅ Branche mergée en `main`
-- ✅ Project status : **Done**
-- ✅ Issue fermée automatiquement (Closes #1)
-- 🎉 Feature déployée !
+- ✅ Branch merged into `main`
+- ✅ Project status: **Done**
+- ✅ Issue closed automatically (Closes #1)
+- 🎉 Feature deployed!
 
-## 📋 Checklist récapitulatif
+## 📋 Summary Checklist
 
-Vous venez de :
+You just:
 
-- [ ] Créer une issue avec un template
-- [ ] Ajouter le label `auto-branch`
-- [ ] Branch auto-créée
-- [ ] Développé localement
-- [ ] Pushez les changements
-- [ ] Ouvert une PR
-- [ ] Code Review Agent commenté
-- [ ] CI Tests passés
-- [ ] PR approuvée
-- [ ] Mergée en main
-- [ ] Issue fermée
-- [ ] Project Board mis à jour
+- [ ] Created an issue with a template
+- [ ] Added the `auto-branch` label
+- [ ] Had a branch auto-created
+- [ ] Developed locally
+- [ ] Pushed changes
+- [ ] Opened a PR
+- [ ] Code Review Agent commented
+- [ ] CI tests passed
+- [ ] PR approved
+- [ ] Merged into main
+- [ ] Issue closed
+- [ ] Project Board updated
 
-**Bravo ! Vous maîtrisez le workflow complet ! 🚀**
+**Congratulations! You've mastered the full workflow! 🚀**
 
-## 🎓 Prochaines étapes
+## 🎓 Next Steps
 
-- Explorez les [agents LLM](../guides/using-agents.md)
-- Configurez des [webhooks Slack](../guides/setup-github-projects.md)
-- Customisez les [workflows](../architecture/workflows.md)
+- Explore the [LLM agents](../guides/using-agents.md)
+- Set up [Slack webhooks](../guides/setup-github-projects.md)
+- Customize the [workflows](../architecture/workflows.md)

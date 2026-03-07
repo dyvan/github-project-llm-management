@@ -1,19 +1,19 @@
-# 🎨 Personnalisation avancée
+# 🎨 Advanced Customization
 
-Pour adapter le template à vos besoins spécifiques.
+To adapt the template to your specific needs.
 
-## Changer le naming des branches
+## Changing branch naming
 
-Éditer `.github/workflows/create-branch.yml` :
+Edit `.github/workflows/create-branch.yml`:
 
 ```bash
-# De : feat/{number}-{title}
+# From: feat/{number}-{title}
 BRANCH_NAME="feat/${ISSUE_NUMBER}-${SLUGIFIED}"
 
-# À : feature/{number}-{title}
+# To: feature/{number}-{title}
 BRANCH_NAME="feature/${ISSUE_NUMBER}-${SLUGIFIED}"
 
-# Ou : naming basé sur le type
+# Or: type-based naming
 if [[ "$LABELS" == *"type:bug"* ]]; then
   BRANCH_NAME="fix/${ISSUE_NUMBER}-${SLUGIFIED}"
 else
@@ -21,18 +21,18 @@ else
 fi
 ```
 
-## Ajouter des champs custom au Project Board
+## Adding custom fields to the Project Board
 
-1. Créer le champ manuellement sur GitHub ou modifier `scripts/setup_project_fields.py` :
+1. Create the field manually on GitHub or modify `scripts/setup_project_fields.py`:
 
 ```python
 fields_to_create = {
     "Status": [...],
-    "Sprint": ["Sprint 1", "Sprint 2", "Sprint 3"],  # Nouveau champ
+    "Sprint": ["Sprint 1", "Sprint 2", "Sprint 3"],  # New field
 }
 ```
 
-2. Mapper dans `update-project.yml` :
+2. Map it in `update-project.yml`:
 
 ```yaml
 - name: Update sprint field
@@ -42,9 +42,9 @@ fields_to_create = {
     fi
 ```
 
-## Notifications Slack/Discord
+## Slack/Discord Notifications
 
-Ajouter à n'importe quel workflow :
+Add to any workflow:
 
 ```yaml
 - name: Notify Slack
@@ -54,17 +54,17 @@ Ajouter à n'importe quel workflow :
       -d '{"text":"✅ PR #${{ github.event.pull_request.number }} merged!"}'
 ```
 
-## Multi-repositories avec un seul Project
+## Multi-repository with a single Project
 
-Configurez le même `GH_PROJECT_NUMBER` dans chaque repo.
+Set the same `GH_PROJECT_NUMBER` in each repo.
 
-## Changer le modèle LLM
+## Changing the LLM model
 
-Tous les workflows IA utilisent Gemini. Le modèle par défaut est `gemini-2.0-flash`. Pour changer le modèle, modifiez la variable correspondante dans le workflow `code-review-agent.yml`.
+All AI workflows use Gemini. The default model is `gemini-2.0-flash`. To change the model, update the corresponding variable in the `code-review-agent.yml` workflow.
 
-## Ajouter des validations custom
+## Adding custom validations
 
-Dans `ci-tests.yml`, ajoutez vos étapes :
+In `ci-tests.yml`, add your steps:
 
 ```yaml
 - name: Custom validation
@@ -72,8 +72,8 @@ Dans `ci-tests.yml`, ajoutez vos étapes :
     ./scripts/my_custom_check.sh
 ```
 
-## Templates d'issues personnalisés
+## Custom issue templates
 
-Éditez `.github/ISSUE_TEMPLATE/*.yml` selon vos besoins.
+Edit `.github/ISSUE_TEMPLATE/*.yml` to suit your needs.
 
 [⬅️ FAQ](FAQ) | [➡️ Contributing](Contributing)

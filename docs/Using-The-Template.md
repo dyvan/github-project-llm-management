@@ -1,48 +1,48 @@
-# 🎓 Utiliser le template
+# 🎓 Using the Template
 
-Guide complet pour utiliser toutes les fonctionnalités du template.
+Complete guide to using all the template features.
 
-## Créer une issue
+## Create an Issue
 
 ```bash
 gh issue create \
-  --title "Ajouter dark mode" \
+  --title "Add dark mode" \
   --label "type:feature,priority:high" \
-  --body "Description de la feature"
+  --body "Feature description"
 ```
 
-**Résultat** : Issue ajoutée automatiquement au Project Board avec Priority=High, Type=Feature
+**Result**: Issue automatically added to the Project Board with Priority=High, Type=Feature
 
-## Auto-créer une branche
+## Auto-create a Branch
 
-Ajoutez le label `auto-branch` à une issue :
+Add the `auto-branch` label to an issue:
 
 ```bash
 gh issue edit 123 --add-label "auto-branch"
 ```
 
-**Résultat** :
-- ✅ Branche créée : `feat/123-titre-issue`
-- ✅ Commentaire posté avec instructions git
-- ✅ Status mis à jour : "Ready"
+**Result**:
+- ✅ Branch created: `feat/123-issue-title`
+- ✅ Comment posted with git instructions
+- ✅ Status updated: "Ready"
 
-## Travailler sur une branche
+## Work on a Branch
 
 ```bash
-# Récupérer la branche
+# Fetch the branch
 git fetch origin
-git checkout feat/123-ajouter-dark-mode
+git checkout feat/123-add-dark-mode
 
-# Faire vos modifications
+# Make your changes
 # ...
 
-# Committer avec référence à l'issue
+# Commit with issue reference
 git add .
 git commit -m "feat: add dark mode toggle (#123)"
-git push origin feat/123-ajouter-dark-mode
+git push origin feat/123-add-dark-mode
 ```
 
-## Créer une Pull Request
+## Create a Pull Request
 
 ```bash
 gh pr create \
@@ -50,62 +50,62 @@ gh pr create \
   --body "Closes #123"
 ```
 
-**Résultat** :
-- ✅ CI/CD se lance
-- ✅ Gemini AI analyse le code (si configuré)
-- ✅ Status de l'issue → "In Review"
+**Result**:
+- ✅ CI/CD runs
+- ✅ Gemini AI analyzes the code (if configured)
+- ✅ Issue Status → "In Review"
 
-## Merger une PR
+## Merge a PR
 
-Quand la PR est approuvée :
+When the PR is approved:
 
 ```bash
 gh pr merge 456 --squash
 ```
 
-**Résultat** :
-- ✅ PR et issue → Status "Done"
-- ✅ Branche supprimée automatiquement
+**Result**:
+- ✅ PR and issue → Status "Done"
+- ✅ Branch automatically deleted
 
-## Utiliser les labels pour automatiser
+## Use Labels to Automate
 
-| Label | Action automatique |
+| Label | Automatic Action |
 |-------|-------------------|
-| `auto-branch` | Crée une branche |
+| `auto-branch` | Creates a branch |
 | `priority:high` | Priority → High |
 | `type:bug` | Type → Bug |
 | `status:in-progress` | Status → In Progress |
 
-## Voir le Project Board
+## View the Project Board
 
 ```bash
-# Lister les items
+# List items
 gh project item-list 1 --owner YOUR_USERNAME
 
-# Voir dans le navigateur
+# View in the browser
 gh project view 1 --owner YOUR_USERNAME --web
 ```
 
-## Templates d'issues
+## Issue Templates
 
-Utilisez les templates dans `.github/ISSUE_TEMPLATE/` :
+Use the templates in `.github/ISSUE_TEMPLATE/`:
 
-- `feature_request.yml` : Nouvelle fonctionnalité
-- `bug_report.yml` : Signaler un bug
-- `task.yml` : Tâche technique
+- `feature_request.yml`: New feature
+- `bug_report.yml`: Report a bug
+- `task.yml`: Technical task
 
-## Workflow complet
+## Complete Workflow
 
-### Exemple : Développer une nouvelle feature
+### Example: Develop a New Feature
 
-1. **Créer l'issue**
+1. **Create the issue**
    ```bash
    gh issue create --title "Add user profile" --label "type:feature,priority:medium,auto-branch"
    ```
 
-2. **Branche auto-créée** → `feat/1-add-user-profile`
+2. **Branch auto-created** → `feat/1-add-user-profile`
 
-3. **Développer**
+3. **Develop**
    ```bash
    git checkout feat/1-add-user-profile
    # Code...
@@ -113,13 +113,13 @@ Utilisez les templates dans `.github/ISSUE_TEMPLATE/` :
    git push
    ```
 
-4. **Créer PR**
+4. **Create PR**
    ```bash
    gh pr create --title "Add user profile (#1)" --body "Closes #1"
    ```
 
-5. **Revue auto** → Gemini analyse le code
+5. **Auto review** → Gemini analyzes the code
 
-6. **Merger** → Status "Done" automatique
+6. **Merge** → Status automatically set to "Done"
 
 [⬅️ Configuration](Configuration) | [➡️ Workflows](Understanding-Workflows)

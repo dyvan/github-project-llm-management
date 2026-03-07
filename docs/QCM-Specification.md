@@ -1,85 +1,85 @@
-# QCM Specification avec Gemini
+# Specification Questionnaire with Gemini
 
-## 📋 Vue d'ensemble
+## 📋 Overview
 
-La fonctionnalité **QCM Specification** utilise l'intelligence artificielle Gemini pour générer automatiquement un questionnaire de spécification personnalisé lorsqu'une issue est prête à être planifiée. Ce questionnaire aide à clarifier les détails techniques et fonctionnels avant de démarrer l'implémentation.
+The **Specification Questionnaire** feature uses Gemini AI to automatically generate a tailored specification questionnaire when an issue is ready to be planned. This questionnaire helps clarify technical and functional details before implementation begins.
 
-## 🎯 Objectif
+## 🎯 Purpose
 
-Cette fonctionnalité permet de :
+This feature enables you to:
 
-- **Clarifier les exigences** avant le démarrage du développement
-- **Identifier les ambiguïtés** dans les descriptions d'issues
-- **Standardiser** le processus de collecte des spécifications
-- **Améliorer la qualité** des implémentations grâce à une meilleure préparation
-- **Réduire les allers-retours** entre développeurs et product owners
+- **Clarify requirements** before development starts
+- **Identify ambiguities** in issue descriptions
+- **Standardize** the specification gathering process
+- **Improve implementation quality** through better preparation
+- **Reduce back-and-forth** between developers and product owners
 
-## 🚀 Comment l'utiliser
+## 🚀 How to Use
 
-### Méthode 1 : Automatique via Label
+### Method 1: Automatic via Label
 
-1. **Créer ou sélectionner une issue** dans votre projet GitHub
-2. **Déplacer l'issue dans la colonne "Ready"** de votre Project Board
-3. **Ajouter le label `plan-with-gemini`** à l'issue
-4. **Attendre quelques secondes** - Un workflow GitHub Actions va se déclencher
-5. **Consulter le commentaire** - Le QCM sera posté automatiquement en commentaire
+1. **Create or select an issue** in your GitHub project
+2. **Move the issue to the "Ready" column** on your Project Board
+3. **Add the `plan-with-gemini` label** to the issue
+4. **Wait a few seconds** - A GitHub Actions workflow will trigger
+5. **Check the comment** - The questionnaire will be posted automatically as a comment
 
-### Méthode 2 : Manuelle via Workflow Dispatch
+### Method 2: Manual via Workflow Dispatch
 
-1. Aller dans l'onglet **Actions** de votre repository
-2. Sélectionner le workflow **"Plan with Gemini QCM"**
-3. Cliquer sur **"Run workflow"**
-4. Entrer le numéro de l'issue
-5. Cliquer sur **"Run workflow"** pour démarrer
+1. Go to the **Actions** tab of your repository
+2. Select the **"Plan with Gemini QCM"** workflow
+3. Click **"Run workflow"**
+4. Enter the issue number
+5. Click **"Run workflow"** to start
 
-## 📝 Types de Questions Générées
+## 📝 Types of Generated Questions
 
-Le QCM s'adapte automatiquement au type d'issue :
+The questionnaire automatically adapts to the issue type:
 
-### Pour les Features (`type:feature`)
+### For Features (`type:feature`)
 
-- **Périmètre de la fonctionnalité** (MVP vs feature complète)
-- **Interface utilisateur** (UI/UX attendue)
-- **Intégration et dépendances** (systèmes affectés)
-- **Performance et scalabilité** (contraintes de performance)
-- **Question ouverte** pour détails supplémentaires
+- **Feature scope** (MVP vs full feature)
+- **User interface** (expected UI/UX)
+- **Integration and dependencies** (affected systems)
+- **Performance and scalability** (performance constraints)
+- **Open question** for additional details
 
-### Pour les Bugs (`type:bug`)
+### For Bugs (`type:bug`)
 
-- **Sévérité et impact** (criticité du bug)
-- **Reproductibilité** (fréquence et conditions)
-- **Environnement affecté** (dev, staging, prod)
-- **Approche de correction** (hotfix vs correction complète)
-- **Question ouverte** pour logs et debugging
+- **Severity and impact** (bug criticality)
+- **Reproducibility** (frequency and conditions)
+- **Affected environment** (dev, staging, prod)
+- **Fix approach** (hotfix vs full fix)
+- **Open question** for logs and debugging
 
-### Pour les Tasks (`type:task`)
+### For Tasks (`type:task`)
 
-- **Objectif principal** (refactoring, setup, documentation)
-- **Approche technique** (plan technique vs investigation)
-- **Dépendances et blocages** (prérequis)
-- **Critères de succès** (livrables attendus)
-- **Question ouverte** pour contraintes spécifiques
+- **Main objective** (refactoring, setup, documentation)
+- **Technical approach** (technical plan vs investigation)
+- **Dependencies and blockers** (prerequisites)
+- **Success criteria** (expected deliverables)
+- **Open question** for specific constraints
 
 ## ⚙️ Configuration
 
-### Prérequis
+### Prerequisites
 
-1. **Clé API Gemini** : Obtenir une clé sur [Google AI Studio](https://ai.google.dev/gemini-api/docs/api-key)
-2. **Secret GitHub** : Configurer `GEMINI_API_KEY` dans les secrets du repository
+1. **Gemini API Key**: Obtain a key from [Google AI Studio](https://ai.google.dev/gemini-api/docs/api-key)
+2. **GitHub Secret**: Configure `GEMINI_API_KEY` in the repository secrets
 
-### Configuration du Secret
+### Setting Up the Secret
 
 ```bash
-# Dans les paramètres GitHub de votre repository
+# In your repository's GitHub settings
 Settings → Secrets and variables → Actions → New repository secret
 
 Name: GEMINI_API_KEY
-Value: <votre-clé-api-gemini>
+Value: <your-gemini-api-key>
 ```
 
-### Variables d'environnement (optionnel)
+### Environment Variables (optional)
 
-Vous pouvez également configurer dans `.env` pour les tests locaux :
+You can also configure in `.env` for local testing:
 
 ```bash
 GEMINI_API_KEY=your_gemini_api_key_here
@@ -88,173 +88,173 @@ GH_OWNER=your_github_username
 GH_REPO=project-name
 ```
 
-## 🔧 Utilisation en ligne de commande
+## 🔧 Command Line Usage
 
-Le script peut aussi être exécuté manuellement :
+The script can also be run manually:
 
 ```bash
-# Générer un QCM pour l'issue #42
+# Generate a questionnaire for issue #42
 python scripts/generate_qcm.py --issue 42
 
-# Générer et poster automatiquement en commentaire
+# Generate and automatically post as a comment
 python scripts/generate_qcm.py --issue 42 --post-comment
 
-# Sauvegarder dans un fichier
+# Save to a file
 python scripts/generate_qcm.py --issue 42 --output qcm-issue-42.md
 ```
 
-### Options disponibles
+### Available Options
 
 | Option | Description |
 |--------|-------------|
-| `--issue` | Numéro de l'issue (requis) |
-| `--owner` | Propriétaire du repository (optionnel, par défaut depuis env) |
-| `--repo` | Nom du repository (optionnel, par défaut depuis env) |
-| `--post-comment` | Poster le QCM en commentaire sur l'issue |
-| `--output` | Fichier de sortie pour sauvegarder le QCM |
+| `--issue` | Issue number (required) |
+| `--owner` | Repository owner (optional, defaults from env) |
+| `--repo` | Repository name (optional, defaults from env) |
+| `--post-comment` | Post the questionnaire as a comment on the issue |
+| `--output` | Output file to save the questionnaire |
 
-## 📊 Workflow GitHub Actions
+## 📊 GitHub Actions Workflow
 
-Le workflow `.github/workflows/plan-with-gemini.yml` :
+The workflow `.github/workflows/plan-with-gemini.yml`:
 
-- **Se déclenche sur** : Label `plan-with-gemini` ajouté à une issue
-- **Peut aussi être déclenché** : Manuellement via workflow_dispatch
-- **Génère** : Un QCM personnalisé avec Gemini
-- **Poste** : Le QCM en commentaire sur l'issue
-- **Ajoute** : Le label `qcm-generated` une fois terminé
+- **Triggers on**: `plan-with-gemini` label added to an issue
+- **Can also be triggered**: Manually via workflow_dispatch
+- **Generates**: A tailored questionnaire using Gemini
+- **Posts**: The questionnaire as a comment on the issue
+- **Adds**: The `qcm-generated` label once complete
 
-### Diagramme du processus
+### Process Diagram
 
 ```
-Issue créée → Déplacée vers "Ready" → Label "plan-with-gemini" ajouté
+Issue created → Moved to "Ready" → "plan-with-gemini" label added
                                               ↓
-                                    Workflow GitHub Actions déclenché
+                                    GitHub Actions workflow triggered
                                               ↓
-                                    Script Python exécuté
+                                    Python script executed
                                               ↓
-                                    Gemini génère le QCM
+                                    Gemini generates the questionnaire
                                               ↓
-                                    QCM posté en commentaire
+                                    Questionnaire posted as comment
                                               ↓
-                                    Label "qcm-generated" ajouté
+                                    "qcm-generated" label added
 ```
 
-## 🎨 Format du QCM
+## 🎨 Questionnaire Format
 
-Le QCM généré suit ce format Markdown :
+The generated questionnaire follows this Markdown format:
 
 ```markdown
-## 🎯 Questionnaire de Spécification
+## 🎯 Specification Questionnaire
 
-> Ce questionnaire vous aide à préciser les détails...
+> This questionnaire helps you clarify the details...
 
-### Question 1: [Titre de la question]
+### Question 1: [Question Title]
 
-**Contexte:** [Pourquoi cette question est importante]
+**Context:** [Why this question matters]
 
 - [ ] Option A: [Description]
 - [ ] Option B: [Description]
 - [ ] Option C: [Description]
 
-### Question Ouverte: Informations Supplémentaires
+### Open Question: Additional Information
 
-**Y a-t-il des détails importants à considérer ?**
+**Are there any important details to consider?**
 
-[Espace pour réponse libre]
+[Space for free-form answer]
 
 ---
 
-**Instructions:** Veuillez cocher les options pertinentes...
+**Instructions:** Please check the relevant options...
 ```
 
-## 🔍 Exemple de Résultat
+## 🔍 Example Output
 
-Pour une issue de feature demandant "Ajouter un mode sombre", le QCM pourrait inclure :
+For a feature issue requesting "Add dark mode", the questionnaire might include:
 
-1. **Périmètre** : Toggle simple vs thème complet personnalisable
-2. **Persistance** : localStorage vs préférences utilisateur en DB
-3. **Détection auto** : Respecter la préférence système ou non
-4. **Composants** : Quels éléments de l'UI doivent supporter le mode sombre
-5. **Question ouverte** : Couleurs spécifiques, accessibilité, etc.
+1. **Scope**: Simple toggle vs fully customizable theme
+2. **Persistence**: localStorage vs user preferences in DB
+3. **Auto-detection**: Whether or not to respect system preferences
+4. **Components**: Which UI elements should support dark mode
+5. **Open question**: Specific colors, accessibility, etc.
 
 ## ❓ FAQ
 
-### Comment personnaliser les questions ?
+### How do I customize the questions?
 
-Les questions sont générées par Gemini en fonction du contenu de l'issue. Pour obtenir des questions plus pertinentes :
+The questions are generated by Gemini based on the issue content. To get more relevant questions:
 
-- Fournissez une description détaillée dans l'issue
-- Utilisez les templates d'issue appropriés
-- Ajoutez du contexte dans la section "Motivation"
+- Provide a detailed description in the issue
+- Use the appropriate issue templates
+- Add context in the "Motivation" section
 
-### Que faire si le QCM n'est pas généré ?
+### What if the questionnaire isn't generated?
 
-1. Vérifier que `GEMINI_API_KEY` est configuré dans les secrets
-2. Consulter les logs du workflow dans l'onglet Actions
-3. Vérifier que le quota API Gemini n'est pas dépassé
-4. Réessayer en retirant puis rajoutant le label
+1. Verify that `GEMINI_API_KEY` is configured in the secrets
+2. Check the workflow logs in the Actions tab
+3. Verify the Gemini API quota hasn't been exceeded
+4. Retry by removing and re-adding the label
 
-### Puis-je modifier le template du QCM ?
+### Can I modify the questionnaire template?
 
-Oui ! Modifiez la méthode `_generate_template_qcm()` dans `scripts/generate_qcm.py` pour personnaliser les templates de fallback.
+Yes! Edit the `_generate_template_qcm()` method in `scripts/generate_qcm.py` to customize the fallback templates.
 
-### Le QCM peut-il être régénéré ?
+### Can the questionnaire be regenerated?
 
-Oui, retirez le label `plan-with-gemini` puis rajoutez-le pour déclencher une nouvelle génération.
+Yes, remove the `plan-with-gemini` label and add it again to trigger a new generation.
 
-## 🛠️ Dépannage
+## 🛠️ Troubleshooting
 
-### Erreur : "GEMINI_API_KEY not set"
+### Error: "GEMINI_API_KEY not set"
 
-**Solution** : Configurez le secret `GEMINI_API_KEY` dans les paramètres du repository.
+**Solution**: Configure the `GEMINI_API_KEY` secret in the repository settings.
 
-### Erreur : "API rate limit exceeded"
+### Error: "API rate limit exceeded"
 
-**Solution** : Attendez quelques minutes ou utilisez une clé API avec un quota plus élevé.
+**Solution**: Wait a few minutes or use an API key with a higher quota.
 
-### Le workflow ne se déclenche pas
+### The workflow doesn't trigger
 
-**Vérifications** :
-- Le label exact est `plan-with-gemini` (sensible à la casse)
-- Le workflow file existe dans `.github/workflows/`
-- Les permissions du GITHUB_TOKEN sont correctes
+**Checks**:
+- The exact label is `plan-with-gemini` (case-sensitive)
+- The workflow file exists in `.github/workflows/`
+- The GITHUB_TOKEN permissions are correct
 
-### Le commentaire n'est pas posté
+### The comment isn't posted
 
-**Vérifications** :
-- Le token GitHub a les permissions `issues: write`
-- L'issue n'est pas verrouillée
-- Consulter les logs du workflow pour plus de détails
+**Checks**:
+- The GitHub token has `issues: write` permissions
+- The issue isn't locked
+- Check the workflow logs for more details
 
-## 📚 Ressources
+## 📚 Resources
 
-- [Documentation Gemini API](https://ai.google.dev/gemini-api/docs)
+- [Gemini API Documentation](https://ai.google.dev/gemini-api/docs)
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
 - [Script generate_qcm.py](../scripts/generate_qcm.py)
 - [Workflow plan-with-gemini.yml](../.github/workflows/plan-with-gemini.yml)
 
-## 🔄 Intégration avec le workflow existant
+## 🔄 Integration with Existing Workflow
 
-Cette fonctionnalité s'intègre avec le workflow de gestion de projet existant :
+This feature integrates with the existing project management workflow:
 
-1. **Backlog** → Issue créée
-2. **Ready** → Label `plan-with-gemini` ajouté → QCM généré
-3. **Répondre au QCM** → Équipe répond aux questions
-4. **In Progress** → Label `auto-branch` ajouté → Branche créée
-5. **In Review** → PR ouverte
-6. **Done** → PR mergée
+1. **Backlog** → Issue created
+2. **Ready** → `plan-with-gemini` label added → Questionnaire generated
+3. **Answer the questionnaire** → Team responds to the questions
+4. **In Progress** → `auto-branch` label added → Branch created
+5. **In Review** → PR opened
+6. **Done** → PR merged
 
-## 🎯 Bonnes Pratiques
+## 🎯 Best Practices
 
-1. **Ajoutez le label `plan-with-gemini`** systématiquement pour les features complexes
-2. **Répondez au QCM** avant d'ajouter le label `auto-branch`
-3. **Conservez les réponses** dans l'issue pour référence future
-4. **Itérez si nécessaire** en régénérant le QCM si des questions restent
-5. **Documentez les décisions** prises suite au QCM dans l'issue
+1. **Systematically add the `plan-with-gemini` label** for complex features
+2. **Answer the questionnaire** before adding the `auto-branch` label
+3. **Keep the answers** in the issue for future reference
+4. **Iterate if needed** by regenerating the questionnaire if questions remain
+5. **Document the decisions** made following the questionnaire in the issue
 
-## 📈 Métriques et Suivi
+## 📈 Metrics and Tracking
 
-Le label `qcm-generated` permet de suivre :
-- Nombre d'issues ayant reçu un QCM
-- Taux de complétion des questionnaires
-- Impact sur la qualité des implémentations
+The `qcm-generated` label allows you to track:
+- Number of issues that received a questionnaire
+- Questionnaire completion rate
+- Impact on implementation quality

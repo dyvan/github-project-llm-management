@@ -1,52 +1,52 @@
-# 🤝 Contribuer au projet
+# 🤝 Contributing
 
-Merci de votre intérêt ! Voici comment participer.
+Thanks for your interest! Here's how to get involved.
 
-## Signaler un bug
+## Reporting a bug
 
-1. Vérifiez qu'il n'existe pas déjà dans [Issues](../../issues)
-2. Créez une issue avec template "Bug Report"
-3. Décrivez étapes pour reproduire
-4. Incluez screenshots si pertinent
+1. Check that it doesn't already exist in [Issues](../../issues)
+2. Create an issue using the "Bug Report" template
+3. Describe the steps to reproduce
+4. Include screenshots if relevant
 
-## Suggérer une fonctionnalité
+## Suggesting a feature
 
-1. Créez une issue avec template "Feature Request"
-2. Décrivez la motivation et cas d'usage
-3. Listez critères d'acceptation
+1. Create an issue using the "Feature Request" template
+2. Describe the motivation and use cases
+3. List acceptance criteria
 
-## Soumettre du code
+## Submitting code
 
-### 1. Fork et clone
+### 1. Fork and clone
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/github-project-llm-management.git
 cd github-project-llm-management
 ```
 
-### 2. Créer une branche
+### 2. Create a branch
 
 ```bash
-# Méthode recommandée : créer une issue avec label "auto-branch"
-# Ou manuellement :
-git checkout -b feat/123-ma-feature
+# Recommended method: create an issue with the "auto-branch" label
+# Or manually:
+git checkout -b feat/123-my-feature
 ```
 
-### 3. Développer
+### 3. Develop
 
-- Suivez le style de code
-- Ajoutez des tests
-- Documentez les changements
+- Follow the code style
+- Add tests
+- Document your changes
 
 ```bash
 git commit -m "feat: add new feature
 
-- Description du changement
+- Description of the change
 - Impact
-- Tests ajoutés"
+- Tests added"
 ```
 
-### 4. Tester
+### 4. Test
 
 ```bash
 pip install -r requirements-dev.txt
@@ -54,26 +54,26 @@ pytest tests/ -v
 ./scripts/validate_setup.sh
 ```
 
-### 5. Créer la PR
+### 5. Create the PR
 
 ```bash
-git push origin feat/123-ma-feature
-gh pr create --title "Ma feature (#123)" --body "Closes #123"
+git push origin feat/123-my-feature
+gh pr create --title "My feature (#123)" --body "Closes #123"
 ```
 
-## Checklist avant de soumettre
+## Checklist before submitting
 
-- [ ] Tests passent
-- [ ] Documentation mise à jour
-- [ ] Pas de secrets committés
-- [ ] Messages de commit clairs
-- [ ] Issue liée dans la PR
+- [ ] Tests pass
+- [ ] Documentation updated
+- [ ] No secrets committed
+- [ ] Clear commit messages
+- [ ] Issue linked in the PR
 
-## Code de conduite
+## Code of conduct
 
-Voir [CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md). En participant, vous acceptez ce code.
+See [CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md). By participating, you agree to this code.
 
-## Questions ?
+## Questions?
 
 - [Discussions](../../discussions)
 - [Issues](../../issues)

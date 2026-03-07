@@ -2,37 +2,37 @@
 
 ## 📊 Overview
 
-GitHub Projects v2 est votre **dashboard central** pour gérer tous les travaux du projet avec visibilité complète et mises à jour automatiques.
+GitHub Projects v2 is your **central dashboard** for managing all project work with full visibility and automatic updates.
 
-## 🎯 Setup Initial
+## 🎯 Initial Setup
 
-### 1. Créer le Project
+### 1. Create the Project
 
-1. Allez à votre repository
-2. Cliquez l'onglet **Projects**
-3. Cliquez **New project**
-4. Choisissez :
-   - Nom : `Project Board`
-   - Template : **Table** (or Kanban)
-   - Visibility : Public
+1. Go to your repository
+2. Click the **Projects** tab
+3. Click **New project**
+4. Choose:
+   - Name: `Project Board`
+   - Template: **Table** (or Kanban)
+   - Visibility: Public
 
-### 2. Configurer les Champs Personnalisés
+### 2. Configure Custom Fields
 
-Dans **Settings → Custom fields** :
+In **Settings → Custom fields**:
 
-| Champ | Type | Options | Requis |
-|-------|------|---------|--------|
-| **Priority** | Single select | Low, Medium, High | Non |
-| **Effort** | Single select | 1, 2, 3, 5, 8 | Non |
-| **Status** | Single select | Backlog, In Progress, In QA, Done | Oui |
-| **Owner** | People | (auto) | Non |
-| **Sprint** | Text | (custom) | Non |
-| **Environment** | Single select | dev, preprod, prod | Non |
+| Field | Type | Options | Required |
+|-------|------|---------|----------|
+| **Priority** | Single select | Low, Medium, High | No |
+| **Effort** | Single select | 1, 2, 3, 5, 8 | No |
+| **Status** | Single select | Backlog, In Progress, In QA, Done | Yes |
+| **Owner** | People | (auto) | No |
+| **Sprint** | Text | (custom) | No |
+| **Environment** | Single select | dev, preprod, prod | No |
 
-### 3. Créer les Vues
+### 3. Create Views
 
-#### Vue 1: Backlog (Table)
-**Colonnes** :
+#### View 1: Backlog (Table)
+**Columns**:
 - Title
 - Priority
 - Effort
@@ -40,68 +40,68 @@ Dans **Settings → Custom fields** :
 - Status
 - Sprint
 
-**Filtres** :
+**Filters**:
 - Status is not Done
 
-**Tri** :
+**Sort**:
 - Created date (oldest first)
 
-**Utilisation** : Planification, estimation, priorisation
+**Use case**: Planning, estimation, prioritization
 
-#### Vue 2: Priority Board (Kanban)
-**Groupage** : Status
-- **Backlog** : Non commencé
-- **In Progress** : En développement
-- **In QA** : Testing/Review
-- **Done** : Complété
+#### View 2: Priority Board (Kanban)
+**Grouping**: Status
+- **Backlog**: Not started
+- **In Progress**: In development
+- **In QA**: Testing/Review
+- **Done**: Completed
 
-**Filtres** :
+**Filters**:
 - Priority = High OR Medium
 
-**Tri** : Priority (highest first)
+**Sort**: Priority (highest first)
 
-**Utilisation** : Vue d'exécution, tracking en temps réel
+**Use case**: Execution view, real-time tracking
 
-#### Vue 3: Team Items (Table)
-**Colonnes** :
+#### View 3: Team Items (Table)
+**Columns**:
 - Title
 - Owner
 - Sprint
 - Status
 - Due Date
 
-**Filtres** :
+**Filters**:
 - Owner = @me (for personal view)
 
-**Tri** :
+**Sort**:
 - Sprint, then Status
 
-**Utilisation** : Suivi personnel, planning de sprint
+**Use case**: Personal tracking, sprint planning
 
 ## 🔄 Workflow Integration
 
 ### Auto-Updates
 
-Les workflows mettent à jour le project automatiquement :
+Workflows update the project automatically:
 
 ```yaml
-# Dans .github/workflows/update-project.yml
-# Déclenché après chaque action
+# In .github/workflows/update-project.yml
+# Triggered after each action
 ```
 
-**Actions** :
-- Issue créée → Ajoutée au Backlog
-- Label `auto-branch` ajouté → Status reste Backlog
-- PR ouverte → Status → In QA
-- Tests passent → Status → Ready for Merge
-- PR mergée → Status → Done
+**Actions**:
+- Issue created → Added to Backlog
+- `auto-branch` label added → Status stays Backlog
+- PR opened → Status → In QA
+- Tests pass → Status → Ready for Merge
+- PR merged → Status → Done
 
 ### Manual Updates
 
-Vous pouvez aussi manuellement :
-1. Drag & drop items entre statuts
-2. Éditer les champs
-3. Ajouter des notes
+You can also manually:
+1. Drag & drop items between statuses
+2. Edit fields
+3. Add notes
 
 ## 📋 Field Details
 
@@ -290,7 +290,7 @@ query {
 - ✅ Move items to "In Progress" when starting
 - ✅ Update status as work progresses
 - ✅ Comment on blockers immediately
-- ❌ Don't let items stuck in "In Progress"
+- ❌ Don't let items get stuck in "In Progress"
 
 ### Review & Close
 - ✅ Move to "In QA" for testing

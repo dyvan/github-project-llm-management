@@ -1,5 +1,5 @@
 name: Feature Request
-description: Proposez une nouvelle fonctionnalité
+description: Suggest a new feature
 title: "[FEATURE] "
 labels: ["type:feature", "status:backlog"]
 assignees: []
@@ -8,36 +8,36 @@ body:
   - type: markdown
     attributes:
       value: |
-        Merci de proposer une nouvelle fonctionnalité ! Remplissez les sections ci-dessous pour nous aider à comprendre votre demande.
+        Thank you for suggesting a new feature! Please fill out the sections below to help us understand your request.
 
   - type: textarea
     id: description
     attributes:
       label: Description
-      description: Décrivez la fonctionnalité que vous aimeriez voir implémentée
-      placeholder: "Ex: Ajouter un toggle pour activer/désactiver le mode sombre..."
+      description: Describe the feature you would like to see implemented
+      placeholder: "E.g.: Add a toggle to enable/disable dark mode..."
     validations:
       required: true
 
   - type: textarea
     id: motivation
     attributes:
-      label: Motivation et cas d'usage
-      description: Pourquoi cette fonctionnalité est-elle importante ? Quels problèmes résout-elle ?
-      placeholder: "Ex: Les utilisateurs demandent une option pour réduire la fatigue oculaire la nuit..."
+      label: Motivation and use cases
+      description: Why is this feature important? What problems does it solve?
+      placeholder: "E.g.: Users are requesting an option to reduce eye strain at night..."
     validations:
       required: true
 
   - type: textarea
     id: acceptance_criteria
     attributes:
-      label: Critères d'acceptation
-      description: Listez les critères pour considérer cette fonctionnalité comme terminée
+      label: Acceptance Criteria
+      description: List the criteria to consider this feature complete
       placeholder: |
-        - [ ] La UI est implémentée et accessible
-        - [ ] L'API fournit les endpoints nécessaires
-        - [ ] Les tests unitaires couvrent les cas d'usage
-        - [ ] La documentation est mise à jour
+        - [ ] The UI is implemented and accessible
+        - [ ] The API provides the necessary endpoints
+        - [ ] Unit tests cover the use cases
+        - [ ] Documentation is updated
       render: markdown
     validations:
       required: true
@@ -45,24 +45,24 @@ body:
   - type: checkboxes
     id: checklist
     attributes:
-      label: Avant de soumettre
+      label: Before submitting
       options:
-        - label: Je n'ai pas trouvé une fonctionnalité similaire
+        - label: I have not found a similar feature request
           required: true
-        - label: Cette fonctionnalité n'a pas déjà été discutée
+        - label: This feature has not already been discussed
           required: true
 
   - type: textarea
     id: additional_context
     attributes:
-      label: Contexte supplémentaire
-      description: Ajoutez des captures d'écran, des mockups, des liens, etc.
-      placeholder: "Optionnel"
+      label: Additional context
+      description: Add screenshots, mockups, links, etc.
+      placeholder: "Optional"
 
   - type: dropdown
     id: priority
     attributes:
-      label: Priorité estimée
+      label: Estimated Priority
       options:
         - Low
         - Medium
@@ -73,7 +73,7 @@ body:
   - type: dropdown
     id: effort
     attributes:
-      label: Effort estimé (story points)
+      label: Estimated Effort (story points)
       options:
         - "1"
         - "2"

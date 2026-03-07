@@ -2,7 +2,7 @@
 
 ## 🏗️ System Design
 
-Le système est composé de trois couches interconnectées :
+The system is composed of three interconnected layers:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -93,29 +93,29 @@ Project Board reflects completion
 ## 🔄 Agent Responsibilities
 
 ### Branch Creator
-- **Input** : Issue + `auto-branch` label
-- **Process** : Validate → Format → Create → Comment
-- **Output** : Branch created, comment posted
-- **Permissions** : `contents: write`, `issues: write`
+- **Input**: Issue + `auto-branch` label
+- **Process**: Validate → Format → Create → Comment
+- **Output**: Branch created, comment posted
+- **Permissions**: `contents: write`, `issues: write`
 
 ### Code Reviewer
-- **Input** : PR opened/updated
-- **Process** : Extract diff → Call Gemini → Format → Post
-- **Output** : Comment with feedback
-- **Permissions** : `pull-requests: write`, `contents: read`
-- **Note** : Non-blocking, informational only
+- **Input**: PR opened/updated
+- **Process**: Extract diff → Call Gemini → Format → Post
+- **Output**: Comment with feedback
+- **Permissions**: `pull-requests: write`, `contents: read`
+- **Note**: Non-blocking, informational only
 
 ### Test Feedback
-- **Input** : Push to branch or PR
-- **Process** : Run tests → Collect results → Report → Update project
-- **Output** : Comment + status update
-- **Permissions** : `contents: read`, `pull-requests: write`
+- **Input**: Push to branch or PR
+- **Process**: Run tests → Collect results → Report → Update project
+- **Output**: Comment + status update
+- **Permissions**: `contents: read`, `pull-requests: write`
 
 ## 🎯 Project Board Integration
 
 ### Fields & Views
 
-**Custom Fields** :
+**Custom Fields**:
 - Priority: Low/Medium/High
 - Effort: 1/2/3/5/8 (story points)
 - Status: Backlog/In Progress/In QA/Done
@@ -123,10 +123,10 @@ Project Board reflects completion
 - Sprint: (text field)
 - Environment: dev/preprod/prod
 
-**Views** :
-1. **Backlog** (Table) : All issues, sortable
-2. **Priority Board** (Kanban) : Grouped by status
-3. **Team Items** (Table) : Filtered by owner
+**Views**:
+1. **Backlog** (Table): All issues, sortable
+2. **Priority Board** (Kanban): Grouped by status
+3. **Team Items** (Table): Filtered by owner
 
 ## 🔐 Permission Model
 
@@ -177,9 +177,9 @@ Deploy to production
 ## 🔌 Integration Points
 
 ### External Services
-- **Gemini API** (Google) : Code review
-- **GitHub API** : Repository operations
-- **GitHub GraphQL** : Project updates (future)
+- **Gemini API** (Google): Code review
+- **GitHub API**: Repository operations
+- **GitHub GraphQL**: Project updates (future)
 
 ### Future Integrations
 - Slack/Discord webhooks

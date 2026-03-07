@@ -1,153 +1,153 @@
-# 🚀 GitHub Project Management - Template Automatisé
+# 🚀 GitHub Project Management - Automated Template
 
 [![Template Validation](https://github.com/dyvan/github-project-llm-management/actions/workflows/template-validation.yml/badge.svg)](https://github.com/dyvan/github-project-llm-management/actions/workflows/template-validation.yml)
 [![CI Tests](https://github.com/dyvan/github-project-llm-management/actions/workflows/ci-tests.yml/badge.svg)](https://github.com/dyvan/github-project-llm-management/actions/workflows/ci-tests.yml)
 
-**Template clé-en-main pour gérer vos projets avec GitHub**
-Kanban automatique • Issues intelligentes • Revue de code IA • Zéro configuration
+**Turnkey template for managing your projects with GitHub**
+Automated Kanban • Smart Issues • AI Code Review • Zero configuration
 
-## 💡 C'est pour qui ?
+## 💡 Who is this for?
 
-✅ **Product managers** qui veulent organiser leur backlog sans coder
-✅ **Chefs de projet** qui veulent un suivi automatique
-✅ **Équipes** qui veulent GitHub Projects synchronisé automatiquement
-✅ **Développeurs** qui veulent un projet géré par LLM (Claude Code, etc.)
+✅ **Product managers** who want to organize their backlog without writing code
+✅ **Project leads** who want automated tracking
+✅ **Teams** who want GitHub Projects synced automatically
+✅ **Developers** who want an LLM-managed project (Claude Code, etc.)
 
-**Aucune compétence technique requise** - Tout est automatisé 🎯
+**No technical skills required** - Everything is automated 🎯
 
 ---
 
-## ⚡ Démarrage rapide (Une seule commande!)
+## ⚡ Quick Start (Just one command!)
 
-### Option 1️⃣: Curl + Bash (Recommandé)
+### Option 1️⃣: Curl + Bash (Recommended)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/dyvan/github-project-llm-management/main/install.sh | bash
 ```
 
-C'est tout! Le script va:
-1. 📁 Demander le nom de votre projet
-2. 🔄 Cloner le template
-3. 🚀 Lancer le bootstrap automatiquement
-4. ✅ Configurer tout
+That's it! The script will:
+1. 📁 Ask for your project name
+2. 🔄 Clone the template
+3. 🚀 Launch the bootstrap automatically
+4. ✅ Configure everything
 
-### Option 2️⃣: Clone + Bootstrap Manuel
+### Option 2️⃣: Clone + Manual Bootstrap
 
-Si vous préférez plus de contrôle:
+If you prefer more control:
 
 ```bash
-git clone https://github.com/dyvan/github-project-llm-management.git mon-projet
-cd mon-projet
+git clone https://github.com/dyvan/github-project-llm-management.git my-project
+cd my-project
 bash scripts/bootstrap.sh
 ```
 
-### Que fait le bootstrap?
+### What does the bootstrap do?
 
-Le script vous demande:
-- **GitHub Token** - Pour créer issues, labels, et project board
-- **Gemini API Key** - Pour génération QCM (optionnel)
+The script asks for:
+- **GitHub Token** - To create issues, labels, and a project board
+- **Gemini API Key** - For specification questionnaire generation (optional)
 
-**Puis deux chemins possibles:**
+**Then one of two paths:**
 
-#### ✅ Avec un GitHub Token?
-Bootstrap lance automatiquement `template-setup.sh`:
-- 🏷️ Labels GitHub créés
-- 📊 Project Board initialisé
-- 🔄 Workflows configurés
-- **C'est prêt!** Créez votre première issue
+#### ✅ Have a GitHub Token?
+Bootstrap automatically runs `template-setup.sh`:
+- 🏷️ GitHub labels created
+- 📊 Project Board initialized
+- 🔄 Workflows configured
+- **You're all set!** Create your first issue
 
-#### ⏸️ Sans token?
-Bootstrap affiche les instructions pour:
-1. Générer un token GitHub (avec les scopes exacts)
-2. L'ajouter à `.env`
-3. Relancer `bash template-setup.sh` manuellement
+#### ⏸️ No token yet?
+Bootstrap displays instructions to:
+1. Generate a GitHub token (with the exact scopes needed)
+2. Add it to `.env`
+3. Run `bash template-setup.sh` manually
 
-**Zéro configuration requise!** 🎉
+**Zero configuration required!** 🎉
 
-➡️ **[Configuration avancée](../../wiki)** • **[Guide complet](#-documentation)**
+➡️ **[Advanced Configuration](../../wiki)** • **[Full Guide](#-documentation)**
 
 ---
 
-## 🎯 Qu'est-ce que ça fait ?
+## 🎯 What does it do?
 
-| Fonctionnalité | Description |
-|----------------|-------------|
-| 📋 **Project Board auto** | Issues ajoutées automatiquement au Kanban |
-| 🌿 **Branches automatiques** | Ajoutez le label `auto-branch`, la branche est créée |
-| 📝 **QCM de spécification** | Gemini génère un questionnaire pour clarifier les specs |
-| 🤖 **Revue de code IA** | Gemini analyse vos PRs et suggère des améliorations |
-| ✅ **Tests automatiques** | Chaque PR est validée automatiquement |
-| 🔄 **Synchronisation** | Status mis à jour automatiquement (Backlog → Done) |
+| Feature | Description |
+|---------|-------------|
+| 📋 **Auto Project Board** | Issues are automatically added to the Kanban board |
+| 🌿 **Automatic Branches** | Add the `auto-branch` label and a branch is created |
+| 📝 **Specification Questionnaire** | Gemini generates a questionnaire to clarify specs |
+| 🤖 **AI Code Review** | Gemini analyzes your PRs and suggests improvements |
+| ✅ **Automated Tests** | Every PR is validated automatically |
+| 🔄 **Synchronization** | Status updates automatically (Backlog → Done) |
 
-**Voir en vidéo** : [Comment ça fonctionne en 2 minutes](../../wiki/Understanding-Workflows)
+**Watch the video**: [How it works in 2 minutes](../../wiki/Understanding-Workflows)
 
 ---
 
 ## 📚 Documentation
 
-**Pour commencer :**
-- 🚀 [Guide de démarrage](../../wiki/Getting-Started) - Setup en 5 minutes
-- ⚙️ [Configuration](../../wiki/Configuration) - Personnaliser le template
-- 🎓 [Utiliser le template](../../wiki/Using-The-Template) - Guide complet
+**Getting started:**
+- 🚀 [Getting Started Guide](../../wiki/Getting-Started) - Setup in 5 minutes
+- ⚙️ [Configuration](../../wiki/Configuration) - Customize the template
+- 🎓 [Using the Template](../../wiki/Using-The-Template) - Complete guide
 
-**Pour approfondir :**
-- 🔧 [Scripts & Automation](../../wiki/Scripts-Reference) - Comprendre les scripts
-- 🔀 [Automations GitHub](../../wiki/Understanding-Workflows) - Comment ça marche
-- ❓ [FAQ](../../wiki/FAQ) - Questions fréquentes
-- 🐛 [Dépannage](../../wiki/Troubleshooting) - Résoudre les problèmes
+**Going deeper:**
+- 🔧 [Scripts & Automation](../../wiki/Scripts-Reference) - Understand the scripts
+- 🔀 [GitHub Automations](../../wiki/Understanding-Workflows) - How it works
+- ❓ [FAQ](../../wiki/FAQ) - Frequently asked questions
+- 🐛 [Troubleshooting](../../wiki/Troubleshooting) - Solving common issues
 
-**Pour contribuer :**
-- 🤝 [Guide de contribution](../../wiki/Contributing) - Comment participer
-- 🎨 [Personnalisation avancée](../../wiki/Advanced-Customization) - Adapter à vos besoins
+**Contributing:**
+- 🤝 [Contributing Guide](../../wiki/Contributing) - How to participate
+- 🎨 [Advanced Customization](../../wiki/Advanced-Customization) - Adapt to your needs
 
-➡️ **[📖 Voir toute la documentation](../../wiki)**
-
----
-
-## 💬 Besoin d'aide ?
-
-- ❓ **Question ?** → [Discussions](../../discussions)
-- 🐛 **Bug ?** → [Ouvrir une issue](../../issues)
-- 📖 **Documentation** → [Wiki complet](../../wiki)
+➡️ **[📖 Browse the full documentation](../../wiki)**
 
 ---
 
-## ⭐ Fonctionnalités principales
+## 💬 Need help?
 
-### Automatisation Project Board
-- ✅ Issues ajoutées automatiquement au backlog
-- ✅ Statuts mis à jour selon les labels
-- ✅ Champs personnalisés (Priority, Effort, Type)
-
-### Création de branches automatique
-- ✅ Label `auto-branch` → branche créée instantanément
-- ✅ Naming automatique (`feat/123-titre-issue`)
-- ✅ Commentaire posté avec commandes git
-
-### QCM de spécification avec Gemini
-- ✅ Label `plan-with-gemini` → questionnaire généré automatiquement
-- ✅ Questions adaptées au type d'issue (Feature, Bug, Task)
-- ✅ Clarification des specs avant implémentation
-- ✅ QCM posté en commentaire sur l'issue
-
-### Revue de code par IA
-- ✅ Analyse automatique des PRs par Gemini AI
-- ✅ Suggestions d'amélioration
-- ✅ Détection de bugs potentiels
-
-### Tests intégrés
-- ✅ Vérification automatique sur chaque PR
-- ✅ Validation de tous les fichiers
-- ✅ Rapport de qualité du code
+- ❓ **Question?** → [Discussions](../../discussions)
+- 🐛 **Bug?** → [Open an issue](../../issues)
+- 📖 **Documentation** → [Full Wiki](../../wiki)
 
 ---
 
-## 📄 Licence
+## ⭐ Key Features
 
-MIT License - Libre d'utilisation pour tout projet
+### Project Board Automation
+- ✅ Issues automatically added to the backlog
+- ✅ Status updates based on labels
+- ✅ Custom fields (Priority, Effort, Type)
+
+### Automatic Branch Creation
+- ✅ `auto-branch` label → branch created instantly
+- ✅ Automatic naming (`feat/123-issue-title`)
+- ✅ Comment posted with git commands
+
+### Specification Questionnaire with Gemini
+- ✅ `plan-with-gemini` label → questionnaire generated automatically
+- ✅ Questions tailored to the issue type (Feature, Bug, Task)
+- ✅ Spec clarification before implementation
+- ✅ Questionnaire posted as a comment on the issue
+
+### AI Code Review
+- ✅ Automatic PR analysis by Gemini AI
+- ✅ Improvement suggestions
+- ✅ Potential bug detection
+
+### Built-in Tests
+- ✅ Automatic validation on every PR
+- ✅ All files verified
+- ✅ Code quality report
 
 ---
 
-**Créé avec ❤️ pour simplifier la gestion de projet sur GitHub**
+## 📄 License
 
-[Documentation](../../wiki) • [Support](../../discussions) • [Contribuer](../../wiki/Contributing)
+MIT License - Free to use for any project
+
+---
+
+**Built with ❤️ to simplify project management on GitHub**
+
+[Documentation](../../wiki) • [Support](../../discussions) • [Contribute](../../wiki/Contributing)

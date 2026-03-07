@@ -1,39 +1,41 @@
-# Code de Conduite pour les Contributeurs
+# Contributor Code of Conduct
 
-## Notre engagement
+## Our Pledge
 
-Dans l'intérêt de favoriser un environnement ouvert et accueillant, nous, contributeurs et mainteneurs, nous engageons à faire de la participation à notre projet et à notre communauté une expérience sans harcèlement pour tous, indépendamment de l'âge, de la taille du corps, du handicap, de l'ethnicité, de l'identité sexuelle et de son expression, du niveau d'expérience, de l'éducation, du statut socio-économique, de la nationalité, de l'apparence personnelle, de la race, de la religion ou de l'identité et l'orientation sexuelles.
+In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to make participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
-## Nos standards
+## Our Standards
 
-Les exemples de comportements qui contribuent à créer un environnement positif incluent :
+Examples of behavior that contributes to creating a positive environment include:
 
-- Utiliser un langage accueillant et inclusif
-- Être respectueux des points de vue et des expériences divergents
-- Accepter les critiques constructives avec grâce
-- Se concentrer sur ce qui est le mieux pour la communauté
-- Montrer de l'empathie envers les autres membres de la communauté
+- Using welcoming and inclusive language
+- Being respectful of differing viewpoints and experiences
+- Gracefully accepting constructive criticism
+- Focusing on what is best for the community
+- Showing empathy towards other community members
 
-Les exemples de comportements inacceptables incluent :
+Examples of unacceptable behavior include:
 
-- L'utilisation de langage ou d'imagerie sexualisés et l'attention ou les avances sexuelles non bienvenues
-- Trolling, commentaires insultants/dérogatoires, et attaques personnelles ou politiques
-- Harcèlement public ou privé
-- Publier des informations privées d'autrui, telles qu'une adresse physique ou email, sans autorisation explicite
-- Autre conduite qui pourrait raisonnablement être considérée comme inappropriée dans un cadre professionnel
+- The use of sexualized language or imagery and unwelcome sexual attention or advances
+- Trolling, insulting/derogatory comments, and personal or political attacks
+- Public or private harassment
+- Publishing others' private information, such as a physical or electronic address, without explicit permission
+- Other conduct which could reasonably be considered inappropriate in a professional setting
 
-## Nos responsabilités
+## Our Responsibilities
 
-Les mainteneurs du projet sont responsables de clarifier les standards de comportement acceptable et sont censés prendre des mesures correctives appropriées et justes en réponse à toute instance de comportement inacceptable.
+Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
 
-Les mainteneurs du projet ont le droit et la responsabilité de supprimer, modifier ou rejeter les commentaires, commits, code, éditions wiki, issues et autres contributions qui ne sont pas alignés avec ce Code de Conduite, ou de bannir temporairement ou définitivement tout contributeur pour des comportements qu'ils jugent inappropriés, menaçants, offensants ou nuisibles.
+Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned with this Code of Conduct, or to ban temporarily or permanently any contributor for behaviors that they deem inappropriate, threatening, offensive, or harmful.
 
-## Application
+## Enforcement
 
-Les instances de comportement abusif, de harcèlement ou inacceptable peuvent être signalées en contactant l'équipe du projet via email. Toutes les plaintes seront examinées et enquêtées, et entraîneront une réponse jugée nécessaire et appropriée aux circonstances. L'équipe du projet est obligée de maintenir la confidentialité du rapporteur d'un incident.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team via email. All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident.
 
 ---
 
-## Source
+## Attribution
 
-Ce Code de Conduite est adapté du [Contributor Covenant][homepage], version 1.4, disponible sur https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
+This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4, available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
+
+[homepage]: https://www.contributor-covenant.org

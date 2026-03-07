@@ -1,106 +1,106 @@
-# ✅ Validation du Template
+# ✅ Template Validation
 
-Comment le template est validé automatiquement.
+How the template is automatically validated.
 
-## Workflow de validation
+## Validation workflow
 
-Le workflow `.github/workflows/template-validation.yml` valide automatiquement que toutes les fonctionnalités du template fonctionnent.
+The `.github/workflows/template-validation.yml` workflow automatically validates that all template features are working correctly.
 
-### Quand s'exécute-t-il ?
+### When does it run?
 
-- ✅ Sur chaque **Pull Request**
-- ✅ Sur chaque **push** vers main/develop
-- ✅ **Manuellement** via Actions tab
-- ✅ **Hebdomadairement** (lundi 9h UTC)
+- ✅ On every **Pull Request**
+- ✅ On every **push** to main/develop
+- ✅ **Manually** via the Actions tab
+- ✅ **Weekly** (Monday 9am UTC)
 
-### Ce qui est testé
+### What is tested
 
-#### 1. Scripts (Syntaxe & Exécution)
+#### 1. Scripts (Syntax & Execution)
 
-**Scripts Python** :
+**Python scripts**:
 - `scripts/project_sync.py`
 - `scripts/setup_project_fields.py`
 
-**Scripts Bash** :
+**Bash scripts**:
 - `setup-project.sh`
 - `scripts/validate_setup.sh`
 
-**Vérifications** :
-- ✅ Syntaxe valide
-- ✅ Scripts exécutables
-- ✅ CLI fonctionne (--help)
+**Checks**:
+- ✅ Valid syntax
+- ✅ Scripts are executable
+- ✅ CLI works (--help)
 
-#### 2. Workflows GitHub Actions
+#### 2. GitHub Actions Workflows
 
-**Workflows testés** :
+**Workflows tested**:
 - `ci-tests.yml`
 - `update-project.yml`
 - `create-branch.yml`
 - `code-review-agent.yml`
 - `template-validation.yml`
 
-**Vérifications** :
-- ✅ YAML valide
-- ✅ Tous les workflows requis présents
-- ✅ Syntaxe correcte
+**Checks**:
+- ✅ Valid YAML
+- ✅ All required workflows present
+- ✅ Correct syntax
 
-#### 3. Tests unitaires
+#### 3. Unit tests
 
-**Tests exécutés** :
-- 32 tests unitaires (pytest)
-- Tests de workflows
-- Tests de project_sync.py
+**Tests run**:
+- 32 unit tests (pytest)
+- Workflow tests
+- project_sync.py tests
 
-**Couverture** :
+**Coverage**:
 - GraphQL queries
 - Field updates
 - Error handling
 
 #### 4. Configuration
 
-**Fichiers validés** :
+**Files validated**:
 - `.github/project.yml`
 - `.env.example`
 - `requirements.txt`
 - `requirements-dev.txt`
 
-**Vérifications** :
-- ✅ YAML valide
-- ✅ Variables requises présentes
-- ✅ Dépendances installables
+**Checks**:
+- ✅ Valid YAML
+- ✅ Required variables present
+- ✅ Dependencies installable
 
 #### 5. Documentation
 
-**Fichiers vérifiés** :
+**Files checked**:
 - `README.md`
 - `CONTRIBUTING.md`
 - `CODE_OF_CONDUCT.md`
 - `docs/Home.md`
 - `docs/Getting-Started.md`
 - `docs/Scripts-Reference.md`
-- Tous les autres docs/
+- All other docs/
 
-**Vérifications** :
-- ✅ Tous les fichiers présents
-- ✅ Structure complète
-- ✅ Liens internes valides
+**Checks**:
+- ✅ All files present
+- ✅ Complete structure
+- ✅ Valid internal links
 
 #### 6. Templates
 
-**Templates validés** :
+**Templates validated**:
 - `.github/ISSUE_TEMPLATE/bug_report.yml`
 - `.github/ISSUE_TEMPLATE/feature_request.yml`
 - `.github/ISSUE_TEMPLATE/task.yml`
 - `.github/PULL_REQUEST_TEMPLATE.md`
 
-**Vérifications** :
-- ✅ YAML valide (issue templates)
-- ✅ Markdown valide (PR template)
-- ✅ Tous les templates présents
+**Checks**:
+- ✅ Valid YAML (issue templates)
+- ✅ Valid Markdown (PR template)
+- ✅ All templates present
 
-#### 7. Dépendances
+#### 7. Dependencies
 
-**Packages testés** :
+**Packages tested**:
 - requests
 - pyyaml
 - google-generativeai
@@ -108,67 +108,67 @@ Le workflow `.github/workflows/template-validation.yml` valide automatiquement q
 - pytest-cov
 - pytest-mock
 
-**Vérifications** :
-- ✅ Installation réussie
-- ✅ Imports fonctionnels
-- ✅ Versions compatibles
+**Checks**:
+- ✅ Successful installation
+- ✅ Imports working
+- ✅ Compatible versions
 
-#### 8. Sécurité
+#### 8. Security
 
-**Vérifications** :
-- ✅ Pas de secrets exposés (API keys)
-- ✅ Pas de tokens dans le code
-- ✅ Secrets utilisés correctement (via secrets.*)
+**Checks**:
+- ✅ No exposed secrets (API keys)
+- ✅ No tokens in the code
+- ✅ Secrets used correctly (via secrets.*)
 
-#### 9. Simulation de fonctionnalités
+#### 9. Feature simulation
 
-**Fonctionnalités simulées** :
+**Features simulated**:
 - CLI project_sync.py
 - CLI setup_project_fields.py
-- Validation setup
+- Setup validation
 
-#### 10. Test d'intégration (sur main)
+#### 10. Integration test (on main)
 
-**Workflow utilisateur simulé** :
-- Clone du repo
-- Installation dépendances
-- Exécution setup
-- Validation
+**Simulated user workflow**:
+- Clone the repo
+- Install dependencies
+- Run setup
+- Validate
 
 ---
 
-## Lancer la validation manuellement
+## Running validation manually
 
 ### Via GitHub Actions
 
-1. Allez dans **Actions** tab
-2. Sélectionnez **Template Validation - E2E Tests**
-3. Cliquez **Run workflow**
-4. Choisissez la branche
-5. Cliquez **Run workflow**
+1. Go to the **Actions** tab
+2. Select **Template Validation - E2E Tests**
+3. Click **Run workflow**
+4. Choose the branch
+5. Click **Run workflow**
 
-### En local
+### Locally
 
 ```bash
-# Installer les dépendances
+# Install dependencies
 pip install -r requirements.txt
 pip install -r requirements-dev.txt
 
-# Lancer les tests
+# Run tests
 pytest tests/ -v
 
-# Valider les workflows
+# Validate workflows
 python -c "import yaml; [yaml.safe_load(open(f)) for f in ['.github/workflows/ci-tests.yml', '.github/workflows/update-project.yml']]"
 
-# Valider le setup
+# Validate setup
 ./scripts/validate_setup.sh
 ```
 
 ---
 
-## Rapport de validation
+## Validation report
 
-Après exécution, le workflow génère un **rapport détaillé** :
+After execution, the workflow generates a **detailed report**:
 
 ```
 📊 TEMPLATE VALIDATION REPORT
@@ -189,47 +189,47 @@ Après exécution, le workflow génère un **rapport détaillé** :
 The template is ready for use!
 ```
 
-Le rapport est aussi disponible dans l'onglet **Summary** de chaque exécution.
+The report is also available in the **Summary** tab of each run.
 
 ---
 
-## En cas d'échec
+## On failure
 
-Si un test échoue :
+If a test fails:
 
-### 1. Consulter les logs
+### 1. Check the logs
 
-- Aller dans Actions → Template Validation
-- Cliquer sur l'exécution échouée
-- Voir les logs détaillés
+- Go to Actions → Template Validation
+- Click on the failed run
+- View the detailed logs
 
-### 2. Reproduire en local
+### 2. Reproduce locally
 
 ```bash
-# Reproduire la partie qui échoue
+# Reproduce the failing part
 pytest tests/test_workflows.py -v
 
-# Ou lancer un script spécifique
+# Or run a specific script
 python scripts/project_sync.py --help
 ```
 
-### 3. Corriger
+### 3. Fix
 
-- Corriger le problème identifié
-- Commiter
-- Push → Le workflow se relance
+- Fix the identified issue
+- Commit
+- Push → The workflow reruns automatically
 
-### 4. Demander de l'aide
+### 4. Ask for help
 
-Si vous ne comprenez pas l'erreur :
-- [Ouvrir une issue](https://github.com/dyvan/github-project-llm-management/issues)
-- [Poser une question](https://github.com/dyvan/github-project-llm-management/discussions)
+If you don't understand the error:
+- [Open an issue](https://github.com/dyvan/github-project-llm-management/issues)
+- [Ask a question](https://github.com/dyvan/github-project-llm-management/discussions)
 
 ---
 
-## Badge de validation
+## Validation badge
 
-Ajoutez le badge dans votre README :
+Add the badge to your README:
 
 ```markdown
 [![Template Validation](https://github.com/OWNER/REPO/actions/workflows/template-validation.yml/badge.svg)](https://github.com/OWNER/REPO/actions/workflows/template-validation.yml)
@@ -237,23 +237,23 @@ Ajoutez le badge dans votre README :
 
 ---
 
-## Fréquence de validation
+## Validation frequency
 
-| Déclencheur | Fréquence |
-|-------------|-----------|
-| Pull Request | À chaque PR |
-| Push main/develop | À chaque push |
-| Manuel | Sur demande |
-| Automatique | Lundi 9h UTC |
+| Trigger | Frequency |
+|---------|-----------|
+| Pull Request | On every PR |
+| Push main/develop | On every push |
+| Manual | On demand |
+| Automatic | Monday 9am UTC |
 
 ---
 
-## Avantages
+## Benefits
 
-✅ **Confiance** : Le template est testé automatiquement
-✅ **Qualité** : Détection précoce des régressions
-✅ **Documentation** : Rapport détaillé à chaque exécution
-✅ **Transparence** : Validation visible publiquement
+✅ **Confidence**: The template is tested automatically
+✅ **Quality**: Early detection of regressions
+✅ **Documentation**: Detailed report on each run
+✅ **Transparency**: Validation is publicly visible
 
 ---
 
