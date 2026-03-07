@@ -417,7 +417,7 @@ jobs:
 
           # Test 3: Validate all setup steps exist
           echo "  3️⃣ Validating setup steps..."
-          for step in 1-check-state 2-check-prerequisites 3-init-labels 4-create-project 5-link-workflows 6-finalize; do
+          for step in 1-check-state 2-check-prerequisites 3-init-labels 4-create-project 5-copy-files 6-finalize; do
             if [ -f "template/.setup/steps/${step}.sh" ]; then
               echo "    ✅ Step ${step} exists"
             else
