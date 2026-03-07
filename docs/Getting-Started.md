@@ -150,19 +150,16 @@ project:
   name: "Project Backlog"
 ```
 
-### 5b. Auto-create custom fields
+### 5b. Create custom fields manually
 
-```bash
-# Automatically create the Project Board fields
-python3 scripts/setup_project_fields.py --project-number 1 --owner YOUR_NAME
-```
+Create these fields manually on your GitHub Project Board settings page:
 
-This automatically creates:
-- **Status**: Backlog, Ready, In Progress, In Review, Blocked, Done
-- **Priority**: Low, Medium, High
-- **Effort**: 1, 2, 3, 5, 8 (story points)
-- **Type**: Feature, Bug, Task, Docs, Infrastructure
-- **Target Version**: (free text field)
+- **Status** (Single Select): Backlog, Ready, In Progress, In Review, Blocked, Done
+- **Priority** (Single Select): Low, Medium, High
+- **Effort** (Single Select): 1, 2, 3, 5, 8 (story points)
+- **Type** (Single Select): Feature, Bug, Task, Docs, Infrastructure
+
+> **Note**: The GitHub API does not support creating custom fields programmatically.
 
 ---
 

@@ -44,7 +44,6 @@ template/
 │   └── project-fields.json # Custom Project fields
 │
 ├── scripts/               # Optional utilities
-│   ├── setup_project_fields.py
 │   ├── project_sync.py
 │   ├── generate_dashboard.py
 │   └── velocity_calculator.py
@@ -206,14 +205,6 @@ Workflows and templates are symlinked to `template/.github/`:
 ---
 
 ## 🛠️ Utility Scripts
-
-### setup_project_fields.py
-
-Configures custom Project v2 fields (via GraphQL):
-
-```bash
-python3 scripts/setup_project_fields.py --project-number 1 --owner dyvan
-```
 
 ### project_sync.py
 

@@ -50,40 +50,11 @@ run_step() {
         warning "You can still access the project at: https://github.com/users/$(get_repo_owner)/projects/$project_num"
     fi
 
-    # Configure custom fields
-    info "Configuring custom fields..."
+    # Note: Custom fields (Status, Priority, Effort, Type) must be created
+    # manually on the GitHub Project Board settings page. The GitHub API does
+    # not support creating custom fields programmatically.
+    info "Remember to create custom fields manually on your Project Board settings."
     echo ""
-
-    local owner=$(get_repo_owner)
-    local repo_root="$(cd "${SETUP_DIR}/../.." && pwd)"
-    if command -v python3 &> /dev/null; then
-        # Get GH_TOKEN from environment or .env file
-        local gh_token="${GH_TOKEN:-}"
-        if [ -z "$gh_token" ] && [ -f "${repo_root}/.env" ]; then
-            gh_token=$(grep "^GH_TOKEN=" "${repo_root}/.env" | cut -d'=' -f2)
-        fi
-
-        if [ -z "$gh_token" ]; then
-            gh_token=$(gh auth token 2>/dev/null || echo "")
-        fi
-
-        if [ -n "$gh_token" ]; then
-            if GH_TOKEN="$gh_token" python3 "${repo_root}/scripts/setup_project_fields.py" --project-number "$project_num" --owner "$owner"; then
-                success "Custom fields configured successfully"
-                store_config "setup_fields" "true"
-            else
-                warning "Could not configure custom fields automatically"
-                warning "You can configure them manually with:"
-                highlight "  python3 scripts/setup_project_fields.py --project-number $project_num --owner $owner"
-            fi
-        else
-            warning "GitHub token not found, skipping field configuration"
-            warning "You can configure them manually with:"
-            highlight "  python3 scripts/setup_project_fields.py --project-number $project_num --owner $owner"
-        fi
-    else
-        warning "Python 3 not found, skipping field configuration"
-    fi
 
     mark_step_completed "create_project"
     return 0

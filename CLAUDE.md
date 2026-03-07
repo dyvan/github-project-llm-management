@@ -101,7 +101,6 @@ Key directories:
 - Per-workflow API keys with fallback: GEMINI_PLAN_API_KEY, GEMINI_SPEC_API_KEY, GEMINI_REVIEW_API_KEY -> fallback GEMINI_API_KEY
 - Template evolving toward Claude Code plugin packaging (#107)
 - Slash commands replace inline workflow tutorials (#106)
-- `setup-project-fields.py` is dead code (GitHub API cannot create custom fields) -- to remove (#103)
 
 ## Secrets
 
