@@ -198,6 +198,23 @@ copy_wiki_templates() {
     fi
 }
 
+copy_mcp_config() {
+    local src="${REPO_ROOT}/.mcp.json"
+    local dest="${PWD}/.mcp.json"
+
+    if [ "$REPO_ROOT" = "$PWD" ]; then
+        success "MCP config already in place"
+        return 0
+    fi
+
+    if [ -f "$src" ]; then
+        cp "$src" "$dest"
+        success "Copied .mcp.json to project root"
+    else
+        warning "No .mcp.json found at $src"
+    fi
+}
+
 copy_claude_md() {
     local src="${REPO_ROOT}/CLAUDE.md"
     local dest="${PWD}/CLAUDE.md"
@@ -235,6 +252,7 @@ run_step() {
     copy_claude_md
     copy_memory_templates
     copy_wiki_templates
+    copy_mcp_config
 
     mark_step_completed "link_workflows"
     mark_step_completed "copy_claude_md"
