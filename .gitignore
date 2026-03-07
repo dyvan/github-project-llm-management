@@ -147,3 +147,6 @@ site/
 template/.setup/.setup-state.json
 .setup-state.json
 site/
+
+# AI session state (local, not committed)
+.ai/

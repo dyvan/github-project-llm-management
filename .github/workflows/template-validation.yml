@@ -281,13 +281,13 @@ jobs:
         run: |
           echo "🔒 Checking for exposed secrets..."
 
-          # Check for common secret patterns
-          if grep -r "sk-[a-zA-Z0-9]" --include="*.py" --include="*.yml" . ; then
+          # Check for common secret patterns (require 20+ chars to avoid false positives like "task-status")
+          if grep -rE "sk-[a-zA-Z0-9]{20,}" --include="*.py" --include="*.yml" . ; then
             echo "❌ Potential API key found in code"
             exit 1
           fi
 
-          if grep -r "ghp_[a-zA-Z0-9]" --include="*.py" --include="*.yml" . ; then
+          if grep -rE "ghp_[a-zA-Z0-9]{20,}" --include="*.py" --include="*.yml" . ; then
             echo "❌ Potential GitHub token found in code"
             exit 1
           fi
