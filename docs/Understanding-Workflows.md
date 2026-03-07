@@ -11,7 +11,7 @@ Label "auto-branch" → create-branch.yml → Branche créée
      ↓
 Développeur code
      ↓
-PR ouverte → code-review-agent.yml → Claude analyse
+PR ouverte → code-review-agent.yml → Gemini analyse
            → ci-tests.yml → Tests exécutés
            → update-project.yml → Status "In Review"
      ↓

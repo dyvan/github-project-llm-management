@@ -88,17 +88,17 @@ mkdir -p docs/images/demo
 
 ---
 
-### 5. Screenshot : Code Review par Claude AI
-**Fichier** : `docs/images/screenshots/05-claude-review.png`
+### 5. Screenshot : Code Review par Gemini AI
+**Fichier** : `docs/images/screenshots/05-gemini-review.png`
 
 **À capturer** :
-- Pull Request avec commentaire de Claude
+- Pull Request avec commentaire de Gemini
 - Suggestions d'amélioration
 - Emojis et formatage markdown
 
 **Comment** :
 1. Créez une PR avec du code
-2. Attendez la revue automatique de Claude
+2. Attendez la revue automatique de Gemini
 3. Capturez le commentaire complet
 
 **Utilisation** : README.md, Understanding-Workflows.md
@@ -197,9 +197,9 @@ mkdir -p docs/images/demo
 - Texte : "4️⃣ Les automations fonctionnent : branches, reviews, sync"
 
 #### 2:15-2:30 - Étape 5 : Code Review
-- Montrer Claude AI qui review la PR automatiquement
+- Montrer Gemini AI qui review la PR automatiquement
 - Zoomer sur un commentaire de suggestion
-- Texte : "5️⃣ Claude AI review votre code automatiquement"
+- Texte : "5️⃣ Gemini AI review votre code automatiquement"
 
 #### 2:30-2:45 - Conclusion
 - Récapitulatif des bénéfices :
@@ -249,7 +249,7 @@ Ajouter des screenshots pour chaque étape :
 ### docs/Understanding-Workflows.md
 Ajouter des screenshots pour expliquer :
 - Auto-branch : `04-auto-branch-comment.png`
-- Code review : `05-claude-review.png`
+- Code review : `05-gemini-review.png`
 - GitHub Actions : `06-github-actions.png`
 
 ### docs/Home.md (Wiki Homepage)

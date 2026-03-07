@@ -149,7 +149,7 @@ Closes #1
 Dans ~30 secondes :
 
 ```
-## 🤖 Automated Code Review by Claude AI
+## 🤖 Automated Code Review by Gemini AI
 
 ### ✅ Strengths
 - Clean component structure

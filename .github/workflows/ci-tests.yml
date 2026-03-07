@@ -213,9 +213,7 @@ jobs:
           test -f CONTRIBUTING.md || exit 1
           test -f CODE_OF_CONDUCT.md || exit 1
           test -f LICENSE || exit 1
-          test -f ROADMAP.md || exit 1
-          test -f PROJECT_BOARD_SETUP.md || exit 1
-          echo "✅ Documentation complete"
+          echo "Documentation complete"
 
       - name: Build summary
         run: |

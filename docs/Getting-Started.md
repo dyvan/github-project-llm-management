@@ -220,7 +220,7 @@ gh pr create \
 
 Vous devriez voir :
 - ✅ CI/CD qui se lance automatiquement
-- ✅ Claude AI qui analyse votre code (si API key configurée)
+- ✅ Gemini AI qui analyse votre code (si API key configurée)
 - ✅ Project Board mis à jour : Status → "In Review"
 
 ---

@@ -31,7 +31,7 @@
 Ce template vous permet de gérer vos projets sur GitHub avec :
 - **Project Board automatique** synchronisé avec vos issues et PRs
 - **Création de branches automatique** à partir des issues
-- **Revue de code par IA** (Claude) sur toutes les PRs
+- **Revue de code par IA** (Gemini) sur toutes les PRs
 - **Tests CI/CD** automatiques
 
 **Aucune compétence technique requise** - Tout est automatisé !
