@@ -124,11 +124,13 @@ jobs:
           ls -la "$TEMPLATE_DIR/template/.setup/" 2>&1 || echo "WARNING: .setup not found"
 
       - name: Run template-setup.sh
+        id: run-setup
+        continue-on-error: true
         run: |
           cd "${{ env.test_dir }}/github-project-llm-management"
 
           # template-setup.sh checks for git repo + gh repo view
-          git init
+          git init -b main
           git config user.name "E2E Test"
           git config user.email "e2e@test.local"
           git remote add origin "https://github.com/$TEST_REPO.git"
@@ -138,16 +140,17 @@ jobs:
 
           # Run setup in non-interactive mode (pipe 'y' for confirmation)
           echo "y" | bash template-setup.sh --reset-state 2>&1 | tee /tmp/setup.log
-
           SETUP_EXIT=${PIPESTATUS[1]}
-          echo "setup_exit=$SETUP_EXIT" >> $GITHUB_ENV
 
-          if [ $SETUP_EXIT -eq 0 ]; then
+          echo "setup_exit=$SETUP_EXIT" >> $GITHUB_ENV
+          echo "setup_exit=$SETUP_EXIT" >> $GITHUB_OUTPUT
+
+          if [ "$SETUP_EXIT" -eq 0 ]; then
             echo "template-setup.sh completed successfully"
           else
             echo "template-setup.sh exited with code: $SETUP_EXIT"
-            echo "Last 50 lines of log:"
-            tail -50 /tmp/setup.log
+            tail -30 /tmp/setup.log
+            exit 1
           fi
 
       # ============================================================
@@ -170,9 +173,9 @@ jobs:
 
           for expected in "${EXPECTED_LABELS[@]}"; do
             if echo "$ACTUAL_LABELS" | grep -qF "$expected"; then
-              ((PASSED++))
+              PASSED=$((PASSED + 1))
             else
-              ((FAILED++))
+              FAILED=$((FAILED + 1))
               MISSING="$MISSING $expected"
             fi
           done
@@ -225,9 +228,9 @@ jobs:
 
           for wf in "${EXPECTED_WORKFLOWS[@]}"; do
             if [ -f "$SETUP_DIR/.github/workflows/$wf" ]; then
-              ((PASSED++))
+              PASSED=$((PASSED + 1))
             else
-              ((FAILED++))
+              FAILED=$((FAILED + 1))
               MISSING="$MISSING $wf"
             fi
           done
