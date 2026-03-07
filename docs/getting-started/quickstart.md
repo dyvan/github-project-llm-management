@@ -263,8 +263,8 @@ Project Updated
 ## 📚 What's Next?
 
 - [Architecture Guide](../architecture/overview.md) - Learn how it works
-- [Using Agents](../guides/using-agents.md) - Advanced agent configuration
-- [Contributing](../../CONTRIBUTING.md) - Start contributing to projects
+- [Advanced Customization](../Advanced-Customization.md) - Customize the template
+- [Contributing](../Contributing.md) - Start contributing to projects
 - [FAQ](../faq.md) - Common questions and answers
 
 ## 💡 Tips

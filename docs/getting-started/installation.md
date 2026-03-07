@@ -216,8 +216,8 @@ Run this checklist:
 
 1. ✅ [Quick Start Guide](./quickstart.md) - Run your first workflow
 2. 📚 [Architecture Overview](../architecture/overview.md) - Understand the system
-3. 📝 [Contributing Guide](../../CONTRIBUTING.md) - Start contributing
+3. 📝 [Contributing Guide](../Contributing.md) - Start contributing
 
 ---
 
-Need help? Check the [FAQ](../faq.md) or [Troubleshooting Guide](../guides/troubleshooting.md)
+Need help? Check the [FAQ](../faq.md) or [Troubleshooting Guide](../Troubleshooting.md)
