@@ -25,7 +25,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install anthropic requests pyyaml
+          pip install requests
 
       - name: Get PR diff
         id: get-diff
@@ -35,77 +35,92 @@ jobs:
           PR_NUMBER=${{ github.event.pull_request.number }}
           REPO=${{ github.repository }}
 
-          # Get the diff
           DIFF=$(gh pr diff $PR_NUMBER --repo "$REPO")
-
-          # Save to file (limit size to avoid token issues)
           echo "$DIFF" | head -10000 > /tmp/pr_diff.txt
 
-          # Count lines
           LINES=$(echo "$DIFF" | wc -l)
           echo "diff_lines=$LINES" >> $GITHUB_OUTPUT
-
           echo "Diff retrieved: $LINES lines"
 
-      - name: Write Python review script
-        run: |
-          cat > /tmp/review_pr.py <<'ENDSCRIPT'
-          import os, sys
-          with open('/tmp/pr_diff.txt', 'r') as f:
-              diff = f.read()
-          if not diff.strip():
-              print("No diff found")
-              sys.exit(0)
-          pr_title = os.getenv('PR_TITLE', '')
-          pr_body = os.getenv('PR_BODY', '')
-          api_key = os.getenv('CLAUDE_API_KEY')
-          if api_key:
-              from anthropic import Anthropic
-              client = Anthropic()
-              with open('/tmp/prompt.txt', 'r') as f:
-                  prompt_template = f.read()
-              prompt = prompt_template.format(pr_title=pr_title, pr_body=pr_body, diff=diff)
-              response = client.messages.create(
-                  model="claude-3-5-sonnet-20241022",
-                  max_tokens=1024,
-                  messages=[{"role": "user", "content": prompt}]
-              )
-              review_comment = response.content[0].text
-          else:
-              print("Warning: CLAUDE_API_KEY not set, providing basic review")
-              review_comment = "Code Review (Basic Mode)\n\nNote: Full AI review requires CLAUDE_API_KEY secret.\n\nBasic Checks:\n- Check file size\n- Verify commit messages\n- Ensure no syntax errors\n- Check for debug statements\n\nTo enable full AI review, add CLAUDE_API_KEY to GitHub Secrets"
-          with open('/tmp/review_comment.md', 'w') as f:
-              f.write(review_comment)
-          print("Review generated successfully")
-          ENDSCRIPT
-
-      - name: Write prompt template
-        run: |
-          cat > /tmp/prompt.txt <<'ENDPROMPT'
-          Review this GitHub Pull Request code changes. Provide constructive feedback in a GitHub-friendly format.
-
-          The PR title is {pr_title}
-          The PR description is {pr_body}
-
-          The following code changes were made
-          {diff}
-
-          Provide a code review with these sections
-          1. Strengths (positive aspects of the code)
-          2. Suggestions (improvements but not blocking)
-          3. Critical Issues (security, performance, bugs)
-
-          Format your response as Markdown suitable for a GitHub PR comment. Be concise and professional.
-          ENDPROMPT
-
-      - name: Run Code Review with Claude
+      - name: Run Code Review with Gemini
         id: review
         env:
-          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+          # Specific key first, then generic fallback (for template users with a single key)
+          GEMINI_REVIEW_API_KEY: ${{ secrets.GEMINI_REVIEW_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_BODY: ${{ github.event.pull_request.body }}
         run: |
-          python /tmp/review_pr.py
+          # Pick the right API key: specific > generic
+          API_KEY="${GEMINI_REVIEW_API_KEY:-$GEMINI_API_KEY}"
+
+          if [ -z "$API_KEY" ]; then
+            echo "No Gemini API key found, using basic review"
+            cat > /tmp/review_comment.md <<'BASIC'
+          **Code Review (Basic Mode)**
+
+          > Full AI review requires a `GEMINI_API_KEY` or `GEMINI_REVIEW_API_KEY` secret.
+
+          Basic checks to perform manually:
+          - [ ] No syntax errors
+          - [ ] No debug statements left
+          - [ ] Commit messages follow conventions
+          - [ ] No secrets or credentials committed
+          BASIC
+            exit 0
+          fi
+
+          python3 - <<'PYEOF'
+          import os, sys, json, requests
+
+          diff_path = "/tmp/pr_diff.txt"
+          with open(diff_path, "r") as f:
+              diff = f.read()
+
+          if not diff.strip():
+              print("No diff found")
+              with open("/tmp/review_comment.md", "w") as f:
+                  f.write("No code changes detected.")
+              sys.exit(0)
+
+          pr_title = os.getenv("PR_TITLE", "")
+          pr_body = os.getenv("PR_BODY", "")
+          api_key = os.getenv("GEMINI_REVIEW_API_KEY") or os.getenv("GEMINI_API_KEY")
+
+          prompt = f"""Review this GitHub Pull Request. Provide constructive feedback in GitHub-friendly Markdown.
+
+          PR Title: {pr_title}
+          PR Description: {pr_body}
+
+          Code changes (diff):
+          ```
+          {diff[:8000]}
+          ```
+
+          Provide a code review with these sections:
+          1. **Strengths** - positive aspects of the code
+          2. **Suggestions** - improvements (not blocking)
+          3. **Critical Issues** - security, performance, bugs (if any)
+
+          Be concise and professional. If the diff is truncated, note it."""
+
+          url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}"
+          payload = {"contents": [{"parts": [{"text": prompt}]}]}
+
+          try:
+              resp = requests.post(url, json=payload, timeout=60)
+              resp.raise_for_status()
+              data = resp.json()
+              review = data["candidates"][0]["content"]["parts"][0]["text"]
+          except Exception as e:
+              review = f"Code review generation failed: {e}\n\nPlease review manually."
+              print(f"Error: {e}", file=sys.stderr)
+
+          with open("/tmp/review_comment.md", "w") as f:
+              f.write(review)
+
+          print("Review generated successfully")
+          PYEOF
 
       - name: Post review as comment
         if: success()
@@ -115,15 +130,13 @@ jobs:
           PR_NUMBER=${{ github.event.pull_request.number }}
           REPO=${{ github.repository }}
 
-          # Create comment body with header and footer
-          echo "## 🤖 Automated Code Review by Claude AI" > /tmp/final_comment.md
+          echo "## :robot: Code Review by Gemini AI" > /tmp/final_comment.md
           echo "" >> /tmp/final_comment.md
           cat /tmp/review_comment.md >> /tmp/final_comment.md
           echo "" >> /tmp/final_comment.md
           echo "---" >> /tmp/final_comment.md
-          echo "*This is an informational review - approval is not required for merge*" >> /tmp/final_comment.md
+          echo "*Automated review - approval is not required for merge*" >> /tmp/final_comment.md
 
-          # Post as PR comment
           gh pr comment $PR_NUMBER --repo "$REPO" --body-file /tmp/final_comment.md
 
       - name: Handle review errors
@@ -136,4 +149,4 @@ jobs:
 
           gh pr comment $PR_NUMBER \
             --repo "$REPO" \
-            --body "⚠️ Code review workflow encountered an error. Please check the workflow logs."
+            --body "Warning: Code review workflow encountered an error. Please check the workflow logs."

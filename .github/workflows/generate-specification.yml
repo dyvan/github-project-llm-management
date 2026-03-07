@@ -51,17 +51,20 @@ jobs:
 
       - name: Check for Gemini API key
         run: |
-          if [ -z "${{ secrets.GEMINI_API_KEY }}" ]; then
-            echo "❌ GEMINI_API_KEY secret is not set"
-            echo "📚 Please configure the GEMINI_API_KEY secret in your repository settings"
+          if [ -n "${{ secrets.GEMINI_SPEC_API_KEY }}" ]; then
+            echo "✅ Using GEMINI_SPEC_API_KEY"
+          elif [ -n "${{ secrets.GEMINI_API_KEY }}" ]; then
+            echo "✅ Using GEMINI_API_KEY (fallback)"
+          else
+            echo "❌ No Gemini API key found"
+            echo "   Set GEMINI_API_KEY or GEMINI_SPEC_API_KEY in repository secrets"
             exit 1
           fi
-          echo "✅ Gemini API key is configured"
 
       - name: Generate specification
         id: generate
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_SPEC_API_KEY || secrets.GEMINI_API_KEY }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "🤖 Generating detailed specification from QCM responses..."
