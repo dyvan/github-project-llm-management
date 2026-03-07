@@ -62,17 +62,21 @@ jobs:
 
       - name: Check for Gemini API key
         run: |
-          if [ -z "${{ secrets.GEMINI_API_KEY }}" ]; then
-            echo "❌ GEMINI_API_KEY secret is not set"
-            echo "📚 Please configure the GEMINI_API_KEY secret in your repository settings"
-            echo "   Get your API key from: https://ai.google.dev/gemini-api/docs/api-key"
+          # Specific key first, then generic fallback
+          if [ -n "${{ secrets.GEMINI_PLAN_API_KEY }}" ]; then
+            echo "✅ Using GEMINI_PLAN_API_KEY"
+          elif [ -n "${{ secrets.GEMINI_API_KEY }}" ]; then
+            echo "✅ Using GEMINI_API_KEY (fallback)"
+          else
+            echo "❌ No Gemini API key found"
+            echo "   Set GEMINI_API_KEY or GEMINI_PLAN_API_KEY in repository secrets"
+            echo "   Get your key at: https://ai.google.dev/gemini-api/docs/api-key"
             exit 1
           fi
-          echo "✅ Gemini API key is configured"
 
       - name: Generate and post QCM
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_PLAN_API_KEY || secrets.GEMINI_API_KEY }}
         run: |
           echo "🤖 Generating QCM using Gemini AI..."
           python scripts/generate_qcm.py \
