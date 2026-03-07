@@ -466,10 +466,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#claude_api_key-for-code-review" class="md-nav__link">
+  <a href="#gemini_api_key-for-code-review-and-ai-workflows" class="md-nav__link">
     <span class="md-ellipsis">
       
-        CLAUDE_API_KEY (for Code Review)
+        GEMINI_API_KEY (for Code Review and AI workflows)
       
     </span>
   </a>
@@ -482,22 +482,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#optional-secrets" class="md-nav__link">
+  <a href="#optional-secrets-per-workflow-keys" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Optional Secrets
+        Optional Secrets (per-workflow keys)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Optional Secrets">
+    <nav class="md-nav" aria-label="Optional Secrets (per-workflow keys)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#openai_api_key-alternative-to-claude" class="md-nav__link">
+  <a href="#gemini_review_api_key-dedicated-key-for-code-review" class="md-nav__link">
     <span class="md-ellipsis">
       
-        OPENAI_API_KEY (Alternative to Claude)
+        GEMINI_REVIEW_API_KEY (dedicated key for code review)
       
     </span>
   </a>
@@ -505,10 +505,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#gemini_api_key-alternative-to-claude" class="md-nav__link">
+  <a href="#gemini_plan_api_key-dedicated-key-for-planning" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GEMINI_API_KEY (Alternative to Claude)
+        GEMINI_PLAN_API_KEY (dedicated key for planning)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gemini_spec_api_key-dedicated-key-for-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GEMINI_SPEC_API_KEY (dedicated key for specification)
       
     </span>
   </a>
@@ -1588,10 +1599,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#claude_api_key-for-code-review" class="md-nav__link">
+  <a href="#gemini_api_key-for-code-review-and-ai-workflows" class="md-nav__link">
     <span class="md-ellipsis">
       
-        CLAUDE_API_KEY (for Code Review)
+        GEMINI_API_KEY (for Code Review and AI workflows)
       
     </span>
   </a>
@@ -1604,22 +1615,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#optional-secrets" class="md-nav__link">
+  <a href="#optional-secrets-per-workflow-keys" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Optional Secrets
+        Optional Secrets (per-workflow keys)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Optional Secrets">
+    <nav class="md-nav" aria-label="Optional Secrets (per-workflow keys)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#openai_api_key-alternative-to-claude" class="md-nav__link">
+  <a href="#gemini_review_api_key-dedicated-key-for-code-review" class="md-nav__link">
     <span class="md-ellipsis">
       
-        OPENAI_API_KEY (Alternative to Claude)
+        GEMINI_REVIEW_API_KEY (dedicated key for code review)
       
     </span>
   </a>
@@ -1627,10 +1638,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#gemini_api_key-alternative-to-claude" class="md-nav__link">
+  <a href="#gemini_plan_api_key-dedicated-key-for-planning" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GEMINI_API_KEY (Alternative to Claude)
+        GEMINI_PLAN_API_KEY (dedicated key for planning)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gemini_spec_api_key-dedicated-key-for-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GEMINI_SPEC_API_KEY (dedicated key for specification)
       
     </span>
   </a>
@@ -1992,19 +2014,22 @@ pip<span class="w"> </span>install<span class="w"> </span>pytest<span class="w">
 <span class="c1"># Select: HTTPS</span>
 <span class="c1"># Authenticate with browser</span>
 </code></pre></div>
-<h4 id="claude_api_key-for-code-review"><code>CLAUDE_API_KEY</code> (for Code Review)<a class="headerlink" href="#claude_api_key-for-code-review" title="Permanent link">&para;</a></h4>
+<h4 id="gemini_api_key-for-code-review-and-ai-workflows"><code>GEMINI_API_KEY</code> (for Code Review and AI workflows)<a class="headerlink" href="#gemini_api_key-for-code-review-and-ai-workflows" title="Permanent link">&para;</a></h4>
 <ol>
-<li>Get your API key from <a href="https://console.anthropic.com">console.anthropic.com</a></li>
+<li>Get your API key from <a href="https://aistudio.google.com/app/apikey">aistudio.google.com</a></li>
 <li>Add it to your repo secrets:</li>
 </ol>
-<div class="highlight"><pre><span></span><code>gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>CLAUDE_API_KEY<span class="w"> </span>--body<span class="w"> </span><span class="s2">&quot;sk-ant-...&quot;</span>
-</code></pre></div>
-<h3 id="optional-secrets">Optional Secrets<a class="headerlink" href="#optional-secrets" title="Permanent link">&para;</a></h3>
-<h4 id="openai_api_key-alternative-to-claude"><code>OPENAI_API_KEY</code> (Alternative to Claude)<a class="headerlink" href="#openai_api_key-alternative-to-claude" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>OPENAI_API_KEY<span class="w"> </span>--body<span class="w"> </span><span class="s2">&quot;sk-...&quot;</span>
-</code></pre></div>
-<h4 id="gemini_api_key-alternative-to-claude"><code>GEMINI_API_KEY</code> (Alternative to Claude)<a class="headerlink" href="#gemini_api_key-alternative-to-claude" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>GEMINI_API_KEY<span class="w"> </span>--body<span class="w"> </span><span class="s2">&quot;AIza...&quot;</span>
+</code></pre></div>
+<h3 id="optional-secrets-per-workflow-keys">Optional Secrets (per-workflow keys)<a class="headerlink" href="#optional-secrets-per-workflow-keys" title="Permanent link">&para;</a></h3>
+<h4 id="gemini_review_api_key-dedicated-key-for-code-review"><code>GEMINI_REVIEW_API_KEY</code> (dedicated key for code review)<a class="headerlink" href="#gemini_review_api_key-dedicated-key-for-code-review" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>GEMINI_REVIEW_API_KEY<span class="w"> </span>--body<span class="w"> </span><span class="s2">&quot;AIza...&quot;</span>
+</code></pre></div>
+<h4 id="gemini_plan_api_key-dedicated-key-for-planning"><code>GEMINI_PLAN_API_KEY</code> (dedicated key for planning)<a class="headerlink" href="#gemini_plan_api_key-dedicated-key-for-planning" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>GEMINI_PLAN_API_KEY<span class="w"> </span>--body<span class="w"> </span><span class="s2">&quot;AIza...&quot;</span>
+</code></pre></div>
+<h4 id="gemini_spec_api_key-dedicated-key-for-specification"><code>GEMINI_SPEC_API_KEY</code> (dedicated key for specification)<a class="headerlink" href="#gemini_spec_api_key-dedicated-key-for-specification" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>GEMINI_SPEC_API_KEY<span class="w"> </span>--body<span class="w"> </span><span class="s2">&quot;AIza...&quot;</span>
 </code></pre></div>
 <h2 id="step-4-enable-github-projects-v2">Step 4: Enable GitHub Projects v2<a class="headerlink" href="#step-4-enable-github-projects-v2" title="Permanent link">&para;</a></h2>
 <ol>
@@ -2143,7 +2168,7 @@ pre-commit<span class="w"> </span>install
 <h3 id="issue-workflows-not-running">Issue: Workflows not running<a class="headerlink" href="#issue-workflows-not-running" title="Permanent link">&para;</a></h3>
 <p><strong>Solution</strong>: Check <strong>Settings → Actions → General</strong> → ensure workflows are enabled</p>
 <h3 id="issue-code-review-agent-not-working">Issue: Code Review Agent not working<a class="headerlink" href="#issue-code-review-agent-not-working" title="Permanent link">&para;</a></h3>
-<p><strong>Solution</strong>: Verify <code>CLAUDE_API_KEY</code> is set correctly (no extra spaces)</p>
+<p><strong>Solution</strong>: Verify <code>GEMINI_API_KEY</code> is set correctly (no extra spaces)</p>
 <h3 id="issue-branch-not-created">Issue: Branch not created<a class="headerlink" href="#issue-branch-not-created" title="Permanent link">&para;</a></h3>
 <p><strong>Solution</strong>: Ensure <code>auto-branch</code> label is added to the issue</p>
 <h3 id="issue-python-tests-fail">Issue: Python tests fail<a class="headerlink" href="#issue-python-tests-fail" title="Permanent link">&para;</a></h3>

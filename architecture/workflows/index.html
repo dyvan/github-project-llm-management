@@ -2958,9 +2958,9 @@ gh<span class="w"> </span>issue<span class="w"> </span>comment<span class="w"> <
 </code></pre></div>
 <h3 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>CLAUDE_API_KEY</code> secret configured</li>
+<li><code>GEMINI_API_KEY</code> secret configured (or <code>GEMINI_REVIEW_API_KEY</code>)</li>
 <li>PR should be &lt; 10000 lines (limit)</li>
-<li>Python with anthropic library installed</li>
+<li>Python with google-generativeai library installed</li>
 </ul>
 <h3 id="process_1">Process<a class="headerlink" href="#process_1" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>PR opened/updated
@@ -2969,7 +2969,7 @@ Get PR diff (via gh cli)
      ↓
 Prepare prompt with diff + PR description
      ↓
-Call Claude API with prompt
+Call Gemini API with prompt
      ↓
 Parse response (structured markdown)
      ↓
@@ -2991,17 +2991,15 @@ Update project status → &quot;In QA&quot;
 1. ✅ Strengths
 2. ⚠️ Suggestions
 3. 🔴 Critical Issues
-<div class="highlight"><pre><span></span><code>### Claude Configuration
+<div class="highlight"><pre><span></span><code>### Gemini Configuration
 ```python
-client = Anthropic()
-response = client.messages.create(
-    model=&quot;claude-3-5-sonnet-20241022&quot;,
-    max_tokens=1024,
-    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt}]
-)
+import google.generativeai as genai
+genai.configure(api_key=os.getenv(&#39;GEMINI_API_KEY&#39;))
+model = genai.GenerativeModel(&#39;gemini-2.0-flash&#39;)
+response = model.generate_content(prompt)
 </code></pre></div></p>
 <h3 id="example-output">Example Output<a class="headerlink" href="#example-output" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="gu">## 🤖 Automated Code Review by Claude AI</span>
+<div class="highlight"><pre><span></span><code><span class="gu">## 🤖 Automated Code Review by Gemini AI</span>
 
 <span class="gu">### ✅ Strengths</span>
 <span class="k">-</span><span class="w"> </span>Good separation of concerns
@@ -3024,9 +3022,7 @@ response = client.messages.create(
 </code></pre></div>
 <h3 id="customization_1">Customization<a class="headerlink" href="#customization_1" title="Permanent link">&para;</a></h3>
 <h4 id="change-model">Change Model<a class="headerlink" href="#change-model" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-3-sonnet-20240229&quot;</span><span class="p">,</span>  <span class="c1"># Other Claude versions</span>
-<span class="c1"># or</span>
-<span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">,</span>  <span class="c1"># OpenAI fallback</span>
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">genai</span><span class="o">.</span><span class="n">GenerativeModel</span><span class="p">(</span><span class="s1">&#39;gemini-1.5-pro&#39;</span><span class="p">)</span>  <span class="c1"># Other Gemini models</span>
 </code></pre></div>
 <h4 id="increasedecrease-detail">Increase/Decrease Detail<a class="headerlink" href="#increasedecrease-detail" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="n">max_tokens</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>  <span class="c1"># More detailed review</span>
@@ -3043,10 +3039,10 @@ response = client.messages.create(
 <span class="s2">&quot;&quot;&quot;</span>
 </code></pre></div></p>
 <h3 id="fallback-behavior">Fallback Behavior<a class="headerlink" href="#fallback-behavior" title="Permanent link">&para;</a></h3>
-<p>If <code>CLAUDE_API_KEY</code> not set:
+<p>If <code>GEMINI_API_KEY</code> not set:
 <div class="highlight"><pre><span></span><code>⚠️ Code review workflow encountered an error
 
-Add CLAUDE_API_KEY to GitHub Secrets to enable full AI-powered review.
+Add GEMINI_API_KEY to GitHub Secrets to enable full AI-powered review.
 </code></pre></div></p>
 <hr />
 <h2 id="4-update-projectyml">4️⃣ update-project.yml<a class="headerlink" href="#4-update-projectyml" title="Permanent link">&para;</a></h2>
@@ -3193,12 +3189,13 @@ Site available at https://dyvan.github.io/github-project-llm-management
 3. Select branch and click <strong>Run</strong></p>
 <h3 id="secrets-for-workflows">Secrets for Workflows<a class="headerlink" href="#secrets-for-workflows" title="Permanent link">&para;</a></h3>
 <p>Add/update in <strong>Settings → Secrets and variables → Actions</strong>:
-- <code>CLAUDE_API_KEY</code> : Anthropic API key
-- <code>OPENAI_API_KEY</code> : OpenAI API key (optional)
-- <code>GEMINI_API_KEY</code> : Google Gemini API key (optional)</p>
+- <code>GEMINI_API_KEY</code> : Google Gemini API key (required for AI features)
+- <code>GEMINI_REVIEW_API_KEY</code> : Dedicated key for code review (optional, falls back to GEMINI_API_KEY)
+- <code>GEMINI_PLAN_API_KEY</code> : Dedicated key for planning (optional, falls back to GEMINI_API_KEY)
+- <code>GEMINI_SPEC_API_KEY</code> : Dedicated key for specification (optional, falls back to GEMINI_API_KEY)</p>
 <p>Access in workflows:
 <div class="highlight"><pre><span></span><code><span class="nt">env</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">CLAUDE_API_KEY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.CLAUDE_API_KEY }}</span>
+<span class="w">  </span><span class="nt">GEMINI_API_KEY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.GEMINI_API_KEY }}</span>
 </code></pre></div></p>
 <hr />
 <h2 id="workflow-metrics">📊 Workflow Metrics<a class="headerlink" href="#workflow-metrics" title="Permanent link">&para;</a></h2>

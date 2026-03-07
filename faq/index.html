@@ -1138,10 +1138,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#puis-je-desactiver-claude-ai" class="md-nav__link">
+  <a href="#puis-je-desactiver-lia-gemini" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Puis-je désactiver Claude AI ?
+        Puis-je désactiver l'IA Gemini ?
       
     </span>
   </a>
@@ -1188,10 +1188,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#quel-modele-claude-est-utilise" class="md-nav__link">
+  <a href="#quel-modele-est-utilise" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quel modèle Claude est utilisé ?
+        Quel modèle est utilisé ?
       
     </span>
   </a>
@@ -1394,10 +1394,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#puis-je-desactiver-claude-ai" class="md-nav__link">
+  <a href="#puis-je-desactiver-lia-gemini" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Puis-je désactiver Claude AI ?
+        Puis-je désactiver l'IA Gemini ?
       
     </span>
   </a>
@@ -1444,10 +1444,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#quel-modele-claude-est-utilise" class="md-nav__link">
+  <a href="#quel-modele-est-utilise" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quel modèle Claude est utilisé ?
+        Quel modèle est utilisé ?
       
     </span>
   </a>
@@ -1579,17 +1579,17 @@
 <h3 id="comment-creer-une-issue-qui-declenche-lautomation">Comment créer une issue qui déclenche l'automation ?<a class="headerlink" href="#comment-creer-une-issue-qui-declenche-lautomation" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>gh<span class="w"> </span>issue<span class="w"> </span>create<span class="w"> </span>--title<span class="w"> </span><span class="s2">&quot;Ma tâche&quot;</span><span class="w"> </span>--label<span class="w"> </span><span class="s2">&quot;type:feature,auto-branch&quot;</span>
 </code></pre></div>
-<h3 id="puis-je-desactiver-claude-ai">Puis-je désactiver Claude AI ?<a class="headerlink" href="#puis-je-desactiver-claude-ai" title="Permanent link">&para;</a></h3>
-<p>Oui, ne configurez simplement pas <code>CLAUDE_API_KEY</code>. La revue fonctionnera en mode basique.</p>
+<h3 id="puis-je-desactiver-lia-gemini">Puis-je désactiver l'IA Gemini ?<a class="headerlink" href="#puis-je-desactiver-lia-gemini" title="Permanent link">&para;</a></h3>
+<p>Oui, ne configurez simplement pas <code>GEMINI_API_KEY</code>. La revue fonctionnera en mode basique.</p>
 <h3 id="comment-personnaliser-les-labels">Comment personnaliser les labels ?<a class="headerlink" href="#comment-personnaliser-les-labels" title="Permanent link">&para;</a></h3>
 <p>Éditez <code>setup-project.sh</code> lignes 86+ et relancez le script.</p>
 <h3 id="est-ce-que-ca-fonctionne-avec-des-repos-prives">Est-ce que ça fonctionne avec des repos privés ?<a class="headerlink" href="#est-ce-que-ca-fonctionne-avec-des-repos-prives" title="Permanent link">&para;</a></h3>
 <p>Oui, complètement.</p>
 <h2 id="techniques">Techniques<a class="headerlink" href="#techniques" title="Permanent link">&para;</a></h2>
-<h3 id="quel-modele-claude-est-utilise">Quel modèle Claude est utilisé ?<a class="headerlink" href="#quel-modele-claude-est-utilise" title="Permanent link">&para;</a></h3>
-<p><code>claude-3-5-sonnet-20241022</code> par défaut. Modifiable dans <code>code-review-agent.yml</code>.</p>
+<h3 id="quel-modele-est-utilise">Quel modèle est utilisé ?<a class="headerlink" href="#quel-modele-est-utilise" title="Permanent link">&para;</a></h3>
+<p><code>gemini-2.0-flash</code> par défaut. Modifiable dans les variables des workflows.</p>
 <h3 id="puis-je-utiliser-un-autre-llm">Puis-je utiliser un autre LLM ?<a class="headerlink" href="#puis-je-utiliser-un-autre-llm" title="Permanent link">&para;</a></h3>
-<p>Oui ! Remplacez l'appel API dans <code>code-review-agent.yml</code> par OpenAI, Gemini, etc.</p>
+<p>Actuellement, tous les workflows utilisent Gemini. Pour utiliser un autre provider, il faut modifier les workflows manuellement.</p>
 <h3 id="les-workflows-consomment-ils-beaucoup-de-minutes-github-actions">Les workflows consomment-ils beaucoup de minutes GitHub Actions ?<a class="headerlink" href="#les-workflows-consomment-ils-beaucoup-de-minutes-github-actions" title="Permanent link">&para;</a></h3>
 <p>Non, très peu. Environ 1-2 minutes par workflow.</p>
 <h3 id="puis-je-utiliser-plusieurs-projets">Puis-je utiliser plusieurs projets ?<a class="headerlink" href="#puis-je-utiliser-plusieurs-projets" title="Permanent link">&para;</a></h3>

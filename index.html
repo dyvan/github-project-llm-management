@@ -1754,7 +1754,7 @@
 <h3 id="integration">Integration<a class="headerlink" href="#integration" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Seamless GitHub Projects v2 integration</li>
-<li>Multiple LLM provider support (Anthropic Claude, OpenAI, Google Gemini)</li>
+<li>Google Gemini AI integration for code review, planning, and specification</li>
 <li>Full CI/CD pipeline with automatic status updates</li>
 </ul>
 <h2 id="quick-start">🚀 Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
@@ -1771,7 +1771,7 @@
 </code></pre></div>
 <h3 id="3-configure-github-secrets">3. Configure GitHub Secrets<a class="headerlink" href="#3-configure-github-secrets" title="Permanent link">&para;</a></h3>
 <p>Go to <strong>Settings → Secrets and variables → Actions</strong> and add:
-- <code>CLAUDE_API_KEY</code> (for code review)
+- <code>GEMINI_API_KEY</code> (for code review)
 - <code>GH_TOKEN</code> (GitHub token with repo access)</p>
 <h3 id="4-enable-github-projects-v2">4. Enable GitHub Projects v2<a class="headerlink" href="#4-enable-github-projects-v2" title="Permanent link">&para;</a></h3>
 <ul>
@@ -1798,7 +1798,7 @@
     A[&quot;Create Issue&lt;br/&gt;+ auto-branch label&quot;] --&gt;|GitHub Actions| B[&quot;Branch Creator&lt;br/&gt;Creates feat/123-title&quot;]
     B --&gt; C[&quot;Develop Locally&quot;]
     C --&gt; D[&quot;Push &amp; Create PR&quot;]
-    D --&gt;|GitHub Actions| E[&quot;Code Reviewer&lt;br/&gt;Claude analyzes code&quot;]
+    D --&gt;|GitHub Actions| E[&quot;Code Reviewer&lt;br/&gt;Gemini analyzes code&quot;]
     D --&gt;|GitHub Actions| F[&quot;CI Tests&lt;br/&gt;Run tests &amp; lint&quot;]
     E --&gt; G[&quot;Post Comments&quot;]
     F --&gt; H[&quot;Report Results&quot;]
@@ -1830,7 +1830,7 @@
 </ul>
 <h3 id="api-keys">API Keys<a class="headerlink" href="#api-keys" title="Permanent link">&para;</a></h3>
 <p>All sensitive credentials stored in GitHub Secrets (never in git):
-<div class="highlight"><pre><span></span><code>GH_TOKEN, CLAUDE_API_KEY, OPENAI_API_KEY, GEMINI_API_KEY
+<div class="highlight"><pre><span></span><code>GH_TOKEN, GEMINI_API_KEY
 </code></pre></div></p>
 <h2 id="use-cases">🎓 Use Cases<a class="headerlink" href="#use-cases" title="Permanent link">&para;</a></h2>
 <h3 id="perfect-for">✅ Perfect For<a class="headerlink" href="#perfect-for" title="Permanent link">&para;</a></h3>

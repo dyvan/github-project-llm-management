@@ -1212,6 +1212,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#change-the-gemini-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Change the Gemini model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#change-branch-naming-convention" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1375,6 +1386,8 @@ gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</sp
 </code></pre></div>
 <h2 id="workflows">Workflows<a class="headerlink" href="#workflows" title="Permanent link">&para;</a></h2>
 <p>Modify workflows in <code>.github/workflows/</code> as needed:</p>
+<h3 id="change-the-gemini-model">Change the Gemini model<a class="headerlink" href="#change-the-gemini-model" title="Permanent link">&para;</a></h3>
+<p>The default model is <code>gemini-2.0-flash</code>. You can change it in the workflow environment variables.</p>
 <h3 id="change-branch-naming-convention">Change branch naming convention<a class="headerlink" href="#change-branch-naming-convention" title="Permanent link">&para;</a></h3>
 <p>In <code>create-branch.yml</code>:
 <div class="highlight"><pre><span></span><code><span class="nv">BRANCH_NAME</span><span class="o">=</span><span class="s2">&quot;feat/</span><span class="si">${</span><span class="nv">ISSUE_NUMBER</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">SLUGIFIED</span><span class="si">}</span><span class="s2">&quot;</span><span class="w">  </span><span class="c1"># Customize</span>

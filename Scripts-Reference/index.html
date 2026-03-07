@@ -1397,7 +1397,7 @@ Repository: username/project-name
 1. ✅ <strong>Prérequis</strong> : gh, python3, git installés
 2. ✅ <strong>Repository</strong> : Dans un repo git avec remote GitHub
 3. ✅ <strong>Authentification</strong> : GitHub CLI authentifié
-4. ✅ <strong>Secrets</strong> : GH_TOKEN et CLAUDE_API_KEY configurés
+4. ✅ <strong>Secrets</strong> : GH_TOKEN et GEMINI_API_KEY configurés
 5. ✅ <strong>Labels</strong> : Tous les labels requis existent
 6. ✅ <strong>Project</strong> : Au moins un projet existe
 7. ✅ <strong>Workflows</strong> : Tous les workflows sont présents
@@ -1529,8 +1529,8 @@ git checkout feat/42-add-dark-mode
    - 🔴 Problèmes critiques
 4. Poste la revue en commentaire</p>
 <p><strong>Mode fallback</strong> :
-Si <code>CLAUDE_API_KEY</code> n'est pas configuré, fonctionne en mode basique (checklist manuelle).</p>
-<p><strong>Modèle utilisé</strong> : <code>claude-3-5-sonnet-20241022</code></p>
+Si <code>GEMINI_API_KEY</code> n'est pas configuré, fonctionne en mode basique (checklist manuelle).</p>
+<p><strong>Modèle utilisé</strong> : <code>gemini-2.0-flash</code></p>
 <hr />
 <h3 id="4-githubworkflowsci-testsyml">4. <code>.github/workflows/ci-tests.yml</code><a class="headerlink" href="#4-githubworkflowsci-testsyml" title="Permanent link">&para;</a></h3>
 <p><strong>Rôle</strong> : Exécute les tests et validations sur chaque PR</p>
