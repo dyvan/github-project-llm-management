@@ -114,12 +114,8 @@ jobs:
           # Create .env targeting projectbot-test01
           OWNER=$(echo "$TEST_REPO" | cut -d'/' -f1)
           REPO=$(echo "$TEST_REPO" | cut -d'/' -f2)
-          cat > "$TEMPLATE_DIR/.env" <<ENVEOF
-GH_TOKEN=$GH_TOKEN
-GH_OWNER=$OWNER
-GH_REPO=$REPO
-GEMINI_API_KEY=test-not-needed-for-setup
-ENVEOF
+          printf "GH_TOKEN=%s\nGH_OWNER=%s\nGH_REPO=%s\nGEMINI_API_KEY=test-not-needed-for-setup\n" \
+            "$GH_TOKEN" "$OWNER" "$REPO" > "$TEMPLATE_DIR/.env"
 
           echo "Test environment prepared"
           echo "Template dir contents:"
