@@ -95,38 +95,46 @@ jobs:
       # ============================================================
       - name: Clone test repo and prepare environment
         run: |
-          # Clone projectbot-test01 into a temp directory
+          # Clone projectbot-test01 into a working directory
           TEST_DIR="/tmp/e2e-test"
           gh repo clone "$TEST_REPO" "$TEST_DIR" -- --depth 1
           echo "test_dir=$TEST_DIR" >> $GITHUB_ENV
 
-          # Copy template files into the test directory (simulating install)
-          cp -r template/ "$TEST_DIR/github-project-llm-management/"
-          cp template-setup.sh "$TEST_DIR/github-project-llm-management/"
-          cp -r scripts/ "$TEST_DIR/github-project-llm-management/scripts/"
-          cp -r .github/ "$TEST_DIR/github-project-llm-management/.github/"
-          cp CLAUDE.md "$TEST_DIR/github-project-llm-management/"
-          cp CLAUDE-USER-TEMPLATE.md "$TEST_DIR/github-project-llm-management/" 2>/dev/null || true
+          # Copy the ENTIRE template repo as a subdirectory (simulating install.sh clone)
+          TEMPLATE_DIR="$TEST_DIR/github-project-llm-management"
+          mkdir -p "$TEMPLATE_DIR"
+          # Copy everything from current checkout (the template repo)
+          cp -r template/ "$TEMPLATE_DIR/template/"
+          cp -r scripts/ "$TEMPLATE_DIR/scripts/"
+          cp -r .github/ "$TEMPLATE_DIR/.github/"
+          cp template-setup.sh "$TEMPLATE_DIR/"
+          cp CLAUDE.md "$TEMPLATE_DIR/"
+          cp CLAUDE-USER-TEMPLATE.md "$TEMPLATE_DIR/" 2>/dev/null || true
 
-          # Create .env file targeting projectbot-test01
+          # Create .env targeting projectbot-test01
           OWNER=$(echo "$TEST_REPO" | cut -d'/' -f1)
           REPO=$(echo "$TEST_REPO" | cut -d'/' -f2)
-          cat > "$TEST_DIR/.env" << EOF
-          GH_TOKEN=$GH_TOKEN
-          GH_OWNER=$OWNER
-          GH_REPO=$REPO
-          GEMINI_API_KEY=test-not-needed-for-setup
-          EOF
+          cat > "$TEMPLATE_DIR/.env" <<ENVEOF
+GH_TOKEN=$GH_TOKEN
+GH_OWNER=$OWNER
+GH_REPO=$REPO
+GEMINI_API_KEY=test-not-needed-for-setup
+ENVEOF
 
-          # Also put .env in the template subdirectory
-          cp "$TEST_DIR/.env" "$TEST_DIR/github-project-llm-management/.env"
-
-          echo "Test environment prepared at $TEST_DIR"
-          ls -la "$TEST_DIR/"
+          echo "Test environment prepared"
+          echo "Template dir contents:"
+          ls -la "$TEMPLATE_DIR/"
+          echo "Template/.setup contents:"
+          ls -la "$TEMPLATE_DIR/template/.setup/" 2>&1 || echo "WARNING: .setup not found"
 
       - name: Run template-setup.sh
         run: |
           cd "${{ env.test_dir }}/github-project-llm-management"
+
+          # template-setup.sh checks for git repo
+          git init
+          git config user.name "E2E Test"
+          git config user.email "e2e@test.local"
 
           # Override GITHUB_TOKEN so gh CLI uses our token
           export GITHUB_TOKEN="$GH_TOKEN"
@@ -212,13 +220,14 @@ jobs:
             "update-project.yml"
           )
 
-          ACTUAL=$(gh api repos/$TEST_REPO/contents/.github/workflows --jq '.[].name' 2>/dev/null || echo "")
+          # Check local filesystem (setup copies files to $PWD)
+          SETUP_DIR="${{ env.test_dir }}/github-project-llm-management"
           PASSED=0
           FAILED=0
           MISSING=""
 
           for wf in "${EXPECTED_WORKFLOWS[@]}"; do
-            if echo "$ACTUAL" | grep -qF "$wf"; then
+            if [ -f "$SETUP_DIR/.github/workflows/$wf" ]; then
               ((PASSED++))
             else
               ((FAILED++))
@@ -238,11 +247,11 @@ jobs:
       - name: Validate issue templates
         id: validate-templates
         run: |
-          TEMPLATES=$(gh api repos/$TEST_REPO/contents/.github/ISSUE_TEMPLATE --jq '.[].name' 2>/dev/null || echo "")
-          COUNT=$(echo "$TEMPLATES" | grep -c '.yml$' || echo 0)
+          SETUP_DIR="${{ env.test_dir }}/github-project-llm-management"
+          COUNT=$(ls "$SETUP_DIR/.github/ISSUE_TEMPLATE/"*.yml 2>/dev/null | wc -l | tr -d ' ')
 
           echo "Issue templates found: $COUNT"
-          echo "$TEMPLATES"
+          ls "$SETUP_DIR/.github/ISSUE_TEMPLATE/" 2>/dev/null || echo "(none)"
 
           echo "templates_count=$COUNT" >> $GITHUB_OUTPUT
           echo "templates_ok=$([ $COUNT -gt 0 ] && echo true || echo false)" >> $GITHUB_OUTPUT
@@ -250,10 +259,11 @@ jobs:
       - name: Validate CLAUDE.md and scripts
         id: validate-files
         run: |
+          SETUP_DIR="${{ env.test_dir }}/github-project-llm-management"
           FILES_OK=true
 
           # Check CLAUDE.md
-          if gh api repos/$TEST_REPO/contents/CLAUDE.md --jq '.name' > /dev/null 2>&1; then
+          if [ -f "$SETUP_DIR/CLAUDE.md" ]; then
             echo "CLAUDE.md: present"
           else
             echo "CLAUDE.md: MISSING"
@@ -263,7 +273,7 @@ jobs:
           # Check key scripts
           EXPECTED_SCRIPTS=("project_sync.py" "auto_close_parent_feature.py" "generate_specification.py")
           for script in "${EXPECTED_SCRIPTS[@]}"; do
-            if gh api repos/$TEST_REPO/contents/scripts/$script --jq '.name' > /dev/null 2>&1; then
+            if [ -f "$SETUP_DIR/scripts/$script" ]; then
               echo "scripts/$script: present"
             else
               echo "scripts/$script: MISSING"
