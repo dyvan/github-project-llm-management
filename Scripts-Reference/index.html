@@ -1517,12 +1517,12 @@ git checkout feat/42-add-dark-mode
 </code></pre></div></p>
 <hr />
 <h3 id="3-githubworkflowscode-review-agentyml">3. <code>.github/workflows/code-review-agent.yml</code><a class="headerlink" href="#3-githubworkflowscode-review-agentyml" title="Permanent link">&para;</a></h3>
-<p><strong>Rôle</strong> : Analyse automatiquement les PRs avec Claude AI</p>
+<p><strong>Rôle</strong> : Analyse automatiquement les PRs avec Gemini AI</p>
 <p><strong>Déclencheur</strong> :
 - PR ouverte, mise à jour, ou réouverte</p>
 <p><strong>Ce qu'il fait</strong> :
 1. Récupère le diff de la PR
-2. Envoie à l'API Claude avec un prompt structuré
+2. Envoie à l'API Gemini avec un prompt structuré
 3. Génère une revue de code avec :
    - ✅ Points forts
    - ⚠️ Suggestions d'amélioration

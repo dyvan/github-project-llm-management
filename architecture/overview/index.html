@@ -1937,7 +1937,7 @@ GitHub Actions triggered (multiple parallel)
 <div class="highlight"><pre><span></span><code>CI Tests Workflow              Code Review Workflow
     ↓                                ↓
 1. Install deps               1. Get PR diff
-2. Lint (black, pylint)       2. Call Claude API
+2. Lint (black, pylint)       2. Call Gemini API
 3. Type check (mypy)          3. Generate review
 4. Run tests (pytest)         4. Post comment
 5. Build                      5. Update status
@@ -1965,7 +1965,7 @@ Project Board reflects completion
 <h3 id="code-reviewer">Code Reviewer<a class="headerlink" href="#code-reviewer" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Input</strong> : PR opened/updated</li>
-<li><strong>Process</strong> : Extract diff → Call Claude → Format → Post</li>
+<li><strong>Process</strong> : Extract diff → Call Gemini → Format → Post</li>
 <li><strong>Output</strong> : Comment with feedback</li>
 <li><strong>Permissions</strong> : <code>pull-requests: write</code>, <code>contents: read</code></li>
 <li><strong>Note</strong> : Non-blocking, informational only</li>
@@ -2051,7 +2051,7 @@ Deploy to production
 <ul>
 <li>✅ Single repo with unlimited issues</li>
 <li>✅ Parallel workflow execution (GitHub Actions standard)</li>
-<li>✅ Claude API calls limited by rate limits</li>
+<li>✅ Gemini API calls limited by rate limits</li>
 </ul>
 <h3 id="growth-path">Growth Path<a class="headerlink" href="#growth-path" title="Permanent link">&para;</a></h3>
 <ol>
