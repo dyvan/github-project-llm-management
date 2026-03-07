@@ -391,7 +391,7 @@ jobs:
           # Test 1: Verify setup script help works
           echo "  1️⃣ Testing setup script help..."
           bash template-setup.sh --help > /tmp/help.txt 2>&1
-          if grep -q "Quick Start" /tmp/help.txt; then
+          if grep -q "USAGE:" /tmp/help.txt; then
             echo "    ✅ Setup help works"
           else
             echo "    ❌ Setup help missing"

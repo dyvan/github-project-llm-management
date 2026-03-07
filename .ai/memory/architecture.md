@@ -10,7 +10,7 @@ Template for automated GitHub project management with AI (Gemini) integration.
 ## Setup Flow
 
 ```
-install.sh (curl) -> bootstrap.sh -> template-setup.sh -> template/.setup/setup.sh
+install.sh (curl) -> template-setup.sh (creates .env if missing) -> template/.setup/setup.sh
 ```
 
 Setup runs 6 idempotent steps tracked via `.setup-state.json`:

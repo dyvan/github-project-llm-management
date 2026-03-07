@@ -231,7 +231,7 @@ clone_and_setup() {
            PROJECT_BOARD_SETUP.md REFACTOR_SUMMARY.md ROADMAP.md \
            TEMPLATE_INDEX.md TESTING_PHASE_1_2.md WORKFLOW_SPECIFICATION.md \
            pytest.ini requirements-dev.txt mkdocs.yml .claude/ \
-           install.sh bootstrap.sh 2>/dev/null || true
+           install.sh 2>/dev/null || true
 
     ok "Unnecessary files removed from template directory"
 

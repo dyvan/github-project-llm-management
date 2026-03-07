@@ -17,54 +17,31 @@ Automated Kanban • Smart Issues • AI Code Review • Zero configuration
 
 ---
 
-## ⚡ Quick Start (Just one command!)
+## Quick Start
 
-### Option 1️⃣: Curl + Bash (Recommended)
+There are two ways to get started:
+
+### Option 1: New project (curl install)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/dyvan/github-project-llm-management/main/install.sh | bash
 ```
 
-That's it! The script will:
-1. 📁 Ask for your project name
-2. 🔄 Clone the template
-3. 🚀 Launch the bootstrap automatically
-4. ✅ Configure everything
+The script will clone the template, collect your tokens, and configure everything.
 
-### Option 2️⃣: Clone + Manual Bootstrap
-
-If you prefer more control:
+### Option 2: Existing clone
 
 ```bash
 git clone https://github.com/dyvan/github-project-llm-management.git my-project
 cd my-project
-bash scripts/bootstrap.sh
+bash template-setup.sh
 ```
 
-### What does the bootstrap do?
-
-The script asks for:
-- **GitHub Token** - To create issues, labels, and a project board
-- **Gemini API Key** - For specification questionnaire generation (optional)
-
-**Then one of two paths:**
-
-#### ✅ Have a GitHub Token?
-Bootstrap automatically runs `template-setup.sh`:
-- 🏷️ GitHub labels created
-- 📊 Project Board initialized
-- 🔄 Workflows configured
-- **You're all set!** Create your first issue
-
-#### ⏸️ No token yet?
-Bootstrap displays instructions to:
-1. Generate a GitHub token (with the exact scopes needed)
-2. Add it to `.env`
-3. Run `bash template-setup.sh` manually
-
-**Zero configuration required!** 🎉
-
-➡️ **[Advanced Configuration](../../wiki)** • **[Full Guide](#-documentation)**
+`template-setup.sh` is the single entry point. It handles everything:
+- Creates `.env` interactively if missing (asks for GH_TOKEN, optional GEMINI_API_KEY)
+- Validates prerequisites (gh CLI, Python, git)
+- Sets up GitHub labels, project board, workflows, and issue templates
+- Idempotent: safe to run multiple times
 
 ---
 

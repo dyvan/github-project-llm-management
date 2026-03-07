@@ -77,7 +77,7 @@ Commands live in `.claude/commands/` and are invoked with `/`. Available command
 
 ## Setup and Architecture
 
-Install flow: `install.sh` (curl) -> `bootstrap.sh` -> `template-setup.sh` -> `template/.setup/setup.sh` (6 steps)
+Install flow: `install.sh` (curl) -> `template-setup.sh` (creates .env if missing) -> `template/.setup/setup.sh` (6 steps)
 
 Setup is idempotent via `.setup-state.json`.
 
