@@ -19,15 +19,15 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
     
     
       
-        <title>⚙️ Configuration - Project LLM Management</title>
+        <title>Configuration - Project LLM Management</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ⚙️ Configuration
+              Configuration
             
           </span>
         </div>
@@ -1050,15 +1050,87 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#fichier-de-configuration-principal" class="md-nav__link">
+  <a href="#github-token-gh_token-required-for-projects-v2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Fichier de configuration principal
+        GitHub Token (GH_TOKEN) -- REQUIRED for Projects v2
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Fichier de configuration principal">
+    <nav class="md-nav" aria-label="GitHub Token (GH_TOKEN) -- REQUIRED for Projects v2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-the-default-github_token-is-not-enough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why the default GITHUB_TOKEN is not enough
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-personal-access-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Personal Access Token
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-the-token-as-a-repository-secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding the token as a repository secret
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-the-token-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verifying the token works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fine-grained-personal-access-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fine-Grained Personal Access Tokens
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-configuration-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project configuration file
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Project configuration file">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1078,10 +1150,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#labels-github" class="md-nav__link">
+  <a href="#github-labels" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Labels GitHub
+        GitHub Labels
       
     </span>
   </a>
@@ -1089,22 +1161,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#secrets-github" class="md-nav__link">
+  <a href="#other-secrets" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Secrets GitHub
+        Other Secrets
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Secrets GitHub">
+    <nav class="md-nav" aria-label="Other Secrets">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#requis" class="md-nav__link">
+  <a href="#required" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Requis
+        Required
       
     </span>
   </a>
@@ -1112,10 +1184,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#optionnels" class="md-nav__link">
+  <a href="#optional" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Optionnels
+        Optional
       
     </span>
   </a>
@@ -1140,10 +1212,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#changer-le-modele-claude" class="md-nav__link">
+  <a href="#change-branch-naming-convention" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Changer le modèle Claude
+        Change branch naming convention
       
     </span>
   </a>
@@ -1151,21 +1223,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#modifier-le-naming-des-branches" class="md-nav__link">
+  <a href="#add-fields-to-the-project-board" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Modifier le naming des branches
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ajouter-des-champs-au-project-board" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ajouter des champs au Project Board
+        Add fields to the Project Board
       
     </span>
   </a>
@@ -1197,12 +1258,84 @@
   
 
 
-<h1 id="configuration">⚙️ Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h1>
-<p>Comment personnaliser le template selon vos besoins.</p>
-<h2 id="fichier-de-configuration-principal">Fichier de configuration principal<a class="headerlink" href="#fichier-de-configuration-principal" title="Permanent link">&para;</a></h2>
+<h1 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h1>
+<p>How to customize the template for your needs.</p>
+<h2 id="github-token-gh_token-required-for-projects-v2">GitHub Token (GH_TOKEN) -- REQUIRED for Projects v2<a class="headerlink" href="#github-token-gh_token-required-for-projects-v2" title="Permanent link">&para;</a></h2>
+<p>The <code>update-project.yml</code> workflow uses GitHub's GraphQL API to automatically
+sync issues and PRs with your Projects v2 board. This requires a Personal
+Access Token (PAT) with the <strong><code>project</code> scope</strong>, which the default
+<code>GITHUB_TOKEN</code> does <strong>not</strong> provide.</p>
+<h3 id="why-the-default-github_token-is-not-enough">Why the default GITHUB_TOKEN is not enough<a class="headerlink" href="#why-the-default-github_token-is-not-enough" title="Permanent link">&para;</a></h3>
+<p>GitHub Actions provides an automatic <code>GITHUB_TOKEN</code> for each workflow run.
+However, this token does <strong>not</strong> include the <code>project</code> scope needed for
+Projects v2 GraphQL mutations (<code>addProjectV2ItemById</code>,
+<code>updateProjectV2ItemFieldValue</code>, etc.). Attempting to use it will result in:</p>
+<ul>
+<li>HTTP 401 errors</li>
+<li><code>"Resource not accessible by integration"</code> GraphQL errors</li>
+<li>Silent failures with <code>continue-on-error: true</code></li>
+</ul>
+<h3 id="creating-a-personal-access-token">Creating a Personal Access Token<a class="headerlink" href="#creating-a-personal-access-token" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Go to <strong>https://github.com/settings/tokens/new</strong> (classic token)</li>
+<li>Give it a descriptive name, e.g. <code>project-bot-token</code></li>
+<li>Set an expiration (recommended: 90 days, then rotate)</li>
+<li>Select the following scopes:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Why it is needed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>repo</code></td>
+<td>Read/write access to repository contents, issues, and PRs</td>
+</tr>
+<tr>
+<td><code>project</code></td>
+<td>Read/write access to Projects v2 (GraphQL API)</td>
+</tr>
+<tr>
+<td><code>workflow</code></td>
+<td>Allows the token to trigger and update GitHub Actions workflows</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Click <strong>Generate token</strong> and copy the value immediately.</li>
+</ol>
+<h3 id="adding-the-token-as-a-repository-secret">Adding the token as a repository secret<a class="headerlink" href="#adding-the-token-as-a-repository-secret" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Using GitHub CLI (recommended)</span>
+gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>GH_TOKEN
+<span class="c1"># Paste the token when prompted</span>
+
+<span class="c1"># Or via the GitHub web UI:</span>
+<span class="c1"># Settings &gt; Secrets and variables &gt; Actions &gt; New repository secret</span>
+<span class="c1"># Name: GH_TOKEN</span>
+<span class="c1"># Value: &lt;your token&gt;</span>
+</code></pre></div>
+<h3 id="verifying-the-token-works">Verifying the token works<a class="headerlink" href="#verifying-the-token-works" title="Permanent link">&para;</a></h3>
+<p>After setting the secret, you can verify it by triggering the
+<code>update-project.yml</code> workflow. Check the <strong>"Diagnose token permissions for
+Projects v2"</strong> step in the workflow logs. You should see:</p>
+<div class="highlight"><pre><span></span><code>GraphQL auth OK (authenticated as: your-username)
+Projects v2 access OK (found N project(s) for your-username)
+</code></pre></div>
+<p>If you see warnings about missing <code>project</code> scope, regenerate the token
+with the correct scopes.</p>
+<h3 id="fine-grained-personal-access-tokens">Fine-Grained Personal Access Tokens<a class="headerlink" href="#fine-grained-personal-access-tokens" title="Permanent link">&para;</a></h3>
+<p>Fine-grained PATs do not currently support Projects v2 GraphQL operations.
+You must use a <strong>classic</strong> PAT. See the
+<a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens">GitHub docs on token types</a>
+for details.</p>
+<hr />
+<h2 id="project-configuration-file">Project configuration file<a class="headerlink" href="#project-configuration-file" title="Permanent link">&para;</a></h2>
 <h3 id="githubprojectyml"><code>.github/project.yml</code><a class="headerlink" href="#githubprojectyml" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="nt">project</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w">  </span><span class="c1"># 👈 Changez selon votre projet</span>
+<span class="w">  </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w">  </span><span class="c1"># Change to match your project number</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Project</span><span class="nv"> </span><span class="s">Backlog&quot;</span>
 <span class="w">  </span><span class="nt">auto_link</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 
@@ -1214,45 +1347,45 @@
 <span class="w">    </span><span class="nt">options</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;Low&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;Medium&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;High&quot;</span><span class="p p-Indicator">]</span>
 <span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Medium&quot;</span>
 </code></pre></div>
-<p><strong>À modifier</strong> :
-- <code>project.number</code> : Mettez le numéro de votre projet GitHub</p>
-<h2 id="labels-github">Labels GitHub<a class="headerlink" href="#labels-github" title="Permanent link">&para;</a></h2>
-<p>Les labels sont créés par <code>setup-project.sh</code>. Pour les personnaliser :</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Modifier setup-project.sh ligne 86+</span>
+<p><strong>To modify</strong>:
+- <code>project.number</code>: Set to the number of your GitHub Project (visible in the project URL)</p>
+<h2 id="github-labels">GitHub Labels<a class="headerlink" href="#github-labels" title="Permanent link">&para;</a></h2>
+<p>Labels are created by <code>setup-project.sh</code>. To customize:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Edit setup-project.sh labels section</span>
 <span class="nb">declare</span><span class="w"> </span>-a<span class="w"> </span><span class="nv">LABELS</span><span class="o">=(</span>
 <span class="w">    </span><span class="s2">&quot;type:feature:0e8a16:New feature&quot;</span>
-<span class="w">    </span><span class="s2">&quot;priority:urgent:ff0000:Urgent&quot;</span><span class="w">  </span><span class="c1"># Ajoutez vos labels</span>
+<span class="w">    </span><span class="s2">&quot;priority:urgent:ff0000:Urgent&quot;</span><span class="w">  </span><span class="c1"># Add your labels</span>
 <span class="o">)</span>
 </code></pre></div>
-<h2 id="secrets-github">Secrets GitHub<a class="headerlink" href="#secrets-github" title="Permanent link">&para;</a></h2>
-<h3 id="requis">Requis<a class="headerlink" href="#requis" title="Permanent link">&para;</a></h3>
+<h2 id="other-secrets">Other Secrets<a class="headerlink" href="#other-secrets" title="Permanent link">&para;</a></h2>
+<h3 id="required">Required<a class="headerlink" href="#required" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>GH_TOKEN</code> : Token avec scopes <code>repo</code>, <code>project</code>, <code>workflow</code></li>
+<li><code>GH_TOKEN</code>: PAT with scopes <code>repo</code>, <code>project</code>, <code>workflow</code> (see above)</li>
 </ul>
-<h3 id="optionnels">Optionnels<a class="headerlink" href="#optionnels" title="Permanent link">&para;</a></h3>
+<h3 id="optional">Optional<a class="headerlink" href="#optional" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>CLAUDE_API_KEY</code> : Pour revue de code IA</li>
+<li><code>GEMINI_API_KEY</code>: Google Gemini API key (used by code review, planning, and spec workflows)</li>
+<li><code>GEMINI_PLAN_API_KEY</code>: Dedicated key for plan-with-gemini workflow (falls back to GEMINI_API_KEY)</li>
+<li><code>GEMINI_SPEC_API_KEY</code>: Dedicated key for generate-specification workflow (falls back to GEMINI_API_KEY)</li>
+<li><code>GEMINI_REVIEW_API_KEY</code>: Dedicated key for code-review-agent workflow (falls back to GEMINI_API_KEY)</li>
+<li><code>SLACK_WEBHOOK_URL</code>: For Slack notifications</li>
 </ul>
 <div class="highlight"><pre><span></span><code>gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>GH_TOKEN
-gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>CLAUDE_API_KEY
+gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>GEMINI_API_KEY
 </code></pre></div>
 <h2 id="workflows">Workflows<a class="headerlink" href="#workflows" title="Permanent link">&para;</a></h2>
-<p>Modifiez les workflows dans <code>.github/workflows/</code> selon vos besoins :</p>
-<h3 id="changer-le-modele-claude">Changer le modèle Claude<a class="headerlink" href="#changer-le-modele-claude" title="Permanent link">&para;</a></h3>
-<p>Dans <code>code-review-agent.yml</code> ligne 69 :
-<div class="highlight"><pre><span></span><code><span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span>  <span class="c1"># Changez ici</span>
+<p>Modify workflows in <code>.github/workflows/</code> as needed:</p>
+<h3 id="change-branch-naming-convention">Change branch naming convention<a class="headerlink" href="#change-branch-naming-convention" title="Permanent link">&para;</a></h3>
+<p>In <code>create-branch.yml</code>:
+<div class="highlight"><pre><span></span><code><span class="nv">BRANCH_NAME</span><span class="o">=</span><span class="s2">&quot;feat/</span><span class="si">${</span><span class="nv">ISSUE_NUMBER</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">SLUGIFIED</span><span class="si">}</span><span class="s2">&quot;</span><span class="w">  </span><span class="c1"># Customize</span>
 </code></pre></div></p>
-<h3 id="modifier-le-naming-des-branches">Modifier le naming des branches<a class="headerlink" href="#modifier-le-naming-des-branches" title="Permanent link">&para;</a></h3>
-<p>Dans <code>create-branch.yml</code> ligne 32 :
-<div class="highlight"><pre><span></span><code><span class="nv">BRANCH_NAME</span><span class="o">=</span><span class="s2">&quot;feat/</span><span class="si">${</span><span class="nv">ISSUE_NUMBER</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">SLUGIFIED</span><span class="si">}</span><span class="s2">&quot;</span><span class="w">  </span><span class="c1"># Personnalisez</span>
-</code></pre></div></p>
-<h3 id="ajouter-des-champs-au-project-board">Ajouter des champs au Project Board<a class="headerlink" href="#ajouter-des-champs-au-project-board" title="Permanent link">&para;</a></h3>
-<p>Dans <code>update-project.yml</code>, ajoutez vos mappings :
-<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LABEL</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;mon-label&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span>python<span class="w"> </span>scripts/project_sync.py<span class="w"> </span>--issue<span class="w"> </span><span class="nv">$ISSUE_NUM</span><span class="w"> </span>--status<span class="w"> </span><span class="s2">&quot;Mon Status&quot;</span>
+<h3 id="add-fields-to-the-project-board">Add fields to the Project Board<a class="headerlink" href="#add-fields-to-the-project-board" title="Permanent link">&para;</a></h3>
+<p>In <code>update-project.yml</code>, add your label mappings:
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LABEL</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;my-label&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span>python<span class="w"> </span>scripts/project_sync.py<span class="w"> </span>--issue<span class="w"> </span><span class="nv">$ISSUE_NUM</span><span class="w"> </span>--status<span class="w"> </span><span class="s2">&quot;My Status&quot;</span>
 <span class="k">fi</span>
 </code></pre></div></p>
-<p><a href="Getting-Started">⬅️ Getting Started</a> | <a href="Using-The-Template">➡️ Using The Template</a></p>
+<p><a href="Getting-Started">&lt;- Getting Started</a> | <a href="Using-The-Template">-&gt; Using The Template</a></p>
 
 
 
@@ -1308,10 +1441,10 @@ gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</sp
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.code.select", "navigation.instant", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.code.select", "navigation.instant", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

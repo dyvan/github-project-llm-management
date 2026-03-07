@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1061,10 +1061,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#project-not-found-ou-graphql-errors" class="md-nav__link">
+  <a href="#project-not-found-or-graphql-errors-or-http-401" class="md-nav__link">
     <span class="md-ellipsis">
       
-        "Project not found" ou "GraphQL errors"
+        "Project not found" or "GraphQL errors" or HTTP 401
       
     </span>
   </a>
@@ -1138,10 +1138,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#token-github-invalide" class="md-nav__link">
+  <a href="#invalid-or-insufficient-github-token" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Token GitHub invalide
+        Invalid or insufficient GitHub token
       
     </span>
   </a>
@@ -1193,18 +1193,30 @@ sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> <
 <span class="c1"># Windows</span>
 winget<span class="w"> </span>install<span class="w"> </span>GitHub.cli
 </code></pre></div>
-<h2 id="project-not-found-ou-graphql-errors">"Project not found" ou "GraphQL errors"<a class="headerlink" href="#project-not-found-ou-graphql-errors" title="Permanent link">&para;</a></h2>
-<p><strong>Causes</strong> :
-- Projet n'existe pas
-- Mauvais numéro dans <code>.github/project.yml</code>
-- Token sans scope <code>project</code></p>
-<p><strong>Solutions</strong> :
-<div class="highlight"><pre><span></span><code><span class="c1"># Vérifier projets existants</span>
+<h2 id="project-not-found-or-graphql-errors-or-http-401">"Project not found" or "GraphQL errors" or HTTP 401<a class="headerlink" href="#project-not-found-or-graphql-errors-or-http-401" title="Permanent link">&para;</a></h2>
+<p><strong>Most common cause</strong>: The <code>GH_TOKEN</code> secret is missing the <code>project</code> scope.</p>
+<p>The default <code>GITHUB_TOKEN</code> provided by GitHub Actions does <strong>not</strong> support
+Projects v2 GraphQL operations. You need a classic Personal Access Token (PAT)
+with scopes: <code>repo</code>, <code>project</code>, <code>workflow</code>.</p>
+<p><strong>How to fix</strong>:</p>
+<ol>
+<li>Create a new PAT at https://github.com/settings/tokens/new</li>
+<li>Select scopes: <code>repo</code>, <code>project</code>, <code>workflow</code></li>
+<li>Save it as a repository secret:
+   <div class="highlight"><pre><span></span><code>gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>GH_TOKEN
+</code></pre></div></li>
+<li>Re-run the failed workflow</li>
+</ol>
+<p>See <a href="Configuration">Configuration</a> for detailed instructions.</p>
+<p><strong>Other causes</strong>:
+- Project does not exist or wrong number in <code>.github/project.yml</code>
+- Fine-grained PAT used instead of classic PAT (Projects v2 requires classic)</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Verify existing projects</span>
 gh<span class="w"> </span>project<span class="w"> </span>list<span class="w"> </span>--owner<span class="w"> </span>YOUR_USERNAME
 
-<span class="c1"># Mettre à jour project.yml avec bon numéro</span>
-<span class="c1"># Recréer token avec scope project</span>
-</code></pre></div></p>
+<span class="c1"># Check the diagnostic step in update-project.yml workflow logs</span>
+<span class="c1"># for detailed error messages</span>
+</code></pre></div>
 <h2 id="permission-denied-sur-scripts">"Permission denied" sur scripts<a class="headerlink" href="#permission-denied-sur-scripts" title="Permanent link">&para;</a></h2>
 <p><strong>Solution</strong> :
 <div class="highlight"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>setup-project.sh
@@ -1250,12 +1262,14 @@ pytest<span class="w"> </span>tests/<span class="w"> </span>-v
 <span class="c1"># Vérifier workflows YAML</span>
 python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import yaml; [yaml.safe_load(open(f)) for f in [&#39;.github/workflows/ci-tests.yml&#39;]]&quot;</span>
 </code></pre></div>
-<h2 id="token-github-invalide">Token GitHub invalide<a class="headerlink" href="#token-github-invalide" title="Permanent link">&para;</a></h2>
-<p><strong>Recréer</strong> :
-1. Aller sur https://github.com/settings/tokens/new
-2. Cocher scopes : <code>repo</code>, <code>project</code>, <code>workflow</code>
-3. Générer
-4. Configurer : <code>gh secret set GH_TOKEN</code></p>
+<h2 id="invalid-or-insufficient-github-token">Invalid or insufficient GitHub token<a class="headerlink" href="#invalid-or-insufficient-github-token" title="Permanent link">&para;</a></h2>
+<p><strong>Recreate</strong>:
+1. Go to https://github.com/settings/tokens/new (must be <strong>classic</strong> token)
+2. Select scopes: <code>repo</code>, <code>project</code>, <code>workflow</code>
+3. Generate and copy the token
+4. Store as secret: <code>gh secret set GH_TOKEN</code></p>
+<p><strong>Note</strong>: Fine-grained PATs do not support Projects v2. Use a classic PAT.
+See <a href="Configuration">Configuration</a> for details.</p>
 <h2 id="besoin-daide-supplementaire">Besoin d'aide supplémentaire<a class="headerlink" href="#besoin-daide-supplementaire" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Valider setup : <code>./scripts/validate_setup.sh</code></li>
@@ -1319,10 +1333,10 @@ python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;i
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.code.select", "navigation.instant", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.code.select", "navigation.instant", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
