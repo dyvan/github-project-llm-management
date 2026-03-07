@@ -69,9 +69,9 @@ jobs:
           git add README.md
           git commit -m "Initial commit"
 
-          git remote add origin "https://github.com/dyvan-bot/$TEST_REPO.git"
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/dyvan-bot/$TEST_REPO.git"
           git branch -M main
-          git push -u origin main 2>&1 | grep -E "(master|main|error)" | head -1
+          git push -u origin main
 
           echo "test_dir=$TEST_DIR" >> $GITHUB_ENV
           echo "Repo initialized and pushed"
@@ -311,7 +311,7 @@ jobs:
           git add tests/ .gitignore
           git commit -m "test: add unit tests"
 
-          git remote add origin "https://github.com/dyvan-bot/$TEST_REPO.git"
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/dyvan-bot/$TEST_REPO.git"
           git branch -M main
           git push -u origin main
 
@@ -574,7 +574,7 @@ jobs:
           git add README.md
           git commit -m "Initial commit"
 
-          git remote add origin "https://github.com/dyvan-bot/$TEST_REPO.git"
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/dyvan-bot/$TEST_REPO.git"
           git branch -M main
           git push -u origin main
           echo "Test repo ready"
@@ -606,7 +606,7 @@ jobs:
           git init -b main 2>/dev/null || true
           git config user.name "E2E Test Bot"
           git config user.email "e2e-test@github.com"
-          git remote add origin "https://github.com/dyvan-bot/${{ steps.create-repo.outputs.test_repo }}.git" 2>/dev/null || true
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/dyvan-bot/${{ steps.create-repo.outputs.test_repo }}.git" 2>/dev/null || true
 
           export GITHUB_TOKEN="$GH_TOKEN"
 
