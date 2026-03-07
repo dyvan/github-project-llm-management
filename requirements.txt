@@ -2,9 +2,7 @@
 python-dotenv==1.0.0
 requests==2.31.0
 
-# LLM & API clients
-anthropic==0.40.0
-openai==1.33.0
+# LLM API client (Gemini only)
 google-generativeai==0.6.0
 
 # GitHub interaction
