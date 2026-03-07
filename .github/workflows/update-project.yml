@@ -31,15 +31,18 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up GitHub token
+        id: token
         run: |
           # Use custom GH_TOKEN if available (with project permissions)
-          # Otherwise use default GITHUB_TOKEN
+          # Otherwise use default GITHUB_TOKEN (may lack project scope)
           if [ -n "${{ secrets.GH_TOKEN }}" ]; then
             echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
+            echo "has_project_token=true" >> $GITHUB_OUTPUT
             echo "✅ Using custom GH_TOKEN with project permissions"
           else
             echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
-            echo "⚠️  Using default GITHUB_TOKEN (limited permissions)"
+            echo "has_project_token=false" >> $GITHUB_OUTPUT
+            echo "⚠️  Using default GITHUB_TOKEN (may lack project permissions)"
           fi
 
       - name: Load project configuration
@@ -131,6 +134,7 @@ jobs:
       # See WORKFLOW_SPECIFICATION.md for details.
 
       - name: Update project on issue labeled
+        continue-on-error: true
         if: github.event_name == 'issues' && github.event.action == 'labeled'
         run: |
           LABEL="${{ github.event.label.name }}"
@@ -165,6 +169,7 @@ jobs:
           fi
 
       - name: Sync PR to project and update status
+        continue-on-error: true
         if: github.event_name == 'pull_request' && github.event.action == 'opened'
         run: |
           # Add PR to project with "In review" status
@@ -188,6 +193,7 @@ jobs:
           fi
 
       - name: Update project on PR merge
+        continue-on-error: true
         if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged
         run: |
           # Update PR status to Done

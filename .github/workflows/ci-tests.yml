@@ -187,12 +187,23 @@ jobs:
       - name: Verify project structure
         run: |
           echo "Verifying project structure..."
-          test -f setup-project.sh || exit 1
-          test -f scripts/project_sync.py || exit 1
-          test -f claude.md || exit 1
-          test -f AUTOMATION.md || exit 1
-          test -d .github/workflows || exit 1
-          test -d tests || exit 1
+          errors=0
+          for f in scripts/project_sync.py CLAUDE.md README.md; do
+            if [ ! -f "$f" ]; then
+              echo "❌ Missing: $f"
+              errors=$((errors + 1))
+            fi
+          done
+          for d in .github/workflows tests; do
+            if [ ! -d "$d" ]; then
+              echo "❌ Missing directory: $d"
+              errors=$((errors + 1))
+            fi
+          done
+          if [ $errors -gt 0 ]; then
+            echo "❌ $errors file(s) missing"
+            exit 1
+          fi
           echo "✅ Project structure verified"
 
       - name: Check documentation exists
