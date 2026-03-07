@@ -111,7 +111,6 @@ gh pr merge 45
 **What happens**:
 - Reads QCM responses from issue comments
 - Gemini AI generates a detailed specification document
-- Specification saved to `specifications/issue-{number}/`
 - Sub-issue created with the specification
 - Labels `auto-branch` and `specifications-ready` added
 
