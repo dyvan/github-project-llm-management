@@ -127,10 +127,11 @@ jobs:
         run: |
           cd "${{ env.test_dir }}/github-project-llm-management"
 
-          # template-setup.sh checks for git repo
+          # template-setup.sh checks for git repo + gh repo view
           git init
           git config user.name "E2E Test"
           git config user.email "e2e@test.local"
+          git remote add origin "https://github.com/$TEST_REPO.git"
 
           # Override GITHUB_TOKEN so gh CLI uses our token
           export GITHUB_TOKEN="$GH_TOKEN"
