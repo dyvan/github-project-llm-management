@@ -11,7 +11,7 @@ on:
         type: number
 
 permissions:
-  contents: write
+  contents: read
   issues: write
 
 jobs:
@@ -73,14 +73,6 @@ jobs:
             --save-files \
             --create-sub-issue
 
-      - name: Commit specification files
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add specifications/
-          git commit -m "docs: Add specification for issue #${{ steps.issue.outputs.number }}" || echo "No changes to commit"
-          git push
-
       - name: Add ready labels
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -99,7 +91,6 @@ jobs:
           echo "   Status: ✅ Completed"
           echo ""
           echo "Generated:"
-          echo "   ✅ Specification files saved to specifications/issue-${{ steps.issue.outputs.number }}/"
           echo "   ✅ Sub-issue created with detailed specification"
           echo "   ✅ Labels added: auto-branch, specifications-ready"
           echo ""
