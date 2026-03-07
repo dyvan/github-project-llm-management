@@ -86,4 +86,6 @@ nav:
       - FAQ: faq.md
       - Hooks: hooks.md
       - Milestones: milestones.md
+  - Agents:
+      - PM Agent: pm-agent.md
   - Contributing: Contributing.md
