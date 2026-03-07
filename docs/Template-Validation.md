@@ -103,7 +103,7 @@ Le workflow `.github/workflows/template-validation.yml` valide automatiquement q
 **Packages testés** :
 - requests
 - pyyaml
-- anthropic
+- google-generativeai
 - pytest
 - pytest-cov
 - pytest-mock

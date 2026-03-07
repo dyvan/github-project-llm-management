@@ -50,24 +50,29 @@ gh auth login
 # Authenticate with browser
 ```
 
-#### `CLAUDE_API_KEY` (for Code Review)
-1. Get your API key from [console.anthropic.com](https://console.anthropic.com)
+#### `GEMINI_API_KEY` (for Code Review and AI workflows)
+1. Get your API key from [aistudio.google.com](https://aistudio.google.com/app/apikey)
 2. Add it to your repo secrets:
 
 ```bash
-gh secret set CLAUDE_API_KEY --body "sk-ant-..."
-```
-
-### Optional Secrets
-
-#### `OPENAI_API_KEY` (Alternative to Claude)
-```bash
-gh secret set OPENAI_API_KEY --body "sk-..."
-```
-
-#### `GEMINI_API_KEY` (Alternative to Claude)
-```bash
 gh secret set GEMINI_API_KEY --body "AIza..."
+```
+
+### Optional Secrets (per-workflow keys)
+
+#### `GEMINI_REVIEW_API_KEY` (dedicated key for code review)
+```bash
+gh secret set GEMINI_REVIEW_API_KEY --body "AIza..."
+```
+
+#### `GEMINI_PLAN_API_KEY` (dedicated key for planning)
+```bash
+gh secret set GEMINI_PLAN_API_KEY --body "AIza..."
+```
+
+#### `GEMINI_SPEC_API_KEY` (dedicated key for specification)
+```bash
+gh secret set GEMINI_SPEC_API_KEY --body "AIza..."
 ```
 
 ## Step 4: Enable GitHub Projects v2
@@ -199,7 +204,7 @@ Run this checklist:
 **Solution**: Check **Settings → Actions → General** → ensure workflows are enabled
 
 ### Issue: Code Review Agent not working
-**Solution**: Verify `CLAUDE_API_KEY` is set correctly (no extra spaces)
+**Solution**: Verify `GEMINI_API_KEY` is set correctly (no extra spaces)
 
 ### Issue: Branch not created
 **Solution**: Ensure `auto-branch` label is added to the issue

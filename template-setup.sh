@@ -31,7 +31,7 @@ QUICK START (3 steps):
 
   2. Edit .env with your settings:
      - GH_TOKEN: Your GitHub Personal Access Token
-     - CLAUDE_API_KEY: Your Anthropic Claude API key (optional)
+     - GEMINI_API_KEY: Your Google Gemini API key (optional)
 
   3. Run setup:
      bash template-setup.sh

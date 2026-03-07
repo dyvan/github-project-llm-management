@@ -99,8 +99,8 @@ automation:
 agents:
   code_review:
     enabled: true
-    provider: "claude"  # Options: claude, openai, gemini
-    model: "claude-3-5-sonnet-20241022"
+    provider: "gemini"
+    model: "gemini-2.0-flash"
     on_events:
       - "pull_request.opened"
       - "pull_request.synchronize"

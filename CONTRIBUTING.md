@@ -137,9 +137,7 @@ project-name/
 - **GitHub Actions** : CI/CD
 
 ### APIs LLM
-- **Claude (Anthropic)** : Code review, suggestions
-- **OpenAI API** : Alternative (optionnel)
-- **Gemini API** : Alternative (optionnel)
+- **Gemini (Google)** : Code review, planification, spécification
 
 ---
 

@@ -182,8 +182,8 @@ GH_PROJECT_NUMBER=${gh_project_number:-0}
 GEMINI_API_KEY=$gemini_key
 
 # LLM Configuration
-LLM_PROVIDER=claude
-LLM_MODEL=claude-3-5-sonnet-20241022
+LLM_PROVIDER=gemini
+LLM_MODEL=gemini-2.0-flash
 
 # Logging
 LOG_LEVEL=INFO

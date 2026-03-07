@@ -60,17 +60,7 @@ Configurez le même `GH_PROJECT_NUMBER` dans chaque repo.
 
 ## Changer le modèle LLM
 
-Dans `code-review-agent.yml` :
-
-```python
-# Utiliser GPT-4
-from openai import OpenAI
-client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
-response = client.chat.completions.create(
-    model="gpt-4-turbo",
-    messages=[{"role": "user", "content": prompt}]
-)
-```
+Tous les workflows IA utilisent Gemini. Le modèle par défaut est `gemini-2.0-flash`. Pour changer le modèle, modifiez la variable correspondante dans le workflow `code-review-agent.yml`.
 
 ## Ajouter des validations custom
 

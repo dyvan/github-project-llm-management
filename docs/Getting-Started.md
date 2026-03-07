@@ -109,12 +109,12 @@ gh auth login
 gh secret set GH_TOKEN
 # Collez votre token quand demandé
 
-# (Optionnel) Configurez la clé API Claude pour la revue de code IA
-gh secret set CLAUDE_API_KEY
-# Obtenez votre clé sur : https://console.anthropic.com/
+# (Optionnel) Configurez la clé API Gemini pour la revue de code IA
+gh secret set GEMINI_API_KEY
+# Obtenez votre clé sur : https://aistudio.google.com/app/apikey
 ```
 
-> **💡 Note** : Sans `CLAUDE_API_KEY`, la revue de code fonctionnera en mode basique (sans IA).
+> **💡 Note** : Sans `GEMINI_API_KEY`, la revue de code fonctionnera en mode basique (sans IA).
 
 ---
 

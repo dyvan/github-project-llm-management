@@ -185,7 +185,7 @@ EOF
 
 # 3. Informer l'utilisateur
 echo "✅ PR créée et prête pour review"
-echo "🤖 Le Code Review Agent (Claude) va analyser automatiquement"
+echo "🤖 Le Code Review Agent (Gemini) va analyser automatiquement"
 echo "🧪 Les tests CI/CD vont se lancer automatiquement"
 ```
 
@@ -297,7 +297,7 @@ python scripts/generate_dashboard.py
 
 ### 2. `code-review-agent.yml`
 **Déclencheur** : PR ouverte, synchronisée, ou rouverte
-**Action** : Claude AI analyse le code et poste un commentaire avec :
+**Action** : Gemini AI analyse le code et poste un commentaire avec :
   - ✅ Points positifs
   - ⚠️ Suggestions d'amélioration
   - 🔴 Problèmes critiques (sécurité, performance)
@@ -700,10 +700,13 @@ python scripts/project_sync.py --issue 156 --status "In Review"
 Dans **Settings → Secrets and variables → Actions** :
 
 - `GH_TOKEN` : GitHub Personal Access Token (scopes: `repo`, `workflow`, `read:org`)
-- `CLAUDE_API_KEY` : Anthropic API key pour le code review
-- `OPENAI_API_KEY` : (Optionnel) OpenAI API key
-- `GEMINI_API_KEY` : (Optionnel) Google Gemini API key
+- `GEMINI_API_KEY` : Google Gemini API key pour le code review et les workflows IA
+- `GEMINI_PLAN_API_KEY` : (Optionnel) Clé Gemini dédiée au workflow de planification
+- `GEMINI_SPEC_API_KEY` : (Optionnel) Clé Gemini dédiée au workflow de spécification
+- `GEMINI_REVIEW_API_KEY` : (Optionnel) Clé Gemini dédiée au workflow de code review
 - `SLACK_WEBHOOK_URL` : (Optionnel) Pour notifications Slack
+
+> **Note** : Les clés par workflow (`GEMINI_PLAN_API_KEY`, `GEMINI_SPEC_API_KEY`, `GEMINI_REVIEW_API_KEY`) sont optionnelles. Si elles ne sont pas configurées, `GEMINI_API_KEY` est utilisée comme fallback.
 
 ### Variables d'Environnement
 
@@ -713,9 +716,7 @@ Fichier `.env` (local uniquement, jamais committer) :
 GH_TOKEN=ghp_xxxxxxxxxxxxx
 GH_OWNER=your-username
 GH_REPO=your-repo-name
-CLAUDE_API_KEY=sk-ant-xxxxxxxxxxxxx
-LLM_PROVIDER=claude
-LLM_MODEL=claude-3-5-sonnet-20241022
+GEMINI_API_KEY=AIza-xxxxxxxxxxxxx
 DEBUG=false
 LOG_LEVEL=INFO
 ```
@@ -728,7 +729,7 @@ LOG_LEVEL=INFO
 - **GitHub Projects v2** : https://docs.github.com/en/issues/planning-and-tracking-with-projects
 - **GitHub Actions** : https://docs.github.com/en/actions
 - **Conventional Commits** : https://www.conventionalcommits.org/
-- **Anthropic Claude API** : https://docs.anthropic.com/
+- **Google Gemini API** : https://aistudio.google.com/
 
 ---
 

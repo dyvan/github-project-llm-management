@@ -421,7 +421,7 @@ gh auth status
 
 # Variables disponibles dans workflows
 echo $GH_TOKEN         # GitHub Token
-echo $CLAUDE_API_KEY   # Pour AI review (optionnel)
+echo $GEMINI_API_KEY   # Pour AI review (optionnel)
 ```
 
 ### .env (gitignored)

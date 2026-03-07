@@ -91,12 +91,12 @@ python3 scripts/project_sync.py --issue 1 --status "Backlog"
 ## Code Review ne fonctionne pas
 
 **Sans commentaire** :
-- Vérifier `CLAUDE_API_KEY` : `gh secret list`
+- Vérifier `GEMINI_API_KEY` : `gh secret list`
 - Mode basique sans API key
 
 **Erreur API** :
 - Vérifier validité clé
-- Vérifier quotas : https://console.anthropic.com/
+- Vérifier quotas : https://aistudio.google.com/
 
 ## Tests échouent
 

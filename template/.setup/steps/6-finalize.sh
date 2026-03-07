@@ -57,7 +57,7 @@ run_step() {
     echo ""
     echo "4. Add GitHub secrets (if using CI/CD):"
     echo "   gh secret set GH_TOKEN"
-    echo "   gh secret set CLAUDE_API_KEY"
+    echo "   gh secret set GEMINI_API_KEY"
     echo ""
 
     return 0
