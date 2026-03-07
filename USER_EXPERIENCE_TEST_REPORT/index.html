@@ -773,7 +773,7 @@
   <span class="md-ellipsis">
     
   
-    Agents Documentation
+    API Reference
   
 
     
@@ -786,144 +786,6 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Agents Documentation
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../agents/branch-creator.md" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Branch Creator
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../agents/code-reviewer.md" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Code Reviewer
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../agents/test-feedback.md" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Test Feedback
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
-        
-          
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    API Reference
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1354,12 +1216,12 @@
 <p><strong>Priority</strong>: 🟡 Medium</p>
 <hr />
 <h3 id="2-setup-script-missing-usage-instructions">2. Setup Script Missing Usage Instructions<a class="headerlink" href="#2-setup-script-missing-usage-instructions" title="Permanent link">&para;</a></h3>
-<p><strong>Problem</strong>: <code>setup-project.sh</code> doesn't display help when run with <code>--help</code></p>
+<p><strong>Problem</strong>: <code>template-setup.sh</code> doesn't display help when run with <code>--help</code></p>
 <p><strong>Impact</strong>: User doesn't know how to use it</p>
 <p><strong>Recommended Solution</strong>:
-<div class="highlight"><pre><span></span><code><span class="c1"># Add to setup-project.sh</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Add to template-setup.sh</span>
 <span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;--help&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;-h&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Usage: ./setup-project.sh&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Usage: ./template-setup.sh&quot;</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;This script will:&quot;</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;  1. Create GitHub labels&quot;</span>
@@ -1408,7 +1270,7 @@ git clone https://github.com/YOU/your-project.git
 cd your-project
 
 <span class="gh"># 3. Run the automatic setup</span>
-./setup-project.sh
+./template-setup.sh
 </code></pre></div></p>
 <p>➡️ <strong><a href="../../wiki/Getting-Started">Full guide in 5 steps</a></strong>
 <div class="highlight"><pre><span></span><code>**Priority**: 🟡 Medium
@@ -1435,7 +1297,7 @@ No action required
 
 ```markdown
 - [ ] Replace &quot;GraphQL&quot;, &quot;API&quot; with simpler terms in README
-- [ ] Add --help to setup-project.sh
+- [ ] Add --help to template-setup.sh
 - [ ] Add docs links in script errors
 - [ ] Reduce quick start to 3 commands max
 - [ ] Re-test after modifications
