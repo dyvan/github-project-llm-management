@@ -1,33 +1,36 @@
-site_name: Project LLM Management
-site_description: GitHub-based project management with LLM agents
-site_author: Your Team
-repo_url: https://github.com/your-org/project-llm-management
-repo_name: project-llm-management
+site_name: GitHub Project LLM Management
+site_description: Turnkey template for automated GitHub project management with AI
+site_author: dyvan
+site_url: https://dyvan.github.io/github-project-llm-management/
+repo_url: https://github.com/dyvan/github-project-llm-management
+repo_name: dyvan/github-project-llm-management
 
 theme:
   name: material
   icon:
     repo: fontawesome/brands/github
+    logo: material/robot-outline
   features:
     - content.code.copy
     - content.code.select
     - navigation.instant
     - navigation.tracking
     - navigation.top
+    - navigation.sections
     - toc.follow
     - search.suggest
     - search.highlight
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: blue
+      primary: indigo
       accent: amber
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: blue
+      primary: indigo
       accent: amber
       toggle:
         icon: material/brightness-4
@@ -50,26 +53,31 @@ markdown_extensions:
       use_pygments: true
   - pymdownx.arithmatex:
       generic: true
+  - attr_list
+  - md_in_html
   - toc:
       permalink: true
 
 nav:
   - Home: index.md
   - Getting Started:
+      - Overview: Getting-Started.md
       - Installation: getting-started/installation.md
       - Quick Start: getting-started/quickstart.md
       - First Issue: getting-started/first-issue.md
+  - User Guide:
+      - Using the Template: Using-The-Template.md
+      - Configuration: Configuration.md
+      - QCM Specification: QCM-Specification.md
+      - Scripts Reference: Scripts-Reference.md
   - Architecture:
       - Overview: architecture/overview.md
       - GitHub Projects v2: architecture/github-projects.md
       - Workflows: architecture/workflows.md
-      - Agents: architecture/agents.md
-  - Guides:
-      - GitHub Projects Setup: guides/setup-github-projects.md
-      - Using Agents: guides/using-agents.md
-      - Contributing: guides/contributing.md
-      - Troubleshooting: guides/troubleshooting.md
-  - API Reference:
-      - GitHub Actions: api/github-actions.md
-      - LLM Integration: api/llm-integration.md
-  - FAQ: faq.md
+      - Understanding Workflows: Understanding-Workflows.md
+  - Reference:
+      - Advanced Customization: Advanced-Customization.md
+      - Template Validation: Template-Validation.md
+      - Troubleshooting: Troubleshooting.md
+      - FAQ: faq.md
+  - Contributing: Contributing.md

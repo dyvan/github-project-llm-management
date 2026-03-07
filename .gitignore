@@ -146,3 +146,4 @@ site/
 # NOTE: Only ignore the state file, not the setup scripts!
 template/.setup/.setup-state.json
 .setup-state.json
+site/

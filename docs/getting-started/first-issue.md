@@ -224,6 +224,6 @@ You just:
 
 ## 🎓 Next Steps
 
-- Explore the [LLM agents](../guides/using-agents.md)
-- Set up [Slack webhooks](../guides/setup-github-projects.md)
+- Learn about [Advanced Customization](../Advanced-Customization.md)
+- Configure [GitHub Projects v2](../architecture/github-projects.md)
 - Customize the [workflows](../architecture/workflows.md)
