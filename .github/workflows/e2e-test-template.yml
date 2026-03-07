@@ -15,7 +15,8 @@ jobs:
 
     env:
       TEST_REPO: dyvan/projectbot-test01
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      # TEST_BOT_TOKEN has cross-repo access to projectbot-test01
+      GH_TOKEN: ${{ secrets.TEST_BOT_TOKEN }}
 
     steps:
       # ============================================================
