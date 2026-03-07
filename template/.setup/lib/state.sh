@@ -18,7 +18,7 @@ init_state() {
     "create_project": false,
     "setup_fields": false,
     "link_workflows": false,
-    "create_symlinks": false,
+    "copy_claude_md": false,
     "setup_complete": false
   },
   "configuration": {
@@ -36,10 +36,11 @@ EOF
 # Check if a step is completed
 is_step_completed() {
     local step=$1
-    if [ -f "$STATE_FILE" ]; then
-        if command -v jq &> /dev/null; then
-            jq -r ".steps.\"$step\"" "$STATE_FILE" 2>/dev/null
-        fi
+    if [ -f "$STATE_FILE" ] && command -v jq &> /dev/null; then
+        local result
+        result=$(jq -r ".steps.\"$step\" // false" "$STATE_FILE" 2>/dev/null)
+        echo "${result:-false}"
+        return
     fi
     echo "false"
 }
@@ -79,9 +80,12 @@ store_config() {
 get_config() {
     local key=$1
     if [ -f "$STATE_FILE" ] && command -v jq &> /dev/null; then
-        jq -r ".configuration.\"$key\"" "$STATE_FILE" 2>/dev/null
+        local result
+        result=$(jq -r ".configuration.\"$key\" // \"null\"" "$STATE_FILE" 2>/dev/null)
+        echo "${result:-null}"
+        return
     fi
-    echo null
+    echo "null"
 }
 
 # Print setup status

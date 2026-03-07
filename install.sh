@@ -177,30 +177,46 @@ clone_and_setup() {
     # Whitelist of workflows to include (user-relevant only)
     local whitelist_workflows="create-branch.yml|code-review-agent.yml|auto-close-feature.yml|generate-specification.yml|plan-with-gemini.yml|update-project.yml"
 
-    # Move and rename workflows with github-project-llm-management prefix
+    # Copy whitelisted workflows (no prefix, clean names)
     if [ -d "$template_dir/.github/workflows" ]; then
         while IFS= read -r workflow; do
             local filename=$(basename "$workflow")
 
             # Check if this workflow is in the whitelist
             if echo "$filename" | grep -E "^($whitelist_workflows)$" >/dev/null; then
-                local new_name="github-project-llm-management-${filename}"
-                cp "$workflow" ".github/workflows/$new_name"
+                cp "$workflow" ".github/workflows/$filename"
             fi
         done < <(find "$template_dir/.github/workflows" -maxdepth 1 -name "*.yml" -type f)
-        ok "User-relevant workflows installed (6 workflows)"
+        ok "Workflows installed in .github/workflows/"
     fi
 
-    # Copy .github/labels and project.yml to parent repo if they don't exist
-    if [ -d "$template_dir/.github/labels" ] && [ ! -d ".github/labels" ]; then
-        cp -r "$template_dir/.github/labels" .github/
-        ok "GitHub labels copied"
+    # Copy issue templates
+    if [ -d "$template_dir/.github/ISSUE_TEMPLATE" ]; then
+        mkdir -p .github/ISSUE_TEMPLATE
+        cp "$template_dir/.github/ISSUE_TEMPLATE/"*.yml .github/ISSUE_TEMPLATE/ 2>/dev/null
+        ok "Issue templates copied"
     fi
 
+    # Copy PR template
+    if [ -f "$template_dir/.github/PULL_REQUEST_TEMPLATE.md" ]; then
+        cp "$template_dir/.github/PULL_REQUEST_TEMPLATE.md" .github/
+        ok "PR template copied"
+    fi
+
+    # Copy project config
     if [ -f "$template_dir/.github/project.yml" ] && [ ! -f ".github/project.yml" ]; then
         cp "$template_dir/.github/project.yml" .github/
         ok "GitHub project configuration copied"
     fi
+
+    # Copy scripts needed by workflows
+    mkdir -p scripts
+    for script in project_sync.py auto_close_parent_feature.py generate_specification.py generate_qcm.py setup_project_fields.py; do
+        if [ -f "$template_dir/scripts/$script" ]; then
+            cp "$template_dir/scripts/$script" "scripts/$script"
+        fi
+    done
+    ok "Helper scripts copied to scripts/"
 
     # Remove .github from template directory (moved to parent)
     rm -rf "$template_dir/.github" 2>/dev/null || true
@@ -253,8 +269,8 @@ create_env_file() {
         gh_repo="your-repo"
     fi
 
-    # Write .env file in template directory
-    cat > "$template_dir/.env" << EOF
+    # Write .env file at project root (not in subdirectory)
+    cat > ".env" << EOF
 # ============================================================================
 # Environment Configuration
 # ============================================================================
@@ -394,44 +410,35 @@ main() {
     ok "GitHub Project LLM Management is ready!"
     echo ""
 
-    log "Directory structure created:"
-    log "  github-project-llm-management/"
-    log "    ├── .env                    (your tokens - NEVER commit!)"
-    log "    ├── CLAUDE.md              (LLM instructions for Claude Code, Cursor, etc.)"
-    log "    ├── scripts/               (helper scripts)"
-    log "    ├── template-setup.sh      (setup project board & labels)"
-    log "    └── ..."
-    echo ""
-
-    log "GitHub workflows added to root (.github/workflows/):"
-    log "  • github-project-llm-management-create-branch.yml"
-    log "  • github-project-llm-management-code-review-agent.yml"
-    log "  • github-project-llm-management-auto-close-feature.yml"
-    log "  • github-project-llm-management-generate-specification.yml"
-    log "  • github-project-llm-management-plan-with-gemini.yml"
-    log "  • github-project-llm-management-update-project.yml"
+    log "Files installed:"
+    log "  .env                          (your tokens - NEVER commit!)"
+    log "  .github/workflows/            (6 automation workflows)"
+    log "  .github/ISSUE_TEMPLATE/       (issue templates)"
+    log "  .github/PULL_REQUEST_TEMPLATE.md"
+    log "  scripts/                      (helper scripts)"
+    log "  github-project-llm-management/ (template config & setup)"
     echo ""
 
     log "Next steps:"
     log ""
     log "  1. Review your configuration:"
-    log "     cat github-project-llm-management/.env"
+    log "     cat .env"
     log ""
-    log "  2. (Optional) Add the files to git:"
-    log "     git add github-project-llm-management/ .github/workflows/ .gitignore"
-    log "     git commit -m 'feat: Add GitHub Project LLM Management'"
-    log ""
-    log "  3. Setup GitHub project board and labels:"
+    log "  2. Setup GitHub project board and labels:"
     log "     bash github-project-llm-management/template-setup.sh"
     log ""
-    log "  4. Start creating issues to manage your project:"
+    log "  3. Add files to git:"
+    log "     git add .github/ scripts/ github-project-llm-management/ .gitignore"
+    log "     git commit -m 'feat: Add GitHub Project LLM Management'"
+    log ""
+    log "  4. Start creating issues:"
     log "     gh issue create --title 'Your first task' --label type:feature"
     log ""
 
     if [[ "$gemini_key" == *"PLACEHOLDER"* ]]; then
         info "AI features disabled"
         log "To enable QCM and AI-assisted specifications:"
-        log "  - Add your GEMINI_API_KEY to github-project-llm-management/.env"
+        log "  - Add your GEMINI_API_KEY to .env"
         log "  - Get it at: https://aistudio.google.com/app/apikey"
         echo ""
     fi

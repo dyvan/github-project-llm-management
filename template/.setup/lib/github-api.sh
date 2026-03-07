@@ -12,6 +12,12 @@ create_labels() {
 
     section "Creating GitHub Labels"
 
+    # Build -R flag if GH_OWNER and GH_REPO are set
+    local repo_flag=()
+    if [ -n "$GH_OWNER" ] && [ -n "$GH_REPO" ]; then
+        repo_flag=(-R "${GH_OWNER}/${GH_REPO}")
+    fi
+
     local count=0
     local skipped=0
 
@@ -21,16 +27,16 @@ create_labels() {
         local color=$(echo "$label" | jq -r '.color // "0075ca"')
 
         # Check if label already exists using -F for fixed string matching (no regex)
-        if gh label list --json name -q ".[].name" 2>/dev/null | grep -qF "$name"; then
+        if gh label list "${repo_flag[@]}" --json name -q ".[].name" 2>/dev/null | grep -qF "$name"; then
             warning "Label '$name' already exists, skipping"
             ((skipped++))
         else
-            if gh label create "$name" --description "$description" --color "$color" > /dev/null 2>&1; then
+            if gh label create "$name" --description "$description" --color "$color" "${repo_flag[@]}" > /dev/null 2>&1; then
                 success "Created label: $name"
                 ((count++))
             else
                 # If it fails, it might already exist - try with --force to update
-                if gh label create "$name" --description "$description" --color "$color" --force > /dev/null 2>&1; then
+                if gh label create "$name" --description "$description" --color "$color" --force "${repo_flag[@]}" > /dev/null 2>&1; then
                     success "Updated label: $name"
                     ((count++))
                 else
