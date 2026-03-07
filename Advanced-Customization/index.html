@@ -1263,15 +1263,13 @@
 </code></pre></div>
 <h2 id="adding-custom-fields-to-the-project-board">Adding custom fields to the Project Board<a class="headerlink" href="#adding-custom-fields-to-the-project-board" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Create the field manually on GitHub or modify <code>scripts/setup_project_fields.py</code>:</li>
-</ol>
-<div class="highlight"><pre><span></span><code><span class="n">fields_to_create</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;Status&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">],</span>
-    <span class="s2">&quot;Sprint&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Sprint 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Sprint 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Sprint 3&quot;</span><span class="p">],</span>  <span class="c1"># New field</span>
-<span class="p">}</span>
-</code></pre></div>
-<ol>
-<li>Map it in <code>update-project.yml</code>:</li>
+<li>
+<p>Create the field manually on the GitHub Project Board settings page.
+   The GitHub API does not support creating custom fields programmatically.</p>
+</li>
+<li>
+<p>Map it in <code>update-project.yml</code>:</p>
+</li>
 </ol>
 <div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Update sprint field</span>
 <span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>

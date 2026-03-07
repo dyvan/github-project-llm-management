@@ -683,17 +683,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-scriptssetup_project_fieldspy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. scripts/setup_project_fields.py
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#3-scriptsvalidate_setupsh" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1344,17 +1333,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-scriptssetup_project_fieldspy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. scripts/setup_project_fields.py
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#3-scriptsvalidate_setupsh" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1624,40 +1602,6 @@ Repository: username/project-name
 ✅ Project created: #1
 </code></pre></div></p>
 <hr />
-<h3 id="2-scriptssetup_project_fieldspy">2. <code>scripts/setup_project_fields.py</code><a class="headerlink" href="#2-scriptssetup_project_fieldspy" title="Permanent link">&para;</a></h3>
-<p><strong>Purpose</strong>: Automatically creates Project Board custom fields via GraphQL</p>
-<p><strong>Usage</strong>:
-<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>scripts/setup_project_fields.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--project-number<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>YOUR_USERNAME
-</code></pre></div></p>
-<p><strong>Arguments</strong>:
-- <code>--project-number</code>: Project number (visible in the URL)
-- <code>--owner</code>: Project owner (username or organization)
-- <code>--project-id</code>: (Optional) GraphQL project ID (alternative to --project-number)</p>
-<p><strong>What it does</strong>:
-1. ✅ Looks up the project by number
-2. ✅ Checks existing fields
-3. ✅ Creates missing fields:
-   - <strong>Status</strong> (Single Select): Backlog, Ready, In Progress, In Review, Blocked, Done
-   - <strong>Priority</strong> (Single Select): Low, Medium, High
-   - <strong>Effort</strong> (Single Select): 1, 2, 3, 5, 8
-   - <strong>Type</strong> (Single Select): Feature, Bug, Task, Docs, Infrastructure
-   - <strong>Target Version</strong> (Text)</p>
-<p><strong>Environment variables</strong>:
-- <code>GH_TOKEN</code> or <code>GITHUB_TOKEN</code>: GitHub token with <code>project</code> scope</p>
-<p><strong>Output</strong>:
-<div class="highlight"><pre><span></span><code>🔍 Checking existing fields...
-📋 Creating custom fields...
-  ✅ Created field: Status
-  ✅ Created field: Priority
-  ⏭️  Field &#39;Effort&#39; already exists, skipping...
-✅ All fields configured!
-</code></pre></div></p>
-<p><strong>Error handling</strong>:
-- If the project doesn't exist → Explicit error
-- If the field already exists → Skip (no duplicates)
-- If the token doesn't have the right scope → Explicit error</p>
 <hr />
 <h3 id="3-scriptsvalidate_setupsh">3. <code>scripts/validate_setup.sh</code><a class="headerlink" href="#3-scriptsvalidate_setupsh" title="Permanent link">&para;</a></h3>
 <p><strong>Purpose</strong>: Validates that the template is correctly configured</p>

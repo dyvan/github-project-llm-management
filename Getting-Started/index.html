@@ -578,10 +578,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#5b-auto-create-custom-fields" class="md-nav__link">
+  <a href="#5b-create-custom-fields-manually" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5b. Auto-create custom fields
+        5b. Create custom fields manually
       
     </span>
   </a>
@@ -1527,10 +1527,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#5b-auto-create-custom-fields" class="md-nav__link">
+  <a href="#5b-create-custom-fields-manually" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5b. Auto-create custom fields
+        5b. Create custom fields manually
       
     </span>
   </a>
@@ -1773,16 +1773,17 @@ bash<span class="w"> </span>template-setup.sh
 <span class="w">  </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w">  </span><span class="c1"># 👈 Replace with your project number</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Project</span><span class="nv"> </span><span class="s">Backlog&quot;</span>
 </code></pre></div>
-<h3 id="5b-auto-create-custom-fields">5b. Auto-create custom fields<a class="headerlink" href="#5b-auto-create-custom-fields" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Automatically create the Project Board fields</span>
-python3<span class="w"> </span>scripts/setup_project_fields.py<span class="w"> </span>--project-number<span class="w"> </span><span class="m">1</span><span class="w"> </span>--owner<span class="w"> </span>YOUR_NAME
-</code></pre></div>
-<p>This automatically creates:
-- <strong>Status</strong>: Backlog, Ready, In Progress, In Review, Blocked, Done
-- <strong>Priority</strong>: Low, Medium, High
-- <strong>Effort</strong>: 1, 2, 3, 5, 8 (story points)
-- <strong>Type</strong>: Feature, Bug, Task, Docs, Infrastructure
-- <strong>Target Version</strong>: (free text field)</p>
+<h3 id="5b-create-custom-fields-manually">5b. Create custom fields manually<a class="headerlink" href="#5b-create-custom-fields-manually" title="Permanent link">&para;</a></h3>
+<p>Create these fields manually on your GitHub Project Board settings page:</p>
+<ul>
+<li><strong>Status</strong> (Single Select): Backlog, Ready, In Progress, In Review, Blocked, Done</li>
+<li><strong>Priority</strong> (Single Select): Low, Medium, High</li>
+<li><strong>Effort</strong> (Single Select): 1, 2, 3, 5, 8 (story points)</li>
+<li><strong>Type</strong> (Single Select): Feature, Bug, Task, Docs, Infrastructure</li>
+</ul>
+<blockquote>
+<p><strong>Note</strong>: The GitHub API does not support creating custom fields programmatically.</p>
+</blockquote>
 <hr />
 <h2 id="step-6-validation-30-seconds">Step 6: Validation (30 seconds)<a class="headerlink" href="#step-6-validation-30-seconds" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># Validate that everything works</span>
