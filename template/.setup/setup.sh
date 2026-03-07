@@ -126,8 +126,7 @@ main() {
         "2-check-prerequisites"
         "3-init-labels"
         "4-create-project"
-        "5-link-workflows"
-        "5.5-copy-claude-md"
+        "5-copy-files"
         "6-finalize"
     )
 

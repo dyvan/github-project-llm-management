@@ -167,38 +167,27 @@ main() {
 
     # Load environment variables from .env if they exist
     # Check both script directory and current directory
+    # Look for .env: project root first, then template subdirectory
     local env_file=""
-    if [ -f "$SCRIPT_DIR/.env" ]; then
-        env_file="$SCRIPT_DIR/.env"
-    elif [ -f ".env" ]; then
+    if [ -f ".env" ]; then
         env_file=".env"
+    elif [ -f "$SCRIPT_DIR/.env" ]; then
+        env_file="$SCRIPT_DIR/.env"
     fi
 
     if [ -n "$env_file" ]; then
-        # Load GH_TOKEN
-        if [ -z "$GH_TOKEN" ]; then
-            export GH_TOKEN=$(grep '^GH_TOKEN=' "$env_file" | cut -d'=' -f2- | tr -d '"' | tr -d "'")
-            if [ -n "$GH_TOKEN" ]; then
-                echo -e "${GREEN}✅ Loaded GH_TOKEN from .env${NC}"
+        # Load all env vars from .env file
+        while IFS='=' read -r key value; do
+            # Skip comments and empty lines
+            [[ "$key" =~ ^#.*$ || -z "$key" ]] && continue
+            # Trim whitespace and quotes
+            value=$(echo "$value" | tr -d '"' | tr -d "'")
+            # Only export if not already set in environment
+            if [ -z "${!key}" ] && [ -n "$value" ]; then
+                export "$key=$value"
+                echo -e "${GREEN}✅ Loaded $key from .env${NC}"
             fi
-        fi
-
-        # Load GH_OWNER
-        if [ -z "$GH_OWNER" ]; then
-            export GH_OWNER=$(grep '^GH_OWNER=' "$env_file" | cut -d'=' -f2- | tr -d '"' | tr -d "'")
-            if [ -n "$GH_OWNER" ]; then
-                echo -e "${GREEN}✅ Loaded GH_OWNER from .env${NC}"
-            fi
-        fi
-
-        # Load GH_REPO
-        if [ -z "$GH_REPO" ]; then
-            export GH_REPO=$(grep '^GH_REPO=' "$env_file" | cut -d'=' -f2- | tr -d '"' | tr -d "'")
-            if [ -n "$GH_REPO" ]; then
-                echo -e "${GREEN}✅ Loaded GH_REPO from .env${NC}"
-            fi
-        fi
-
+        done < "$env_file"
         echo ""
     fi
 
