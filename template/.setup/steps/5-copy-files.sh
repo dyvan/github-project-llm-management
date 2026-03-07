@@ -142,6 +142,32 @@ copy_claude_commands() {
     fi
 }
 
+copy_memory_templates() {
+    local src="${REPO_ROOT}/.ai/memory"
+    local dest="${PWD}/.ai/memory"
+
+    if [ "$REPO_ROOT" = "$PWD" ]; then
+        success "Memory templates already in place"
+        return 0
+    fi
+
+    if [ -d "$src" ]; then
+        mkdir -p "$dest"
+        local count=0
+        for tmpl in "$src"/*.md; do
+            if [ -f "$tmpl" ]; then
+                cp "$tmpl" "$dest/"
+                count=$((count+1))
+            fi
+        done
+        if [ $count -gt 0 ]; then
+            success "Copied $count memory templates to .ai/memory/"
+        fi
+    else
+        warning "No memory templates found at $src"
+    fi
+}
+
 copy_claude_md() {
     local src="${REPO_ROOT}/CLAUDE.md"
     local dest="${PWD}/CLAUDE.md"
@@ -177,6 +203,7 @@ run_step() {
     copy_scripts
     copy_claude_commands
     copy_claude_md
+    copy_memory_templates
 
     mark_step_completed "link_workflows"
     mark_step_completed "copy_claude_md"
