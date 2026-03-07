@@ -11,6 +11,10 @@ permissions:
 jobs:
   code-review:
     runs-on: ubuntu-latest
+    if: ${{ secrets.GEMINI_API_KEY != '' || secrets.GEMINI_REVIEW_API_KEY != '' }}
+
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_REVIEW_API_KEY || secrets.GEMINI_API_KEY }}
 
     steps:
       - name: Checkout code
@@ -45,31 +49,9 @@ jobs:
       - name: Run Code Review with Gemini
         id: review
         env:
-          # Specific key first, then generic fallback (for template users with a single key)
-          GEMINI_REVIEW_API_KEY: ${{ secrets.GEMINI_REVIEW_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_BODY: ${{ github.event.pull_request.body }}
         run: |
-          # Pick the right API key: specific > generic
-          API_KEY="${GEMINI_REVIEW_API_KEY:-$GEMINI_API_KEY}"
-
-          if [ -z "$API_KEY" ]; then
-            echo "No Gemini API key found, using basic review"
-            cat > /tmp/review_comment.md <<'BASIC'
-          **Code Review (Basic Mode)**
-
-          > Full AI review requires a `GEMINI_API_KEY` or `GEMINI_REVIEW_API_KEY` secret.
-
-          Basic checks to perform manually:
-          - [ ] No syntax errors
-          - [ ] No debug statements left
-          - [ ] Commit messages follow conventions
-          - [ ] No secrets or credentials committed
-          BASIC
-            exit 0
-          fi
-
           python3 - <<'PYEOF'
           import os, sys, json, requests
 
@@ -85,7 +67,7 @@ jobs:
 
           pr_title = os.getenv("PR_TITLE", "")
           pr_body = os.getenv("PR_BODY", "")
-          api_key = os.getenv("GEMINI_REVIEW_API_KEY") or os.getenv("GEMINI_API_KEY")
+          api_key = os.getenv("GEMINI_API_KEY")
 
           prompt = f"""Review this GitHub Pull Request. Provide constructive feedback in GitHub-friendly Markdown.
 
@@ -150,3 +132,12 @@ jobs:
           gh pr comment $PR_NUMBER \
             --repo "$REPO" \
             --body "Warning: Code review workflow encountered an error. Please check the workflow logs."
+
+  skip-notice:
+    runs-on: ubuntu-latest
+    if: ${{ secrets.GEMINI_API_KEY == '' && secrets.GEMINI_REVIEW_API_KEY == '' }}
+    steps:
+      - name: AI code review skipped
+        run: |
+          echo "AI code review skipped -- no Gemini API key configured."
+          echo "To enable, add GEMINI_API_KEY (or GEMINI_REVIEW_API_KEY) to repository secrets."

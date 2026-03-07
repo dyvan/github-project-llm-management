@@ -17,14 +17,16 @@ permissions:
 jobs:
   generate-qcm:
     runs-on: ubuntu-latest
-    # Only run if the label is "plan-with-gemini" or if manually triggered
+    # Only run if the label is "plan-with-gemini" or if manually triggered, AND a Gemini key exists
     if: |
-      (github.event_name == 'issues' && github.event.label.name == 'plan-with-gemini') ||
-      github.event_name == 'workflow_dispatch'
+      ((github.event_name == 'issues' && github.event.label.name == 'plan-with-gemini') ||
+      github.event_name == 'workflow_dispatch') &&
+      (secrets.GEMINI_API_KEY != '' || secrets.GEMINI_PLAN_API_KEY != '')
 
     env:
       GH_OWNER: ${{ github.repository_owner }}
       GH_REPO: ${{ github.event.repository.name }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_PLAN_API_KEY || secrets.GEMINI_API_KEY }}
 
     steps:
       - name: Checkout code
@@ -60,23 +62,7 @@ jobs:
           echo "number=${ISSUE_NUM}" >> $GITHUB_OUTPUT
           echo "📋 Processing issue #${ISSUE_NUM}"
 
-      - name: Check for Gemini API key
-        run: |
-          # Specific key first, then generic fallback
-          if [ -n "${{ secrets.GEMINI_PLAN_API_KEY }}" ]; then
-            echo "✅ Using GEMINI_PLAN_API_KEY"
-          elif [ -n "${{ secrets.GEMINI_API_KEY }}" ]; then
-            echo "✅ Using GEMINI_API_KEY (fallback)"
-          else
-            echo "❌ No Gemini API key found"
-            echo "   Set GEMINI_API_KEY or GEMINI_PLAN_API_KEY in repository secrets"
-            echo "   Get your key at: https://ai.google.dev/gemini-api/docs/api-key"
-            exit 1
-          fi
-
       - name: Generate and post QCM
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_PLAN_API_KEY || secrets.GEMINI_API_KEY }}
         run: |
           echo "🤖 Generating QCM using Gemini AI..."
           python scripts/generate_qcm.py \
@@ -106,3 +92,15 @@ jobs:
           echo "   Issue: #${{ steps.issue.outputs.number }}"
           echo "   Status: ${{ job.status }}"
           echo "   Trigger: ${{ github.event_name }}"
+
+  skip-notice:
+    runs-on: ubuntu-latest
+    if: |
+      ((github.event_name == 'issues' && github.event.label.name == 'plan-with-gemini') ||
+      github.event_name == 'workflow_dispatch') &&
+      secrets.GEMINI_API_KEY == '' && secrets.GEMINI_PLAN_API_KEY == ''
+    steps:
+      - name: AI planning skipped
+        run: |
+          echo "AI planning skipped -- no Gemini API key configured."
+          echo "To enable, add GEMINI_API_KEY (or GEMINI_PLAN_API_KEY) to repository secrets."

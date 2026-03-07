@@ -18,12 +18,14 @@ jobs:
   generate-specification:
     runs-on: ubuntu-latest
     if: |
-      (github.event_name == 'issues' && github.event.label.name == 'generate-specification') ||
-      github.event_name == 'workflow_dispatch'
+      ((github.event_name == 'issues' && github.event.label.name == 'generate-specification') ||
+      github.event_name == 'workflow_dispatch') &&
+      (secrets.GEMINI_API_KEY != '' || secrets.GEMINI_SPEC_API_KEY != '')
 
     env:
       GH_OWNER: ${{ github.repository_owner }}
       GH_REPO: ${{ github.event.repository.name }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_SPEC_API_KEY || secrets.GEMINI_API_KEY }}
 
     steps:
       - name: Checkout code
@@ -49,22 +51,9 @@ jobs:
           echo "number=${ISSUE_NUM}" >> $GITHUB_OUTPUT
           echo "📋 Processing issue #${ISSUE_NUM}"
 
-      - name: Check for Gemini API key
-        run: |
-          if [ -n "${{ secrets.GEMINI_SPEC_API_KEY }}" ]; then
-            echo "✅ Using GEMINI_SPEC_API_KEY"
-          elif [ -n "${{ secrets.GEMINI_API_KEY }}" ]; then
-            echo "✅ Using GEMINI_API_KEY (fallback)"
-          else
-            echo "❌ No Gemini API key found"
-            echo "   Set GEMINI_API_KEY or GEMINI_SPEC_API_KEY in repository secrets"
-            exit 1
-          fi
-
       - name: Generate specification
         id: generate
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_SPEC_API_KEY || secrets.GEMINI_API_KEY }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "🤖 Generating detailed specification from QCM responses..."
@@ -101,3 +90,15 @@ jobs:
         run: |
           echo "❌ Specification generation failed"
           echo "Check the logs above for details"
+
+  skip-notice:
+    runs-on: ubuntu-latest
+    if: |
+      ((github.event_name == 'issues' && github.event.label.name == 'generate-specification') ||
+      github.event_name == 'workflow_dispatch') &&
+      secrets.GEMINI_API_KEY == '' && secrets.GEMINI_SPEC_API_KEY == ''
+    steps:
+      - name: AI specification generation skipped
+        run: |
+          echo "AI specification generation skipped -- no Gemini API key configured."
+          echo "To enable, add GEMINI_API_KEY (or GEMINI_SPEC_API_KEY) to repository secrets."
