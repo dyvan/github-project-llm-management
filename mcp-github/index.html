@@ -12,13 +12,13 @@
         <meta name="author" content="dyvan">
       
       
-        <link rel="canonical" href="https://dyvan.github.io/github-project-llm-management/Getting-Started/">
+        <link rel="canonical" href="https://dyvan.github.io/github-project-llm-management/mcp-github/">
       
       
-        <link rel="prev" href="..">
+        <link rel="prev" href="../wiki/">
       
       
-        <link rel="next" href="../getting-started/installation/">
+        <link rel="next" href="../pm-agent/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>Overview - GitHub Project LLM Management</title>
+        <title>MCP GitHub Server - GitHub Project LLM Management</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#getting-started-guide" class="md-skip">
+        <a href="#mcp-github-server" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Overview
+              MCP GitHub Server
             
           </span>
         </div>
@@ -288,8 +288,6 @@
       
   
   
-    
-  
   
   
     
@@ -302,11 +300,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
@@ -327,7 +325,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -342,37 +340,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Overview
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../Getting-Started/" class="md-nav__link">
         
   
   
@@ -388,309 +359,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#prerequisites-2-minutes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prerequisites (2 minutes)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Prerequisites (2 minutes)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-git" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. Git
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-github-cli" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. GitHub CLI
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-python-311" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Python 3.11+
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-1-create-your-project-1-minute" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 1: Create Your Project (1 minute)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 1: Create Your Project (1 minute)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#option-a-use-as-a-template-recommended" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Option A: Use as a template (recommended)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#option-b-add-to-an-existing-project" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Option B: Add to an existing project
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-github-authentication-30-seconds" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 2: GitHub Authentication (30 seconds)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-configure-secrets-1-minute" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 3: Configure Secrets (1 minute)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 3: Configure Secrets (1 minute)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#create-a-github-personal-access-token-pat" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Create a GitHub Personal Access Token (PAT)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configure-the-token" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Configure the token
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-4-installation-2-minutes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 4: Installation (2 minutes)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-5-project-configuration-1-minute" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 5: Project Configuration (1 minute)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 5: Project Configuration (1 minute)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#5a-update-the-project-number" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5a. Update the project number
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5b-create-custom-fields-manually" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5b. Create custom fields manually
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-6-validation-30-seconds" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 6: Validation (30 seconds)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-test" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Test
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Quick Test">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-create-an-issue" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. Create an issue
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-watch-the-magic" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. Watch the magic ✨
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-create-a-pull-request" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Create a Pull Request
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-watch-the-magic-again" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Watch the magic again ✨
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Next Steps
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#need-help" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Need Help?
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1161,8 +829,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -1173,11 +843,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
@@ -1198,7 +868,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1409,10 +1079,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../mcp-github/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP GitHub Server
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1428,6 +1125,70 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-it-provides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What it provides
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-complements-gh-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it complements gh CLI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1581,99 +1342,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites-2-minutes" class="md-nav__link">
+  <a href="#what-it-provides" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prerequisites (2 minutes)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Prerequisites (2 minutes)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-git" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. Git
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-github-cli" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. GitHub CLI
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-python-311" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Python 3.11+
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-1-create-your-project-1-minute" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 1: Create Your Project (1 minute)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 1: Create Your Project (1 minute)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#option-a-use-as-a-template-recommended" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Option A: Use as a template (recommended)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#option-b-add-to-an-existing-project" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Option B: Add to an existing project
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-github-authentication-30-seconds" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 2: GitHub Authentication (30 seconds)
+        What it provides
       
     </span>
   </a>
@@ -1681,49 +1353,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-configure-secrets-1-minute" class="md-nav__link">
+  <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: Configure Secrets (1 minute)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 3: Configure Secrets (1 minute)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#create-a-github-personal-access-token-pat" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Create a GitHub Personal Access Token (PAT)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configure-the-token" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Configure the token
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-4-installation-2-minutes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 4: Installation (2 minutes)
+        Configuration
       
     </span>
   </a>
@@ -1731,49 +1364,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-5-project-configuration-1-minute" class="md-nav__link">
+  <a href="#how-it-complements-gh-cli" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 5: Project Configuration (1 minute)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 5: Project Configuration (1 minute)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#5a-update-the-project-number" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5a. Update the project number
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5b-create-custom-fields-manually" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5b. Create custom fields manually
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-6-validation-30-seconds" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 6: Validation (30 seconds)
+        How it complements gh CLI
       
     </span>
   </a>
@@ -1781,82 +1375,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-test" class="md-nav__link">
+  <a href="#troubleshooting" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Test
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Quick Test">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-create-an-issue" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. Create an issue
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-watch-the-magic" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. Watch the magic ✨
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-create-a-pull-request" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Create a Pull Request
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-watch-the-magic-again" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Watch the magic again ✨
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Next Steps
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#need-help" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Need Help?
+        Troubleshooting
       
     </span>
   </a>
@@ -1883,192 +1405,66 @@
   
 
 
-<h1 id="getting-started-guide">🚀 Getting Started Guide<a class="headerlink" href="#getting-started-guide" title="Permanent link">&para;</a></h1>
-<p>Install and configure the template in <strong>5 minutes flat</strong>.</p>
-<h2 id="prerequisites-2-minutes">Prerequisites (2 minutes)<a class="headerlink" href="#prerequisites-2-minutes" title="Permanent link">&para;</a></h2>
-<p>Before you begin, make sure you have:</p>
-<h3 id="1-git">1. Git<a class="headerlink" href="#1-git" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check if Git is installed</span>
-git<span class="w"> </span>--version
-
-<span class="c1"># Install Git if needed:</span>
-<span class="c1"># macOS: brew install git</span>
-<span class="c1"># Linux: sudo apt install git</span>
-<span class="c1"># Windows: https://git-scm.com/download/win</span>
-</code></pre></div>
-<h3 id="2-github-cli">2. GitHub CLI<a class="headerlink" href="#2-github-cli" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Install GitHub CLI</span>
-<span class="c1"># macOS</span>
-brew<span class="w"> </span>install<span class="w"> </span>gh
-
-<span class="c1"># Linux (Ubuntu/Debian)</span>
-curl<span class="w"> </span>-fsSL<span class="w"> </span>https://cli.github.com/packages/githubcli-archive-keyring.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>dd<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/usr/share/keyrings/githubcli-archive-keyring.gpg
-sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>gh
-
-<span class="c1"># Windows</span>
-winget<span class="w"> </span>install<span class="w"> </span>GitHub.cli
-
-<span class="c1"># Verify the installation</span>
-gh<span class="w"> </span>--version
-</code></pre></div>
-<h3 id="3-python-311">3. Python 3.11+<a class="headerlink" href="#3-python-311" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check if Python is installed</span>
-python3<span class="w"> </span>--version
-
-<span class="c1"># Install Python if needed:</span>
-<span class="c1"># macOS: brew install python@3.11</span>
-<span class="c1"># Linux: sudo apt install python3.11</span>
-<span class="c1"># Windows: https://www.python.org/downloads/</span>
-</code></pre></div>
-<hr />
-<h2 id="step-1-create-your-project-1-minute">Step 1: Create Your Project (1 minute)<a class="headerlink" href="#step-1-create-your-project-1-minute" title="Permanent link">&para;</a></h2>
-<h3 id="option-a-use-as-a-template-recommended">Option A: Use as a template (recommended)<a class="headerlink" href="#option-a-use-as-a-template-recommended" title="Permanent link">&para;</a></h3>
-<ol>
-<li>On GitHub, click the <strong>"Use this template"</strong> button at the top of the page</li>
-<li>Give your project a name (e.g., <code>my-project</code>)</li>
-<li>Choose visibility (Public or Private)</li>
-<li>Click <strong>"Create repository from template"</strong></li>
-</ol>
-<div class="highlight"><pre><span></span><code><span class="c1"># Clone your new repository</span>
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/YOUR_NAME/my-project.git
-<span class="nb">cd</span><span class="w"> </span>my-project
-</code></pre></div>
-<h3 id="option-b-add-to-an-existing-project">Option B: Add to an existing project<a class="headerlink" href="#option-b-add-to-an-existing-project" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>your-existing-project
-git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>template<span class="w"> </span>https://github.com/dyvan/github-project-llm-management.git
-git<span class="w"> </span>fetch<span class="w"> </span>template
-git<span class="w"> </span>merge<span class="w"> </span>template/main<span class="w"> </span>--allow-unrelated-histories
-</code></pre></div>
-<hr />
-<h2 id="step-2-github-authentication-30-seconds">Step 2: GitHub Authentication (30 seconds)<a class="headerlink" href="#step-2-github-authentication-30-seconds" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># Log in to GitHub</span>
-gh<span class="w"> </span>auth<span class="w"> </span>login
-
-<span class="c1"># Follow the instructions:</span>
-<span class="c1"># 1. Choose &quot;GitHub.com&quot;</span>
-<span class="c1"># 2. Choose &quot;HTTPS&quot;</span>
-<span class="c1"># 3. Say &quot;Yes&quot; to authenticate</span>
-<span class="c1"># 4. Choose &quot;Login with a web browser&quot;</span>
-<span class="c1"># 5. Copy the code and open the browser</span>
-</code></pre></div>
-<hr />
-<h2 id="step-3-configure-secrets-1-minute">Step 3: Configure Secrets (1 minute)<a class="headerlink" href="#step-3-configure-secrets-1-minute" title="Permanent link">&para;</a></h2>
-<h3 id="create-a-github-personal-access-token-pat">Create a GitHub Personal Access Token (PAT)<a class="headerlink" href="#create-a-github-personal-access-token-pat" title="Permanent link">&para;</a></h3>
-<ol>
-<li>Go to: https://github.com/settings/tokens/new</li>
-<li>Give it a name: <code>My template automation</code></li>
-<li><strong>Check these scopes</strong>:</li>
-<li>✅ <code>repo</code> (Full control of private repositories)</li>
-<li>✅ <code>project</code> (Full control of projects)</li>
-<li>✅ <code>workflow</code> (Update GitHub Action workflows)</li>
-<li>Click <strong>"Generate token"</strong></li>
-<li><strong>Copy the token</strong> (you won't see it again!)</li>
-</ol>
-<h3 id="configure-the-token">Configure the token<a class="headerlink" href="#configure-the-token" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Configure the GitHub token</span>
-gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>GH_TOKEN
-<span class="c1"># Paste your token when prompted</span>
-
-<span class="c1"># (Optional) Configure the Gemini API key for AI code review</span>
-gh<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>GEMINI_API_KEY
-<span class="c1"># Get your key at: https://aistudio.google.com/app/apikey</span>
-</code></pre></div>
-<blockquote>
-<p><strong>💡 Note</strong>: Without <code>GEMINI_API_KEY</code>, code review will work in basic mode (without AI).</p>
-</blockquote>
-<hr />
-<h2 id="step-4-installation-2-minutes">Step 4: Installation (2 minutes)<a class="headerlink" href="#step-4-installation-2-minutes" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># Install Python dependencies</span>
-pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-
-<span class="c1"># Run the setup script</span>
-bash<span class="w"> </span>template-setup.sh
-</code></pre></div>
-<p><strong>The script will</strong>:
-1. ✅ Verify that everything is installed
-2. ✅ Create GitHub labels (type:feature, priority:high, etc.)
-3. ✅ Create a GitHub Project v2
-4. ✅ Ask you to note the project number</p>
-<blockquote>
-<p><strong>🔔 Important</strong>: Note the <strong>project number</strong> displayed (e.g., Project #1)</p>
-</blockquote>
-<hr />
-<h2 id="step-5-project-configuration-1-minute">Step 5: Project Configuration (1 minute)<a class="headerlink" href="#step-5-project-configuration-1-minute" title="Permanent link">&para;</a></h2>
-<h3 id="5a-update-the-project-number">5a. Update the project number<a class="headerlink" href="#5a-update-the-project-number" title="Permanent link">&para;</a></h3>
-<p>Edit the <code>.github/project.yml</code> file:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">project</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w">  </span><span class="c1"># 👈 Replace with your project number</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Project</span><span class="nv"> </span><span class="s">Backlog&quot;</span>
-</code></pre></div>
-<h3 id="5b-create-custom-fields-manually">5b. Create custom fields manually<a class="headerlink" href="#5b-create-custom-fields-manually" title="Permanent link">&para;</a></h3>
-<p>Create these fields manually on your GitHub Project Board settings page:</p>
+<h1 id="mcp-github-server">MCP GitHub Server<a class="headerlink" href="#mcp-github-server" title="Permanent link">&para;</a></h1>
+<h2 id="what-it-provides">What it provides<a class="headerlink" href="#what-it-provides" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://modelcontextprotocol.io/">Model Context Protocol (MCP)</a> GitHub server
+gives Claude Code native access to GitHub APIs without shelling out to <code>gh</code>. This
+includes:</p>
 <ul>
-<li><strong>Status</strong> (Single Select): Backlog, Ready, In Progress, In Review, Blocked, Done</li>
-<li><strong>Priority</strong> (Single Select): Low, Medium, High</li>
-<li><strong>Effort</strong> (Single Select): 1, 2, 3, 5, 8 (story points)</li>
-<li><strong>Type</strong> (Single Select): Feature, Bug, Task, Docs, Infrastructure</li>
+<li><strong>Issues</strong> -- list, create, update, comment</li>
+<li><strong>Pull Requests</strong> -- list, create, review, merge</li>
+<li><strong>Repositories</strong> -- search, read files, list branches</li>
+<li><strong>Projects v2</strong> -- read and update project board items</li>
 </ul>
-<blockquote>
-<p><strong>Note</strong>: The GitHub API does not support creating custom fields programmatically.</p>
-</blockquote>
-<hr />
-<h2 id="step-6-validation-30-seconds">Step 6: Validation (30 seconds)<a class="headerlink" href="#step-6-validation-30-seconds" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># Validate that everything works</span>
-./scripts/validate_setup.sh
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
+<p>The server is configured in <code>.mcp.json</code> at the project root. It reads the
+<code>GH_TOKEN</code> environment variable from your <code>.env</code> file:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># .env (never commit this file)</span>
+<span class="nv">GH_TOKEN</span><span class="o">=</span>ghp_xxxxxxxxxxxxx
 </code></pre></div>
-<p>If you see <code>✅ All checks passed!</code>, <strong>you're all set</strong>! 🎉</p>
-<hr />
-<h2 id="quick-test">Quick Test<a class="headerlink" href="#quick-test" title="Permanent link">&para;</a></h2>
-<p>Let's test that the automation works:</p>
-<h3 id="1-create-an-issue">1. Create an issue<a class="headerlink" href="#1-create-an-issue" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>gh<span class="w"> </span>issue<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--title<span class="w"> </span><span class="s2">&quot;Test automation&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--label<span class="w"> </span><span class="s2">&quot;type:feature,priority:medium,auto-branch&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--body<span class="w"> </span><span class="s2">&quot;Test that the automation works&quot;</span>
-</code></pre></div>
-<h3 id="2-watch-the-magic">2. Watch the magic ✨<a class="headerlink" href="#2-watch-the-magic" title="Permanent link">&para;</a></h3>
-<p>A few seconds later, you should see:
-- ✅ Issue added to the Project Board with Priority=Medium
-- ✅ Branch automatically created: <code>feat/1-test-automation</code>
-- ✅ Comment posted on the issue with git instructions</p>
-<h3 id="3-create-a-pull-request">3. Create a Pull Request<a class="headerlink" href="#3-create-a-pull-request" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Fetch the branch</span>
-git<span class="w"> </span>fetch<span class="w"> </span>origin
-git<span class="w"> </span>checkout<span class="w"> </span>feat/1-test-automation
-
-<span class="c1"># Make a change (example)</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;# Test&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>test.md
-git<span class="w"> </span>add<span class="w"> </span>test.md
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: test automation (#1)&quot;</span>
-git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>feat/1-test-automation
-
-<span class="c1"># Create a PR</span>
-gh<span class="w"> </span>pr<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--title<span class="w"> </span><span class="s2">&quot;Test PR&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--body<span class="w"> </span><span class="s2">&quot;Closes #1&quot;</span>
-</code></pre></div>
-<h3 id="4-watch-the-magic-again">4. Watch the magic again ✨<a class="headerlink" href="#4-watch-the-magic-again" title="Permanent link">&para;</a></h3>
-<p>You should see:
-- ✅ CI/CD launching automatically
-- ✅ Gemini AI analyzing your code (if API key is configured)
-- ✅ Project Board updated: Status → "In Review"</p>
-<hr />
-<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
-<p>Now that everything is working:</p>
-<ol>
-<li><strong><a href="Using-The-Template">📖 Read the full documentation</a></strong> - Understand all the features</li>
-<li><strong><a href="Configuration">⚙️ Customize the template</a></strong> - Adapt to your needs</li>
-<li><strong><a href="Understanding-Workflows">🔀 Understand the workflows</a></strong> - Learn how it works</li>
-</ol>
-<hr />
-<h2 id="need-help">Need Help?<a class="headerlink" href="#need-help" title="Permanent link">&para;</a></h2>
+<p>No additional setup is needed. Claude Code detects <code>.mcp.json</code> automatically
+and starts the server on demand.</p>
+<h2 id="how-it-complements-gh-cli">How it complements gh CLI<a class="headerlink" href="#how-it-complements-gh-cli" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>gh CLI</th>
+<th>MCP GitHub</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shell scripting</td>
+<td>Native</td>
+<td>Not applicable</td>
+</tr>
+<tr>
+<td>Structured API data</td>
+<td>JSON via --json</td>
+<td>Native objects</td>
+</tr>
+<tr>
+<td>Claude Code native</td>
+<td>Via Bash tool</td>
+<td>Direct tool calls</td>
+</tr>
+<tr>
+<td>Offline fallback</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>Both approaches work. The MCP server provides a more integrated experience
+inside Claude Code, while <code>gh</code> CLI remains the fallback for scripting and
+when MCP is not available.</p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Having issues?</strong> → Check the <a href="Troubleshooting">Troubleshooting</a> page</li>
-<li><strong>Question?</strong> → Post in the <a href="https://github.com/dyvan/github-project-llm-management/discussions">Discussions</a></li>
-<li><strong>Bug?</strong> → Open an <a href="https://github.com/dyvan/github-project-llm-management/issues">Issue</a></li>
+<li>Ensure <code>GH_TOKEN</code> is set in <code>.env</code> with <code>repo</code>, <code>project</code>, and <code>read:org</code> scopes.</li>
+<li>Run <code>npx @modelcontextprotocol/server-github</code> manually to verify the server starts.</li>
+<li>If MCP is unavailable, all commands gracefully fall back to <code>gh</code> CLI.</li>
 </ul>
-<hr />
-<p><a href="Home">⬅️ Back to Home</a> | <a href="Configuration">Next: Configuration ➡️</a></p>
 
 
 
