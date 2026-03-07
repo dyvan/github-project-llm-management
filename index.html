@@ -6,15 +6,17 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="GitHub-based project management with LLM agents">
+        <meta name="description" content="Turnkey template for automated GitHub project management with AI">
       
       
-        <meta name="author" content="Your Team">
+        <meta name="author" content="dyvan">
+      
+      
+        <link rel="canonical" href="https://dyvan.github.io/github-project-llm-management/">
       
       
       
-      
-        <link rel="next" href="getting-started/installation/">
+        <link rel="next" href="Getting-Started/">
       
       
         
@@ -25,7 +27,7 @@
     
     
       
-        <title>Project LLM Management</title>
+        <title>GitHub Project LLM Management</title>
       
     
     
@@ -67,7 +69,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="amber">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -76,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#project-llm-management" class="md-skip">
+        <a href="#automated-github-project-management" class="md-skip">
           Skip to content
         </a>
       
@@ -92,10 +94,10 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Project LLM Management" class="md-header__button md-logo" aria-label="Project LLM Management" data-md-component="logo">
+    <a href="." title="GitHub Project LLM Management" class="md-header__button md-logo" aria-label="GitHub Project LLM Management" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.5 15.5c0 1.11-.89 2-2 2s-2-.89-2-2 .9-2 2-2 2 .9 2 2m-9-2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.89 2-2-.89-2-2-2M23 15v3c0 .55-.45 1-1 1h-1v1c0 1.11-.89 2-2 2H5a2 2 0 0 1-2-2v-1H2c-.55 0-1-.45-1-1v-3c0-.55.45-1 1-1h1c0-3.87 3.13-7 7-7h1V5.73c-.6-.34-1-.99-1-1.73 0-1.1.9-2 2-2s2 .9 2 2c0 .74-.4 1.39-1 1.73V7h1c3.87 0 7 3.13 7 7h1c.55 0 1 .45 1 1m-2 1h-2v-2c0-2.76-2.24-5-5-5h-4c-2.76 0-5 2.24-5 5v2H3v1h2v3h14v-3h2z"/></svg>
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -106,7 +108,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Project LLM Management
+            GitHub Project LLM Management
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -125,7 +127,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
     
       <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -135,7 +137,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
     
       <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -194,13 +196,13 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/your-org/project-llm-management" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/dyvan/github-project-llm-management" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
   </div>
   <div class="md-source__repository">
-    project-llm-management
+    dyvan/github-project-llm-management
   </div>
 </a>
       </div>
@@ -221,7 +223,9 @@
           
             
               
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -230,23 +234,23 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Project LLM Management" class="md-nav__button md-logo" aria-label="Project LLM Management" data-md-component="logo">
+    <a href="." title="GitHub Project LLM Management" class="md-nav__button md-logo" aria-label="GitHub Project LLM Management" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.5 15.5c0 1.11-.89 2-2 2s-2-.89-2-2 .9-2 2-2 2 .9 2 2m-9-2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.89 2-2-.89-2-2-2M23 15v3c0 .55-.45 1-1 1h-1v1c0 1.11-.89 2-2 2H5a2 2 0 0 1-2-2v-1H2c-.55 0-1-.45-1-1v-3c0-.55.45-1 1-1h1c0-3.87 3.13-7 7-7h1V5.73c-.6-.34-1-.99-1-1.73 0-1.1.9-2 2-2s2 .9 2 2c0 .74-.4 1.39-1 1.73V7h1c3.87 0 7 3.13 7 7h1c.55 0 1 .45 1 1m-2 1h-2v-2c0-2.76-2.24-5-5-5h-4c-2.76 0-5 2.24-5 5v2H3v1h2v3h14v-3h2z"/></svg>
 
     </a>
-    Project LLM Management
+    GitHub Project LLM Management
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/your-org/project-llm-management" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/dyvan/github-project-llm-management" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
   </div>
   <div class="md-source__repository">
-    project-llm-management
+    dyvan/github-project-llm-management
   </div>
 </a>
     </div>
@@ -320,132 +324,32 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#key-features" class="md-nav__link">
+  <a href="#install-in-one-command" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🎯 Key Features
+        Install in one command
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="🎯 Key Features">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#automated-workflows" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Automated Workflows
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#project-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Project Management
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#integration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Integration
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
+  <a href="#what-you-get" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🚀 Quick Start
+        What you get
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="🚀 Quick Start">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. Prerequisites
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-clonefork-this-template" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. Clone/Fork this template
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-configure-github-secrets" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Configure GitHub Secrets
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-enable-github-projects-v2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Enable GitHub Projects v2
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5-create-your-first-issue" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5. Create your first issue
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#documentation-structure" class="md-nav__link">
+  <a href="#manual-work-vs-this-template" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📚 Documentation Structure
+        Manual work vs. this template
       
     </span>
   </a>
@@ -456,7 +360,7 @@
   <a href="#how-it-works" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🤖 How It Works
+        How it works
       
     </span>
   </a>
@@ -464,22 +368,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#project-tracking" class="md-nav__link">
+  <a href="#get-started-in-3-steps" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📊 Project Tracking
+        Get started in 3 steps
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📊 Project Tracking">
+    <nav class="md-nav" aria-label="Get started in 3 steps">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#backlog" class="md-nav__link">
+  <a href="#1-install-the-template" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Backlog
+        1. Install the template
       
     </span>
   </a>
@@ -487,10 +391,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#priority-board" class="md-nav__link">
+  <a href="#2-create-your-first-issue" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Priority Board
+        2. Create your first issue
       
     </span>
   </a>
@@ -498,10 +402,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#team-items" class="md-nav__link">
+  <a href="#3-open-a-pr-and-let-automation-take-over" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Team Items
+        3. Open a PR and let automation take over
       
     </span>
   </a>
@@ -514,88 +418,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#security" class="md-nav__link">
+  <a href="#built-for-ai-assisted-development" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🔐 Security
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔐 Security">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#permissions-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Permissions Model
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#api-keys" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        API Keys
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#use-cases" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🎓 Use Cases
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🎓 Use Cases">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#perfect-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ✅ Perfect For
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#consider-alternatives-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ⚠️ Consider Alternatives For
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#contributing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🤝 Contributing
+        Built for AI-assisted development
       
     </span>
   </a>
@@ -603,21 +429,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#support" class="md-nav__link">
+  <a href="#faq" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📞 Support
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📄 License
+        FAQ
       
     </span>
   </a>
@@ -642,15 +457,20 @@
     
     
     
+      
+        
+        
+      
     
-    <li class="md-nav__item md-nav__item--nested">
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -678,6 +498,34 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Getting-Started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -780,15 +628,191 @@
     
     
     
+      
+        
+        
+      
     
-    <li class="md-nav__item md-nav__item--nested">
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Using-The-Template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using the Template
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="QCM-Specification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QCM Specification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Scripts-Reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scripts Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -806,8 +830,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -908,14 +932,14 @@
   
   
     <li class="md-nav__item">
-      <a href="architecture/agents.md" class="md-nav__link">
+      <a href="Understanding-Workflows/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Agents
+    Understanding Workflows
   
 
     
@@ -946,22 +970,27 @@
     
     
     
-    
-    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
             
   
   
   <span class="md-ellipsis">
     
   
-    Guides
+    Reference
   
 
     
@@ -972,12 +1001,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
   
-    Guides
+    Reference
   
 
           </label>
@@ -990,14 +1019,14 @@
   
   
     <li class="md-nav__item">
-      <a href="guides/setup-github-projects.md" class="md-nav__link">
+      <a href="Advanced-Customization/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    GitHub Projects Setup
+    Advanced Customization
   
 
     
@@ -1018,14 +1047,14 @@
   
   
     <li class="md-nav__item">
-      <a href="guides/using-agents.md" class="md-nav__link">
+      <a href="Template-Validation/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Using Agents
+    Template Validation
   
 
     
@@ -1046,35 +1075,7 @@
   
   
     <li class="md-nav__item">
-      <a href="guides/contributing.md" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Contributing
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="guides/troubleshooting.md" class="md-nav__link">
+      <a href="Troubleshooting/" class="md-nav__link">
         
   
   
@@ -1095,125 +1096,8 @@
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    API Reference
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    API Reference
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
               
                 
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="api/github-actions.md" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    GitHub Actions
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="api/llm-integration.md" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    LLM Integration
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
   
   
   
@@ -1238,6 +1122,41 @@
     </li>
   
 
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
     
   </ul>
 </nav>
@@ -1247,7 +1166,9 @@
             
             
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -1266,132 +1187,32 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#key-features" class="md-nav__link">
+  <a href="#install-in-one-command" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🎯 Key Features
+        Install in one command
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="🎯 Key Features">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#automated-workflows" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Automated Workflows
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#project-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Project Management
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#integration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Integration
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
+  <a href="#what-you-get" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🚀 Quick Start
+        What you get
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="🚀 Quick Start">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. Prerequisites
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-clonefork-this-template" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. Clone/Fork this template
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-configure-github-secrets" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Configure GitHub Secrets
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-enable-github-projects-v2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Enable GitHub Projects v2
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5-create-your-first-issue" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5. Create your first issue
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#documentation-structure" class="md-nav__link">
+  <a href="#manual-work-vs-this-template" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📚 Documentation Structure
+        Manual work vs. this template
       
     </span>
   </a>
@@ -1402,7 +1223,7 @@
   <a href="#how-it-works" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🤖 How It Works
+        How it works
       
     </span>
   </a>
@@ -1410,22 +1231,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#project-tracking" class="md-nav__link">
+  <a href="#get-started-in-3-steps" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📊 Project Tracking
+        Get started in 3 steps
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📊 Project Tracking">
+    <nav class="md-nav" aria-label="Get started in 3 steps">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#backlog" class="md-nav__link">
+  <a href="#1-install-the-template" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Backlog
+        1. Install the template
       
     </span>
   </a>
@@ -1433,10 +1254,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#priority-board" class="md-nav__link">
+  <a href="#2-create-your-first-issue" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Priority Board
+        2. Create your first issue
       
     </span>
   </a>
@@ -1444,10 +1265,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#team-items" class="md-nav__link">
+  <a href="#3-open-a-pr-and-let-automation-take-over" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Team Items
+        3. Open a PR and let automation take over
       
     </span>
   </a>
@@ -1460,88 +1281,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#security" class="md-nav__link">
+  <a href="#built-for-ai-assisted-development" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🔐 Security
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔐 Security">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#permissions-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Permissions Model
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#api-keys" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        API Keys
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#use-cases" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🎓 Use Cases
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🎓 Use Cases">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#perfect-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ✅ Perfect For
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#consider-alternatives-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ⚠️ Consider Alternatives For
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#contributing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🤝 Contributing
+        Built for AI-assisted development
       
     </span>
   </a>
@@ -1549,21 +1292,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#support" class="md-nav__link">
+  <a href="#faq" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📞 Support
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📄 License
+        FAQ
       
     </span>
   </a>
@@ -1584,145 +1316,275 @@
               <article class="md-content__inner md-typeset">
                 
                   
+  
+
 
 
   
   
 
 
-<h1 id="project-llm-management">Project LLM Management<a class="headerlink" href="#project-llm-management" title="Permanent link">&para;</a></h1>
-<p>Welcome to the <strong>GitHub-based Project Management with LLM Agents</strong> template!</p>
-<p>This is a comprehensive, production-ready template for managing software projects using:</p>
-<ul>
-<li>🏗️ <strong>GitHub Projects v2</strong> for centralized tracking</li>
-<li>🤖 <strong>LLM Agents</strong> (Gemini, Claude, ChatGPT) for automation</li>
-<li>🔄 <strong>GitHub Actions</strong> for CI/CD and workflows</li>
-<li>👥 <strong>Human oversight</strong> via a central Project Board</li>
-</ul>
-<h2 id="key-features">🎯 Key Features<a class="headerlink" href="#key-features" title="Permanent link">&para;</a></h2>
-<h3 id="automated-workflows">Automated Workflows<a class="headerlink" href="#automated-workflows" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>QCM Generator</strong>: Gemini-powered questionnaires to clarify specifications before implementation</li>
-<li><strong>Branch Creator</strong>: Automatically creates feature branches when issues receive the <code>auto-branch</code> label</li>
-<li><strong>Code Reviewer</strong>: AI-powered code reviews on pull requests</li>
-<li><strong>Test Feedback</strong>: Automated testing, linting, and coverage reporting</li>
-</ul>
-<h3 id="project-management">Project Management<a class="headerlink" href="#project-management" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Backlog View</strong>: All future work, sorted by priority</li>
-<li><strong>Priority Board</strong>: Kanban-style tracking by status</li>
-<li><strong>Team Items</strong>: Personalized view filtered by owner</li>
-</ul>
-<h3 id="integration">Integration<a class="headerlink" href="#integration" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Seamless GitHub Projects v2 integration</li>
-<li>Google Gemini AI integration for code review, planning, and specification</li>
-<li>Full CI/CD pipeline with automatic status updates</li>
-</ul>
-<h2 id="quick-start">🚀 Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
-<h3 id="1-prerequisites">1. Prerequisites<a class="headerlink" href="#1-prerequisites" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Git</li>
-<li>GitHub account with admin access</li>
-<li>GitHub CLI (<code>gh</code>)</li>
-<li>Python 3.11+ (if using Python workflows)</li>
-</ul>
-<h3 id="2-clonefork-this-template">2. Clone/Fork this template<a class="headerlink" href="#2-clonefork-this-template" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/your-org/project-llm-management.git
-<span class="nb">cd</span><span class="w"> </span>project-llm-management
+<style>
+.md-typeset h1 {
+  font-size: 2.5em;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+.hero-subtitle {
+  font-size: 1.3em;
+  color: var(--md-default-fg-color--light);
+  margin-top: 0.5em;
+  margin-bottom: 1.5em;
+}
+.stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 3em;
+  margin: 2em 0;
+  flex-wrap: wrap;
+}
+.stat-item {
+  text-align: center;
+}
+.stat-number {
+  font-size: 2.2em;
+  font-weight: 700;
+  color: var(--md-primary-fg-color);
+  display: block;
+  line-height: 1.2;
+}
+.stat-label {
+  font-size: 0.85em;
+  color: var(--md-default-fg-color--light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.cta-row {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  margin: 2em 0;
+  flex-wrap: wrap;
+}
+.install-box {
+  background: var(--md-code-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  padding: 1.5em 2em;
+  max-width: 700px;
+  margin: 2em auto;
+  text-align: center;
+}
+.install-box code {
+  font-size: 0.95em;
+}
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  margin: 3em 0;
+}
+</style>
+
+<h1 id="automated-github-project-management">Automated GitHub Project Management<a class="headerlink" href="#automated-github-project-management" title="Permanent link">&para;</a></h1>
+<p class="hero-subtitle">
+You vibe your code with AI? This template organizes everything else.<br>
+Issues, Kanban board, code reviews, branches — all automated. Zero config.
+</p>
+
+<div class="stats-row">
+  <div class="stat-item">
+    <span class="stat-number">8</span>
+    <span class="stat-label">Automated Workflows</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">1</span>
+    <span class="stat-label">Install Command</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">70%</span>
+    <span class="stat-label">Tasks Automated</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">0</span>
+    <span class="stat-label">Config Required</span>
+  </div>
+</div>
+
+<div class="cta-row">
+  <a href="Getting-Started/" class="md-button md-button--primary">Get Started</a>
+  <a href="https://github.com/dyvan/github-project-llm-management" class="md-button">View on GitHub</a>
+</div>
+
+<hr class="section-divider">
+
+<h2 id="install-in-one-command">Install in one command<a class="headerlink" href="#install-in-one-command" title="Permanent link">&para;</a></h2>
+<div class="install-box">
+
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/dyvan/github-project-llm-management/main/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
 </code></pre></div>
-<h3 id="3-configure-github-secrets">3. Configure GitHub Secrets<a class="headerlink" href="#3-configure-github-secrets" title="Permanent link">&para;</a></h3>
-<p>Go to <strong>Settings → Secrets and variables → Actions</strong> and add:
-- <code>GEMINI_API_KEY</code> (for code review)
-- <code>GH_TOKEN</code> (GitHub token with repo access)</p>
-<h3 id="4-enable-github-projects-v2">4. Enable GitHub Projects v2<a class="headerlink" href="#4-enable-github-projects-v2" title="Permanent link">&para;</a></h3>
+
+</div>
+
+<p>The setup wizard asks for your <strong>GitHub token</strong> and optional <strong>Gemini API key</strong>. Labels, project board, and workflows are configured automatically.</p>
+<hr class="section-divider">
+
+<h2 id="what-you-get">What you get<a class="headerlink" href="#what-you-get" title="Permanent link">&para;</a></h2>
+<div class="grid cards">
 <ul>
-<li>Navigate to your repository's <strong>Projects</strong> tab</li>
-<li>Click <strong>New project</strong> and select <strong>Table</strong> or <strong>Board</strong></li>
-<li>Workflows will sync project updates automatically</li>
-</ul>
-<h3 id="5-create-your-first-issue">5. Create your first issue<a class="headerlink" href="#5-create-your-first-issue" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Use one of the provided templates (Feature, Bug, Task)</li>
-<li>Add the <code>auto-branch</code> label</li>
-<li>A branch will be created automatically!</li>
-</ul>
-<h2 id="documentation-structure">📚 Documentation Structure<a class="headerlink" href="#documentation-structure" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong><a href="getting-started/installation/">Getting Started</a></strong>: Setup and first steps</li>
-<li><strong><a href="QCM-Specification/">QCM Specification</a></strong>: Generate specification questionnaires with Gemini</li>
-<li><strong><a href="architecture/overview/">Architecture</a></strong>: System design and components</li>
-<li><strong><a href="./guides/setup-github-projects.md">Guides</a></strong>: How to use each feature</li>
-</ul>
-<h2 id="how-it-works">🤖 How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>graph TD
-    A[&quot;Create Issue&lt;br/&gt;+ auto-branch label&quot;] --&gt;|GitHub Actions| B[&quot;Branch Creator&lt;br/&gt;Creates feat/123-title&quot;]
-    B --&gt; C[&quot;Develop Locally&quot;]
-    C --&gt; D[&quot;Push &amp; Create PR&quot;]
-    D --&gt;|GitHub Actions| E[&quot;Code Reviewer&lt;br/&gt;Gemini analyzes code&quot;]
-    D --&gt;|GitHub Actions| F[&quot;CI Tests&lt;br/&gt;Run tests &amp; lint&quot;]
-    E --&gt; G[&quot;Post Comments&quot;]
-    F --&gt; H[&quot;Report Results&quot;]
-    G --&gt; I[&quot;Developer Reviews&lt;br/&gt;&amp; Fixes&quot;]
-    H --&gt; I
-    I --&gt;|Ready| J[&quot;Merge to develop&quot;]
-    J --&gt;|GitHub Actions| K[&quot;Project Board&lt;br/&gt;Status → Done&quot;]
-    K --&gt; L[&quot;Deployed to preprod&quot;]
-</code></pre></div>
-<h2 id="project-tracking">📊 Project Tracking<a class="headerlink" href="#project-tracking" title="Permanent link">&para;</a></h2>
-<p>All work is tracked in <strong>GitHub Projects v2</strong> with three main views:</p>
-<h3 id="backlog">Backlog<a class="headerlink" href="#backlog" title="Permanent link">&para;</a></h3>
-<p>All future issues, sortable by priority and effort</p>
-<h3 id="priority-board">Priority Board<a class="headerlink" href="#priority-board" title="Permanent link">&para;</a></h3>
-<p>Current work in Kanban format:
-- <strong>Backlog</strong>: Not started
-- <strong>In Progress</strong>: Being worked on
-- <strong>In QA</strong>: Testing/Review
-- <strong>Done</strong>: Completed</p>
-<h3 id="team-items">Team Items<a class="headerlink" href="#team-items" title="Permanent link">&para;</a></h3>
-<p>Filter by assignee and sprint for personal tracking</p>
-<h2 id="security">🔐 Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h2>
-<h3 id="permissions-model">Permissions Model<a class="headerlink" href="#permissions-model" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Branch Creator</strong>: Write access (create branches)</li>
-<li><strong>Code Reviewer</strong>: Read access (no modifications)</li>
-<li><strong>Test Feedback</strong>: Read access (comment only)</li>
-<li><strong>Human maintainers</strong>: Full permissions</li>
-</ul>
-<h3 id="api-keys">API Keys<a class="headerlink" href="#api-keys" title="Permanent link">&para;</a></h3>
-<p>All sensitive credentials stored in GitHub Secrets (never in git):
-<div class="highlight"><pre><span></span><code>GH_TOKEN, GEMINI_API_KEY
-</code></pre></div></p>
-<h2 id="use-cases">🎓 Use Cases<a class="headerlink" href="#use-cases" title="Permanent link">&para;</a></h2>
-<h3 id="perfect-for">✅ Perfect For<a class="headerlink" href="#perfect-for" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Distributed teams with async workflows</li>
-<li>Projects with many contributors</li>
-<li>Continuous learning environments</li>
-<li>DevOps-focused teams</li>
-<li>Open-source projects</li>
-</ul>
-<h3 id="consider-alternatives-for">⚠️ Consider Alternatives For<a class="headerlink" href="#consider-alternatives-for" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Real-time synchronous work</li>
-<li>Projects requiring manual QA</li>
-<li>Systems without GitHub</li>
-</ul>
-<h2 id="contributing">🤝 Contributing<a class="headerlink" href="#contributing" title="Permanent link">&para;</a></h2>
-<p>See <a href="../CONTRIBUTING.md">CONTRIBUTING.md</a> for guidelines on how to contribute to this template.</p>
-<h2 id="support">📞 Support<a class="headerlink" href="#support" title="Permanent link">&para;</a></h2>
-<ul>
-<li>📖 <strong>Documentation</strong>: See <a href="getting-started/installation/">Getting Started</a></li>
-<li>💬 <strong>Discussions</strong>: GitHub Discussions tab</li>
-<li>🐛 <strong>Issues</strong>: Use the provided issue templates</li>
-<li>📧 <strong>Email</strong>: your-email@example.com</li>
-</ul>
-<h2 id="license">📄 License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
-<p>MIT License - See <a href="../LICENSE">LICENSE</a> file for details.</p>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 3v6h8V3m-8 18h8V11h-8M3 21h8v-6H3m0-2h8V3H3z"/></svg></span> <strong>Auto Project Board</strong></p>
 <hr />
-<p><strong>Ready to get started?</strong> → <a href="getting-started/installation/">Installation Guide</a></p>
-<p><strong>Want to learn more?</strong> → <a href="architecture/overview/">Architecture Overview</a></p>
-<p><strong>Have questions?</strong> → <a href="faq/">FAQ</a></p>
+<p>Issues and PRs are automatically added to your Kanban board. Status flows from Backlog to Done without manual updates.</p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14c-3.36 0-4.46 1.35-4.82 2.24C9.25 16.7 10 17.76 10 19a3 3 0 0 1-3 3 3 3 0 0 1-3-3c0-1.31.83-2.42 2-2.83V7.83A2.99 2.99 0 0 1 4 5a3 3 0 0 1 3-3 3 3 0 0 1 3 3c0 1.31-.83 2.42-2 2.83v5.29c.88-.65 2.16-1.12 4-1.12 2.67 0 3.56-1.34 3.85-2.23A3.01 3.01 0 0 1 14 7a3 3 0 0 1 3-3 3 3 0 0 1 3 3c0 1.34-.88 2.5-2.09 2.86C17.65 11.29 16.68 14 13 14m-6 4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1M7 4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m10 2a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1"/></svg></span> <strong>Automatic Branches</strong></p>
+<hr />
+<p>Add the <code>auto-branch</code> label to any issue. A branch <code>feat/123-title</code> is created and linked in seconds.</p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4v-1.91L12.09 18H6v-2h8.09l2-2H6v-2h12.09L20 10.09V8l-6-6zm7 1.5L18.5 9H13zm7.15 9.5a.55.55 0 0 0-.4.16l-1.02 1.02 2.09 2.08 1.02-1.01c.21-.22.21-.58 0-.79l-1.3-1.3a.54.54 0 0 0-.39-.16m-2.01 1.77L12 20.92V23h2.08l6.15-6.15z"/></svg></span> <strong>Specification Questionnaire</strong></p>
+<hr />
+<p>Gemini generates a tailored questionnaire to clarify requirements before implementation starts.</p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"/></svg></span> <strong>AI Code Review</strong></p>
+<hr />
+<p>Every PR is analyzed by Gemini AI with improvement suggestions, bug detection, and security checks.</p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 2v2h1v14a4 4 0 0 0 4 4 4 4 0 0 0 4-4V4h1V2zm4 14c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m2-4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m1-5h-4V4h4z"/></svg></span> <strong>Automated Testing</strong></p>
+<hr />
+<p>Lint, tests, and build run on every PR. Results are posted as comments. No CI setup needed.</p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M.41 13.41 6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17 7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42-6.35 6.35 1.42 1.41z"/></svg></span> <strong>Auto-close Features</strong></p>
+<hr />
+<p>Parent issues close automatically when all sub-issues are done. No manual tracking required.</p>
+</li>
+</ul>
+</div>
+<hr class="section-divider">
+
+<h2 id="manual-work-vs-this-template">Manual work vs. this template<a class="headerlink" href="#manual-work-vs-this-template" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Without template</th>
+<th>With template</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create a branch</td>
+<td>Manual <code>git checkout -b</code></td>
+<td>Add label <code>auto-branch</code></td>
+</tr>
+<tr>
+<td>Track issue status</td>
+<td>Drag cards on the board</td>
+<td>Automatic: Backlog → In Review → Done</td>
+</tr>
+<tr>
+<td>Code review</td>
+<td>Wait for humans</td>
+<td>Gemini reviews in seconds + human review</td>
+</tr>
+<tr>
+<td>Clarify requirements</td>
+<td>Meetings, back-and-forth</td>
+<td>Gemini generates a spec questionnaire</td>
+</tr>
+<tr>
+<td>Close parent issues</td>
+<td>Remember to check manually</td>
+<td>Auto-closes when sub-issues are done</td>
+</tr>
+<tr>
+<td>CI/CD setup</td>
+<td>Write workflow YAML</td>
+<td>Pre-configured, works out of the box</td>
+</tr>
+</tbody>
+</table>
+<hr class="section-divider">
+
+<h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>graph LR
+    A[&quot;Create Issue&quot;] --&gt; B[&quot;Add label&quot;]
+    B --&gt; C[&quot;Branch created&quot;]
+    C --&gt; D[&quot;Develop &amp; Push&quot;]
+    D --&gt; E[&quot;Open PR&quot;]
+    E --&gt; F[&quot;AI Review + CI&quot;]
+    F --&gt; G[&quot;Merge&quot;]
+    G --&gt; H[&quot;Done&quot;]
+    style A fill:#4051b5,color:#fff
+    style H fill:#43a047,color:#fff
+</code></pre></div>
+<p><strong>You handle steps 1 through 5.</strong> Everything after that is automated.</p>
+<hr class="section-divider">
+
+<h2 id="get-started-in-3-steps">Get started in 3 steps<a class="headerlink" href="#get-started-in-3-steps" title="Permanent link">&para;</a></h2>
+<h3 id="1-install-the-template">1. Install the template<a class="headerlink" href="#1-install-the-template" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/dyvan/github-project-llm-management/main/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
+<h3 id="2-create-your-first-issue">2. Create your first issue<a class="headerlink" href="#2-create-your-first-issue" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>gh<span class="w"> </span>issue<span class="w"> </span>create<span class="w"> </span>--title<span class="w"> </span><span class="s2">&quot;Add user authentication&quot;</span><span class="w"> </span>--label<span class="w"> </span><span class="s2">&quot;type:feature&quot;</span>
+gh<span class="w"> </span>issue<span class="w"> </span>edit<span class="w"> </span><span class="m">1</span><span class="w"> </span>--add-label<span class="w"> </span><span class="s2">&quot;auto-branch&quot;</span>
+</code></pre></div>
+<p>A branch is created automatically. Check it out and start coding.</p>
+<h3 id="3-open-a-pr-and-let-automation-take-over">3. Open a PR and let automation take over<a class="headerlink" href="#3-open-a-pr-and-let-automation-take-over" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>gh<span class="w"> </span>pr<span class="w"> </span>create<span class="w"> </span>--title<span class="w"> </span><span class="s2">&quot;feat: Add user auth (#1)&quot;</span><span class="w"> </span>--body<span class="w"> </span><span class="s2">&quot;Closes #1&quot;</span>
+</code></pre></div>
+<p>Gemini reviews your code. CI runs tests. Merge it — the issue closes and the board updates.</p>
+<hr class="section-divider">
+
+<h2 id="built-for-ai-assisted-development">Built for AI-assisted development<a class="headerlink" href="#built-for-ai-assisted-development" title="Permanent link">&para;</a></h2>
+<p>Works with <strong>Claude Code</strong>, <strong>Cursor</strong>, <strong>GitHub Copilot</strong>, <strong>Windsurf</strong>, or plain <code>vim</code>. This template handles project management so you focus on shipping code.</p>
+<div class="stats-row">
+  <div class="stat-item">
+    <span class="stat-number">:material-language-python:</span>
+    <span class="stat-label">Python 3.11+</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">:octicons-mark-github-16:</span>
+    <span class="stat-label">GitHub Actions</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">:material-robot:</span>
+    <span class="stat-label">Google Gemini</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">:material-book-open-variant:</span>
+    <span class="stat-label">MkDocs Material</span>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<h2 id="faq">FAQ<a class="headerlink" href="#faq" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>Do I need a Gemini API key?</summary>
+<p>It's optional. Without it, you still get automatic branches, project board sync, CI tests, and auto-close. The Gemini key enables AI code review and specification questionnaires.</p>
+</details>
+<details class="question">
+<summary>Can I use this with an existing repo?</summary>
+<p>Yes. The install script clones the template into a new project, but you can also copy the workflows and scripts into an existing repo manually.</p>
+</details>
+<details class="question">
+<summary>Is this only for Python projects?</summary>
+<p>No. The template works with any language. The Python scripts are for the automation layer (project sync, QCM generation). Your project code can be anything.</p>
+</details>
+<details class="question">
+<summary>What GitHub token scopes do I need?</summary>
+<p>The token needs <code>repo</code>, <code>project</code>, and <code>workflow</code> scopes. The setup wizard will tell you exactly what to configure.</p>
+</details>
+<hr class="section-divider">
+
+<div style="text-align: center; margin: 2em 0;">
+  <a href="Getting-Started/" class="md-button md-button--primary" style="margin: 0.5em;">Get Started</a>
+  <a href="https://github.com/dyvan/github-project-llm-management" class="md-button" style="margin: 0.5em;">Star on GitHub</a>
+</div>
 
 
 
@@ -1730,8 +1592,13 @@
 
 
 
+  
+  
 
 
+
+
+  
 
 
 
@@ -1778,7 +1645,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["content.code.copy", "content.code.select", "navigation.instant", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["content.code.copy", "content.code.select", "navigation.instant", "navigation.tracking", "navigation.top", "navigation.sections", "toc.follow", "search.suggest", "search.highlight"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
