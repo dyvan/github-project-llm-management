@@ -87,6 +87,7 @@ nav:
       - Hooks: hooks.md
       - Milestones: milestones.md
       - Wiki Templates: wiki.md
+      - MCP GitHub Server: mcp-github.md
   - Agents:
       - PM Agent: pm-agent.md
   - Contributing: Contributing.md
