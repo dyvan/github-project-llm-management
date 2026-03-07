@@ -125,7 +125,7 @@ gh secret set GEMINI_API_KEY
 pip install -r requirements.txt
 
 # Run the setup script
-./setup-project.sh
+bash template-setup.sh
 ```
 
 **The script will**:

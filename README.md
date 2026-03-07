@@ -75,9 +75,11 @@ Bootstrap displays instructions to:
 | 📋 **Auto Project Board** | Issues are automatically added to the Kanban board |
 | 🌿 **Automatic Branches** | Add the `auto-branch` label and a branch is created |
 | 📝 **Specification Questionnaire** | Gemini generates a questionnaire to clarify specs |
+| 📄 **Spec Generation** | Gemini generates detailed specs from questionnaire answers |
 | 🤖 **AI Code Review** | Gemini analyzes your PRs and suggests improvements |
 | ✅ **Automated Tests** | Every PR is validated automatically |
 | 🔄 **Synchronization** | Status updates automatically (Backlog → Done) |
+| 🔒 **Auto-close Features** | Parent issues auto-close when all sub-issues are done |
 
 **Watch the video**: [How it works in 2 minutes](../../wiki/Understanding-Workflows)
 
@@ -130,10 +132,19 @@ Bootstrap displays instructions to:
 - ✅ Spec clarification before implementation
 - ✅ Questionnaire posted as a comment on the issue
 
+### Specification Generation with Gemini
+- ✅ `generate-specification` label → detailed spec from QCM responses
+- ✅ Sub-issue created with full specification document
+- ✅ Branch auto-created for implementation
+
 ### AI Code Review
 - ✅ Automatic PR analysis by Gemini AI
 - ✅ Improvement suggestions
 - ✅ Potential bug detection
+
+### Auto-close Parent Features
+- ✅ Merging a PR auto-checks if all sub-issues are done
+- ✅ Parent feature issue closed automatically when complete
 
 ### Built-in Tests
 - ✅ Automatic validation on every PR

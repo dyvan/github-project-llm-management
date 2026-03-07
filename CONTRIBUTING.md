@@ -110,11 +110,12 @@ project-name/
 │   ├── workflows/           # GitHub Actions
 │   ├── ISSUE_TEMPLATE/      # Issue templates
 │   └── PULL_REQUEST_TEMPLATE/
-├── agents/                  # LLM agent documentation
 ├── docs/                    # MkDocs documentation
-├── src/                     # Source code
+├── scripts/                 # Automation scripts
+├── template/                # Template setup files
 ├── tests/                   # Unit tests
 ├── requirements.txt         # Python dependencies
+├── template-setup.sh        # Project setup script
 ├── README.md
 ├── CONTRIBUTING.md
 └── LICENSE

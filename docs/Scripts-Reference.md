@@ -6,13 +6,13 @@ Documentation for all template automation scripts.
 
 ## 📜 Main Scripts
 
-### 1. `setup-project.sh`
+### 1. `template-setup.sh`
 
 **Purpose**: Initial setup script to configure a new project
 
 **Usage**:
 ```bash
-./setup-project.sh
+bash template-setup.sh
 ```
 
 **What it does**:

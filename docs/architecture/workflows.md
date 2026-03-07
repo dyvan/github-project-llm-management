@@ -553,5 +553,3 @@ env:
 | Docs not deploying | Wrong branch | Ensure gh-pages exists |
 
 ---
-
-Next: [Agents Documentation](../agents/branch-creator.md)

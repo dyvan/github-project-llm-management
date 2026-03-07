@@ -22,7 +22,7 @@ The `.github/workflows/template-validation.yml` workflow automatically validates
 - `scripts/setup_project_fields.py`
 
 **Bash scripts**:
-- `setup-project.sh`
+- `template-setup.sh`
 - `scripts/validate_setup.sh`
 
 **Checks**:

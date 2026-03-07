@@ -93,11 +93,52 @@ gh pr merge 45
 
 ---
 
+### 6. **Specification Questionnaire (QCM)** ✅
+**Trigger**: Adding `plan-with-gemini` label to an issue
+**What happens**:
+- Gemini AI generates a specification questionnaire tailored to the issue type (Feature, Bug, Task)
+- Questionnaire posted as a comment on the issue
+- Label `qcm-generated` added when complete
+
+**Workflow**: `.github/workflows/plan-with-gemini.yml`
+
+**Requirements**: `GEMINI_API_KEY` secret configured (or `GEMINI_PLAN_API_KEY`)
+
+---
+
+### 7. **Specification Generation** ✅
+**Trigger**: Adding `generate-specification` label to an issue (after QCM is completed)
+**What happens**:
+- Reads QCM responses from issue comments
+- Gemini AI generates a detailed specification document
+- Specification saved to `specifications/issue-{number}/`
+- Sub-issue created with the specification
+- Labels `auto-branch` and `specifications-ready` added
+
+**Workflow**: `.github/workflows/generate-specification.yml`
+
+**Requirements**: `GEMINI_API_KEY` secret configured (or `GEMINI_SPEC_API_KEY`)
+
+---
+
+### 8. **Auto-close Parent Feature** ✅
+**Trigger**: PR merged with `Closes #X` in description
+**What happens**:
+- Extracts linked issue number from PR body
+- Checks if all sub-issues of the parent feature are closed
+- If all sub-issues are done, automatically closes the parent feature issue
+
+**Workflow**: `.github/workflows/auto-close-feature.yml`
+
+**Requirements**: None (uses GitHub token)
+
+---
+
 ## ⚠️ **Semi-Automated** (Initial Setup Required)
 
 ### 1. **GitHub Project Board Creation** ⚠️
 **Manual setup required**:
-1. Run `./setup-project.sh` (one-time setup)
+1. Run `bash template-setup.sh` (one-time setup)
 2. Manually configure custom fields in Project Settings:
    - Priority (Single select: High, Medium, Low)
    - Effort (Single select: 1, 2, 3, 5, 8)
@@ -114,7 +155,7 @@ gh pr merge 45
 
 ### 2. **Labels Configuration** ⚠️
 **Manual setup required**:
-1. Run `./setup-project.sh` (creates all labels)
+1. Run `bash template-setup.sh` (creates all labels)
 2. Or manually create via GitHub UI
 
 **Once configured**: Labels work automatically with workflows
@@ -146,7 +187,7 @@ Use this checklist when setting up a new project from this template:
 
 - [ ] **2. Run the setup script**
   ```bash
-  ./setup-project.sh
+  bash template-setup.sh
   ```
   This will:
   - ✅ Check prerequisites (gh, python3, jq)

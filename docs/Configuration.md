@@ -95,10 +95,10 @@ fields:
 
 ## GitHub Labels
 
-Labels are created by `setup-project.sh`. To customize:
+Labels are created by `template-setup.sh`. To customize:
 
 ```bash
-# Edit setup-project.sh labels section
+# Edit template-setup.sh labels section
 declare -a LABELS=(
     "type:feature:0e8a16:New feature"
     "priority:urgent:ff0000:Urgent"  # Add your labels

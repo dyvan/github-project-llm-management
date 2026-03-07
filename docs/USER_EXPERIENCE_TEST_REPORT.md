@@ -67,15 +67,15 @@
 
 ### 2. Setup Script Missing Usage Instructions
 
-**Problem**: `setup-project.sh` doesn't display help when run with `--help`
+**Problem**: `template-setup.sh` doesn't display help when run with `--help`
 
 **Impact**: User doesn't know how to use it
 
 **Recommended Solution**:
 ```bash
-# Add to setup-project.sh
+# Add to template-setup.sh
 if [[ "$1" == "--help" || "$1" == "-h" ]]; then
-    echo "Usage: ./setup-project.sh"
+    echo "Usage: ./template-setup.sh"
     echo ""
     echo "This script will:"
     echo "  1. Create GitHub labels"
@@ -144,7 +144,7 @@ git clone https://github.com/YOU/your-project.git
 cd your-project
 
 # 3. Run the automatic setup
-./setup-project.sh
+./template-setup.sh
 ```
 
 ➡️ **[Full guide in 5 steps](../../wiki/Getting-Started)**
@@ -174,7 +174,7 @@ No action required
 
 ```markdown
 - [ ] Replace "GraphQL", "API" with simpler terms in README
-- [ ] Add --help to setup-project.sh
+- [ ] Add --help to template-setup.sh
 - [ ] Add docs links in script errors
 - [ ] Reduce quick start to 3 commands max
 - [ ] Re-test after modifications
