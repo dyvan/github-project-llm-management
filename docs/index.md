@@ -5,7 +5,7 @@ Welcome to the **GitHub-based Project Management with LLM Agents** template!
 This is a comprehensive, production-ready template for managing software projects using:
 
 - 🏗️ **GitHub Projects v2** for centralized tracking
-- 🤖 **LLM Agents** (Claude, ChatGPT, Gemini) for automation
+- 🤖 **LLM Agents** (Gemini, Claude, ChatGPT) for automation
 - 🔄 **GitHub Actions** for CI/CD and workflows
 - 👥 **Human oversight** via a central Project Board
 

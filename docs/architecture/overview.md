@@ -70,7 +70,7 @@ GitHub Actions triggered (multiple parallel)
 CI Tests Workflow              Code Review Workflow
     ↓                                ↓
 1. Install deps               1. Get PR diff
-2. Lint (black, pylint)       2. Call Claude API
+2. Lint (black, pylint)       2. Call Gemini API
 3. Type check (mypy)          3. Generate review
 4. Run tests (pytest)         4. Post comment
 5. Build                      5. Update status
@@ -100,7 +100,7 @@ Project Board reflects completion
 
 ### Code Reviewer
 - **Input** : PR opened/updated
-- **Process** : Extract diff → Call Claude → Format → Post
+- **Process** : Extract diff → Call Gemini → Format → Post
 - **Output** : Comment with feedback
 - **Permissions** : `pull-requests: write`, `contents: read`
 - **Note** : Non-blocking, informational only
@@ -166,7 +166,7 @@ Deploy to production
 ### Current Capacity
 - ✅ Single repo with unlimited issues
 - ✅ Parallel workflow execution (GitHub Actions standard)
-- ✅ Claude API calls limited by rate limits
+- ✅ Gemini API calls limited by rate limits
 
 ### Growth Path
 1. Add more agents (Security Scanner, Performance Profiler)

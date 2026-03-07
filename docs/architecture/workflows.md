@@ -214,7 +214,7 @@ Already done, accessible via:
 ## 3️⃣ code-review-agent.yml
 
 ### Purpose
-Use Claude AI to automatically review pull requests and provide constructive feedback.
+Use Gemini AI to automatically review pull requests and provide constructive feedback.
 
 ### Trigger
 ```yaml
@@ -537,7 +537,7 @@ env:
 - **Typical project**: ~500 minutes/month
 
 ### API Costs
-- **Claude code review**: ~$0.01-0.05 per review
+- **Gemini code review**: ~$0.01-0.05 per review
 - **Typical monthly**: $10-30 for active project
 
 ---

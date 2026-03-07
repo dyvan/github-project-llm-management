@@ -88,7 +88,7 @@ Puis sur GitHub :
 
 #### 6. Révision de code
 
-- Le **Code Review Agent** (Claude) commentera automatiquement
+- Le **Code Review Agent** (Gemini) commentera automatiquement
 - L'équipe reverra la PR
 - Les tests (lint, pytest, build) doivent passer
 - Répondez aux retours et committez les corrections

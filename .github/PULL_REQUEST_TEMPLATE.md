@@ -64,6 +64,6 @@ Ajoutez toute information supplémentaire utile pour les reviewers.
 
 ---
 
-**🤖 Code Review par l'agent IA** : Ce PR sera automatiquement révisé par Claude. Des suggestions et des commentaires apparaîtront ci-dessous.
+**🤖 Code Review par l'agent IA** : Ce PR sera automatiquement révisé par Gemini. Des suggestions et des commentaires apparaîtront ci-dessous.
 
 **👥 Review humain requis** : Veuillez attendre l'approbation d'au moins un mainteneur avant le merge.

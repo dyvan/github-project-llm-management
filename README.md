@@ -75,7 +75,7 @@ Bootstrap affiche les instructions pour:
 | 📋 **Project Board auto** | Issues ajoutées automatiquement au Kanban |
 | 🌿 **Branches automatiques** | Ajoutez le label `auto-branch`, la branche est créée |
 | 📝 **QCM de spécification** | Gemini génère un questionnaire pour clarifier les specs |
-| 🤖 **Revue de code IA** | Claude analyse vos PRs et suggère des améliorations |
+| 🤖 **Revue de code IA** | Gemini analyse vos PRs et suggère des améliorations |
 | ✅ **Tests automatiques** | Chaque PR est validée automatiquement |
 | 🔄 **Synchronisation** | Status mis à jour automatiquement (Backlog → Done) |
 
@@ -131,7 +131,7 @@ Bootstrap affiche les instructions pour:
 - ✅ QCM posté en commentaire sur l'issue
 
 ### Revue de code par IA
-- ✅ Analyse automatique des PRs par Claude AI
+- ✅ Analyse automatique des PRs par Gemini AI
 - ✅ Suggestions d'amélioration
 - ✅ Détection de bugs potentiels
 

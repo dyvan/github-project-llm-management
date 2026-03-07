@@ -52,7 +52,7 @@ gh pr create \
 
 **Résultat** :
 - ✅ CI/CD se lance
-- ✅ Claude AI analyse le code (si configuré)
+- ✅ Gemini AI analyse le code (si configuré)
 - ✅ Status de l'issue → "In Review"
 
 ## Merger une PR
@@ -118,7 +118,7 @@ Utilisez les templates dans `.github/ISSUE_TEMPLATE/` :
    gh pr create --title "Add user profile (#1)" --body "Closes #1"
    ```
 
-5. **Revue auto** → Claude analyse le code
+5. **Revue auto** → Gemini analyse le code
 
 6. **Merger** → Status "Done" automatique
 

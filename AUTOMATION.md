@@ -192,7 +192,7 @@ Use this checklist when setting up a new project from this template:
   ```bash
   # Create a PR
   gh pr create --title "Test PR" --body "Test"
-  # Check for Claude AI review comment
+  # Check for Gemini AI review comment
   ```
 
 - [ ] **Test 4: CI/CD**
@@ -232,7 +232,7 @@ gh pr create --title "feat: Add user authentication (#123)" --body "Closes #123"
 
 # ✨ Automation takes over:
 # - Issue status → "In Review"
-# - Claude reviews code
+# - Gemini reviews code
 # - CI runs tests
 # - PR status tracked in Project Board
 
@@ -301,12 +301,12 @@ python scripts/project_sync.py \
 python scripts/project_sync.py --pr 45 --status "Done"
 ```
 
-### Using with Claude AI
+### Using with Gemini AI
 
 Claude can use these commands via `claude.md` instructions:
 
 ```bash
-# Claude can autonomously execute:
+# Gemini can autonomously execute:
 gh issue create --title "..." --label "..."
 gh issue edit 123 --add-label "auto-branch"
 python scripts/project_sync.py --issue 123 --status "In Progress"
@@ -389,7 +389,7 @@ python scripts/project_sync.py --issue 123 --status "In Progress"
 ## 📚 **Related Documentation**
 
 - `README.md`: Main project documentation
-- `claude.md`: Instructions for Claude AI
+- `claude.md`: Instructions for Gemini AI
 - `PROJECT_BOARD_SETUP.md`: Detailed Project Board setup
 - `CONTRIBUTING.md`: Contribution guidelines
 - `.github/workflows/`: All automation workflows

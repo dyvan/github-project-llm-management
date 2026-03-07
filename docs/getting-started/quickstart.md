@@ -151,12 +151,12 @@ Click **Create pull request**
 
 ### Code Review Agent
 **What happens:**
-- Claude AI analyzes your code
+- Gemini AI analyzes your code
 - Posts feedback comment on PR
 
 **Example comment:**
 ```markdown
-## 🤖 Code Review by Claude AI
+## 🤖 Code Review by Gemini AI
 
 ### ✅ Strengths
 - Good error handling
@@ -189,7 +189,7 @@ None found!
 ## ✅ Code Review & Merge
 
 ### Step 1: Address Feedback
-If Claude suggested improvements:
+If Gemini suggested improvements:
 ```bash
 # Make changes
 nano src/profile.py
