@@ -21,7 +21,10 @@ copy_workflows() {
 
     mkdir -p "$dest"
 
-    # Workflows to copy (user-relevant only)
+    # WHITELIST: Only these workflows are distributed to template users.
+    # Internal/E2E workflows (e2e-test-template.yml, e2e-test-install.yml,
+    # template-validation.yml, auto-add-to-project.yml) are intentionally
+    # excluded -- they are development-only and must never be shipped.
     local workflows=(
         "create-branch.yml"
         "code-review-agent.yml"
@@ -29,6 +32,8 @@ copy_workflows() {
         "generate-specification.yml"
         "plan-with-gemini.yml"
         "update-project.yml"
+        "ci-tests.yml"
+        "deploy-docs.yml"
     )
 
     local count=0

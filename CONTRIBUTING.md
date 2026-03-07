@@ -123,7 +123,37 @@ project-name/
 
 ---
 
-## 💻 Tech Stack
+## Workflows: Template vs Internal
+
+Not all workflow files in `.github/workflows/` are distributed to template users. The setup step `5-copy-files.sh` uses an explicit whitelist.
+
+**Template workflows** (distributed to users):
+
+| Workflow | Purpose |
+|---|---|
+| `create-branch.yml` | Auto-create branch from issue |
+| `code-review-agent.yml` | Gemini AI code review |
+| `auto-close-feature.yml` | Auto-close parent when subs done |
+| `generate-specification.yml` | Gemini generates detailed spec |
+| `plan-with-gemini.yml` | Gemini generates spec questionnaire |
+| `update-project.yml` | Sync project board |
+| `ci-tests.yml` | Lint, tests, build |
+| `deploy-docs.yml` | Deploy MkDocs to GitHub Pages |
+
+**Internal workflows** (NOT distributed, development-only):
+
+| Workflow | Purpose |
+|---|---|
+| `e2e-test-template.yml` | End-to-end template validation |
+| `e2e-test-install.yml` | End-to-end install flow test |
+| `template-validation.yml` | Template structure validation |
+| `auto-add-to-project.yml` | Auto-add items to project board (repo-specific) |
+
+A CI test (`tests/test_template_distribution.py`) enforces that internal workflows never appear in the whitelist.
+
+---
+
+## Tech Stack
 
 ### Languages
 - **Python 3.11+** (primary language)
