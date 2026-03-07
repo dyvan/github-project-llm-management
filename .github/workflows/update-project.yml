@@ -129,9 +129,17 @@ jobs:
             --base "$BASE_BRANCH" \
             --head "$BRANCH_NAME" || echo "⚠️  Could not create PR (might already exist)"
 
-      # NOTE: Issues are NOT automatically added to project on creation.
-      # They remain in GitHub Backlog until manually moved or auto-branch label is added.
-      # See WORKFLOW_SPECIFICATION.md for details.
+      - name: Add issue to project on creation
+        continue-on-error: true
+        if: github.event_name == 'issues' && github.event.action == 'opened'
+        env:
+          GH_TOKEN: ${{ env.GH_TOKEN }}
+        run: |
+          ISSUE_URL="${{ github.event.issue.html_url }}"
+          ISSUE_NUM=${{ github.event.issue.number }}
+          echo "Adding issue #$ISSUE_NUM to project board..."
+          gh project item-add $PROJECT_NUM --owner $GH_OWNER --url "$ISSUE_URL"
+          echo "Issue #$ISSUE_NUM added to project board"
 
       - name: Update project on issue labeled
         continue-on-error: true

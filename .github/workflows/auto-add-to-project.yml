@@ -1,0 +1,29 @@
+name: Auto-add issues to project board
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: read
+
+jobs:
+  add-to-project:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Add issue to project (official action)
+        uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: https://github.com/users/dyvan/projects/3
+          github-token: ${{ secrets.GH_TOKEN }}
+
+      - name: Fallback - Add issue via gh CLI
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          ISSUE_URL="${{ github.event.issue.html_url }}"
+          echo "Primary action failed, attempting fallback with gh CLI..."
+          gh project item-add 3 --owner dyvan --url "$ISSUE_URL"
+          echo "Issue added to project via gh CLI fallback"
