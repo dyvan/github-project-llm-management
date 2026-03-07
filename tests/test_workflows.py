@@ -68,9 +68,19 @@ class TestWorkflowFiles:
         with open(workflow_path, 'r') as f:
             content = yaml.safe_load(f)
 
-        # Check triggers (handle YAML parsing of 'on' as True)
+        # Check triggers: only issues and pull_request (no push)
         triggers = content.get('on') or content.get(True, {})
-        assert 'push' in triggers or 'pull_request' in triggers or 'issues' in triggers
+        assert 'issues' in triggers, "update-project should trigger on issues"
+        assert 'pull_request' in triggers, "update-project should trigger on pull_request"
+        assert 'push' not in triggers, "update-project should not trigger on push"
+
+        # Check issue trigger types
+        assert 'opened' in triggers['issues']['types']
+        assert 'labeled' in triggers['issues']['types']
+
+        # Check PR trigger types
+        assert 'opened' in triggers['pull_request']['types']
+        assert 'closed' in triggers['pull_request']['types']
 
         # Check jobs
         assert 'update-project' in content['jobs']
@@ -79,12 +89,16 @@ class TestWorkflowFiles:
         job = content['jobs']['update-project']
         steps = job['steps']
 
-        # Check that at least one step calls project_sync.py
         has_sync_call = any(
             'project_sync.py' in str(step.get('run', ''))
             for step in steps
         )
         assert has_sync_call, "update-project workflow doesn't call project_sync.py"
+
+        # Workflow should be concise (< 100 lines)
+        with open(workflow_path, 'r') as f:
+            line_count = sum(1 for _ in f)
+        assert line_count < 100, f"update-project.yml should be < 100 lines, got {line_count}"
 
     def test_create_branch_workflow_structure(self, workflows_dir):
         """Test create-branch.yml has correct structure"""

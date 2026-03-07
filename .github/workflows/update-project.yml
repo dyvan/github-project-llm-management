@@ -1,302 +1,81 @@
 name: Update GitHub Project
 
-# =============================================================================
-# REQUIRED TOKEN SCOPES
-# =============================================================================
-# This workflow uses GitHub's GraphQL API to manage Projects v2 boards.
-# The default GITHUB_TOKEN does NOT support Projects v2 operations.
-#
-# You MUST create a Personal Access Token (classic) with these scopes:
-#   - repo        (full control of private repositories)
-#   - project     (full control of projects -- REQUIRED for Projects v2 GraphQL)
-#   - workflow    (update GitHub Action workflows)
-#
-# Then store it as a repository secret named GH_TOKEN:
-#   gh secret set GH_TOKEN
-#
-# Without the 'project' scope, all project board updates will fail with
-# HTTP 401 or "Resource not accessible by integration" errors.
-#
-# See: docs/Configuration.md for detailed setup instructions.
-# =============================================================================
-
 on:
-  push:
-    branches: [main, develop, staging, 'feat/*', 'fix/*', 'refactor/*', 'docs/*']
-  pull_request:
-    types: [opened, synchronize, closed]
   issues:
-    types: [opened, closed, labeled, unlabeled]
+    types: [opened, labeled]
+  pull_request:
+    types: [opened, closed]
 
 permissions:
   contents: read
   issues: read
-  pull-requests: write  # Required to create PRs automatically
-  # Projects v2 requires a PAT with 'project' scope -- the built-in
-  # GITHUB_TOKEN cannot access Projects v2 GraphQL mutations.
-  # See: https://docs.github.com/en/graphql/reference/mutations#updateprojectv2itemfieldvalue
+  pull-requests: read
 
 jobs:
   update-project:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'issues'
-
     env:
       GH_OWNER: ${{ github.repository_owner }}
       GH_REPO: ${{ github.event.repository.name }}
-
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up GitHub token
-        id: token
+      - name: Validate token and load config
         run: |
-          # Use custom GH_TOKEN if available (with project permissions)
-          # Otherwise use default GITHUB_TOKEN (may lack project scope)
-          if [ -n "${{ secrets.GH_TOKEN }}" ]; then
-            echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
-            echo "has_project_token=true" >> $GITHUB_OUTPUT
-            echo "Using custom GH_TOKEN"
-          else
-            echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
-            echo "has_project_token=false" >> $GITHUB_OUTPUT
-            echo "::warning::No GH_TOKEN secret found. Using default GITHUB_TOKEN which lacks 'project' scope. Project board updates will fail. See docs/Configuration.md for setup instructions."
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::GH_TOKEN secret not set. Requires PAT with 'project' scope. See docs/Configuration.md."
+            exit 1
           fi
 
-      - name: Diagnose token permissions for Projects v2
-        id: diagnose
+      - uses: actions/checkout@v4
+
+      - name: Load project number
         run: |
-          echo "--- Token Diagnostics ---"
+          P=""; [ -f .env ] && P=$(grep "^GH_PROJECT_NUMBER=" .env | cut -d'=' -f2 | tr -d ' ')
+          [ -z "$P" ] && [ -n "${{ secrets.GH_PROJECT_NUMBER }}" ] && P="${{ secrets.GH_PROJECT_NUMBER }}"
+          echo "PROJECT_NUM=${P:-auto}" >> $GITHUB_ENV
 
-          # Test 1: Basic GraphQL connectivity
-          HTTP_CODE=$(curl -s -o /tmp/graphql_response.json -w "%{http_code}" \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Content-Type: application/json" \
-            -d '{"query":"query { viewer { login } }"}' \
-            https://api.github.com/graphql)
-
-          if [ "$HTTP_CODE" = "200" ]; then
-            VIEWER=$(cat /tmp/graphql_response.json | python3 -c "import sys,json; print(json.load(sys.stdin).get('data',{}).get('viewer',{}).get('login','unknown'))" 2>/dev/null || echo "unknown")
-            echo "GraphQL auth OK (authenticated as: $VIEWER)"
-          else
-            echo "::error::GraphQL authentication failed (HTTP $HTTP_CODE). Check that GH_TOKEN is valid."
-            echo "has_project_scope=false" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-
-          # Test 2: Projects v2 scope -- try to list projects for the repo owner
-          HTTP_CODE=$(curl -s -o /tmp/project_response.json -w "%{http_code}" \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Content-Type: application/json" \
-            -d "{\"query\":\"query { user(login: \\\"$GH_OWNER\\\") { projectsV2(first: 1) { totalCount } } }\"}" \
-            https://api.github.com/graphql)
-
-          RESPONSE=$(cat /tmp/project_response.json)
-          HAS_ERRORS=$(echo "$RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); print('yes' if 'errors' in d else 'no')" 2>/dev/null || echo "unknown")
-
-          if [ "$HTTP_CODE" = "200" ] && [ "$HAS_ERRORS" = "no" ]; then
-            PROJECT_COUNT=$(echo "$RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['user']['projectsV2']['totalCount'])" 2>/dev/null || echo "?")
-            echo "Projects v2 access OK (found $PROJECT_COUNT project(s) for $GH_OWNER)"
-            echo "has_project_scope=true" >> $GITHUB_OUTPUT
-          else
-            ERROR_MSG=$(echo "$RESPONSE" | python3 -c "import sys,json; errs=json.load(sys.stdin).get('errors',[]); print(errs[0].get('message','unknown') if errs else 'unknown')" 2>/dev/null || echo "unknown")
-            echo "::warning::Projects v2 access FAILED: $ERROR_MSG"
-            echo "::warning::Your GH_TOKEN is missing the 'project' scope. Project board updates will be skipped."
-            echo "::warning::Fix: Create a new PAT at https://github.com/settings/tokens/new with scopes: repo, project, workflow"
-            echo "::warning::Then run: gh secret set GH_TOKEN"
-            echo "::warning::See docs/Configuration.md for detailed instructions."
-            echo "has_project_scope=false" >> $GITHUB_OUTPUT
-          fi
-
-          echo "--- End Diagnostics ---"
-
-      - name: Load project configuration
-        id: config
-        run: |
-          PROJECT_NUM=""
-
-          # Try to load from .env file first (for local development)
-          if [ -f .env ]; then
-            PROJECT_NUM=$(grep "^GH_PROJECT_NUMBER=" .env | cut -d'=' -f2 | tr -d ' ')
-          fi
-
-          # Fallback: Use GitHub Secret if set
-          if [ -z "$PROJECT_NUM" ] && [ -n "${{ secrets.GH_PROJECT_NUMBER }}" ]; then
-            PROJECT_NUM="${{ secrets.GH_PROJECT_NUMBER }}"
-          fi
-
-          # If still empty, detect project dynamically
-          if [ -z "$PROJECT_NUM" ]; then
-            echo "⚠️  Project number not found in .env or secrets, detecting dynamically..."
-            # Will be detected in Python script
-            PROJECT_NUM="auto"
-          fi
-
-          echo "project_number=${PROJECT_NUM}" >> $GITHUB_OUTPUT
-          echo "PROJECT_NUM=${PROJECT_NUM}" >> $GITHUB_ENV
-          echo "Loaded project number: ${PROJECT_NUM}"
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
-        run: |
-          pip install requests pyyaml
+      - run: pip install requests pyyaml
 
-      - name: Create PR automatically on first push (feature/fix branches)
-        if: |
-          github.event_name == 'push' &&
-          (startsWith(github.ref, 'refs/heads/feat/') ||
-           startsWith(github.ref, 'refs/heads/fix/') ||
-           startsWith(github.ref, 'refs/heads/refactor/') ||
-           startsWith(github.ref, 'refs/heads/docs/'))
-        run: |
-          BRANCH_NAME="${{ github.ref_name }}"
-
-          # Extract issue number from branch name (e.g., feat/123-description -> 123)
-          ISSUE_NUM=$(echo "$BRANCH_NAME" | grep -oE '^[a-z]+/[0-9]+' | cut -d'/' -f2)
-
-          if [ -z "$ISSUE_NUM" ]; then
-            echo "⚠️  Could not extract issue number from branch name: $BRANCH_NAME"
-            exit 0
-          fi
-
-          # Check if PR already exists for this branch
-          EXISTING_PR=$(gh pr list --head "$BRANCH_NAME" --json number -q '.[0].number' 2>/dev/null || echo "")
-
-          if [ -n "$EXISTING_PR" ]; then
-            echo "✅ PR #$EXISTING_PR already exists for branch $BRANCH_NAME"
-            exit 0
-          fi
-
-          # Get issue title and extract base branch
-          ISSUE_TITLE=$(gh issue view "$ISSUE_NUM" --json title -q '.title' 2>/dev/null || echo "")
-          BASE_BRANCH="develop"
-
-          if [ -z "$ISSUE_TITLE" ]; then
-            echo "⚠️  Could not fetch issue #$ISSUE_NUM"
-            exit 0
-          fi
-
-          # Create PR with "Closes #X" in body
-          echo "🔄 Creating PR for branch $BRANCH_NAME (issue #$ISSUE_NUM)..."
-          gh pr create \
-            --title "feat(us-$ISSUE_NUM): $(echo "$ISSUE_TITLE" | sed 's/^\[.*\] //')" \
-            --body "Closes #$ISSUE_NUM
-
-          ## Checklist
-          - [ ] Code follows project conventions
-          - [ ] Tests added/updated
-          - [ ] Documentation updated
-          - [ ] No breaking changes (or documented)" \
-            --base "$BASE_BRANCH" \
-            --head "$BRANCH_NAME" || echo "⚠️  Could not create PR (might already exist)"
-
-      - name: Add issue to project on creation
-        continue-on-error: true
+      - name: Add issue to project
         if: github.event_name == 'issues' && github.event.action == 'opened'
-        env:
-          GH_TOKEN: ${{ env.GH_TOKEN }}
-        run: |
-          ISSUE_URL="${{ github.event.issue.html_url }}"
-          ISSUE_NUM=${{ github.event.issue.number }}
-          echo "Adding issue #$ISSUE_NUM to project board..."
-          gh project item-add $PROJECT_NUM --owner $GH_OWNER --url "$ISSUE_URL"
-          echo "Issue #$ISSUE_NUM added to project board"
-
-      - name: Update project on issue labeled
         continue-on-error: true
+        run: gh project item-add $PROJECT_NUM --owner $GH_OWNER --url "${{ github.event.issue.html_url }}"
+
+      - name: Update project on label
         if: github.event_name == 'issues' && github.event.action == 'labeled'
+        continue-on-error: true
         run: |
           LABEL="${{ github.event.label.name }}"
-          ISSUE_NUM=${{ github.event.issue.number }}
+          ARGS="--issue ${{ github.event.issue.number }} --project $PROJECT_NUM"
+          case "$LABEL" in
+            auto-branch|status:in-progress) python scripts/project_sync.py $ARGS --status "In progress" ;;
+            status:blocked)                 python scripts/project_sync.py $ARGS --status "Blocked" ;;
+            priority:high)                  python scripts/project_sync.py $ARGS --priority "High" ;;
+            priority:medium)                python scripts/project_sync.py $ARGS --priority "Medium" ;;
+            priority:low)                   python scripts/project_sync.py $ARGS --priority "Low" ;;
+            type:feature)                   python scripts/project_sync.py $ARGS --type "Feature" ;;
+            type:bug)                       python scripts/project_sync.py $ARGS --type "Bug" ;;
+            type:task)                      python scripts/project_sync.py $ARGS --type "Task" ;;
+          esac
 
-          # Map labels to status changes
-          if [[ "$LABEL" == "auto-branch" ]]; then
-            # auto-branch label triggers branch creation AND moves issue to In Progress
-            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --status "In progress"
-          elif [[ "$LABEL" == "status:in-progress" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --status "In progress"
-          elif [[ "$LABEL" == "status:blocked" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --status "Blocked"
-          fi
-
-          # Map priority labels
-          if [[ "$LABEL" == "priority:high" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --priority "High"
-          elif [[ "$LABEL" == "priority:medium" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --priority "Medium"
-          elif [[ "$LABEL" == "priority:low" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --priority "Low"
-          fi
-
-          # Map type labels
-          if [[ "$LABEL" == "type:feature" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --type "Feature"
-          elif [[ "$LABEL" == "type:bug" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --type "Bug"
-          elif [[ "$LABEL" == "type:task" ]]; then
-            python scripts/project_sync.py --issue $ISSUE_NUM --project $PROJECT_NUM --type "Task"
-          fi
-
-      - name: Sync PR to project and update status
-        continue-on-error: true
+      - name: Sync PR to project
         if: github.event_name == 'pull_request' && github.event.action == 'opened'
+        continue-on-error: true
         run: |
-          # Add PR to project with "In review" status
-          python scripts/project_sync.py \
-            --pr ${{ github.event.pull_request.number }} \
-            --project $PROJECT_NUM \
-            --status "In review"
-
-          # Extract and update linked issue
-          PR_BODY='${{ github.event.pull_request.body }}'
-          ISSUE_NUM=$(echo "$PR_BODY" | grep -oP 'Closes\s+#\K\d+' | head -1)
-
-          if [ -n "$ISSUE_NUM" ]; then
-            echo "Found linked issue #$ISSUE_NUM"
-            python scripts/project_sync.py \
-              --issue $ISSUE_NUM \
-              --project $PROJECT_NUM \
-              --status "In review"
-          else
-            echo "No linked issue found in PR description"
-          fi
+          SYNC="python scripts/project_sync.py --project $PROJECT_NUM"
+          $SYNC --pr ${{ github.event.pull_request.number }} --status "In review"
+          ISSUE=$(echo '${{ github.event.pull_request.body }}' | grep -oP 'Closes\s+#\K\d+' | head -1)
+          [ -n "$ISSUE" ] && $SYNC --issue $ISSUE --status "In review"
 
       - name: Update project on PR merge
-        continue-on-error: true
         if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged
+        continue-on-error: true
         run: |
-          # Update PR status to Done
-          python scripts/project_sync.py \
-            --pr ${{ github.event.pull_request.number }} \
-            --project $PROJECT_NUM \
-            --status "Done"
-
-          # Extract and update linked issue to Done
-          PR_BODY='${{ github.event.pull_request.body }}'
-          ISSUE_NUM=$(echo "$PR_BODY" | grep -oP 'Closes\s+#\K\d+' | head -1)
-
-          if [ -n "$ISSUE_NUM" ]; then
-            echo "Updating linked issue #$ISSUE_NUM to Done"
-            python scripts/project_sync.py \
-              --issue $ISSUE_NUM \
-              --project $PROJECT_NUM \
-              --status "Done"
-          fi
-
-      - name: Summary
-        if: always()
-        run: |
-          echo "--- Update Project Workflow Summary ---"
-          if [ "${{ steps.diagnose.outputs.has_project_scope }}" = "true" ]; then
-            echo "Token: OK (has project scope)"
-          else
-            echo "Token: MISSING project scope -- project board steps were skipped or failed"
-            echo "Action required: See docs/Configuration.md for GH_TOKEN setup"
-          fi
-          echo "Event: ${{ github.event_name }} / ${{ github.event.action }}"
-          echo "--- End Summary ---"
+          SYNC="python scripts/project_sync.py --project $PROJECT_NUM"
+          $SYNC --pr ${{ github.event.pull_request.number }} --status "Done"
+          ISSUE=$(echo '${{ github.event.pull_request.body }}' | grep -oP 'Closes\s+#\K\d+' | head -1)
+          [ -n "$ISSUE" ] && $SYNC --issue $ISSUE --status "Done"
