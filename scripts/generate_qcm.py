@@ -83,7 +83,7 @@ Generate 3-5 focused questions to clarify specifications before implementation.
 2. Provide 3-5 clear, mutually exclusive options (or indicate if open-ended)
 3. Include context explaining WHY the question matters
 4. Include one open-ended question at the end for additional details
-5. Use French language throughout
+5. Use English language throughout
 
 **Question Focus by Issue Type:**"""
 
@@ -128,54 +128,54 @@ For GENERAL issues, prioritize:
 
 **Output Format (Markdown):**
 
-## 🎯 Questionnaire de Spécification - {issue_type.upper()}
+## 🎯 Specification Questionnaire - {issue_type.upper()}
 
-> Ce questionnaire aide à clarifier les détails avant l'implémentation.
+> This questionnaire helps clarify details before implementation.
 
-### Question 1: [Titre court et clair]
+### Question 1: [Short, clear title]
 
-**Contexte:** [Pourquoi cette question est importante]
+**Context:** [Why this question matters]
 
-- [ ] Option A: [Description claire]
-- [ ] Option B: [Description claire]
-- [ ] Option C: [Description claire]
-- [ ] Autre: _[Veuillez préciser]_
+- [ ] Option A: [Clear description]
+- [ ] Option B: [Clear description]
+- [ ] Option C: [Clear description]
+- [ ] Other: _[Please specify]_
 
-### Question 2: [Titre]
+### Question 2: [Title]
 ...
 (Continue with questions)
 
-### Question Ouverte: Détails Supplémentaires
+### Open-Ended Question: Additional Details
 
-**Y a-t-il des détails importants, contraintes ou considérations particulières ?**
+**Are there any important details, constraints, or special considerations?**
 
-_[Votre réponse ici]_
+_[Your answer here]_
 
 ---
 
-## ✅ Prochaines Étapes
+## ✅ Next Steps
 
-**1. Complétez ce questionnaire:**
-   - Cochez les options pertinentes
-   - Modifiez ce commentaire pour ajouter vos réponses
-   - Remplissez la question ouverte avec des détails
+**1. Complete this questionnaire:**
+   - Check the relevant options
+   - Edit this comment to add your answers
+   - Fill in the open-ended question with details
 
-**2. Une fois complété, déclenchez la génération de spécification détaillée:**
+**2. Once completed, trigger the detailed specification generation:**
 
-   **Via ligne de commande:**
+   **Via command line:**
    ```bash
    gh issue edit {issue_number} --add-label "generate-specification"
    ```
 
-   **Ou via l'interface GitHub:**
-   - Cliquez sur "Labels" à droite
-   - Trouvez et cochez `generate-specification`
-   - Le workflow se lancera automatiquement
+   **Or via the GitHub interface:**
+   - Click on "Labels" on the right
+   - Find and check `generate-specification`
+   - The workflow will run automatically
 
-**3. Un rapport détaillé sera généré automatiquement ! 🤖**
-   - Rapport de spécification créé
-   - Sous-issue créée avec la spécification complète
-   - Branche de développement prêt à être utilisée
+**3. A detailed report will be generated automatically! 🤖**
+   - Specification report created
+   - Sub-issue created with the full specification
+   - Development branch ready to use
 
 ---
 
@@ -225,166 +225,166 @@ Generate ONLY the questionnaire in Markdown format above. Do not add any text be
     def _generate_template_qcm(self, issue_type: str, title: str, issue_number: int) -> str:
         """Generate template-based QCM as fallback"""
         templates = {
-            "feature": """## 🎯 Questionnaire de Spécification - Feature
+            "feature": """## 🎯 Specification Questionnaire - Feature
 
-> Ce questionnaire vous aide à préciser les détails de cette fonctionnalité avant l'implémentation.
+> This questionnaire helps you clarify the details of this feature before implementation.
 
-### Question 1: Périmètre de la Feature
+### Question 1: Feature Scope
 
-**Contexte:** Clarifier les limites et l'étendue de la fonctionnalité.
+**Context:** Clarify the boundaries and extent of the feature.
 
-- [ ] Option A: Feature minimale (MVP) avec fonctionnalités de base uniquement
-- [ ] Option B: Feature complète avec toutes les fonctionnalités décrites
-- [ ] Option C: Feature extensive avec des améliorations additionnelles
-- [ ] Autre: _[Veuillez préciser]_
+- [ ] Option A: Minimal feature (MVP) with basic functionality only
+- [ ] Option B: Complete feature with all described functionality
+- [ ] Option C: Extended feature with additional enhancements
+- [ ] Other: _[Please specify]_
 
-### Question 2: Interface Utilisateur
+### Question 2: User Interface
 
-**Contexte:** Définir l'expérience utilisateur attendue.
+**Context:** Define the expected user experience.
 
-- [ ] Option A: Interface graphique complète avec tous les éléments visuels
-- [ ] Option B: Interface minimale fonctionnelle
-- [ ] Option C: API/CLI uniquement (pas d'interface graphique)
-- [ ] Option D: Réutiliser un composant existant avec modifications
-- [ ] Autre: _[Veuillez préciser]_
+- [ ] Option A: Full graphical interface with all visual elements
+- [ ] Option B: Minimal functional interface
+- [ ] Option C: API/CLI only (no graphical interface)
+- [ ] Option D: Reuse an existing component with modifications
+- [ ] Other: _[Please specify]_
 
-### Question 3: Intégration et Dépendances
+### Question 3: Integration and Dependencies
 
-**Contexte:** Identifier les systèmes et fonctionnalités existants affectés.
+**Context:** Identify affected existing systems and features.
 
-- [ ] Option A: Feature isolée, aucune dépendance majeure
-- [ ] Option B: Intégration avec des fonctionnalités existantes
-- [ ] Option C: Nécessite des modifications d'architecture
-- [ ] Option D: Dépend de features externes ou APIs tierces
-- [ ] Autre: _[Veuillez préciser]_
+- [ ] Option A: Isolated feature, no major dependencies
+- [ ] Option B: Integration with existing features
+- [ ] Option C: Requires architectural changes
+- [ ] Option D: Depends on external features or third-party APIs
+- [ ] Other: _[Please specify]_
 
-### Question 4: Performance et Scalabilité
+### Question 4: Performance and Scalability
 
-**Contexte:** Anticiper les besoins en performance.
+**Context:** Anticipate performance requirements.
 
-- [ ] Option A: Performance standard, volume de données faible
-- [ ] Option B: Performance importante, gros volumes attendus
-- [ ] Option C: Temps réel requis
-- [ ] Option D: Optimisations spécifiques nécessaires
-- [ ] Autre: _[Veuillez préciser]_
+- [ ] Option A: Standard performance, low data volume
+- [ ] Option B: High performance needed, large volumes expected
+- [ ] Option C: Real-time required
+- [ ] Option D: Specific optimizations needed
+- [ ] Other: _[Please specify]_
 
-### Question Ouverte: Informations Supplémentaires
+### Open-Ended Question: Additional Information
 
-**Y a-t-il des détails importants, contraintes techniques, ou considérations de sécurité que nous devrions prendre en compte ?**
+**Are there any important details, technical constraints, or security considerations we should take into account?**
 
-_[Votre réponse ici]_
+_[Your answer here]_
 
 ---
 
-**Instructions:** Veuillez cocher les options pertinentes et ajouter vos commentaires. Une fois complété, nous pourrons démarrer l'implémentation avec toutes les informations nécessaires.
+**Instructions:** Please check the relevant options and add your comments. Once completed, we can start implementation with all the necessary information.
 """,
-            "bug": """## 🐛 Questionnaire de Spécification - Bug
+            "bug": """## 🐛 Specification Questionnaire - Bug
 
-> Ce questionnaire vous aide à préciser les détails de ce bug avant la correction.
+> This questionnaire helps you clarify the details of this bug before fixing it.
 
-### Question 1: Sévérité et Impact
+### Question 1: Severity and Impact
 
-**Contexte:** Évaluer la priorité de correction.
+**Context:** Assess the priority for fixing.
 
-- [ ] Option A: Critique - Bloque l'utilisation ou perte de données
-- [ ] Option B: Haute - Fonctionnalité importante affectée
-- [ ] Option C: Moyenne - Fonctionnalité utilisable avec contournement
-- [ ] Option D: Basse - Problème cosmétique ou mineur
-- [ ] Autre: _[Veuillez préciser]_
+- [ ] Option A: Critical - Blocks usage or causes data loss
+- [ ] Option B: High - Important functionality affected
+- [ ] Option C: Medium - Functionality usable with workaround
+- [ ] Option D: Low - Cosmetic or minor issue
+- [ ] Other: _[Please specify]_
 
-### Question 2: Reproductibilité
+### Question 2: Reproducibility
 
-**Contexte:** Comprendre la fréquence du bug.
+**Context:** Understand how frequently the bug occurs.
 
-- [ ] Option A: Toujours reproductible avec les étapes fournies
-- [ ] Option B: Reproductible dans certaines conditions
-- [ ] Option C: Intermittent et difficile à reproduire
-- [ ] Option D: Observé une seule fois
-- [ ] Autre: _[Veuillez préciser]_
+- [ ] Option A: Always reproducible with the provided steps
+- [ ] Option B: Reproducible under certain conditions
+- [ ] Option C: Intermittent and difficult to reproduce
+- [ ] Option D: Observed only once
+- [ ] Other: _[Please specify]_
 
-### Question 3: Environnement Affecté
+### Question 3: Affected Environment
 
-**Contexte:** Identifier les environnements impactés.
+**Context:** Identify the impacted environments.
 
-- [ ] Option A: Production uniquement
-- [ ] Option B: Tous les environnements (dev, staging, prod)
-- [ ] Option C: Environnements de développement uniquement
-- [ ] Option D: Configuration ou navigateur spécifique
-- [ ] Autre: _[Veuillez préciser]_
+- [ ] Option A: Production only
+- [ ] Option B: All environments (dev, staging, prod)
+- [ ] Option C: Development environments only
+- [ ] Option D: Specific configuration or browser
+- [ ] Other: _[Please specify]_
 
-### Question 4: Approche de Correction Préférée
+### Question 4: Preferred Fix Approach
 
-**Contexte:** Définir la stratégie de résolution.
+**Context:** Define the resolution strategy.
 
-- [ ] Option A: Correction rapide (hotfix)
-- [ ] Option B: Correction complète avec refactoring
-- [ ] Option C: Workaround temporaire puis correction dans une release future
-- [ ] Option D: Investigation approfondie requise avant correction
-- [ ] Autre: _[Veuillez préciser]_
+- [ ] Option A: Quick fix (hotfix)
+- [ ] Option B: Complete fix with refactoring
+- [ ] Option C: Temporary workaround then fix in a future release
+- [ ] Option D: In-depth investigation required before fixing
+- [ ] Other: _[Please specify]_
 
-### Question Ouverte: Informations Supplémentaires
+### Open-Ended Question: Additional Information
 
-**Y a-t-il des logs, stack traces, ou informations de debugging additionnelles disponibles ?**
+**Are there any logs, stack traces, or additional debugging information available?**
 
-_[Votre réponse ici]_
+_[Your answer here]_
 
 ---
 
-**Instructions:** Veuillez cocher les options pertinentes et ajouter vos commentaires. Une fois complété, nous pourrons démarrer la correction avec toutes les informations nécessaires.
+**Instructions:** Please check the relevant options and add your comments. Once completed, we can start the fix with all the necessary information.
 """,
-            "task": """## 📋 Questionnaire de Spécification - Task
+            "task": """## 📋 Specification Questionnaire - Task
 
-> Ce questionnaire vous aide à préciser les détails de cette tâche avant l'exécution.
+> This questionnaire helps you clarify the details of this task before execution.
 
-### Question 1: Objectif Principal
+### Question 1: Main Objective
 
-**Contexte:** Clarifier le but de cette tâche.
+**Context:** Clarify the purpose of this task.
 
-- [ ] Option A: Refactoring / Amélioration de code existant
-- [ ] Option B: Configuration / Setup d'infrastructure
-- [ ] Option C: Documentation technique
-- [ ] Option D: Dette technique / Optimisation
-- [ ] Autre: _[Veuillez préciser]_
+- [ ] Option A: Refactoring / Improving existing code
+- [ ] Option B: Configuration / Infrastructure setup
+- [ ] Option C: Technical documentation
+- [ ] Option D: Technical debt / Optimization
+- [ ] Other: _[Please specify]_
 
-### Question 2: Approche Technique
+### Question 2: Technical Approach
 
-**Contexte:** Définir la méthode d'exécution.
+**Context:** Define the execution method.
 
-- [ ] Option A: Suivre un plan technique spécifique (à détailler)
-- [ ] Option B: Investigation puis proposition d'approche
-- [ ] Option C: Implémentation standard avec best practices
-- [ ] Option D: POC/Prototype d'abord
-- [ ] Autre: _[Veuillez préciser]_
+- [ ] Option A: Follow a specific technical plan (to be detailed)
+- [ ] Option B: Investigation then propose an approach
+- [ ] Option C: Standard implementation with best practices
+- [ ] Option D: POC/Prototype first
+- [ ] Other: _[Please specify]_
 
-### Question 3: Dépendances et Blocages
+### Question 3: Dependencies and Blockers
 
-**Contexte:** Identifier les prérequis.
+**Context:** Identify prerequisites.
 
-- [ ] Option A: Aucune dépendance, peut démarrer immédiatement
-- [ ] Option B: Dépend d'autres issues en cours
-- [ ] Option C: Nécessite validation/approbation avant de commencer
-- [ ] Option D: Requiert des ressources externes (accès, credentials, etc.)
-- [ ] Autre: _[Veuillez préciser]_
+- [ ] Option A: No dependencies, can start immediately
+- [ ] Option B: Depends on other issues in progress
+- [ ] Option C: Requires validation/approval before starting
+- [ ] Option D: Requires external resources (access, credentials, etc.)
+- [ ] Other: _[Please specify]_
 
-### Question 4: Critères de Succès
+### Question 4: Success Criteria
 
-**Contexte:** Définir les livrables attendus.
+**Context:** Define the expected deliverables.
 
-- [ ] Option A: Code fonctionnel avec tests
-- [ ] Option B: Documentation complète
-- [ ] Option C: Configuration déployée et validée
-- [ ] Option D: Metrics/Benchmarks d'amélioration
-- [ ] Autre: _[Veuillez préciser]_
+- [ ] Option A: Working code with tests
+- [ ] Option B: Complete documentation
+- [ ] Option C: Configuration deployed and validated
+- [ ] Option D: Improvement metrics/benchmarks
+- [ ] Other: _[Please specify]_
 
-### Question Ouverte: Informations Supplémentaires
+### Open-Ended Question: Additional Information
 
-**Y a-t-il des contraintes de temps, de budget, ou des considérations techniques spécifiques pour cette tâche ?**
+**Are there any time constraints, budget limitations, or specific technical considerations for this task?**
 
-_[Votre réponse ici]_
+_[Your answer here]_
 
 ---
 
-**Instructions:** Veuillez cocher les options pertinentes et ajouter vos commentaires. Une fois complété, nous pourrons démarrer l'exécution avec toutes les informations nécessaires.
+**Instructions:** Please check the relevant options and add your comments. Once completed, we can start execution with all the necessary information.
 """
         }
 

@@ -1,36 +1,36 @@
-# 🔀 Comprendre les Workflows
+# 🔀 Understanding Workflows
 
-Comment fonctionnent les automations GitHub Actions.
+How the GitHub Actions automations work.
 
-## Vue d'ensemble
+## Overview
 
 ```
-Issue créée → update-project.yml → Ajout au Project Board (Backlog)
+Issue created → update-project.yml → Added to Project Board (Backlog)
      ↓
-Label "auto-branch" → create-branch.yml → Branche créée
+Label "auto-branch" → create-branch.yml → Branch created
      ↓
-Développeur code
+Developer codes
      ↓
-PR ouverte → code-review-agent.yml → Gemini analyse
-           → ci-tests.yml → Tests exécutés
-           → update-project.yml → Status "In Review"
+PR opened → code-review-agent.yml → Gemini analyzes
+          → ci-tests.yml → Tests run
+          → update-project.yml → Status "In Review"
      ↓
-PR mergée → update-project.yml → Status "Done"
+PR merged → update-project.yml → Status "Done"
 ```
 
-## Workflows détaillés
+## Detailed Workflows
 
 ### 1. update-project.yml
 
-**Quand** : Issue/PR créée, labellée, mergée
+**When**: Issue/PR created, labeled, merged
 
-**Actions** :
-- Issue créée → Ajoute au Backlog
-- Label ajouté → Met à jour Status/Priority/Type
-- PR ouverte → Status "In Review"
-- PR mergée → Status "Done"
+**Actions**:
+- Issue created → Adds to Backlog
+- Label added → Updates Status/Priority/Type
+- PR opened → Status "In Review"
+- PR merged → Status "Done"
 
-**Variables** :
+**Variables**:
 ```yaml
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -40,41 +40,41 @@ env:
 
 ### 2. create-branch.yml
 
-**Quand** : Label `auto-branch` ajouté
+**When**: Label `auto-branch` added
 
-**Actions** :
-1. Récupère titre issue
-2. Crée slug (ex: "Fix API Bug" → "fix-api-bug")
-3. Crée branche `feat/{number}-{slug}`
-4. Poste commentaire avec instructions
+**Actions**:
+1. Retrieves issue title
+2. Creates slug (e.g., "Fix API Bug" → "fix-api-bug")
+3. Creates branch `feat/{number}-{slug}`
+4. Posts comment with instructions
 
 ### 3. code-review-agent.yml
 
-**Quand** : PR ouverte/mise à jour
+**When**: PR opened/updated
 
-**Actions** :
-1. Récupère le diff
-2. Envoie à Gemini AI
-3. Génère revue (Points forts, Suggestions, Problèmes)
-4. Poste commentaire
+**Actions**:
+1. Retrieves the diff
+2. Sends it to Gemini AI
+3. Generates review (Strengths, Suggestions, Issues)
+4. Posts comment
 
-**Mode fallback** : Sans GEMINI_API_KEY, checklist basique
+**Fallback mode**: Without GEMINI_API_KEY, basic checklist
 
 ### 4. ci-tests.yml
 
-**Quand** : Push sur main/develop, PR ouverte
+**When**: Push on main/develop, PR opened
 
-**Actions** :
-1. Vérifie permissions scripts
-2. Valide YAML workflows
-3. Lance tests unitaires
-4. Rapport de couverture
+**Actions**:
+1. Checks script permissions
+2. Validates workflow YAML syntax
+3. Runs unit tests
+4. Coverage report
 
-## Personnaliser les workflows
+## Customizing Workflows
 
-### Ajouter un nouveau mapping label
+### Add a new label mapping
 
-Dans `update-project.yml` :
+In `update-project.yml`:
 ```yaml
 - name: Update on custom label
   run: |
@@ -83,15 +83,15 @@ Dans `update-project.yml` :
     fi
 ```
 
-### Changer le prefix de branche
+### Change the branch prefix
 
-Dans `create-branch.yml` :
+In `create-branch.yml`:
 ```bash
-# Changer "feat/" en "feature/"
+# Change "feat/" to "feature/"
 BRANCH_NAME="feature/${ISSUE_NUMBER}-${SLUGIFIED}"
 ```
 
-### Ajouter des notifications
+### Add notifications
 
 ```yaml
 - name: Notify Slack
@@ -100,14 +100,14 @@ BRANCH_NAME="feature/${ISSUE_NUMBER}-${SLUGIFIED}"
       -d '{"text":"PR merged!"}'
 ```
 
-## Déboguer un workflow
+## Debugging a Workflow
 
 ```bash
-# Voir les logs
+# View logs
 gh run list
 gh run view RUN_ID --log
 
-# Re-lancer un workflow
+# Re-run a workflow
 gh run rerun RUN_ID
 ```
 

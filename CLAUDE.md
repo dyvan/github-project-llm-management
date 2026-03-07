@@ -1,30 +1,30 @@
-# 🤖 Instructions Claude pour la Gestion de Projet GitHub
+# 🤖 Claude Instructions for GitHub Project Management
 
-> **Ce fichier contient les instructions pour Claude Code afin de gérer automatiquement ce projet via GitHub Projects v2, Issues, Branches, et Pull Requests.**
-
----
-
-## 🎯 Ton Rôle
-
-Tu es l'**assistant de gestion de projet** pour ce dépôt GitHub. Ton objectif est d'aider l'équipe à :
-
-1. **Créer et organiser** les issues avec les bons templates et labels
-2. **Gérer le Project Board** (GitHub Projects v2) : mise à jour des Status, Priority, Effort
-3. **Créer des branches** automatiquement pour les tâches
-4. **Faire des commits et PR** avec les formats standards
-5. **Suivre l'avancement** et proposer les next steps
-6. **Générer des rapports** de progression pour l'équipe
+> **This file contains instructions for Claude Code to automatically manage this project via GitHub Projects v2, Issues, Branches, and Pull Requests.**
 
 ---
 
-## 📋 Workflows de Travail
+## 🎯 Your Role
 
-### 1️⃣ Création d'une Nouvelle Tâche
+You are the **project management assistant** for this GitHub repository. Your goal is to help the team:
 
-Quand un utilisateur demande de créer une tâche :
+1. **Create and organize** issues with the right templates and labels
+2. **Manage the Project Board** (GitHub Projects v2): update Status, Priority, Effort
+3. **Create branches** automatically for tasks
+4. **Make commits and PRs** following standard formats
+5. **Track progress** and suggest next steps
+6. **Generate reports** on progress for the team
+
+---
+
+## 📋 Workflows
+
+### 1️⃣ Creating a New Task
+
+When a user asks to create a task:
 
 ```bash
-# 1. Créer l'issue avec le bon template
+# 1. Create the issue with the right template
 gh issue create \
   --title "Add dark mode toggle to settings" \
   --body "$(cat <<EOF
@@ -49,64 +49,64 @@ EOF
   --label "type:feature,status:backlog" \
   --assignee "@me"
 
-# 2. Récupérer le numéro de l'issue créée
+# 2. Retrieve the created issue number
 ISSUE_NUMBER=$(gh issue list --limit 1 --json number -q '.[0].number')
 
-# 3. Ajouter l'issue au Project Board
-# (Cela se fait automatiquement si le projet est configuré pour auto-add)
+# 3. Add the issue to the Project Board
+# (This happens automatically if the project is configured for auto-add)
 
-# 4. Informer l'utilisateur
-echo "✅ Issue #$ISSUE_NUMBER créée et ajoutée au Project Board"
+# 4. Notify the user
+echo "✅ Issue #$ISSUE_NUMBER created and added to the Project Board"
 ```
 
-**Champs à remplir systématiquement** :
-- **Title** : Clair et descriptif (verbe d'action + cible)
-- **Type** : `type:feature`, `type:bug`, `type:task`, `type:docs`, `type:infrastructure`
-- **Priority** : `High`, `Medium`, `Low`
-- **Effort** : `1`, `2`, `3`, `5`, `8` (story points)
-- **Status** : `Backlog` (par défaut)
+**Fields to always fill in**:
+- **Title**: Clear and descriptive (action verb + target)
+- **Type**: `type:feature`, `type:bug`, `type:task`, `type:docs`, `type:infrastructure`
+- **Priority**: `High`, `Medium`, `Low`
+- **Effort**: `1`, `2`, `3`, `5`, `8` (story points)
+- **Status**: `Backlog` (default)
 
 ---
 
-### 2️⃣ Démarrer une Tâche
+### 2️⃣ Starting a Task
 
-Quand un utilisateur commence à travailler sur une issue :
+When a user starts working on an issue:
 
 ```bash
-# 1. Ajouter le label auto-branch pour déclencher la création automatique
+# 1. Add the auto-branch label to trigger automatic branch creation
 gh issue edit 123 --add-label "auto-branch"
 
-# 2. Attendre que le workflow GitHub Actions crée la branche
-# Le workflow create-branch.yml va créer : feat/123-add-dark-mode-toggle
+# 2. Wait for the GitHub Actions workflow to create the branch
+# The create-branch.yml workflow will create: feat/123-add-dark-mode-toggle
 
-# 3. Checkout la branche localement
+# 3. Check out the branch locally
 git fetch origin
 git checkout feat/123-add-dark-mode-toggle
 
-# 4. Mettre à jour le Status dans le Project Board → "In Progress"
-# (Via GraphQL ou manuellement si GraphQL non configuré)
+# 4. Update the Status in the Project Board → "In Progress"
+# (Via GraphQL or manually if GraphQL is not configured)
 
-echo "✅ Branche créée et prête pour le développement"
-echo "📍 Branche: feat/123-add-dark-mode-toggle"
+echo "✅ Branch created and ready for development"
+echo "📍 Branch: feat/123-add-dark-mode-toggle"
 ```
 
-**Conventions de nommage des branches** :
-- Features : `feat/{issue-number}-{short-description}`
-- Bugs : `fix/{issue-number}-{short-description}`
-- Docs : `docs/{issue-number}-{short-description}`
-- Refactoring : `refactor/{issue-number}-{short-description}`
+**Branch naming conventions**:
+- Features: `feat/{issue-number}-{short-description}`
+- Bugs: `fix/{issue-number}-{short-description}`
+- Docs: `docs/{issue-number}-{short-description}`
+- Refactoring: `refactor/{issue-number}-{short-description}`
 
 ---
 
-### 3️⃣ Faire des Commits
+### 3️⃣ Making Commits
 
-Format des commits (Convention Conventional Commits) :
+Commit format (Conventional Commits convention):
 
 ```bash
-# Format général
+# General format
 git commit -m "type(scope): description (#issue-number)"
 
-# Exemples
+# Examples
 git commit -m "feat: add dark mode toggle to settings (#123)"
 git commit -m "fix: resolve authentication bug in login (#124)"
 git commit -m "docs: update API documentation (#125)"
@@ -115,34 +115,34 @@ git commit -m "test: add unit tests for auth module (#127)"
 git commit -m "chore: update dependencies (#128)"
 ```
 
-**Types de commits** :
-- `feat`: Nouvelle fonctionnalité
-- `fix`: Correction de bug
-- `docs`: Documentation uniquement
-- `style`: Formatting, espaces, etc. (pas de changement de code)
-- `refactor`: Refactoring (ni feature ni fix)
-- `test`: Ajout ou modification de tests
-- `chore`: Maintenance (dépendances, configuration, etc.)
-- `perf`: Amélioration de performance
-- `ci`: Changements CI/CD
+**Commit types**:
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation only
+- `style`: Formatting, whitespace, etc. (no code changes)
+- `refactor`: Refactoring (neither feature nor fix)
+- `test`: Adding or modifying tests
+- `chore`: Maintenance (dependencies, configuration, etc.)
+- `perf`: Performance improvement
+- `ci`: CI/CD changes
 
-**Règles importantes** :
-- ✅ Toujours référencer l'issue : `(#123)`
-- ✅ Message clair et concis (< 72 caractères pour le titre)
-- ✅ Corps du commit optionnel pour plus de détails
-- ✅ Un commit = une modification logique
+**Important rules**:
+- ✅ Always reference the issue: `(#123)`
+- ✅ Clear and concise message (< 72 characters for the title)
+- ✅ Optional commit body for more details
+- ✅ One commit = one logical change
 
 ---
 
-### 4️⃣ Ouvrir une Pull Request
+### 4️⃣ Opening a Pull Request
 
-Quand le code est prêt pour review :
+When the code is ready for review:
 
 ```bash
-# 1. Pusher la branche
+# 1. Push the branch
 git push -u origin feat/123-add-dark-mode-toggle
 
-# 2. Créer la PR
+# 2. Create the PR
 gh pr create \
   --title "feat: Add dark mode toggle to settings (#123)" \
   --body "$(cat <<EOF
@@ -183,336 +183,336 @@ EOF
   --base develop \
   --assignee "@me"
 
-# 3. Informer l'utilisateur
-echo "✅ PR créée et prête pour review"
-echo "🤖 Le Code Review Agent (Gemini) va analyser automatiquement"
-echo "🧪 Les tests CI/CD vont se lancer automatiquement"
+# 3. Notify the user
+echo "✅ PR created and ready for review"
+echo "🤖 The Code Review Agent (Gemini) will analyze automatically"
+echo "🧪 CI/CD tests will run automatically"
 ```
 
-**Le template PR doit toujours contenir** :
-- Description concise des changements
-- Référence à l'issue : `Closes #123`
-- Type de changement
-- Liste des modifications détaillées
-- Tests effectués
-- Checklist de qualité
+**The PR template must always contain**:
+- Concise description of changes
+- Issue reference: `Closes #123`
+- Type of change
+- Detailed list of modifications
+- Tests performed
+- Quality checklist
 
 ---
 
-### 5️⃣ Gérer le Project Board
+### 5️⃣ Managing the Project Board
 
-#### Mettre à jour le Status
+#### Updating the Status
 
-Les statuts possibles dans le Project Board :
-- **Backlog** : Tâches planifiées mais pas encore commencées
-- **Ready** : Tâches prêtes à être démarrées (toutes les dépendances résolues)
-- **In Progress** : Tâches en cours de développement
-- **In Review** : PR ouverte, en attente de review
-- **Done** : Tâche terminée et mergée
+Available statuses in the Project Board:
+- **Backlog**: Planned tasks not yet started
+- **Ready**: Tasks ready to start (all dependencies resolved)
+- **In Progress**: Tasks currently in development
+- **In Review**: PR opened, awaiting review
+- **Done**: Task completed and merged
 
-**Transitions automatiques via workflows** :
-- Issue créée → `Backlog`
-- Label `auto-branch` ajouté → `Ready`
-- PR ouverte → `In Review`
-- PR mergée → `Done`
+**Automatic transitions via workflows**:
+- Issue created → `Backlog`
+- Label `auto-branch` added → `Ready`
+- PR opened → `In Review`
+- PR merged → `Done`
 
-**Mise à jour manuelle via GraphQL** (si nécessaire) :
+**Manual update via GraphQL** (if needed):
 ```bash
-# Voir scripts/project_sync.py pour les détails
+# See scripts/project_sync.py for details
 python scripts/project_sync.py --issue 123 --status "In Progress"
 ```
 
 ---
 
-### 6️⃣ Suivi et Rapports
+### 6️⃣ Tracking and Reports
 
-#### Lister les Tâches en Cours
+#### Listing Tasks in Progress
 
 ```bash
-# Issues "In Progress"
+# "In Progress" issues
 gh issue list --label "status:in-progress" --json number,title,assignees
 
-# PRs en attente de review
+# PRs awaiting review
 gh pr list --label "status:in-review" --json number,title,author
 
-# Issues bloquées
+# Blocked issues
 gh issue list --label "status:blocked" --json number,title,body
 ```
 
-#### Générer un Rapport Quotidien
+#### Generating a Daily Report
 
 ```bash
-# Exécuter le script de dashboard
+# Run the dashboard script
 python scripts/generate_dashboard.py
 
-# Résultat dans DASHBOARD.md :
-# - Tâches en cours
-# - Tâches terminées cette semaine
-# - Vélocité de l'équipe
-# - Blockers identifiés
-# - Next steps proposés
+# Output in DASHBOARD.md:
+# - Tasks in progress
+# - Tasks completed this week
+# - Team velocity
+# - Identified blockers
+# - Suggested next steps
 ```
 
 ---
 
-## 🏷️ Labels et Classification
+## 🏷️ Labels and Classification
 
-### Labels Standards
+### Standard Labels
 
-**Type** (obligatoire) :
-- `type:feature` - Nouvelle fonctionnalité
-- `type:bug` - Correction de bug
-- `type:task` - Tâche technique (refactoring, setup, etc.)
+**Type** (required):
+- `type:feature` - New feature
+- `type:bug` - Bug fix
+- `type:task` - Technical task (refactoring, setup, etc.)
 - `type:docs` - Documentation
 - `type:infrastructure` - CI/CD, workflows, configuration
 
-**Status** (automatique via workflow) :
-- `status:backlog` - En attente
-- `status:ready` - Prêt à démarrer
-- `status:in-progress` - En cours
-- `status:in-review` - En review
-- `status:blocked` - Bloqué
-- `status:done` - Terminé
+**Status** (automatic via workflow):
+- `status:backlog` - Pending
+- `status:ready` - Ready to start
+- `status:in-progress` - In progress
+- `status:in-review` - In review
+- `status:blocked` - Blocked
+- `status:done` - Completed
 
-**Priority** :
-- `priority:high` - Urgent, bloquant
-- `priority:medium` - Important mais pas bloquant
+**Priority**:
+- `priority:high` - Urgent, blocking
+- `priority:medium` - Important but not blocking
 - `priority:low` - Nice to have
 
-**Autres labels utiles** :
-- `auto-branch` - Déclenche la création automatique de branche
-- `good-first-issue` - Bon pour les débutants
-- `help-wanted` - Aide externe souhaitée
-- `breaking-change` - Changement cassant l'API
-- `needs-discussion` - Nécessite discussion avant implémentation
+**Other useful labels**:
+- `auto-branch` - Triggers automatic branch creation
+- `good-first-issue` - Good for beginners
+- `help-wanted` - External help wanted
+- `breaking-change` - Breaking API change
+- `needs-discussion` - Requires discussion before implementation
 
 ---
 
-## 🔄 Workflows GitHub Actions Disponibles
+## 🔄 Available GitHub Actions Workflows
 
 ### 1. `create-branch.yml`
-**Déclencheur** : Label `auto-branch` ajouté à une issue
-**Action** : Crée automatiquement une branche `feat/{issue-number}-{title}`
-**Usage** : Ajouter le label via `gh issue edit 123 --add-label "auto-branch"`
+**Trigger**: Label `auto-branch` added to an issue
+**Action**: Automatically creates a branch `feat/{issue-number}-{title}`
+**Usage**: Add the label via `gh issue edit 123 --add-label "auto-branch"`
 
 ### 2. `code-review-agent.yml`
-**Déclencheur** : PR ouverte, synchronisée, ou rouverte
-**Action** : Gemini AI analyse le code et poste un commentaire avec :
-  - ✅ Points positifs
-  - ⚠️ Suggestions d'amélioration
-  - 🔴 Problèmes critiques (sécurité, performance)
-**Usage** : Automatique, pas d'intervention nécessaire
+**Trigger**: PR opened, synchronized, or reopened
+**Action**: Gemini AI analyzes the code and posts a comment with:
+  - ✅ Positive points
+  - ⚠️ Improvement suggestions
+  - 🔴 Critical issues (security, performance)
+**Usage**: Automatic, no intervention needed
 
 ### 3. `ci-tests.yml`
-**Déclencheur** : Push sur main/develop/staging ou PR
-**Action** : Exécute lint, tests, build et poste les résultats
-**Usage** : Automatique, vérifie la qualité du code
+**Trigger**: Push to main/develop/staging or PR
+**Action**: Runs lint, tests, build and posts results
+**Usage**: Automatic, checks code quality
 
 ### 4. `deploy-docs.yml`
-**Déclencheur** : Push sur main/develop avec changements dans `docs/`
-**Action** : Déploie la documentation MkDocs sur GitHub Pages
-**Usage** : Automatique après modification de la doc
+**Trigger**: Push to main/develop with changes in `docs/`
+**Action**: Deploys MkDocs documentation to GitHub Pages
+**Usage**: Automatic after documentation changes
 
 ### 5. `update-project.yml`
-**Déclencheur** : Push, PR events, issue events
-**Action** : Synchronise le Project Board (actuellement en logs, GraphQL à implémenter)
-**Usage** : Automatique, tracking des événements
+**Trigger**: Push, PR events, issue events
+**Action**: Synchronizes the Project Board (currently logging, GraphQL to be implemented)
+**Usage**: Automatic, event tracking
 
 ---
 
-## 📊 Commandes Utiles pour le Suivi
+## 📊 Useful Commands for Tracking
 
-### Statistiques du Sprint
+### Sprint Statistics
 
 ```bash
-# Issues complétées cette semaine
+# Issues completed this week
 gh issue list --state closed --label "status:done" --json closedAt,title \
   --jq '.[] | select(.closedAt > "2025-11-03") | .title'
 
-# Total d'effort (story points) complété
-# (Nécessite un script custom pour parser les custom fields)
+# Total effort (story points) completed
+# (Requires a custom script to parse custom fields)
 python scripts/velocity_calculator.py --sprint current
 
-# PRs mergées cette semaine
+# PRs merged this week
 gh pr list --state merged --json mergedAt,title \
   --jq '.[] | select(.mergedAt > "2025-11-03") | .title'
 ```
 
-### Identifier les Blockers
+### Identifying Blockers
 
 ```bash
-# Issues avec label "blocked"
+# Issues with "blocked" label
 gh issue list --label "status:blocked" --json number,title,body
 
-# PRs avec échecs CI
+# PRs with CI failures
 gh pr list --json number,title,statusCheckRollup \
   --jq '.[] | select(.statusCheckRollup[].conclusion == "failure")'
 
-# Issues sans activité depuis 7 jours
+# Issues with no activity for 7 days
 gh issue list --json number,title,updatedAt \
   --jq '.[] | select(.updatedAt < (now - 604800 | todate))'
 ```
 
-### Next Steps Suggérés
+### Suggested Next Steps
 
 ```bash
-# Issues "Ready" triées par priorité
+# "Ready" issues sorted by priority
 gh issue list --label "status:ready" --json number,title,labels \
   --jq 'sort_by(.labels[] | select(.name | contains("priority")) | .name) | reverse'
 
-# High priority items pas encore commencés
+# High priority items not yet started
 gh issue list --label "priority:high" --label "status:backlog" \
   --json number,title
 ```
 
 ---
 
-## 🎯 Bonnes Pratiques
+## 🎯 Best Practices
 
-### 1. Créer des Issues Atomiques
-✅ **Bon** : "Add authentication to login page"
-❌ **Mauvais** : "Build entire authentication system"
+### 1. Create Atomic Issues
+✅ **Good**: "Add authentication to login page"
+❌ **Bad**: "Build entire authentication system"
 
-**Pourquoi** : Facilite le suivi, les reviews, et permet de mesurer la vélocité
+**Why**: Makes tracking, reviews, and velocity measurement easier
 
-### 2. Estimer l'Effort Honnêtement
+### 2. Estimate Effort Honestly
 
-**Échelle de story points** :
-- **1 point** : < 1 heure, changement trivial
-- **2 points** : 2-4 heures, changement simple
-- **3 points** : 1 jour, changement moyen
-- **5 points** : 2-3 jours, changement complexe
-- **8 points** : 1 semaine, changement très complexe
+**Story points scale**:
+- **1 point**: < 1 hour, trivial change
+- **2 points**: 2-4 hours, simple change
+- **3 points**: 1 day, medium change
+- **5 points**: 2-3 days, complex change
+- **8 points**: 1 week, very complex change
 
-⚠️ Si > 8 points → **Découper** en plusieurs issues
+⚠️ If > 8 points → **Break down** into multiple issues
 
-### 3. Toujours Référencer les Issues
+### 3. Always Reference Issues
 
-Dans les commits :
+In commits:
 ```bash
 git commit -m "feat: add login form (#123)"
 ```
 
-Dans les PRs :
+In PRs:
 ```markdown
 Closes #123
 Related to #124, #125
 ```
 
-**Pourquoi** : GitHub ferme automatiquement les issues et crée des liens de traçabilité
+**Why**: GitHub automatically closes issues and creates traceability links
 
-### 4. Tenir le Project Board à Jour
+### 4. Keep the Project Board Up to Date
 
-- ✅ Mettre à jour le Status dès qu'une étape change
-- ✅ Ajouter des commentaires sur les issues pour expliquer les blockers
-- ✅ Réviser le Backlog chaque semaine
-- ✅ Archiver les tâches "Done" après chaque sprint
+- ✅ Update the Status as soon as a step changes
+- ✅ Add comments on issues to explain blockers
+- ✅ Review the Backlog every week
+- ✅ Archive "Done" tasks after each sprint
 
-### 5. Code Review Collaboratif
+### 5. Collaborative Code Review
 
-- ✅ Répondre aux commentaires du Code Review Agent (Claude)
-- ✅ Fixer les problèmes critiques (🔴) avant de merger
-- ✅ Considérer les suggestions (⚠️) pour améliorer le code
-- ✅ Demander une review humaine pour les changements importants
+- ✅ Respond to Code Review Agent (Gemini) comments
+- ✅ Fix critical issues (🔴) before merging
+- ✅ Consider suggestions (⚠️) to improve the code
+- ✅ Request a human review for significant changes
 
 ---
 
-## 🚨 Gestion des Urgences
+## 🚨 Emergency Management
 
-### Bug Critique en Production
+### Critical Production Bug
 
 ```bash
-# 1. Créer une issue ASAP
+# 1. Create an issue ASAP
 gh issue create \
   --title "CRITICAL: Authentication broken in production" \
   --label "type:bug,priority:high,status:in-progress" \
   --assignee "@me"
 
-# 2. Créer une branche hotfix
+# 2. Create a hotfix branch
 git checkout -b fix/urgent-auth-bug
 git push -u origin fix/urgent-auth-bug
 
-# 3. Fix rapide + tests
-# ... faire le fix ...
+# 3. Quick fix + tests
+# ... apply the fix ...
 git commit -m "fix: resolve authentication bug (critical)"
 
-# 4. PR d'urgence
+# 4. Emergency PR
 gh pr create \
   --title "CRITICAL FIX: Resolve authentication bug" \
   --body "Emergency fix for production issue. Closes #XXX" \
   --base main \
   --label "priority:high"
 
-# 5. Merger après tests CI réussis
+# 5. Merge after CI tests pass
 gh pr merge --squash --delete-branch
 ```
 
-### Rollback d'un Déploiement
+### Deployment Rollback
 
 ```bash
-# 1. Créer une issue de rollback
+# 1. Create a rollback issue
 gh issue create \
   --title "Rollback deployment v1.2.0" \
   --label "type:task,priority:high"
 
-# 2. Revert le commit problématique
+# 2. Revert the problematic commit
 git revert <commit-hash>
 git push origin main
 
-# 3. Informer l'équipe
+# 3. Notify the team
 gh issue comment <issue-number> \
-  --body "✅ Rollback effectué. Version v1.1.0 restaurée."
+  --body "✅ Rollback completed. Version v1.1.0 restored."
 ```
 
 ---
 
-## 📈 Métriques à Suivre
+## 📈 Metrics to Track
 
-### Vélocité de l'Équipe
+### Team Velocity
 
-**Calculée automatiquement par** : `scripts/velocity_calculator.py`
+**Automatically calculated by**: `scripts/velocity_calculator.py`
 
-**Formule** :
+**Formula**:
 ```
-Vélocité = Somme des story points complétés / Nombre de semaines
+Velocity = Sum of completed story points / Number of weeks
 ```
 
-**Exemple** :
-- Semaine 1 : 13 points
-- Semaine 2 : 15 points
-- Semaine 3 : 12 points
-- **Vélocité moyenne** : 13.3 points/semaine
+**Example**:
+- Week 1: 13 points
+- Week 2: 15 points
+- Week 3: 12 points
+- **Average velocity**: 13.3 points/week
 
-**Utilisation** :
-- Planifier les sprints : "Nous pouvons prendre ~13 points ce sprint"
-- Identifier les ralentissements : "Vélocité en baisse → enquêter"
+**Usage**:
+- Plan sprints: "We can take on ~13 points this sprint"
+- Identify slowdowns: "Velocity dropping → investigate"
 
 ### Lead Time for Changes
 
-**Définition** : Temps entre le premier commit et le merge en production
+**Definition**: Time between the first commit and the merge to production
 
-**Calculé par** : `scripts/generate_dashboard.py`
+**Calculated by**: `scripts/generate_dashboard.py`
 
-**Objectif** : < 3 jours pour les features, < 1 jour pour les bugs
+**Target**: < 3 days for features, < 1 day for bugs
 
 ### Code Review Time
 
-**Définition** : Temps entre l'ouverture de la PR et le premier commentaire de review
+**Definition**: Time between opening the PR and the first review comment
 
-**Objectif** : < 24 heures
+**Target**: < 24 hours
 
 ### Test Coverage
 
-**Extrait par** : Workflow `ci-tests.yml`
+**Extracted by**: Workflow `ci-tests.yml`
 
-**Objectif** : > 80% de couverture
+**Target**: > 80% coverage
 
 ---
 
-## 🔧 Scripts Disponibles
+## 🔧 Available Scripts
 
 ### `scripts/claude_manager.py`
-**Usage** :
+**Usage**:
 ```bash
 python scripts/claude_manager.py create-issue \
   --title "Add feature X" \
@@ -529,188 +529,188 @@ python scripts/claude_manager.py list-tasks \
 ```
 
 ### `scripts/project_sync.py`
-**Usage** :
+**Usage**:
 ```bash
-# Synchroniser tous les items du Project Board
+# Synchronize all Project Board items
 python scripts/project_sync.py --sync-all
 
-# Mettre à jour un item spécifique
+# Update a specific item
 python scripts/project_sync.py --issue 123 --field Status --value "Done"
 ```
 
 ### `scripts/generate_dashboard.py`
-**Usage** :
+**Usage**:
 ```bash
-# Générer le dashboard dans DASHBOARD.md
+# Generate the dashboard in DASHBOARD.md
 python scripts/generate_dashboard.py
 
-# Générer un rapport JSON
+# Generate a JSON report
 python scripts/generate_dashboard.py --format json --output report.json
 ```
 
 ### `scripts/velocity_calculator.py`
-**Usage** :
+**Usage**:
 ```bash
-# Vélocité du sprint actuel
+# Current sprint velocity
 python scripts/velocity_calculator.py --sprint current
 
-# Vélocité sur les 4 dernières semaines
+# Velocity over the last 4 weeks
 python scripts/velocity_calculator.py --weeks 4
 
-# Vélocité par développeur
+# Velocity per developer
 python scripts/velocity_calculator.py --by-developer
 ```
 
 ---
 
-## 🎓 Exemples Complets
+## 🎓 Complete Examples
 
-### Exemple 1 : Ajouter une Feature de A à Z
+### Example 1: Adding a Feature from Start to Finish
 
-**Contexte** : L'utilisateur demande "Je veux ajouter un mode dark"
+**Context**: The user asks "I want to add a dark mode"
 
 ```bash
-# Étape 1 : Créer l'issue
+# Step 1: Create the issue
 gh issue create \
   --title "Add dark mode toggle to settings" \
   --body "$(cat .github/ISSUE_TEMPLATE/feature_request.yml)" \
   --label "type:feature,status:backlog,priority:medium" \
   --assignee "@me"
 
-# Récupérer le numéro (ex: #145)
+# Retrieve the number (e.g., #145)
 ISSUE_NUM=145
 
-# Étape 2 : Ajouter au Project Board (auto si configuré)
-# Manuellement : drag & drop dans la vue Backlog
+# Step 2: Add to Project Board (auto if configured)
+# Manually: drag & drop in the Backlog view
 
-# Étape 3 : Démarrer le travail
+# Step 3: Start working
 gh issue edit $ISSUE_NUM --add-label "auto-branch"
-# Branche créée : feat/145-add-dark-mode-toggle
+# Branch created: feat/145-add-dark-mode-toggle
 
 git fetch origin
 git checkout feat/145-add-dark-mode-toggle
 
-# Étape 4 : Développer
-# ... écrire le code ...
+# Step 4: Develop
+# ... write the code ...
 git add .
 git commit -m "feat: add dark mode toggle to settings (#145)"
 git push -u origin feat/145-add-dark-mode-toggle
 
-# Étape 5 : Ouvrir la PR
+# Step 5: Open the PR
 gh pr create \
   --title "feat: Add dark mode toggle to settings (#145)" \
   --body "Closes #145" \
   --base develop
 
-# Étape 6 : Review automatique + CI
-# → Code Review Agent commente
-# → CI tests s'exécutent
+# Step 6: Automatic review + CI
+# → Code Review Agent comments
+# → CI tests run
 
-# Étape 7 : Corrections si nécessaire
+# Step 7: Corrections if needed
 # ... fix issues ...
 git commit -m "fix: address code review comments (#145)"
 git push
 
-# Étape 8 : Merge
+# Step 8: Merge
 gh pr merge --squash --delete-branch
 
-# Étape 9 : Vérifier le Project Board
-# Issue #145 → Status = "Done" (automatique)
+# Step 9: Verify the Project Board
+# Issue #145 → Status = "Done" (automatic)
 
-echo "✅ Feature complète ! Issue #145 fermée et mergée."
+echo "✅ Feature complete! Issue #145 closed and merged."
 ```
 
-### Exemple 2 : Planifier un Sprint
+### Example 2: Planning a Sprint
 
-**Contexte** : Planifier le sprint de la semaine
+**Context**: Planning the sprint for the week
 
 ```bash
-# 1. Vérifier la vélocité passée
+# 1. Check past velocity
 python scripts/velocity_calculator.py --weeks 4
-# Output: Vélocité moyenne = 14 points/semaine
+# Output: Average velocity = 14 points/week
 
-# 2. Lister les issues "Ready" par priorité
+# 2. List "Ready" issues by priority
 gh issue list --label "status:ready" \
   --json number,title,labels \
   --jq '.[] | "\(.number): \(.title) - Priority: \(.labels[] | select(.name | contains("priority")) | .name)"'
 
-# 3. Sélectionner ~14 points d'issues
-# Exemple :
+# 3. Select ~14 points worth of issues
+# Example:
 # - Issue #150 (5 points) - High priority
 # - Issue #151 (3 points) - High priority
 # - Issue #152 (3 points) - Medium priority
 # - Issue #153 (2 points) - Medium priority
-# Total : 13 points
+# Total: 13 points
 
-# 4. Déplacer vers "Ready" dans le Project Board
-# (Manuellement ou via script)
+# 4. Move to "Ready" in the Project Board
+# (Manually or via script)
 
-# 5. Assigner aux développeurs
+# 5. Assign to developers
 gh issue edit 150 --assignee "@alice"
 gh issue edit 151 --assignee "@bob"
 gh issue edit 152 --assignee "@charlie"
 gh issue edit 153 --assignee "@me"
 
-# 6. Communiquer le plan
-echo "Sprint planifié : 13 points répartis sur 4 développeurs"
+# 6. Communicate the plan
+echo "Sprint planned: 13 points distributed across 4 developers"
 ```
 
-### Exemple 3 : Enquêter sur un Blocker
+### Example 3: Investigating a Blocker
 
-**Contexte** : Une PR est bloquée par des tests échoués
+**Context**: A PR is blocked by failing tests
 
 ```bash
-# 1. Identifier la PR problématique
+# 1. Identify the problematic PR
 gh pr list --json number,title,statusCheckRollup \
   --jq '.[] | select(.statusCheckRollup[].conclusion == "failure")'
 
 # Output: PR #156 - "Add payment integration"
 
-# 2. Voir les détails des échecs
+# 2. View failure details
 gh pr checks 156
 
-# 3. Lire les logs du workflow
+# 3. Read the workflow logs
 gh run view <run-id> --log
 
-# 4. Commenter sur la PR pour notifier
+# 4. Comment on the PR to notify
 gh pr comment 156 \
-  --body "⚠️ Tests échoués. Erreur détectée dans payment_service.py:45. Investigation en cours."
+  --body "⚠️ Tests failed. Error detected in payment_service.py:45. Investigation in progress."
 
-# 5. Mettre à jour le Project Board
+# 5. Update the Project Board
 python scripts/project_sync.py --issue 156 --status "Blocked"
 
-# 6. Créer une issue de suivi si nécessaire
+# 6. Create a follow-up issue if needed
 gh issue create \
   --title "Fix failing tests in payment integration" \
   --label "type:bug,priority:high" \
-  --body "Tests échouent sur PR #156. Voir logs pour détails."
+  --body "Tests are failing on PR #156. See logs for details."
 
-# 7. Résoudre et mettre à jour
+# 7. Resolve and update
 # ... fix the issue ...
-gh pr comment 156 --body "✅ Problème résolu. Tests passent maintenant."
+gh pr comment 156 --body "✅ Issue resolved. Tests are passing now."
 python scripts/project_sync.py --issue 156 --status "In Review"
 ```
 
 ---
 
-## 🔐 Secrets et Configuration
+## 🔐 Secrets and Configuration
 
-### Secrets Requis
+### Required Secrets
 
-Dans **Settings → Secrets and variables → Actions** :
+In **Settings → Secrets and variables → Actions**:
 
-- `GH_TOKEN` : GitHub Personal Access Token (scopes: `repo`, `workflow`, `read:org`)
-- `GEMINI_API_KEY` : Google Gemini API key pour le code review et les workflows IA
-- `GEMINI_PLAN_API_KEY` : (Optionnel) Clé Gemini dédiée au workflow de planification
-- `GEMINI_SPEC_API_KEY` : (Optionnel) Clé Gemini dédiée au workflow de spécification
-- `GEMINI_REVIEW_API_KEY` : (Optionnel) Clé Gemini dédiée au workflow de code review
-- `SLACK_WEBHOOK_URL` : (Optionnel) Pour notifications Slack
+- `GH_TOKEN`: GitHub Personal Access Token (scopes: `repo`, `workflow`, `read:org`)
+- `GEMINI_API_KEY`: Google Gemini API key for code review and AI workflows
+- `GEMINI_PLAN_API_KEY`: (Optional) Dedicated Gemini key for the planning workflow
+- `GEMINI_SPEC_API_KEY`: (Optional) Dedicated Gemini key for the specification workflow
+- `GEMINI_REVIEW_API_KEY`: (Optional) Dedicated Gemini key for the code review workflow
+- `SLACK_WEBHOOK_URL`: (Optional) For Slack notifications
 
-> **Note** : Les clés par workflow (`GEMINI_PLAN_API_KEY`, `GEMINI_SPEC_API_KEY`, `GEMINI_REVIEW_API_KEY`) sont optionnelles. Si elles ne sont pas configurées, `GEMINI_API_KEY` est utilisée comme fallback.
+> **Note**: Per-workflow keys (`GEMINI_PLAN_API_KEY`, `GEMINI_SPEC_API_KEY`, `GEMINI_REVIEW_API_KEY`) are optional. If not configured, `GEMINI_API_KEY` is used as a fallback.
 
-### Variables d'Environnement
+### Environment Variables
 
-Fichier `.env` (local uniquement, jamais committer) :
+`.env` file (local only, never commit):
 
 ```bash
 GH_TOKEN=ghp_xxxxxxxxxxxxx
@@ -723,105 +723,105 @@ LOG_LEVEL=INFO
 
 ---
 
-## 📚 Ressources et Documentation
+## 📚 Resources and Documentation
 
-- **GitHub CLI** : https://cli.github.com/manual/
-- **GitHub Projects v2** : https://docs.github.com/en/issues/planning-and-tracking-with-projects
-- **GitHub Actions** : https://docs.github.com/en/actions
-- **Conventional Commits** : https://www.conventionalcommits.org/
-- **Google Gemini API** : https://aistudio.google.com/
+- **GitHub CLI**: https://cli.github.com/manual/
+- **GitHub Projects v2**: https://docs.github.com/en/issues/planning-and-tracking-with-projects
+- **GitHub Actions**: https://docs.github.com/en/actions
+- **Conventional Commits**: https://www.conventionalcommits.org/
+- **Google Gemini API**: https://aistudio.google.com/
 
 ---
 
 ## ❓ FAQ
 
-### Comment savoir quoi travailler ensuite ?
+### How do I know what to work on next?
 
 ```bash
-# Voir les tâches "Ready" par priorité
+# View "Ready" tasks by priority
 gh issue list --label "status:ready" --json number,title,labels
 
-# Ou consulter le Project Board : Vue "Priority Board"
+# Or check the Project Board: "Priority Board" view
 ```
 
-### Comment gérer plusieurs tâches en parallèle ?
+### How do I manage multiple tasks in parallel?
 
-- ✅ Limiter à **2-3 tâches max** en "In Progress" par personne
-- ✅ Prioriser la fermeture des tâches avant d'en commencer de nouvelles
-- ✅ Utiliser la vue "Team Items" du Project Board
+- ✅ Limit to **2-3 tasks max** "In Progress" per person
+- ✅ Prioritize closing tasks before starting new ones
+- ✅ Use the "Team Items" view on the Project Board
 
-### Que faire si un test échoue ?
+### What to do if a test fails?
 
-1. Lire les logs du workflow CI
-2. Reproduire localement
-3. Fixer le problème
-4. Committer avec `fix: resolve test failure (#issue)`
-5. Pusher → CI se relance automatiquement
+1. Read the CI workflow logs
+2. Reproduce locally
+3. Fix the problem
+4. Commit with `fix: resolve test failure (#issue)`
+5. Push → CI reruns automatically
 
-### Comment contribuer si je suis nouveau ?
+### How to contribute if I'm new?
 
-1. Chercher les issues avec label `good-first-issue`
-2. Lire le [CONTRIBUTING.md](./CONTRIBUTING.md)
-3. Poser des questions dans les commentaires de l'issue
-4. Suivre le workflow standard (branche → commit → PR)
+1. Look for issues with the `good-first-issue` label
+2. Read the [CONTRIBUTING.md](./CONTRIBUTING.md)
+3. Ask questions in the issue comments
+4. Follow the standard workflow (branch → commit → PR)
 
 ---
 
-## 🎯 Checklist de Qualité
+## 🎯 Quality Checklist
 
-Avant de merger une PR, vérifier que :
+Before merging a PR, verify that:
 
-- [ ] ✅ Tous les tests passent (CI)
-- [ ] ✅ Code review approuvé (humain ou Claude avec confiance)
+- [ ] ✅ All tests pass (CI)
+- [ ] ✅ Code review approved (human or AI with confidence)
 - [ ] ✅ Coverage ≥ 80%
-- [ ] ✅ Documentation mise à jour (README, docs/, commentaires)
-- [ ] ✅ Pas de secrets committés (vérifier `.env`, credentials)
-- [ ] ✅ Commit messages suivent les conventions
-- [ ] ✅ Issue référencée dans la PR (`Closes #123`)
-- [ ] ✅ Breaking changes documentés (si applicable)
-- [ ] ✅ Performance acceptable (pas de régression)
-- [ ] ✅ Accessibilité vérifiée (si UI)
+- [ ] ✅ Documentation updated (README, docs/, comments)
+- [ ] ✅ No secrets committed (check `.env`, credentials)
+- [ ] ✅ Commit messages follow conventions
+- [ ] ✅ Issue referenced in the PR (`Closes #123`)
+- [ ] ✅ Breaking changes documented (if applicable)
+- [ ] ✅ Acceptable performance (no regression)
+- [ ] ✅ Accessibility verified (if UI)
 
 ---
 
-## 🚀 Commandes Rapides (Cheatsheet)
+## 🚀 Quick Commands (Cheatsheet)
 
 ```bash
-# Créer une issue
+# Create an issue
 gh issue create --title "..." --label "type:feature" --assignee "@me"
 
-# Créer une branche auto
+# Create an auto-branch
 gh issue edit 123 --add-label "auto-branch"
 
-# Ouvrir une PR
+# Open a PR
 gh pr create --title "..." --body "Closes #123" --base develop
 
-# Lister tâches en cours
+# List tasks in progress
 gh issue list --label "status:in-progress"
 
-# Merger une PR
+# Merge a PR
 gh pr merge 456 --squash --delete-branch
 
-# Voir les checks d'une PR
+# View PR checks
 gh pr checks 456
 
-# Commenter une PR
+# Comment on a PR
 gh pr comment 456 --body "LGTM ✅"
 
-# Générer le dashboard
+# Generate the dashboard
 python scripts/generate_dashboard.py
 
-# Calculer la vélocité
+# Calculate velocity
 python scripts/velocity_calculator.py --weeks 4
 ```
 
 ---
 
-**🎉 Tu es maintenant prêt à gérer ce projet comme un pro !**
+**🎉 You are now ready to manage this project like a pro!**
 
-**Questions ?** Ouvre une issue avec le label `question` ou consulte la [documentation complète](./docs/).
+**Questions?** Open an issue with the `question` label or check the [full documentation](./docs/).
 
 ---
 
-**Dernière mise à jour** : 2025-11-10
-**Maintenu par** : Claude AI + Équipe de développement
+**Last updated**: 2025-11-10
+**Maintained by**: Claude AI + Development Team

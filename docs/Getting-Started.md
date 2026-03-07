@@ -1,17 +1,17 @@
-# 🚀 Guide de démarrage
+# 🚀 Getting Started Guide
 
-Installez et configurez le template en **5 minutes chrono**.
+Install and configure the template in **5 minutes flat**.
 
-## Prérequis (2 minutes)
+## Prerequisites (2 minutes)
 
-Avant de commencer, assurez-vous d'avoir :
+Before you begin, make sure you have:
 
 ### 1. Git
 ```bash
-# Vérifier si Git est installé
+# Check if Git is installed
 git --version
 
-# Installer Git si nécessaire:
+# Install Git if needed:
 # macOS: brew install git
 # Linux: sudo apt install git
 # Windows: https://git-scm.com/download/win
@@ -19,7 +19,7 @@ git --version
 
 ### 2. GitHub CLI
 ```bash
-# Installer GitHub CLI
+# Install GitHub CLI
 # macOS
 brew install gh
 
@@ -30,16 +30,16 @@ sudo apt install gh
 # Windows
 winget install GitHub.cli
 
-# Vérifier l'installation
+# Verify the installation
 gh --version
 ```
 
 ### 3. Python 3.11+
 ```bash
-# Vérifier si Python est installé
+# Check if Python is installed
 python3 --version
 
-# Installer Python si nécessaire:
+# Install Python if needed:
 # macOS: brew install python@3.11
 # Linux: sudo apt install python3.11
 # Windows: https://www.python.org/downloads/
@@ -47,25 +47,25 @@ python3 --version
 
 ---
 
-## Étape 1 : Créer votre projet (1 minute)
+## Step 1: Create Your Project (1 minute)
 
-### Option A : Utiliser comme template (recommandé)
+### Option A: Use as a template (recommended)
 
-1. Sur GitHub, cliquez sur le bouton **"Use this template"** en haut de la page
-2. Donnez un nom à votre projet (ex: `mon-projet`)
-3. Choisissez visibilité (Public ou Private)
-4. Cliquez **"Create repository from template"**
+1. On GitHub, click the **"Use this template"** button at the top of the page
+2. Give your project a name (e.g., `my-project`)
+3. Choose visibility (Public or Private)
+4. Click **"Create repository from template"**
 
 ```bash
-# Clonez votre nouveau repository
-git clone https://github.com/VOTRE_NOM/mon-projet.git
-cd mon-projet
+# Clone your new repository
+git clone https://github.com/YOUR_NAME/my-project.git
+cd my-project
 ```
 
-### Option B : Ajouter à un projet existant
+### Option B: Add to an existing project
 
 ```bash
-cd votre-projet-existant
+cd your-existing-project
 git remote add template https://github.com/dyvan/github-project-llm-management.git
 git fetch template
 git merge template/main --allow-unrelated-histories
@@ -73,174 +73,174 @@ git merge template/main --allow-unrelated-histories
 
 ---
 
-## Étape 2 : Authentification GitHub (30 secondes)
+## Step 2: GitHub Authentication (30 seconds)
 
 ```bash
-# Connectez-vous à GitHub
+# Log in to GitHub
 gh auth login
 
-# Suivez les instructions :
-# 1. Choisissez "GitHub.com"
-# 2. Choisissez "HTTPS"
-# 3. Dites "Yes" pour authentifier
-# 4. Choisissez "Login with a web browser"
-# 5. Copiez le code et ouvrez le navigateur
+# Follow the instructions:
+# 1. Choose "GitHub.com"
+# 2. Choose "HTTPS"
+# 3. Say "Yes" to authenticate
+# 4. Choose "Login with a web browser"
+# 5. Copy the code and open the browser
 ```
 
 ---
 
-## Étape 3 : Configuration des secrets (1 minute)
+## Step 3: Configure Secrets (1 minute)
 
-### Créer un GitHub Personal Access Token (PAT)
+### Create a GitHub Personal Access Token (PAT)
 
-1. Allez sur : https://github.com/settings/tokens/new
-2. Donnez un nom : `Mon template automation`
-3. **Cochez ces scopes** :
+1. Go to: https://github.com/settings/tokens/new
+2. Give it a name: `My template automation`
+3. **Check these scopes**:
    - ✅ `repo` (Full control of private repositories)
    - ✅ `project` (Full control of projects)
    - ✅ `workflow` (Update GitHub Action workflows)
-4. Cliquez **"Generate token"**
-5. **Copiez le token** (vous ne le reverrez plus !)
+4. Click **"Generate token"**
+5. **Copy the token** (you won't see it again!)
 
-### Configurer le token
+### Configure the token
 
 ```bash
-# Configurez le token GitHub
+# Configure the GitHub token
 gh secret set GH_TOKEN
-# Collez votre token quand demandé
+# Paste your token when prompted
 
-# (Optionnel) Configurez la clé API Gemini pour la revue de code IA
+# (Optional) Configure the Gemini API key for AI code review
 gh secret set GEMINI_API_KEY
-# Obtenez votre clé sur : https://aistudio.google.com/app/apikey
+# Get your key at: https://aistudio.google.com/app/apikey
 ```
 
-> **💡 Note** : Sans `GEMINI_API_KEY`, la revue de code fonctionnera en mode basique (sans IA).
+> **💡 Note**: Without `GEMINI_API_KEY`, code review will work in basic mode (without AI).
 
 ---
 
-## Étape 4 : Installation (2 minutes)
+## Step 4: Installation (2 minutes)
 
 ```bash
-# Installez les dépendances Python
+# Install Python dependencies
 pip install -r requirements.txt
 
-# Lancez le script de setup
+# Run the setup script
 ./setup-project.sh
 ```
 
-**Le script va** :
-1. ✅ Vérifier que tout est installé
-2. ✅ Créer les labels GitHub (type:feature, priority:high, etc.)
-3. ✅ Créer un GitHub Project v2
-4. ✅ Vous demander de noter le numéro du projet
+**The script will**:
+1. ✅ Verify that everything is installed
+2. ✅ Create GitHub labels (type:feature, priority:high, etc.)
+3. ✅ Create a GitHub Project v2
+4. ✅ Ask you to note the project number
 
-> **🔔 Important** : Notez le **numéro du projet** affiché (ex: Project #1)
+> **🔔 Important**: Note the **project number** displayed (e.g., Project #1)
 
 ---
 
-## Étape 5 : Configuration du projet (1 minute)
+## Step 5: Project Configuration (1 minute)
 
-### 5a. Mettre à jour le numéro de projet
+### 5a. Update the project number
 
-Éditez le fichier `.github/project.yml` :
+Edit the `.github/project.yml` file:
 
 ```yaml
 project:
-  number: 1  # 👈 Remplacez par le numéro de votre projet
+  number: 1  # 👈 Replace with your project number
   name: "Project Backlog"
 ```
 
-### 5b. Auto-créer les champs custom
+### 5b. Auto-create custom fields
 
 ```bash
-# Créez automatiquement les champs du Project Board
-python3 scripts/setup_project_fields.py --project-number 1 --owner VOTRE_NOM
+# Automatically create the Project Board fields
+python3 scripts/setup_project_fields.py --project-number 1 --owner YOUR_NAME
 ```
 
-Cela crée automatiquement :
-- **Status** : Backlog, Ready, In Progress, In Review, Blocked, Done
-- **Priority** : Low, Medium, High
-- **Effort** : 1, 2, 3, 5, 8 (story points)
-- **Type** : Feature, Bug, Task, Docs, Infrastructure
-- **Target Version** : (champ texte libre)
+This automatically creates:
+- **Status**: Backlog, Ready, In Progress, In Review, Blocked, Done
+- **Priority**: Low, Medium, High
+- **Effort**: 1, 2, 3, 5, 8 (story points)
+- **Type**: Feature, Bug, Task, Docs, Infrastructure
+- **Target Version**: (free text field)
 
 ---
 
-## Étape 6 : Validation (30 secondes)
+## Step 6: Validation (30 seconds)
 
 ```bash
-# Validez que tout fonctionne
+# Validate that everything works
 ./scripts/validate_setup.sh
 ```
 
-Si vous voyez `✅ All checks passed!`, **c'est prêt** ! 🎉
+If you see `✅ All checks passed!`, **you're all set**! 🎉
 
 ---
 
-## Test rapide
+## Quick Test
 
-Testons que l'automation fonctionne :
+Let's test that the automation works:
 
-### 1. Créer une issue
+### 1. Create an issue
 
 ```bash
 gh issue create \
   --title "Test automation" \
   --label "type:feature,priority:medium,auto-branch" \
-  --body "Tester que l'automation fonctionne"
+  --body "Test that the automation works"
 ```
 
-### 2. Observer la magie ✨
+### 2. Watch the magic ✨
 
-Quelques secondes après, vous devriez voir :
-- ✅ Issue ajoutée au Project Board avec Priority=Medium
-- ✅ Branche créée automatiquement : `feat/1-test-automation`
-- ✅ Commentaire posté sur l'issue avec les instructions git
+A few seconds later, you should see:
+- ✅ Issue added to the Project Board with Priority=Medium
+- ✅ Branch automatically created: `feat/1-test-automation`
+- ✅ Comment posted on the issue with git instructions
 
-### 3. Créer une Pull Request
+### 3. Create a Pull Request
 
 ```bash
-# Récupérez la branche
+# Fetch the branch
 git fetch origin
 git checkout feat/1-test-automation
 
-# Faites un changement (exemple)
+# Make a change (example)
 echo "# Test" > test.md
 git add test.md
 git commit -m "feat: test automation (#1)"
 git push origin feat/1-test-automation
 
-# Créez une PR
+# Create a PR
 gh pr create \
   --title "Test PR" \
   --body "Closes #1"
 ```
 
-### 4. Observer encore la magie ✨
+### 4. Watch the magic again ✨
 
-Vous devriez voir :
-- ✅ CI/CD qui se lance automatiquement
-- ✅ Gemini AI qui analyse votre code (si API key configurée)
-- ✅ Project Board mis à jour : Status → "In Review"
-
----
-
-## Prochaines étapes
-
-Maintenant que tout fonctionne :
-
-1. **[📖 Lire la documentation complète](Using-The-Template)** - Comprendre toutes les fonctionnalités
-2. **[⚙️ Personnaliser le template](Configuration)** - Adapter à vos besoins
-3. **[🔀 Comprendre les workflows](Understanding-Workflows)** - Savoir comment ça marche
+You should see:
+- ✅ CI/CD launching automatically
+- ✅ Gemini AI analyzing your code (if API key is configured)
+- ✅ Project Board updated: Status → "In Review"
 
 ---
 
-## Besoin d'aide ?
+## Next Steps
 
-- **Problème ?** → Consultez le [Dépannage](Troubleshooting)
-- **Question ?** → Postez dans les [Discussions](https://github.com/dyvan/github-project-llm-management/discussions)
-- **Bug ?** → Ouvrez une [Issue](https://github.com/dyvan/github-project-llm-management/issues)
+Now that everything is working:
+
+1. **[📖 Read the full documentation](Using-The-Template)** - Understand all the features
+2. **[⚙️ Customize the template](Configuration)** - Adapt to your needs
+3. **[🔀 Understand the workflows](Understanding-Workflows)** - Learn how it works
 
 ---
 
-[⬅️ Retour à l'accueil](Home) | [Suivant : Configuration ➡️](Configuration)
+## Need Help?
+
+- **Having issues?** → Check the [Troubleshooting](Troubleshooting) page
+- **Question?** → Post in the [Discussions](https://github.com/dyvan/github-project-llm-management/discussions)
+- **Bug?** → Open an [Issue](https://github.com/dyvan/github-project-llm-management/issues)
+
+---
+
+[⬅️ Back to Home](Home) | [Next: Configuration ➡️](Configuration)

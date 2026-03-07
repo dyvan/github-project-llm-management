@@ -1,60 +1,60 @@
-# Bienvenue sur la documentation
+# Welcome to the Documentation
 
-**GitHub Project Management Template** - Gestion de projet automatisée pour tous
+**GitHub Project Management Template** - Automated project management for everyone
 
-## 🎯 Navigation rapide
+## 🎯 Quick Navigation
 
-### Pour démarrer
-- **[🚀 Guide de démarrage](Getting-Started)** - Installer et configurer en 5 minutes
-- **[⚙️ Configuration](Configuration)** - Personnaliser le template
-- **[🎓 Utiliser le template](Using-The-Template)** - Guide d'utilisation complet
+### Getting Started
+- **[🚀 Getting Started Guide](Getting-Started)** - Install and configure in 5 minutes
+- **[⚙️ Configuration](Configuration)** - Customize the template
+- **[🎓 Using the Template](Using-The-Template)** - Complete usage guide
 
-### Comprendre le fonctionnement
-- **[🔧 Scripts & Automation](Scripts-Reference)** - Documentation des scripts
-- **[🔀 Workflows GitHub Actions](Understanding-Workflows)** - Comment fonctionnent les automations
-- **[✅ Validation du Template](Template-Validation)** - Tests automatiques de fonctionnalité
-- **[❓ FAQ](FAQ)** - Questions fréquentes
+### Understanding How It Works
+- **[🔧 Scripts & Automation](Scripts-Reference)** - Scripts documentation
+- **[🔀 GitHub Actions Workflows](Understanding-Workflows)** - How the automations work
+- **[✅ Template Validation](Template-Validation)** - Automated functionality tests
+- **[❓ FAQ](FAQ)** - Frequently asked questions
 
-### Besoin d'aide ?
-- **[🐛 Dépannage](Troubleshooting)** - Résoudre les problèmes courants
-- **[💬 Support](https://github.com/dyvan/github-project-llm-management/discussions)** - Poser une question
-- **[🐞 Signaler un bug](https://github.com/dyvan/github-project-llm-management/issues)** - Ouvrir une issue
+### Need Help?
+- **[🐛 Troubleshooting](Troubleshooting)** - Solve common issues
+- **[💬 Support](https://github.com/dyvan/github-project-llm-management/discussions)** - Ask a question
+- **[🐞 Report a Bug](https://github.com/dyvan/github-project-llm-management/issues)** - Open an issue
 
-### Pour les utilisateurs avancés
-- **[🎨 Personnalisation avancée](Advanced-Customization)** - Adapter à vos besoins
-- **[🤝 Contribuer](Contributing)** - Participer au projet
-
----
-
-## 📖 À propos de ce template
-
-Ce template vous permet de gérer vos projets sur GitHub avec :
-- **Project Board automatique** synchronisé avec vos issues et PRs
-- **Création de branches automatique** à partir des issues
-- **Revue de code par IA** (Gemini) sur toutes les PRs
-- **Tests CI/CD** automatiques
-
-**Aucune compétence technique requise** - Tout est automatisé !
+### For Advanced Users
+- **[🎨 Advanced Customization](Advanced-Customization)** - Adapt to your needs
+- **[🤝 Contributing](Contributing)** - Participate in the project
 
 ---
 
-## 🎬 Par où commencer ?
+## 📖 About This Template
 
-1. **Nouveau ?** → Commencez par le [Guide de démarrage](Getting-Started)
-2. **Configuration** → Suivez le guide [Configuration](Configuration)
-3. **Première utilisation** → Lisez [Utiliser le template](Using-The-Template)
-4. **Problème ?** → Consultez le [Dépannage](Troubleshooting)
+This template lets you manage your GitHub projects with:
+- **Automatic Project Board** synced with your issues and PRs
+- **Automatic branch creation** from issues
+- **AI code review** (Gemini) on all PRs
+- **Automatic CI/CD tests**
 
----
-
-## 💡 Cas d'usage
-
-Ce template est parfait pour :
-- **Product managers** qui veulent organiser leur backlog
-- **Chefs de projet** qui veulent un suivi automatique
-- **Équipes de développement** qui veulent automatiser les tâches répétitives
-- **Projets open source** qui veulent une gestion structurée
+**No technical skills required** - Everything is automated!
 
 ---
 
-**🚀 Prêt ? [Commencer maintenant](Getting-Started)**
+## 🎬 Where to Start?
+
+1. **New here?** → Start with the [Getting Started Guide](Getting-Started)
+2. **Configuration** → Follow the [Configuration](Configuration) guide
+3. **First time using it** → Read [Using the Template](Using-The-Template)
+4. **Having issues?** → Check the [Troubleshooting](Troubleshooting) page
+
+---
+
+## 💡 Use Cases
+
+This template is perfect for:
+- **Product managers** who want to organize their backlog
+- **Project managers** who want automatic tracking
+- **Development teams** who want to automate repetitive tasks
+- **Open source projects** that want structured management
+
+---
+
+**🚀 Ready? [Get started now](Getting-Started)**

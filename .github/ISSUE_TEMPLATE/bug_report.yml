@@ -1,5 +1,5 @@
 name: Bug Report
-description: Signalez un bug ou un problème
+description: Report a bug or issue
 title: "[BUG] "
 labels: ["type:bug", "status:backlog"]
 assignees: []
@@ -8,26 +8,26 @@ body:
   - type: markdown
     attributes:
       value: |
-        Merci de signaler un bug ! Pour nous aider à le reproduire et le corriger rapidement, veuillez remplir les détails ci-dessous.
+        Thank you for reporting a bug! To help us reproduce and fix it quickly, please fill in the details below.
 
   - type: textarea
     id: description
     attributes:
-      label: Description du bug
-      description: Décrivez clairement le problème observé
-      placeholder: "Ex: Quand je clique sur le bouton X, il se passe Y au lieu de Z..."
+      label: Bug description
+      description: Clearly describe the observed problem
+      placeholder: "E.g.: When I click on button X, Y happens instead of Z..."
     validations:
       required: true
 
   - type: textarea
     id: steps_to_reproduce
     attributes:
-      label: Étapes pour reproduire
-      description: Listez les étapes précises pour reproduire le bug
+      label: Steps to reproduce
+      description: List the precise steps to reproduce the bug
       placeholder: |
-        1. Aller à la page X
-        2. Cliquer sur Y
-        3. Observer que Z se produit
+        1. Go to page X
+        2. Click on Y
+        3. Observe that Z occurs
       render: markdown
     validations:
       required: true
@@ -35,32 +35,32 @@ body:
   - type: textarea
     id: expected_behavior
     attributes:
-      label: Comportement attendu
-      description: Décrivez ce qui devrait se passer
-      placeholder: "Ex: Le bouton devrait afficher une notification de succès..."
+      label: Expected behavior
+      description: Describe what should happen
+      placeholder: "E.g.: The button should display a success notification..."
     validations:
       required: true
 
   - type: textarea
     id: actual_behavior
     attributes:
-      label: Comportement observé
-      description: Décrivez ce qui se passe réellement
-      placeholder: "Ex: Une erreur 500 est affichée..."
+      label: Actual behavior
+      description: Describe what actually happens
+      placeholder: "E.g.: A 500 error is displayed..."
     validations:
       required: true
 
   - type: textarea
     id: environment
     attributes:
-      label: Environnement
-      description: Informations système et environnement
+      label: Environment
+      description: System and environment information
       placeholder: |
         - OS: Ubuntu 22.04
         - Python: 3.11.5
-        - Version de l'application: v1.2.3
-        - Navigateur: Chrome 120.0
-        - Base de données: PostgreSQL 15
+        - Application version: v1.2.3
+        - Browser: Chrome 120.0
+        - Database: PostgreSQL 15
       render: markdown
     validations:
       required: true
@@ -68,9 +68,9 @@ body:
   - type: textarea
     id: error_logs
     attributes:
-      label: Logs ou traces d'erreur
-      description: Collez les messages d'erreur, logs ou stack traces pertinents
-      placeholder: "Collez les logs ici..."
+      label: Logs or error traces
+      description: Paste relevant error messages, logs, or stack traces
+      placeholder: "Paste logs here..."
       render: bash
     validations:
       required: false
@@ -78,32 +78,32 @@ body:
   - type: textarea
     id: screenshots
     attributes:
-      label: Captures d'écran
-      description: Ajoutez des captures d'écran montrant le bug
-      placeholder: "Attachez des images si possible"
+      label: Screenshots
+      description: Add screenshots showing the bug
+      placeholder: "Attach images if possible"
     validations:
       required: false
 
   - type: checkboxes
     id: checklist
     attributes:
-      label: Avant de soumettre
+      label: Before submitting
       options:
-        - label: J'ai vérifié que ce bug n'a pas déjà été signalé
+        - label: I have verified that this bug has not already been reported
           required: true
-        - label: Je peux reproduire le bug de manière consistante
+        - label: I can reproduce the bug consistently
           required: true
-        - label: Les informations d'environnement sont complètes
+        - label: The environment information is complete
           required: true
 
   - type: dropdown
     id: severity
     attributes:
-      label: Sévérité
+      label: Severity
       options:
-        - Low (cosmétique)
-        - Medium (fonctionnel mais non-bloquant)
-        - High (bloque l'utilisation)
-        - Critical (perte de données / sécurité)
+        - Low (cosmetic)
+        - Medium (functional but non-blocking)
+        - High (blocks usage)
+        - Critical (data loss / security)
     validations:
       required: true

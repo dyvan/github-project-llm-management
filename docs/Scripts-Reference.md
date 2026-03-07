@@ -1,40 +1,40 @@
-# 🔧 Scripts & Automation - Référence complète
+# 🔧 Scripts & Automation - Complete Reference
 
-Documentation de tous les scripts d'automation du template.
+Documentation for all template automation scripts.
 
 ---
 
-## 📜 Scripts principaux
+## 📜 Main Scripts
 
 ### 1. `setup-project.sh`
 
-**Rôle** : Script de setup initial pour configurer un nouveau projet
+**Purpose**: Initial setup script to configure a new project
 
-**Utilisation** :
+**Usage**:
 ```bash
 ./setup-project.sh
 ```
 
-**Ce qu'il fait** :
-1. ✅ Vérifie les prérequis (gh, python, jq)
-2. ✅ Détecte le repository GitHub courant
-3. ✅ Crée tous les labels nécessaires
-4. ✅ Crée un GitHub Project v2
-5. ✅ Configure le workflow de base
+**What it does**:
+1. ✅ Checks prerequisites (gh, python, jq)
+2. ✅ Detects the current GitHub repository
+3. ✅ Creates all required labels
+4. ✅ Creates a GitHub Project v2
+5. ✅ Configures the base workflow
 
-**Labels créés** :
-- **Type** : `type:feature`, `type:bug`, `type:task`, `type:docs`, `type:infrastructure`
-- **Priority** : `priority:high`, `priority:medium`, `priority:low`
-- **Status** : `status:backlog`, `status:ready`, `status:in-progress`, `status:blocked`, `status:done`
-- **Special** : `auto-branch`, `good-first-issue`, `help-wanted`
+**Labels created**:
+- **Type**: `type:feature`, `type:bug`, `type:task`, `type:docs`, `type:infrastructure`
+- **Priority**: `priority:high`, `priority:medium`, `priority:low`
+- **Status**: `status:backlog`, `status:ready`, `status:in-progress`, `status:blocked`, `status:done`
+- **Special**: `auto-branch`, `good-first-issue`, `help-wanted`
 
-**Arguments** : Aucun (interactif)
+**Arguments**: None (interactive)
 
-**Prérequis** :
-- GitHub CLI authentifié
-- Permissions d'admin sur le repository
+**Prerequisites**:
+- GitHub CLI authenticated
+- Admin permissions on the repository
 
-**Sortie** :
+**Output**:
 ```
 🚀 GitHub Project LLM Management - Setup Script
 ================================================
@@ -49,34 +49,34 @@ Repository: username/project-name
 
 ### 2. `scripts/setup_project_fields.py`
 
-**Rôle** : Crée automatiquement les champs custom du Project Board via GraphQL
+**Purpose**: Automatically creates Project Board custom fields via GraphQL
 
-**Utilisation** :
+**Usage**:
 ```bash
 python3 scripts/setup_project_fields.py \
   --project-number 1 \
   --owner YOUR_USERNAME
 ```
 
-**Arguments** :
-- `--project-number` : Numéro du projet (visible dans l'URL)
-- `--owner` : Propriétaire du projet (username ou organisation)
-- `--project-id` : (Optionnel) ID GraphQL du projet (alternative à --project-number)
+**Arguments**:
+- `--project-number`: Project number (visible in the URL)
+- `--owner`: Project owner (username or organization)
+- `--project-id`: (Optional) GraphQL project ID (alternative to --project-number)
 
-**Ce qu'il fait** :
-1. ✅ Cherche le projet par numéro
-2. ✅ Vérifie les champs existants
-3. ✅ Crée les champs manquants :
-   - **Status** (Single Select) : Backlog, Ready, In Progress, In Review, Blocked, Done
-   - **Priority** (Single Select) : Low, Medium, High
-   - **Effort** (Single Select) : 1, 2, 3, 5, 8
-   - **Type** (Single Select) : Feature, Bug, Task, Docs, Infrastructure
+**What it does**:
+1. ✅ Looks up the project by number
+2. ✅ Checks existing fields
+3. ✅ Creates missing fields:
+   - **Status** (Single Select): Backlog, Ready, In Progress, In Review, Blocked, Done
+   - **Priority** (Single Select): Low, Medium, High
+   - **Effort** (Single Select): 1, 2, 3, 5, 8
+   - **Type** (Single Select): Feature, Bug, Task, Docs, Infrastructure
    - **Target Version** (Text)
 
-**Variables d'environnement** :
-- `GH_TOKEN` ou `GITHUB_TOKEN` : Token GitHub avec scope `project`
+**Environment variables**:
+- `GH_TOKEN` or `GITHUB_TOKEN`: GitHub token with `project` scope
 
-**Sortie** :
+**Output**:
 ```
 🔍 Checking existing fields...
 📋 Creating custom fields...
@@ -86,33 +86,33 @@ python3 scripts/setup_project_fields.py \
 ✅ All fields configured!
 ```
 
-**Gestion d'erreur** :
-- Si le projet n'existe pas → Erreur explicite
-- Si le champ existe déjà → Skip (pas de doublon)
-- Si le token n'a pas le bon scope → Erreur explicite
+**Error handling**:
+- If the project doesn't exist → Explicit error
+- If the field already exists → Skip (no duplicates)
+- If the token doesn't have the right scope → Explicit error
 
 ---
 
 ### 3. `scripts/validate_setup.sh`
 
-**Rôle** : Valide que le template est correctement configuré
+**Purpose**: Validates that the template is correctly configured
 
-**Utilisation** :
+**Usage**:
 ```bash
 ./scripts/validate_setup.sh
 ```
 
-**Ce qu'il vérifie** :
-1. ✅ **Prérequis** : gh, python3, git installés
-2. ✅ **Repository** : Dans un repo git avec remote GitHub
-3. ✅ **Authentification** : GitHub CLI authentifié
-4. ✅ **Secrets** : GH_TOKEN et GEMINI_API_KEY configurés
-5. ✅ **Labels** : Tous les labels requis existent
-6. ✅ **Project** : Au moins un projet existe
-7. ✅ **Workflows** : Tous les workflows sont présents
-8. ✅ **Dépendances** : Packages Python installés
+**What it checks**:
+1. ✅ **Prerequisites**: gh, python3, git installed
+2. ✅ **Repository**: Inside a git repo with GitHub remote
+3. ✅ **Authentication**: GitHub CLI authenticated
+4. ✅ **Secrets**: GH_TOKEN and GEMINI_API_KEY configured
+5. ✅ **Labels**: All required labels exist
+6. ✅ **Project**: At least one project exists
+7. ✅ **Workflows**: All workflows are present
+8. ✅ **Dependencies**: Python packages installed
 
-**Sortie (succès)** :
+**Output (success)**:
 ```
 🔍 GitHub Project Template - Setup Validation
 ==============================================
@@ -132,88 +132,88 @@ python3 scripts/setup_project_fields.py \
 ✅ All checks passed! Template is ready to use.
 ```
 
-**Sortie (erreurs)** :
+**Output (errors)**:
 ```
 ❌ Setup incomplete: 2 error(s), 3 warning(s).
 
 Please fix the errors above before using this template.
 ```
 
-**Codes de sortie** :
-- `0` : Tout OK
-- `1` : Erreurs trouvées
+**Exit codes**:
+- `0`: All OK
+- `1`: Errors found
 
 ---
 
 ### 4. `scripts/project_sync.py`
 
-**Rôle** : Synchronise les issues/PRs avec le Project Board via GraphQL
+**Purpose**: Syncs issues/PRs with the Project Board via GraphQL
 
-**Utilisation** :
+**Usage**:
 ```bash
-# Synchroniser une issue
+# Sync an issue
 python3 scripts/project_sync.py \
   --issue 123 \
   --status "In Progress" \
   --priority "High"
 
-# Synchroniser une PR
+# Sync a PR
 python3 scripts/project_sync.py \
   --pr 456 \
   --status "In Review"
 
-# Spécifier un projet
+# Specify a project
 python3 scripts/project_sync.py \
   --issue 123 \
   --project 1 \
   --status "Done"
 ```
 
-**Arguments** :
-- `--issue NUMBER` : Numéro de l'issue à synchroniser
-- `--pr NUMBER` : Numéro de la PR à synchroniser
-- `--project NUMBER` : (Optionnel) Numéro du projet
-- `--status VALUE` : Définir le champ Status
-- `--priority VALUE` : Définir le champ Priority
-- `--effort VALUE` : Définir le champ Effort
-- `--type VALUE` : Définir le champ Type
-- `--version VALUE` : Définir le champ Target Version
+**Arguments**:
+- `--issue NUMBER`: Issue number to sync
+- `--pr NUMBER`: PR number to sync
+- `--project NUMBER`: (Optional) Project number
+- `--status VALUE`: Set the Status field
+- `--priority VALUE`: Set the Priority field
+- `--effort VALUE`: Set the Effort field
+- `--type VALUE`: Set the Type field
+- `--version VALUE`: Set the Target Version field
 
-**Variables d'environnement** :
-- `GH_TOKEN` ou `GITHUB_TOKEN` : Token GitHub
-- `GH_OWNER` : Propriétaire du repository
-- `GH_REPO` : Nom du repository
+**Environment variables**:
+- `GH_TOKEN` or `GITHUB_TOKEN`: GitHub token
+- `GH_OWNER`: Repository owner
+- `GH_REPO`: Repository name
 
-**Comment ça marche** :
-1. Récupère l'ID GraphQL de l'issue/PR
-2. Trouve le project (ou utilise le premier trouvé)
-3. Ajoute l'item au project (si pas déjà ajouté)
-4. Met à jour les champs demandés
+**How it works**:
+1. Retrieves the GraphQL ID of the issue/PR
+2. Finds the project (or uses the first one found)
+3. Adds the item to the project (if not already added)
+4. Updates the requested fields
 
-**Sortie** :
+**Output**:
 ```
 ✅ Issue #123 synced successfully
 ```
 
-**Utilisé par** :
-- Workflow `update-project.yml` (automatiquement)
-- Peut être appelé manuellement pour debug
+**Used by**:
+- Workflow `update-project.yml` (automatically)
+- Can be called manually for debugging
 
 ---
 
-## 🤖 Workflows GitHub Actions
+## 🤖 GitHub Actions Workflows
 
 ### 1. `.github/workflows/update-project.yml`
 
-**Rôle** : Synchronise automatiquement le Project Board avec les issues/PRs
+**Purpose**: Automatically syncs the Project Board with issues/PRs
 
-**Déclencheurs** :
-- Issue créée → Ajoute au Backlog
-- Issue labellée → Met à jour Status/Priority/Type selon le label
-- PR ouverte → Met à jour Status à "In Review"
-- PR mergée → Met à jour Status à "Done"
+**Triggers**:
+- Issue created → Adds to Backlog
+- Issue labeled → Updates Status/Priority/Type based on the label
+- PR opened → Updates Status to "In Review"
+- PR merged → Updates Status to "Done"
 
-**Exemple de mapping labels** :
+**Label mapping example**:
 ```yaml
 Label "auto-branch"       → Status: "Ready"
 Label "status:in-progress" → Status: "In Progress"
@@ -221,7 +221,7 @@ Label "priority:high"      → Priority: "High"
 Label "type:feature"       → Type: "Feature"
 ```
 
-**Variables d'environnement définies** :
+**Environment variables defined**:
 ```yaml
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -233,23 +233,23 @@ env:
 
 ### 2. `.github/workflows/create-branch.yml`
 
-**Rôle** : Crée automatiquement une branche quand le label `auto-branch` est ajouté
+**Purpose**: Automatically creates a branch when the `auto-branch` label is added
 
-**Déclencheur** :
-- Issue labellée avec `auto-branch`
+**Trigger**:
+- Issue labeled with `auto-branch`
 
-**Ce qu'il fait** :
-1. Récupère le titre de l'issue
-2. Crée un slug (ex: "Fix bug API" → "fix-bug-api")
-3. Crée une branche `feat/{issue-number}-{slug}`
-4. Poste un commentaire avec les instructions git
+**What it does**:
+1. Retrieves the issue title
+2. Creates a slug (e.g., "Fix bug API" → "fix-bug-api")
+3. Creates a branch `feat/{issue-number}-{slug}`
+4. Posts a comment with git instructions
 
-**Exemple** :
+**Example**:
 ```
-Issue #42 : "Add dark mode"
-→ Branche créée : feat/42-add-dark-mode
+Issue #42: "Add dark mode"
+→ Branch created: feat/42-add-dark-mode
 
-Commentaire posté :
+Comment posted:
 ✅ Branch created: feat/42-add-dark-mode
 
 Get started:
@@ -261,58 +261,58 @@ git checkout feat/42-add-dark-mode
 
 ### 3. `.github/workflows/code-review-agent.yml`
 
-**Rôle** : Analyse automatiquement les PRs avec Gemini AI
+**Purpose**: Automatically analyzes PRs with Gemini AI
 
-**Déclencheur** :
-- PR ouverte, mise à jour, ou réouverte
+**Trigger**:
+- PR opened, updated, or reopened
 
-**Ce qu'il fait** :
-1. Récupère le diff de la PR
-2. Envoie à l'API Gemini avec un prompt structuré
-3. Génère une revue de code avec :
-   - ✅ Points forts
-   - ⚠️ Suggestions d'amélioration
-   - 🔴 Problèmes critiques
-4. Poste la revue en commentaire
+**What it does**:
+1. Retrieves the PR diff
+2. Sends it to the Gemini API with a structured prompt
+3. Generates a code review with:
+   - ✅ Strengths
+   - ⚠️ Improvement suggestions
+   - 🔴 Critical issues
+4. Posts the review as a comment
 
-**Mode fallback** :
-Si `GEMINI_API_KEY` n'est pas configuré, fonctionne en mode basique (checklist manuelle).
+**Fallback mode**:
+If `GEMINI_API_KEY` is not configured, works in basic mode (manual checklist).
 
-**Modèle utilisé** : `gemini-2.0-flash`
+**Model used**: `gemini-2.0-flash`
 
 ---
 
 ### 4. `.github/workflows/ci-tests.yml`
 
-**Rôle** : Exécute les tests et validations sur chaque PR
+**Purpose**: Runs tests and validations on each PR
 
-**Déclencheur** :
-- Push sur main/develop/staging
-- PR ouverte
+**Trigger**:
+- Push on main/develop/staging
+- PR opened
 
-**Étapes** :
-1. ✅ Vérifier permissions des scripts
-2. ✅ Valider la syntaxe YAML des workflows
-3. ✅ Tester le setup script
-4. ✅ Lancer les tests unitaires (pytest)
-5. ✅ Vérifier la couverture de code
+**Steps**:
+1. ✅ Check script permissions
+2. ✅ Validate workflow YAML syntax
+3. ✅ Test the setup script
+4. ✅ Run unit tests (pytest)
+5. ✅ Check code coverage
 
-**Matrice de tests** :
+**Test matrix**:
 - Python 3.11
 
 ---
 
-## 📝 Fichiers de configuration
+## 📝 Configuration Files
 
 ### `.github/project.yml`
 
-Configuration centrale du projet :
+Central project configuration:
 
 ```yaml
 project:
-  number: 1  # Numéro du projet
+  number: 1  # Project number
   name: "Project Backlog"
-  auto_link: true  # Auto-ajouter issues au project
+  auto_link: true  # Auto-add issues to project
 
 fields:
   status:
@@ -325,41 +325,41 @@ automation:
     label: "auto-branch"
 ```
 
-**Utilisé par** : Tous les workflows pour connaître le projet cible
+**Used by**: All workflows to identify the target project
 
 ---
 
-## 🔧 Utilisation avancée
+## 🔧 Advanced Usage
 
-### Debug : Synchroniser manuellement
+### Debug: Sync Manually
 
 ```bash
-# Forcer la synchronisation d'une issue
+# Force sync an issue
 python3 scripts/project_sync.py --issue 123 --status "Backlog"
 
-# Vérifier le résultat
+# Check the result
 gh project item-list 1 --owner YOUR_USERNAME
 ```
 
-### Tester les workflows localement
+### Test Workflows Locally
 
 ```bash
-# Installer act (GitHub Actions local runner)
+# Install act (GitHub Actions local runner)
 brew install act  # macOS
-# ou : https://github.com/nektos/act
+# or: https://github.com/nektos/act
 
-# Tester le workflow CI
+# Test the CI workflow
 act -j test
 
-# Tester le workflow update-project (simulation)
+# Test the update-project workflow (simulation)
 act issues -e test_event.json
 ```
 
 ---
 
-## 💡 Tips & astuces
+## 💡 Tips & Tricks
 
-### Obtenir l'ID GraphQL d'un projet
+### Get the GraphQL ID of a Project
 
 ```bash
 gh api graphql -f query='
@@ -373,13 +373,13 @@ gh api graphql -f query='
 }'
 ```
 
-### Lister tous les items d'un projet
+### List All Items in a Project
 
 ```bash
 gh project item-list 1 --owner YOUR_USERNAME --format json
 ```
 
-### Vérifier les secrets configurés
+### Check Configured Secrets
 
 ```bash
 gh secret list
@@ -387,19 +387,19 @@ gh secret list
 
 ---
 
-## 🐛 Dépannage
+## 🐛 Troubleshooting
 
-**Erreur : "Project not found"**
-- Vérifiez que `.github/project.yml` a le bon numéro
-- Vérifiez que le projet existe : `gh project list --owner YOUR_USERNAME`
+**Error: "Project not found"**
+- Check that `.github/project.yml` has the correct number
+- Check that the project exists: `gh project list --owner YOUR_USERNAME`
 
-**Erreur : "GraphQL errors"**
-- Vérifiez que `GH_TOKEN` a le scope `project`
-- Recréez le token : https://github.com/settings/tokens
+**Error: "GraphQL errors"**
+- Check that `GH_TOKEN` has the `project` scope
+- Recreate the token: https://github.com/settings/tokens
 
-**Script ne s'exécute pas**
-- Rendez-le exécutable : `chmod +x script.sh`
+**Script won't run**
+- Make it executable: `chmod +x script.sh`
 
 ---
 
-[⬅️ Retour à l'accueil](Home) | [Suivant : Workflows ➡️](Understanding-Workflows)
+[⬅️ Back to Home](Home) | [Next: Workflows ➡️](Understanding-Workflows)
