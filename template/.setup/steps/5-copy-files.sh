@@ -116,6 +116,32 @@ copy_scripts() {
     fi
 }
 
+copy_claude_commands() {
+    local src="${REPO_ROOT}/.claude/commands"
+    local dest="${PWD}/.claude/commands"
+
+    if [ "$REPO_ROOT" = "$PWD" ]; then
+        success "Claude commands already in place"
+        return 0
+    fi
+
+    if [ -d "$src" ]; then
+        mkdir -p "$dest"
+        local count=0
+        for cmd in "$src"/*.md; do
+            if [ -f "$cmd" ]; then
+                cp "$cmd" "$dest/"
+                count=$((count+1))
+            fi
+        done
+        if [ $count -gt 0 ]; then
+            success "Copied $count Claude commands to .claude/commands/"
+        fi
+    else
+        warning "No Claude commands found at $src"
+    fi
+}
+
 copy_claude_md() {
     local src="${TEMPLATE_ROOT}/CLAUDE-USER-TEMPLATE.md"
     local dest="${PWD}/CLAUDE.md"
@@ -152,6 +178,7 @@ run_step() {
     copy_issue_templates
     copy_pr_template
     copy_scripts
+    copy_claude_commands
     copy_claude_md
 
     mark_step_completed "link_workflows"
