@@ -174,9 +174,6 @@ done
 
 ## 🔮 Future Scripts (Planned)
 
-- `generate_dashboard.py`: Generate project dashboard (DASHBOARD.md)
-- `velocity_calculator.py`: Calculate team velocity from completed story points
-- `claude_manager.py`: CLI interface for Claude to manage projects
 - `issue_templates_generator.py`: Bulk create issues from templates
 
 ---
@@ -217,9 +214,8 @@ gh issue close $TEST_ISSUE
 ## 📚 Related Documentation
 
 - `../AUTOMATION.md`: Complete automation guide
-- `../claude.md`: Instructions for Claude AI
+- `../CLAUDE.md`: Instructions for Claude Code
 - `../.github/workflows/update-project.yml`: Workflow using this script
-- `../PROJECT_BOARD_SETUP.md`: Project Board setup guide
 
 ---
 

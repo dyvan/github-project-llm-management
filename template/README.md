@@ -44,9 +44,7 @@ template/
 │   └── project-fields.json # Custom Project fields
 │
 ├── scripts/               # Optional utilities
-│   ├── project_sync.py
-│   ├── generate_dashboard.py
-│   └── velocity_calculator.py
+│   └── project_sync.py
 │
 ├── docs/                  # Template documentation
 │   ├── WORKFLOWS.md
@@ -212,22 +210,6 @@ Synchronizes the Project Board with issues/PRs:
 
 ```bash
 python3 scripts/project_sync.py --sync-all
-```
-
-### generate_dashboard.py
-
-Generates a progress dashboard:
-
-```bash
-python3 scripts/generate_dashboard.py --format json --output report.json
-```
-
-### velocity_calculator.py
-
-Calculates team velocity:
-
-```bash
-python3 scripts/velocity_calculator.py --weeks 4
 ```
 
 ---
