@@ -1,35 +1,22 @@
-# 🚀 GitHub Project Management - Automated Template
+# GitHub Project LLM Management
 
 [![Template Validation](https://github.com/dyvan/github-project-llm-management/actions/workflows/template-validation.yml/badge.svg)](https://github.com/dyvan/github-project-llm-management/actions/workflows/template-validation.yml)
 [![CI Tests](https://github.com/dyvan/github-project-llm-management/actions/workflows/ci-tests.yml/badge.svg)](https://github.com/dyvan/github-project-llm-management/actions/workflows/ci-tests.yml)
 
-**Turnkey template for managing your projects with GitHub**
-Automated Kanban • Smart Issues • AI Code Review • Zero configuration
-
-## 💡 Who is this for?
-
-✅ **Product managers** who want to organize their backlog without writing code
-✅ **Project leads** who want automated tracking
-✅ **Teams** who want GitHub Projects synced automatically
-✅ **Developers** who want an LLM-managed project (Claude Code, etc.)
-
-**No technical skills required** - Everything is automated 🎯
+**Automated GitHub project management for AI-powered development teams.**
+Slash commands + PM agent + Kanban automation + AI code review + Plugin packaging
 
 ---
 
 ## Quick Start
 
-There are two ways to get started:
-
-### Option 1: New project (curl install)
+### New project (one command)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/dyvan/github-project-llm-management/main/install.sh | bash
 ```
 
-The script will clone the template, collect your tokens, and configure everything.
-
-### Option 2: Existing clone
+### Existing clone
 
 ```bash
 git clone https://github.com/dyvan/github-project-llm-management.git my-project
@@ -37,105 +24,85 @@ cd my-project
 bash template-setup.sh
 ```
 
-`template-setup.sh` is the single entry point. It handles everything:
-- Creates `.env` interactively if missing (asks for GH_TOKEN, optional GEMINI_API_KEY)
-- Validates prerequisites (gh CLI, Python, git)
-- Sets up GitHub labels, project board, workflows, and issue templates
-- Idempotent: safe to run multiple times
+`template-setup.sh` is the single entry point. It creates `.env` interactively if missing, validates prerequisites (gh CLI, Python, git), sets up labels, project board, workflows, and issue templates. Idempotent -- safe to run multiple times.
 
 ---
 
-## 🎯 What does it do?
+## Features
 
 | Feature | Description |
 |---------|-------------|
-| 📋 **Auto Project Board** | Issues are automatically added to the Kanban board |
-| 🌿 **Automatic Branches** | Add the `auto-branch` label and a branch is created |
-| 📝 **Specification Questionnaire** | Gemini generates a questionnaire to clarify specs |
-| 📄 **Spec Generation** | Gemini generates detailed specs from questionnaire answers |
-| 🤖 **AI Code Review** | Gemini analyzes your PRs and suggests improvements |
-| ✅ **Automated Tests** | Every PR is validated automatically |
-| 🔄 **Synchronization** | Status updates automatically (Backlog → Done) |
-| 🔒 **Auto-close Features** | Parent issues auto-close when all sub-issues are done |
-
-**Watch the video**: [How it works in 2 minutes](../../wiki/Understanding-Workflows)
+| **8 Slash Commands** | `/start-task`, `/finish-task`, `/next-task`, `/plan-task`, `/task-status`, `/sprint-report`, `/save-session`, `/load-session` |
+| **PM Agent** | Sprint planning, backlog grooming, retrospectives, health checks |
+| **Auto Project Board** | Issues flow through Kanban (Backlog -> Ready -> In Progress -> In Review -> Done) automatically |
+| **AI Code Review** | Gemini analyzes PRs (opt-in, needs API key) |
+| **Project Memory** | `.ai/memory/` persists context across AI sessions |
+| **Hooks** | Pre-commit checks, session save/load, board updates |
+| **Plugin** | Install as Claude Code plugin with all commands bundled |
+| **Wiki Templates** | Shared knowledge base for team context |
 
 ---
 
-## 📚 Documentation
+## GitHub Actions Workflows
 
-**Getting started:**
-- 🚀 [Getting Started Guide](../../wiki/Getting-Started) - Setup in 5 minutes
-- ⚙️ [Configuration](../../wiki/Configuration) - Customize the template
-- 🎓 [Using the Template](../../wiki/Using-The-Template) - Complete guide
-
-**Going deeper:**
-- 🔧 [Scripts & Automation](../../wiki/Scripts-Reference) - Understand the scripts
-- 🔀 [GitHub Automations](../../wiki/Understanding-Workflows) - How it works
-- ❓ [FAQ](../../wiki/FAQ) - Frequently asked questions
-- 🐛 [Troubleshooting](../../wiki/Troubleshooting) - Solving common issues
-
-**Contributing:**
-- 🤝 [Contributing Guide](../../wiki/Contributing) - How to participate
-- 🎨 [Advanced Customization](../../wiki/Advanced-Customization) - Adapt to your needs
-
-➡️ **[📖 Browse the full documentation](../../wiki)**
+| Workflow | Trigger | Purpose |
+|----------|---------|---------|
+| `create-branch.yml` | Label `auto-branch` | Auto-create branch from issue |
+| `code-review-agent.yml` | PR opened/synced | Gemini AI code review |
+| `ci-tests.yml` | Push to main or PR | Lint, tests, build |
+| `deploy-docs.yml` | Push with `docs/` changes | Deploy MkDocs to GitHub Pages |
+| `update-project.yml` | Push, PR, issue events | Sync project board |
+| `plan-with-gemini.yml` | Label `plan-with-gemini` | Generate spec questionnaire |
+| `generate-specification.yml` | Label `generate-specification` | Generate detailed spec |
+| `auto-close-feature.yml` | PR merged with `Closes #X` | Auto-close parent when subs done |
 
 ---
 
-## 💬 Need help?
+## Project Structure
 
-- ❓ **Question?** → [Discussions](../../discussions)
-- 🐛 **Bug?** → [Open an issue](../../issues)
-- 📖 **Documentation** → [Full Wiki](../../wiki)
-
----
-
-## ⭐ Key Features
-
-### Project Board Automation
-- ✅ Issues automatically added to the backlog
-- ✅ Status updates based on labels
-- ✅ Custom fields (Priority, Effort, Type)
-
-### Automatic Branch Creation
-- ✅ `auto-branch` label → branch created instantly
-- ✅ Automatic naming (`feat/123-issue-title`)
-- ✅ Comment posted with git commands
-
-### Specification Questionnaire with Gemini
-- ✅ `plan-with-gemini` label → questionnaire generated automatically
-- ✅ Questions tailored to the issue type (Feature, Bug, Task)
-- ✅ Spec clarification before implementation
-- ✅ Questionnaire posted as a comment on the issue
-
-### Specification Generation with Gemini
-- ✅ `generate-specification` label → detailed spec from QCM responses
-- ✅ Sub-issue created with full specification document
-- ✅ Branch auto-created for implementation
-
-### AI Code Review
-- ✅ Automatic PR analysis by Gemini AI
-- ✅ Improvement suggestions
-- ✅ Potential bug detection
-
-### Auto-close Parent Features
-- ✅ Merging a PR auto-checks if all sub-issues are done
-- ✅ Parent feature issue closed automatically when complete
-
-### Built-in Tests
-- ✅ Automatic validation on every PR
-- ✅ All files verified
-- ✅ Code quality report
+```
+.claude/commands/    -- Slash commands for Claude Code
+.github/workflows/   -- CI/CD and automation workflows
+template/.setup/     -- Setup scripts (6 idempotent steps)
+scripts/             -- Python scripts (project sync, dashboard, velocity)
+docs/                -- MkDocs Material documentation site
+```
 
 ---
 
-## 📄 License
+## Configuration
 
-MIT License - Free to use for any project
+### Required secrets (Settings -> Secrets -> Actions)
+
+- `GH_TOKEN` -- GitHub PAT (scopes: `repo`, `workflow`, `read:org`, `project`)
+
+### Optional secrets (for AI features)
+
+- `GEMINI_API_KEY` -- Google Gemini API key (enables code review, planning, spec generation)
+- `GEMINI_PLAN_API_KEY`, `GEMINI_SPEC_API_KEY`, `GEMINI_REVIEW_API_KEY` -- Per-workflow keys (fall back to `GEMINI_API_KEY`)
 
 ---
 
-**Built with ❤️ to simplify project management on GitHub**
+## Testing
 
-[Documentation](../../wiki) • [Support](../../discussions) • [Contribute](../../wiki/Contributing)
+```bash
+python3 -m pytest tests/ -v
+```
+
+---
+
+## Documentation
+
+Full documentation: **[dyvan.github.io/github-project-llm-management](https://dyvan.github.io/github-project-llm-management/)**
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines. Issues labeled `good-first-issue` are a great starting point.
+
+---
+
+## License
+
+MIT License -- see [LICENSE](./LICENSE) for details.
