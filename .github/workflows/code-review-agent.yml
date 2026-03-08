@@ -86,17 +86,20 @@ jobs:
 
           Be concise and professional. If the diff is truncated, note it."""
 
-          url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}"
+          url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+          headers = {"x-goog-api-key": api_key, "Content-Type": "application/json"}
           payload = {"contents": [{"parts": [{"text": prompt}]}]}
 
           try:
-              resp = requests.post(url, json=payload, timeout=60)
+              resp = requests.post(url, json=payload, headers=headers, timeout=60)
               resp.raise_for_status()
               data = resp.json()
               review = data["candidates"][0]["content"]["parts"][0]["text"]
           except Exception as e:
-              review = f"Code review generation failed: {e}\n\nPlease review manually."
-              print(f"Error: {e}", file=sys.stderr)
+              # Sanitize error to never leak API key
+              err_msg = str(e).replace(api_key, "***") if api_key else str(e)
+              review = f"Code review generation failed: {err_msg}\n\nPlease review manually."
+              print(f"Error: {err_msg}", file=sys.stderr)
 
           with open("/tmp/review_comment.md", "w") as f:
               f.write(review)

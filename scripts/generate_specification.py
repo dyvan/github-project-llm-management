@@ -282,7 +282,8 @@ Start directly with the Executive Summary or Problem Statement."""
 
     def _call_gemini_api(self, prompt: str) -> str:
         """Call Gemini API to generate specification"""
-        url = f"{self.api_url}?key={self.api_key}"
+        url = self.api_url
+        api_headers = {"x-goog-api-key": self.api_key, "Content-Type": "application/json"}
 
         payload = {
             "contents": [
@@ -300,11 +301,7 @@ Start directly with the Executive Summary or Problem Statement."""
             }
         }
 
-        headers = {
-            "Content-Type": "application/json"
-        }
-
-        response = requests.post(url, json=payload, headers=headers)
+        response = requests.post(url, json=payload, headers=api_headers)
         response.raise_for_status()
 
         result = response.json()

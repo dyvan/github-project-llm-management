@@ -185,7 +185,8 @@ Generate ONLY the questionnaire in Markdown format above. Do not add any text be
 
     def _call_gemini_api(self, prompt: str) -> str:
         """Call Gemini API to generate content"""
-        url = f"{self.api_url}?key={self.api_key}"
+        url = self.api_url
+        headers = {"x-goog-api-key": self.api_key, "Content-Type": "application/json"}
 
         payload = {
             "contents": [
@@ -201,10 +202,6 @@ Generate ONLY the questionnaire in Markdown format above. Do not add any text be
                 "topP": 0.95,
                 "maxOutputTokens": 2048,
             }
-        }
-
-        headers = {
-            "Content-Type": "application/json"
         }
 
         response = requests.post(url, json=payload, headers=headers)
