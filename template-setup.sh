@@ -18,6 +18,9 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
+# Non-interactive mode (--yes / -y)
+YES_MODE=false
+
 # Safe read that works with piped stdin (tries /dev/tty first)
 safe_read() {
     local prompt="$1"
@@ -52,6 +55,7 @@ USAGE:
 
 OPTIONS:
   --help              Show this help
+  --yes, -y           Non-interactive mode (skip all prompts, use defaults)
   --skip-completed    Skip already done steps
   --dry-run           Preview changes without applying
   --reset-state       Start fresh (discard previous state)
@@ -75,11 +79,23 @@ EXAMPLES:
 EOF
 }
 
-# Check if --help requested
-if [[ "$1" == "--help" || "$1" == "-h" ]]; then
-    show_help
-    exit 0
-fi
+# Parse flags before main
+PASS_THROUGH_ARGS=()
+for arg in "$@"; do
+    case "$arg" in
+        --help|-h)
+            show_help
+            exit 0
+            ;;
+        --yes|-y)
+            YES_MODE=true
+            ;;
+        *)
+            PASS_THROUGH_ARGS+=("$arg")
+            ;;
+    esac
+done
+set -- "${PASS_THROUGH_ARGS[@]}"
 
 # ============================================================================
 # Ensure .env exists (merged from bootstrap.sh)
@@ -112,6 +128,11 @@ ensure_env() {
     local gh_token="${GH_TOKEN:-}"
 
     if [ -z "$gh_token" ]; then
+        if [ "$YES_MODE" = true ]; then
+            echo -e "${RED}GH_TOKEN is required but --yes mode cannot prompt for it.${NC}"
+            echo "  Set GH_TOKEN in environment before using --yes."
+            return 1
+        fi
         echo -e "${BLUE}GitHub Personal Access Token (REQUIRED)${NC}"
         echo "  Used for: issues, labels, project board, workflows"
         echo "  Get one at: https://github.com/settings/tokens/new"
@@ -136,19 +157,24 @@ ensure_env() {
     local gemini_key="${GEMINI_API_KEY:-}"
 
     if [ -z "$gemini_key" ]; then
-        echo ""
-        echo -e "${BLUE}Google Gemini API Key (OPTIONAL - for AI features)${NC}"
-        echo "  Used for: QCM generation, specification generation, AI planning"
-        echo "  Get one at: https://aistudio.google.com/app/apikey"
-        echo "  If skipped: AI features will be disabled (add later if needed)"
-        echo ""
-        safe_read "Paste your GEMINI_API_KEY (or leave blank to skip): " gemini_key
-
-        if [ -z "$gemini_key" ]; then
-            echo "  Gemini API Key skipped - AI features will be disabled"
+        if [ "$YES_MODE" = true ]; then
+            echo "  Gemini API Key skipped (--yes mode) - AI features will be disabled"
             gemini_key="PLACEHOLDER_GEMINI_API_KEY_CHANGE_ME"
         else
-            echo -e "${GREEN}GEMINI_API_KEY configured${NC}"
+            echo ""
+            echo -e "${BLUE}Google Gemini API Key (OPTIONAL - for AI features)${NC}"
+            echo "  Used for: QCM generation, specification generation, AI planning"
+            echo "  Get one at: https://aistudio.google.com/app/apikey"
+            echo "  If skipped: AI features will be disabled (add later if needed)"
+            echo ""
+            safe_read "Paste your GEMINI_API_KEY (or leave blank to skip): " gemini_key
+
+            if [ -z "$gemini_key" ]; then
+                echo "  Gemini API Key skipped - AI features will be disabled"
+                gemini_key="PLACEHOLDER_GEMINI_API_KEY_CHANGE_ME"
+            else
+                echo -e "${GREEN}GEMINI_API_KEY configured${NC}"
+            fi
         fi
     else
         echo -e "${GREEN}GEMINI_API_KEY configured (from environment)${NC}"
@@ -226,7 +252,7 @@ validate_env() {
     if ! command -v gh &> /dev/null; then
         echo -e "${RED}❌ GitHub CLI (gh) not found${NC}"
         echo "   Install from: https://cli.github.com/"
-        ((errors++))
+        errors=$((errors + 1))
     else
         echo -e "${GREEN}✅ GitHub CLI${NC}"
     fi
@@ -235,7 +261,7 @@ validate_env() {
     if ! command -v python3 &> /dev/null; then
         echo -e "${RED}❌ Python 3 not found${NC}"
         echo "   Install Python 3.8 or higher"
-        ((errors++))
+        errors=$((errors + 1))
     else
         echo -e "${GREEN}✅ Python 3${NC}"
     fi
@@ -244,7 +270,7 @@ validate_env() {
     if ! command -v git &> /dev/null; then
         echo -e "${RED}❌ Git not found${NC}"
         echo "   Install from: https://git-scm.com/"
-        ((errors++))
+        errors=$((errors + 1))
     else
         echo -e "${GREEN}✅ Git${NC}"
     fi
@@ -254,7 +280,7 @@ validate_env() {
         if ! gh auth status &> /dev/null; then
             echo -e "${YELLOW}⚠️  GitHub CLI not authenticated${NC}"
             echo "   Run: gh auth login"
-            ((errors++))
+            errors=$((errors + 1))
         else
             echo -e "${GREEN}✅ GitHub authenticated${NC}"
         fi
@@ -365,12 +391,16 @@ main() {
     echo -e "${CYAN}Repository: $repo${NC}"
     echo ""
 
-    # Ask for confirmation
-    read -p "$(echo -e ${YELLOW})Continue setup for this repository? (y/n)$(echo -e ${NC}) " -n 1 -r
-    echo
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        echo "Setup cancelled."
-        exit 0
+    # Ask for confirmation (skip in non-interactive mode)
+    if [ "$YES_MODE" = true ]; then
+        echo -e "${GREEN}Auto-confirming setup (--yes mode)${NC}"
+    else
+        read -p "$(echo -e ${YELLOW})Continue setup for this repository? (y/n)$(echo -e ${NC}) " -n 1 -r || true
+        echo
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            echo "Setup cancelled."
+            exit 0
+        fi
     fi
 
     echo ""
