@@ -118,8 +118,8 @@ if not token:
     print("❌ GH_TOKEN or GITHUB_TOKEN environment variable not set")
     print("")
     print("💡 Need help? See:")
-    print("   - Troubleshooting: https://github.com/YOUR_REPO/wiki/Troubleshooting")
-    print("   - Getting Started: https://github.com/YOUR_REPO/wiki/Getting-Started")
+    print("   - Troubleshooting: https://dyvan.github.io/github-project-llm-management/Troubleshooting/")
+    print("   - Getting Started: https://dyvan.github.io/github-project-llm-management/getting-started/quickstart/")
     sys.exit(1)
 ```
 
@@ -147,7 +147,7 @@ cd your-project
 ./template-setup.sh
 ```
 
-➡️ **[Full guide in 5 steps](../../wiki/Getting-Started)**
+➡️ **[Full guide](https://dyvan.github.io/github-project-llm-management/getting-started/quickstart/)**
 ```
 
 **Priority**: 🟡 Medium

@@ -1,59 +1,59 @@
-# ❓ Questions Fréquentes (FAQ)
+# ❓ Frequently Asked Questions (FAQ)
 
 ## Installation
 
-### Dois-je connaître la programmation ?
-Non ! Le template est conçu pour les non-développeurs. Suivez simplement le [Guide de démarrage](Getting-Started).
+### Do I need to know how to code?
+No! The template is designed for non-developers. Just follow the [Getting Started guide](Getting-Started).
 
-### Quels sont les prérequis ?
+### What are the prerequisites?
 - Git
 - GitHub CLI
 - Python 3.11+
 
-Tous s'installent facilement, voir [Getting Started](Getting-Started).
+All are easy to install, see [Getting Started](Getting-Started).
 
-### Combien de temps prend l'installation ?
-Environ 5 minutes en suivant le guide.
+### How long does installation take?
+About 5 minutes following the guide.
 
-## Utilisation
+## Usage
 
-### Comment créer une issue qui déclenche l'automation ?
+### How do I create an issue that triggers automation?
 ```bash
-gh issue create --title "Ma tâche" --label "type:feature,auto-branch"
+gh issue create --title "My task" --label "type:feature,auto-branch"
 ```
 
-### Puis-je désactiver Claude AI ?
-Oui, ne configurez simplement pas `CLAUDE_API_KEY`. La revue fonctionnera en mode basique.
+### Can I disable Gemini AI?
+Yes, simply don't configure `GEMINI_API_KEY`. The review will work in basic mode.
 
-### Comment personnaliser les labels ?
-Éditez `setup-project.sh` lignes 86+ et relancez le script.
+### How do I customize labels?
+Edit `template-setup.sh` and re-run the script.
 
-### Est-ce que ça fonctionne avec des repos privés ?
-Oui, complètement.
+### Does it work with private repos?
+Yes, fully.
 
-## Techniques
+## Technical
 
-### Quel modèle Claude est utilisé ?
-`claude-3-5-sonnet-20241022` par défaut. Modifiable dans `code-review-agent.yml`.
+### Which model is used?
+`gemini-2.0-flash` by default. Configurable in the workflow variables.
 
-### Puis-je utiliser un autre LLM ?
-Oui ! Remplacez l'appel API dans `code-review-agent.yml` par OpenAI, Gemini, etc.
+### Can I use a different LLM?
+Currently, all workflows use Gemini. To use a different provider, you need to modify the workflows manually.
 
-### Les workflows consomment-ils beaucoup de minutes GitHub Actions ?
-Non, très peu. Environ 1-2 minutes par workflow.
+### Do the workflows consume a lot of GitHub Actions minutes?
+No, very few. About 1-2 minutes per workflow.
 
-### Puis-je utiliser plusieurs projets ?
-Oui, spécifiez `--project NUMBER` dans les scripts.
+### Can I use multiple projects?
+Yes, specify `--project NUMBER` in the scripts.
 
-## Dépannage
+## Troubleshooting
 
 ### "Project not found"
-Vérifiez `.github/project.yml` et `gh project list --owner YOUR_USERNAME`.
+Check `.github/project.yml` and `gh project list --owner YOUR_USERNAME`.
 
-### Les workflows ne se déclenchent pas
-Vérifiez Settings → Actions → "Allow all actions".
+### Workflows not triggering
+Check Settings → Actions → "Allow all actions".
 
-### Plus de questions ?
+### More questions?
 - [Troubleshooting](Troubleshooting)
 - [Discussions](https://github.com/dyvan/github-project-llm-management/discussions)
 

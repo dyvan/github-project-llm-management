@@ -11,12 +11,6 @@
 - **Impact**: Hard to maintain, difficult to debug failures.
 - **Fix**: Simplify triggers and split into focused workflows.
 
-### setup_project_fields.py is dead code (2025-11)
-- **Issue**: #103
-- **Problem**: GitHub API cannot create custom project fields programmatically. The script does nothing useful.
-- **Impact**: Confuses contributors, copied to template users unnecessarily.
-- **Fix**: Remove the script and its references in step 5.
-
 ### Longtermhelp has token in git remote URL (2026-03)
 - **Problem**: Security risk -- token visible in `.git/config`.
 - **Impact**: Token could be leaked if config is shared.
@@ -34,4 +28,4 @@
 
 ## Resolved
 
-_Move items here when fixed, with the PR number._
+- **setup_project_fields.py** -- removed (dead code, #103)

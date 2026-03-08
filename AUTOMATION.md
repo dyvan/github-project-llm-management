@@ -203,7 +203,7 @@ Use this checklist when setting up a new project from this template:
 - [ ] **4. Manually configure Project Board custom fields**
   - Go to Project Settings → Fields
   - Add: Priority, Effort, Type, Status, Owner, Target Version
-  - See `PROJECT_BOARD_SETUP.md` for details
+  - See Project Settings in the GitHub UI for details
 
 - [ ] **5. Enable GitHub Pages** (if you want docs)
   - Go to Settings → Pages
@@ -429,7 +429,7 @@ python scripts/project_sync.py --issue 123 --status "In Progress"
 ## 📚 **Related Documentation**
 
 - `README.md`: Main project documentation
-- `claude.md`: Instructions for Gemini AI
+- `CLAUDE.md`: Instructions for Claude Code
 - `CONTRIBUTING.md`: Contribution guidelines
 - `.github/workflows/`: All automation workflows
 
