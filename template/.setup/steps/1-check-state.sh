@@ -22,7 +22,7 @@ run_step() {
                 echo ""
                 info "Last completed at: $(jq -r '.setup_completed_at' "$STATE_FILE" 2>/dev/null)"
                 echo ""
-                read -p "Run setup again to verify/update? (y/n) " -n 1 -r
+                read -p "Run setup again to verify/update? (y/n) " -n 1 -r || true
                 echo
                 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
                     return 0

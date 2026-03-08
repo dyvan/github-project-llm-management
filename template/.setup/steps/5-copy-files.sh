@@ -40,10 +40,10 @@ copy_workflows() {
     for wf in "${workflows[@]}"; do
         if [ -f "$src/$wf" ]; then
             cp "$src/$wf" "$dest/$wf"
-            ((count++))
+            count=$((count + 1))
         elif [ -f "${REPO_ROOT}/.github/workflows/$wf" ]; then
             cp "${REPO_ROOT}/.github/workflows/$wf" "$dest/$wf"
-            ((count++))
+            count=$((count + 1))
         fi
     done
 
@@ -111,7 +111,7 @@ copy_scripts() {
     for script in "${scripts[@]}"; do
         if [ -f "$src/$script" ]; then
             cp "$src/$script" "$dest/$script"
-            ((count++))
+            count=$((count + 1))
         fi
     done
 

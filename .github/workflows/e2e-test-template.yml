@@ -137,9 +137,9 @@ jobs:
           # Override GITHUB_TOKEN so gh CLI uses our token
           export GITHUB_TOKEN="$GH_TOKEN"
 
-          # Run setup in non-interactive mode (pipe 'y' for confirmation)
-          echo "y" | bash template-setup.sh --reset-state 2>&1 | tee /tmp/setup.log
-          SETUP_EXIT=${PIPESTATUS[1]}
+          # Run setup in non-interactive mode
+          bash template-setup.sh --reset-state --yes 2>&1 | tee /tmp/setup.log
+          SETUP_EXIT=${PIPESTATUS[0]}
 
           echo "setup_exit=$SETUP_EXIT" >> $GITHUB_ENV
           echo "setup_exit=$SETUP_EXIT" >> $GITHUB_OUTPUT

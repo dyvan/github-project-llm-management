@@ -607,8 +607,8 @@ jobs:
           export GITHUB_TOKEN="$GH_TOKEN"
 
           echo "=== FIRST template-setup.sh run ==="
-          echo "y" | bash template-setup.sh --reset-state 2>&1 | tee /tmp/setup-run1.log
-          SETUP_EXIT=${PIPESTATUS[1]}
+          bash template-setup.sh --reset-state --yes 2>&1 | tee /tmp/setup-run1.log
+          SETUP_EXIT=${PIPESTATUS[0]}
           echo "exit_code=$SETUP_EXIT" >> $GITHUB_OUTPUT
 
           if [ $SETUP_EXIT -eq 0 ]; then
@@ -668,8 +668,8 @@ jobs:
           export GITHUB_TOKEN="$GH_TOKEN"
 
           echo "=== SECOND template-setup.sh run ==="
-          echo "y" | bash template-setup.sh 2>&1 | tee /tmp/setup-run2.log
-          SETUP_EXIT=${PIPESTATUS[1]}
+          bash template-setup.sh --yes 2>&1 | tee /tmp/setup-run2.log
+          SETUP_EXIT=${PIPESTATUS[0]}
           echo "exit_code=$SETUP_EXIT" >> $GITHUB_OUTPUT
 
           if [ $SETUP_EXIT -eq 0 ]; then

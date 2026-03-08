@@ -29,16 +29,16 @@ create_labels() {
         # Check if label already exists using -F for fixed string matching (no regex)
         if gh label list "${repo_flag[@]}" --json name -q ".[].name" 2>/dev/null | grep -qF "$name"; then
             warning "Label '$name' already exists, skipping"
-            ((skipped++))
+            skipped=$((skipped + 1))
         else
             if gh label create "$name" --description "$description" --color "$color" "${repo_flag[@]}" > /dev/null 2>&1; then
                 success "Created label: $name"
-                ((count++))
+                count=$((count + 1))
             else
                 # If it fails, it might already exist - try with --force to update
                 if gh label create "$name" --description "$description" --color "$color" --force "${repo_flag[@]}" > /dev/null 2>&1; then
                     success "Updated label: $name"
-                    ((count++))
+                    count=$((count + 1))
                 else
                     error "Failed to create/update label: $name"
                 fi
