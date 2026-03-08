@@ -68,26 +68,28 @@ nav:
       - Installation: getting-started/installation.md
       - Quick Start: getting-started/quickstart.md
       - First Issue: getting-started/first-issue.md
+  - CLI Tools:
+      - Slash Commands: commands.md
+      - PM Agent: pm-agent.md
+      - Hooks: hooks.md
+      - MCP GitHub Server: mcp-github.md
   - User Guide:
       - Using the Template: Using-The-Template.md
       - Configuration: Configuration.md
-      - AI Features: ai-features.md
+      - Milestones & Sprints: milestones.md
+      - AI Features (Gemini): ai-features.md
+      - Wiki Templates: wiki.md
       - QCM Specification: QCM-Specification.md
-      - Scripts Reference: Scripts-Reference.md
   - Architecture:
       - Overview: architecture/overview.md
       - GitHub Projects v2: architecture/github-projects.md
       - Workflows: architecture/workflows.md
       - Understanding Workflows: Understanding-Workflows.md
   - Reference:
-      - Advanced Customization: Advanced-Customization.md
+      - Scripts Reference: Scripts-Reference.md
+      - Plugin: plugin.md
       - Template Validation: Template-Validation.md
+      - Advanced Customization: Advanced-Customization.md
       - Troubleshooting: Troubleshooting.md
       - FAQ: faq.md
-      - Hooks: hooks.md
-      - Milestones: milestones.md
-      - Wiki Templates: wiki.md
-      - MCP GitHub Server: mcp-github.md
-  - Agents:
-      - PM Agent: pm-agent.md
   - Contributing: Contributing.md
