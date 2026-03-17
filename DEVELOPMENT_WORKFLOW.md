@@ -1,6 +1,8 @@
 # Development Workflow
 
-Autonomous development workflow for GitHub projects managed with this template. This workflow supports both human and AI-driven development (bflow/beebotflow), with Gherkin acceptance criteria as the quality gate.
+Autonomous development workflow for GitHub projects managed with this template. This workflow supports both human and AI-driven development, with Gherkin acceptance criteria as the quality gate.
+
+> **Note**: The pipeline steps (Gherkin writing, development, validation, merge) are executed by internal AI agents (Claude Code, Gemini CLI, or similar). The agent orchestration engine (bflow/beebotflow) is a separate private tool not included in this template. This document describes the **workflow conventions and labels** that any compatible agent system can follow.
 
 ## Overview
 
@@ -168,14 +170,16 @@ Every interactive or verifiable UI element should have a `data-testid` attribute
 | `{page}-empty-state` | `campaign-empty-state` | Empty state |
 | `{page}-card` | `campaign-card` | Clickable card (list) |
 
-## Bflow Integration
+## Agent Orchestration
 
-[bflow (beebotflow)](https://github.com/dyvan/beebotflow) is the autonomous agent that runs this workflow on a schedule.
+This workflow is designed to be driven by an autonomous agent orchestrator. The reference implementation is [bflow (beebotflow)](https://github.com/dyvan/beebotflow), a private orchestration engine. The agent code is not distributed with this template — only the workflow conventions, labels, and slash commands are provided here.
 
-### Setup
+Any compatible agent system that follows the label lifecycle and priority order described above can drive this workflow.
 
-1. **Install bflow** on a server or CI runner
-2. **Configure `bflow.json`** for your project:
+### Reference Setup (bflow)
+
+1. **Install your agent orchestrator** on a server or CI runner
+2. **Configure it** for your project:
    ```json
    {
      "repo": "owner/repo",
