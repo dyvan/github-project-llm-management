@@ -60,6 +60,8 @@ Commands live in `.claude/commands/` and are invoked with `/`. Available command
 | /sprint-report   | Generate a sprint progress report                        |
 | /plan-task       | Break down a feature into sub-tasks                      |
 | /next-task       | Pick the next task from Ready queue (P1 + milestone)     |
+| /write-acceptance-tests | Generate Gherkin acceptance criteria for an issue  |
+| /validate-feature | Validate a PR on preview against Gherkin criteria       |
 
 ## GitHub Actions Workflows
 
@@ -94,6 +96,7 @@ Key directories:
 **Status**: `status:backlog`, `status:ready`, `status:in-progress`, `status:in-review`, `status:blocked`, `status:done`
 **Priority**: `priority:high`, `priority:medium`, `priority:low`
 **Special**: `auto-branch`, `plan-with-gemini`, `generate-specification`
+**Automation**: `auto:ready`, `auto:gherkin`, `auto:dev`, `auto:pr-open`, `auto:preview-ready`, `auto:merge-ready`, `auto:fix-needed`, `auto:blocked`, `auto:needs-human`
 
 ## Key Decisions
 
@@ -101,6 +104,20 @@ Key directories:
 - Per-workflow API keys with fallback: GEMINI_PLAN_API_KEY, GEMINI_SPEC_API_KEY, GEMINI_REVIEW_API_KEY -> fallback GEMINI_API_KEY
 - Template evolving toward Claude Code plugin packaging (#107)
 - Slash commands replace inline workflow tutorials (#106)
+
+## Acceptance Testing Workflow
+
+**Gherkin-first development**: write acceptance criteria BEFORE code. See `DEVELOPMENT_WORKFLOW.md` for the full workflow.
+
+Three separate steps -- never combine in a single agent run:
+
+1. **Write criteria** (`/write-acceptance-tests <issue>`) -- generates Gherkin + data-testid table in the issue. Must be done BEFORE any code.
+2. **Develop** -- reads the Gherkin, implements the feature, adds `data-testid` attributes. Developer must NOT modify the Gherkin.
+3. **Validate** (`/validate-feature <pr>`) -- tests against the Gherkin on preview, posts report on PR. If Gherkin missing, STOP.
+
+**data-testid convention**: `{page}-{action}-btn`, `{page}-{field}-input`, `{page}-alert-{type}`, etc. See `DEVELOPMENT_WORKFLOW.md` for full table.
+
+**When launching parallel dev agents**: run `/write-acceptance-tests` on all issues first, then launch dev agents.
 
 ## Secrets
 

@@ -60,6 +60,12 @@ jobs:
             type:feature)                   python scripts/project_sync.py $ARGS --type "Feature" ;;
             type:bug)                       python scripts/project_sync.py $ARGS --type "Bug" ;;
             type:task)                      python scripts/project_sync.py $ARGS --type "Task" ;;
+            auto:ready)                     python scripts/project_sync.py $ARGS --status "Ready" ;;
+            auto:gherkin|auto:dev)          python scripts/project_sync.py $ARGS --status "In progress" ;;
+            auto:pr-open|auto:preview-ready) python scripts/project_sync.py $ARGS --status "In review" ;;
+            auto:merge-ready)               python scripts/project_sync.py $ARGS --status "In review" ;;
+            auto:fix-needed)                python scripts/project_sync.py $ARGS --status "In progress" ;;
+            auto:blocked|auto:needs-human)  python scripts/project_sync.py $ARGS --status "Blocked" ;;
           esac
 
       - name: Sync PR to project
